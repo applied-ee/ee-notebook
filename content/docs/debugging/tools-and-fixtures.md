@@ -1,6 +1,6 @@
 ---
 title: "Tools & Fixtures for Debugging"
-weight: 80
+weight: 45
 ---
 
 # Tools & Fixtures for Debugging
