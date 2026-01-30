@@ -19,7 +19,7 @@ Car amps are simultaneously audio equipment, high-current power electronics, and
 - **Inline fuse** — 30–40 A automotive blade fuse in a holder on the power lead. Non-negotiable
 - **DMM** — voltage and resistance
 - **Oscilloscope** — at least 2 channels
-- **Dummy loads** — power resistors or dummy speaker loads matching the amp's rated impedance (typically 4 Ω or 2 Ω). Must be rated for the amp's output power. Wirewound resistors on heatsinks, or purpose-built dummy loads
+- **Dummy loads** — power resistors or dummy speaker loads matching the amp's rated impedance (typically 4 Ω or 2 Ω). Must be rated for the amp's output power. See [Dummy Load for Car Audio Amps]({{< relref "/docs/debugging/tools-and-fixtures/dummy-load-car-audio" >}}) for build details
 - **Audio signal source** — function generator (1 kHz sine is the workhorse) or a phone/DAP with a known-clean output
 - **RCA cables and speaker wire** — known-good
 
