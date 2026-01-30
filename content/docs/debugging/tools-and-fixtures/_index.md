@@ -1,11 +1,14 @@
 ---
 title: "Tools & Fixtures for Debugging"
 weight: 45
+bookCollapseSection: true
 ---
 
 # Tools & Fixtures for Debugging
 
 This page is about what you set up *before* the debug session begins — the physical fixtures, accessories, and habits that make debugging possible and safe. For how to actually use instruments and interpret readings, see the [Measurement & Test](/docs/measurement/) section.
+
+For fixture builds tailored to specific DUTs, see the sub-pages below.
 
 ## Current-Limited Power Supply
 
@@ -99,3 +102,9 @@ A cable you haven't verified is a suspect, not a tool.
 **Labeling matters** — A drawer full of unlabeled cables is a drawer full of suspects. Mark known-good cables with a bit of tape or a cable tag. Mark known-bad cables by throwing them away — a flaky cable in the spares box will eventually get used by accident.
 
 The goal is to eliminate the test setup itself as a variable. When you trust your cables, adapters, and fixtures, you can focus on the actual circuit.
+
+## DUT-Specific Fixtures
+
+The general fixtures above apply to everything. The pages below cover purpose-built test setups for specific device types.
+
+- **[Dummy Load for Car Audio Amps]({{< relref "dummy-load-car-audio" >}})** — Building and using a resistive dummy load for high-power 12 V amplifier testing
