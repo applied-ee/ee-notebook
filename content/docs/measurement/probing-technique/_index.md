@@ -10,6 +10,8 @@ Connecting to a circuit without changing what you're measuring. Probe selection,
 
 ## What This Section Covers
 
+This section is about the connection between your instrument and the circuit — the part most people skip and then wonder why their readings look wrong.
+
 Measurement intent — the questions you're trying to answer at the bench:
 
 - **Am I loading the circuit?** — Probe impedance vs. source impedance. When your 10 MΩ DMM or 10x scope probe is still too heavy. High-Z nodes, current sense resistors, and knowing when you've changed the circuit by measuring it.

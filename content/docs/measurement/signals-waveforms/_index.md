@@ -10,6 +10,8 @@ Following signals stage by stage. Presence, shape, gain, distortion, clipping. W
 
 ## What This Section Covers
 
+This section is about tracing a signal through a circuit and finding where it stops looking right.
+
 Measurement intent — the questions you're trying to answer at the bench:
 
 - **Is the signal present at this node?** — Confirming that a signal exists where it should. No signal at all is a different problem than a wrong signal.

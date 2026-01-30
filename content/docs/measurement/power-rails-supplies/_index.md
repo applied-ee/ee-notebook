@@ -10,6 +10,8 @@ Supply verification, ripple, regulation, current draw, sequencing, energy storag
 
 ## What This Section Covers
 
+This section focuses on supply behavior under real operating conditions, not ideal no-load measurements.
+
 Measurement intent — the questions you're trying to answer at the bench:
 
 - **[Is voltage present?]({{< relref "voltage-present" >}})** — First check at power-up. Confirm the rail exists before looking at anything downstream.

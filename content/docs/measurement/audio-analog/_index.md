@@ -10,6 +10,8 @@ Audio-specific and analog measurement: THD, SNR, frequency response, gain struct
 
 ## What This Section Covers
 
+This section covers measurements where the signal itself is the product — distortion, noise floor, and frequency response all matter to the end result.
+
 Measurement intent — the questions you're trying to answer at the bench:
 
 - **What's the THD / noise floor?** — Distortion and noise measurements. Audio analyzers, FFT-based THD, and understanding what the numbers mean in practice.
