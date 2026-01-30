@@ -10,6 +10,8 @@ Signal characterization in time and frequency domains. Rise times, jitter, clock
 
 ## What This Section Covers
 
+This section moves beyond "is the signal there?" to characterizing what it actually looks like in time and frequency.
+
 Measurement intent — the questions you're trying to answer at the bench:
 
 - **Is this clock at the right frequency?** — Frequency measurement with counters, scopes, and FFT. Crystal oscillators, PLLs, RC oscillators, and clock dividers.

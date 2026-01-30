@@ -10,6 +10,8 @@ Trusting your readings. Accuracy, resolution, systematic error, uncertainty. Thi
 
 ## What This Section Covers
 
+This section is about questioning your readings before trusting them — every measurement has limits, and knowing those limits is what separates data from guessing.
+
 Measurement intent — the questions you're trying to answer at the bench:
 
 - **Is my instrument accurate enough for this?** — Matching instrument specs to measurement needs. When a 3½-digit DMM is fine and when you need 5½ digits. When scope sample rate matters and when it doesn't.

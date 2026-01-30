@@ -10,6 +10,8 @@ Tracking down unwanted signals. EMI, ground loops, crosstalk, coupling. The meas
 
 ## What This Section Covers
 
+This section is about finding and fixing the invisible signals you didn't put there — the ones ruining your circuit.
+
 Measurement intent — the questions you're trying to answer at the bench:
 
 - **Where is this noise coming from?** — Identifying noise sources: switching converters, digital clocks, motor drives, external interference. Near-field probing, spectrum analysis, and process of elimination.

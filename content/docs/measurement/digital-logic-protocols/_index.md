@@ -10,6 +10,8 @@ Logic levels, bus health, protocol decode (SPI, I2C, UART, CAN). MCU I/O verific
 
 ## What This Section Covers
 
+This section bridges analog measurement and digital communication — logic levels, bus activity, and protocol decode.
+
 Measurement intent — the questions you're trying to answer at the bench:
 
 - **Are logic levels correct for this voltage domain?** — VOH, VOL, VIH, VIL thresholds. Level shifting between 3.3V and 5V domains. Marginal logic levels that work sometimes.

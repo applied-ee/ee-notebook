@@ -10,6 +10,8 @@ Mains, high voltage, CAT ratings, isolation, and the habits that keep you alive.
 
 ## What This Section Covers
 
+Everything here is about assessing hazard *before* you connect anything — not after you see sparks.
+
 Measurement intent — the questions you're trying to answer at the bench:
 
 - **Can I touch/probe this safely?** — Assessing hazard before connecting anything. Is it de-energized? Are stored charges drained? What's the worst case?

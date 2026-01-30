@@ -10,6 +10,8 @@ Go/no-go on parts. Real values vs. markings. R, C, L, diodes, transistors, ESR. 
 
 ## What This Section Covers
 
+This section is about testing individual parts — what they actually measure, not what's printed on the package.
+
 Measurement intent — the questions you're trying to answer at the bench:
 
 - **Is this part dead or alive?** — Quick go/no-go checks. Diode junctions, transistor beta, capacitor charge/discharge, inductor continuity. Catching the obviously blown parts first.

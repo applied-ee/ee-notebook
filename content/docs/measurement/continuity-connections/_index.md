@@ -10,6 +10,8 @@ Is this connected to that? Opens, shorts, solder joints, cables, traces. The sim
 
 ## What This Section Covers
 
+This section covers the simplest measurements — but they're often the first ones that matter when something doesn't work.
+
 Measurement intent — the questions you're trying to answer at the bench:
 
 - **Is this joint making contact?** — Solder joints, crimp connections, header pins, socket contacts. Continuity beep vs. resistance measurement for marginal joints.
