@@ -129,6 +129,41 @@ When you need to add a connection that doesn't exist on the board — whether fo
 - Route away from heat sources
 - Label the jumper (a tag of tape with a note) so future you knows why it's there
 
+## When to Stop Reworking
+
+Repair skill includes knowing when you're about to make things worse. Every rework attempt carries risk — heat stress, lifted pads, solder bridges, damaged adjacent components — and the risk accumulates.
+
+### Pad Damage Threshold
+
+If you've lifted two pads on the same board, stop. You're either applying too much heat, too much mechanical force, or working on a board with weak copper adhesion (common in cheap or old PCBs). A third attempt at the same technique will likely lift a third pad.
+
+**Pause and reconsider:**
+- Switch to a different technique (e.g., hot air instead of iron, or vice versa)
+- Lower your iron temperature and use more flux
+- Accept that the board may need jumper wires for the lifted pads before you continue
+- Ask whether the board is worth further rework or whether a fresh board is cheaper than the repair time
+
+### Thermal Collateral Damage
+
+Hot air is powerful but indiscriminate. Everything in the airflow gets heated.
+
+**Plastic connectors** — Most plastic housings deform or melt well below reflow temperatures. If a connector is near your rework target, either shield it with kapton tape and aluminum foil, or remove the connector first and replace it after. "I'll be careful" is not a shielding strategy.
+
+**Adjacent components** — Small passives near your target can reflow and shift, tombstone, or float away in the airflow. Shield with kapton tape, or tack them down with a dot of adhesive. After hot air rework, inspect neighbors — not just the part you replaced.
+
+**Multi-layer boards** — Internal copper planes act as heat sinks. You may find yourself cranking the temperature to get enough heat to the target pad. But the surface temperature around the joint is now much higher than you think. Use preheat to bring the whole board up to ~100–150°C first, so the delta from the hot air nozzle is smaller.
+
+### Diminishing Returns
+
+Some signs that further rework is unlikely to succeed:
+
+- **Board is physically damaged** — substrate is delaminated, charred, or warped from repeated reflow cycles
+- **Multiple repairs stacked on repairs** — jumper wires patching lifted pads that were damaged while replacing a component that was only suspect, not confirmed faulty
+- **The replacement part is the third one you've tried** — if the first two didn't fix it, the component probably isn't the problem. Go back to diagnosis
+- **You're working angry or tired** — rework requires steady hands and patience. If you're frustrated, walk away. The board will still be broken tomorrow, but it won't have additional damage from a shaky hand
+
+The cheapest rework is the one you didn't have to do twice.
+
 ## Cleaning After Rework
 
 Flux residue left on the board can cause problems over time: corrosion, leakage currents, and unreliable measurements.

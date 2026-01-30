@@ -86,19 +86,56 @@ Forcing a known state turns a "something is wrong somewhere" into a "this specif
 
 ## Working Without a Schematic
 
-Sometimes you don't have documentation. Reverse-engineering enough to debug is a different skill from full reverse-engineering.
+Sometimes you don't have documentation — or you have a partial schematic that covers the block you're *not* debugging. Reverse-engineering enough to debug is a different skill from full reverse-engineering. You don't need to understand the whole board. You need to understand enough to isolate the fault.
 
-**Minimum you need to figure out:**
-- Where does power come in, and what voltages are generated?
-- What are the major ICs? (Read part numbers, look up datasheets)
-- What connects to what? (Follow traces, check continuity)
-- Where are the connectors, and what do they carry?
+### Step 1: Identify Power Rails
+
+Power is the skeleton of the board. Everything else hangs off it.
+
+- Find the power input (barrel jack, USB, battery connector, header pins)
+- Follow the input to voltage regulators — look for 3-terminal devices (SOT-223, TO-220, SOT-23-5) near the input, often with chunky capacitors on both sides
+- Measure each regulator's output to identify the rails (common: 5 V, 3.3 V, 1.8 V, 1.2 V)
+- Trace where each rail goes. On a 2-layer board, one side is often a ground pour — check with continuity
+- Label the rails on a photo or sketch as you go. Everything downstream depends on knowing which rail feeds which section
+
+### Step 2: Find Grounds
+
+- Check for a ground plane (continuity from the input ground to exposed copper, mounting holes, or shield cans)
+- Identify ground pins on connectors — often the outermost pin or the shell/shield
+- On 2-layer boards, the bottom layer is frequently a ground pour. Confirm with continuity between multiple exposed points
+- Mark your ground reference — you'll need a reliable ground connection for every measurement from here on
+
+### Step 3: Identify Clocks and Crystals
+
+Clocks tell you what the board does and whether the brain is running.
+
+- Look for crystals and crystal oscillators — silver cans, small 4-pin packages, or 2-pin HC49 packages
+- Read the frequency marking on the crystal (e.g., 8.000 MHz, 12.000, 25.000, 32.768 kHz for RTC)
+- Trace which IC the crystal connects to — that's your processor, FPGA, or communications chip
+- Probe the crystal/oscillator output with a scope. If the clock isn't running, nothing downstream will work. This is one of the highest-value early measurements on an unknown board
+
+### Step 4: Find Reset Pin Behavior
+
+A processor held in reset looks dead but isn't broken.
+
+- Look up the main IC's datasheet (read the part number, search online). Find the reset pin
+- Trace the reset pin back — it usually connects to an RC network, a reset supervisor IC, or a pushbutton
+- Measure the reset pin: is it at the active level (held in reset) or the inactive level (running)?
+- If the reset pin is stuck active, trace upstream to find out why — voltage supervisor seeing a low rail, external signal holding it down, or a missing pull-up
+
+### Step 5: Signal Tracing With Continuity and Visual Routing
+
+When you need to know "what connects to what" without a netlist.
+
+- **Visual tracing** — Follow traces on the board surface. A magnifying lamp or USB microscope helps. Traces on the top layer are usually visible; bottom-layer traces may be partially hidden by solder mask
+- **Continuity meter** — Set your DMM to continuity mode. Touch one probe to the pin you're tracing, then systematically check candidate destinations (nearby IC pins, connector pins, test points). The beep tells you the connection exists; silence rules it out
+- **IC datasheets as cheat sheets** — Once you've identified a part number, the datasheet's pinout tells you what *should* be connected to each pin. Use continuity to confirm the actual connections match, and to figure out where each net goes on the board
+- **Connector pinouts** — Connectors are the board's external interface. Identifying what each pin carries (power, ground, data, clock) often reveals the board's functional blocks. Standard connectors (USB, JTAG, SPI headers, UART) have known pinouts — check against the standard first
 
 **Practical tips:**
-- Start with the power section — find the input, regulators, and rails
-- Large ICs with many pins are processors/FPGAs — find their power and clock pins first
-- Connectors and test points are debugging gifts — they're access points the original designer left for you
-- Take photos and make notes as you go — you'll forget which pin you already checked
+- Take photos and annotate them as you go — you'll forget which pin you already checked
+- Connectors and test points are debugging gifts — access points the original designer left for you
+- You don't need a complete schematic to debug. You need to know: where is power, is the clock running, is reset released, and is the signal present at the boundary of the block you're investigating
 
 ## Working With a Schematic
 
