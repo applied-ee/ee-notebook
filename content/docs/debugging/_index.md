@@ -18,7 +18,7 @@ Entries capture debugging strategies, common failure patterns, repair procedures
 - **[Fault Isolation Strategies]({{< relref "fault-isolation" >}})** — Narrow the search space systematically
 - **[Common Failure Modes & Patterns]({{< relref "failure-modes-and-patterns" >}})** — Recognize the usual suspects before diving deep
 - **[Field Failure Modes by Component]({{< relref "component-field-failures" >}})** — How components fail in the field and how those failures present
+- **[Tools & Fixtures for Debugging]({{< relref "tools-and-fixtures" >}})** — Physical setup that makes debugging possible and safe
 - **[Rework & Repair Techniques]({{< relref "rework-and-repair" >}})** — Desoldering, replacement, trace repair, and cleanup
 - **[Verification After Repair]({{< relref "verification-after-repair" >}})** — Confirming the fix and catching regressions
 - **[Post-Mortems & Lessons Learned]({{< relref "post-mortems" >}})** — Recording what happened so you get faster next time
-- **[Tools & Fixtures for Debugging]({{< relref "tools-and-fixtures" >}})** — Physical setup that makes debugging possible and safe
