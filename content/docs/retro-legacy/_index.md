@@ -31,3 +31,5 @@ This is not a history of electronics or a museum catalog — historical context 
 - **[Repair, Substitution, and Reverse Engineering]({{< relref "repair-substitution-and-reverse-engineering" >}})** — Finding replacements, reading undocumented circuits, and making safe substitutions
 
 - **[Interfacing Legacy Systems with Modern Electronics]({{< relref "interfacing-with-modern-electronics" >}})** — Level shifting, protocol conversion, and bridging old and new safely
+
+- **[Interfacing Playbook: Modern ↔ Legacy]({{< relref "interfacing-playbook" >}})** — The capstone: systematic checklists, adapter building blocks, grounding patterns, worked mini-patterns, and bench bring-up procedure for connecting modern MCUs to legacy systems
