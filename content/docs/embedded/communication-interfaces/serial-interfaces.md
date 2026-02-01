@@ -160,39 +160,74 @@ digraph i2c {
   rankdir=TB
   bgcolor="transparent"
   node [fontname="Helvetica" fontsize=11]
-  edge [fontname="Helvetica" fontsize=10]
-  splines=ortho
-  nodesep=0.3
+  edge [fontname="Helvetica" fontsize=10 arrowsize=0.7]
+  splines=false
   ranksep=0.5
 
-  vdd [label="VDD" shape=none fontcolor="#cccc88"]
+  // Pull-up section
+  pullups [label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="12" CELLPADDING="4">
+      <TR>
+        <TD><FONT COLOR="#cccc88">VDD</FONT></TD>
+        <TD><FONT COLOR="#cccc88">VDD</FONT></TD>
+      </TR>
+      <TR>
+        <TD PORT="rsda" BORDER="1" BGCOLOR="#3a3a2a" COLOR="#aaaa66"><FONT COLOR="#cccc88">Rp 4.7k</FONT></TD>
+        <TD PORT="rscl" BORDER="1" BGCOLOR="#3a3a2a" COLOR="#aaaa66"><FONT COLOR="#cccc88">Rp 4.7k</FONT></TD>
+      </TR>
+    </TABLE>
+  > shape=plain]
 
-  rp_sda [label="Rp\n4.7k" shape=box style="filled" fillcolor="#3a3a2a" fontcolor="#cccc88" color="#aaaa66" width=0.6 height=0.4]
-  rp_scl [label="Rp\n4.7k" shape=box style="filled" fillcolor="#3a3a2a" fontcolor="#cccc88" color="#aaaa66" width=0.6 height=0.4]
+  // Bus bar — per-device port columns, no visible internal borders
+  bus [label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0">
+      <TR><TD>
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#3e3e5a" COLOR="#8888cc">
+          <TR>
+            <TD PORT="sda_rp" WIDTH="30"> </TD>
+            <TD PORT="sda_lbl" WIDTH="40"><FONT COLOR="#e8e8e8"><B>SDA</B></FONT></TD>
+            <TD PORT="sda0" WIDTH="72"> </TD>
+            <TD PORT="sda1" WIDTH="72"> </TD>
+            <TD PORT="sda2" WIDTH="72"> </TD>
+            <TD PORT="sda3" WIDTH="72"> </TD>
+          </TR>
+        </TABLE>
+      </TD></TR>
+      <TR><TD HEIGHT="4"> </TD></TR>
+      <TR><TD>
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#3e3e5a" COLOR="#88cc88">
+          <TR>
+            <TD PORT="scl_rp" WIDTH="30"> </TD>
+            <TD PORT="scl_lbl" WIDTH="40"><FONT COLOR="#e8e8e8"><B>SCL</B></FONT></TD>
+            <TD PORT="scl0" WIDTH="72"> </TD>
+            <TD PORT="scl1" WIDTH="72"> </TD>
+            <TD PORT="scl2" WIDTH="72"> </TD>
+            <TD PORT="scl3" WIDTH="72"> </TD>
+          </TR>
+        </TABLE>
+      </TD></TR>
+    </TABLE>
+  > shape=plain]
 
-  vdd -> rp_sda [color="#aaaa66"]
-  vdd -> rp_scl [color="#aaaa66"]
+  pullups:rsda -> bus:sda_rp [color="#aaaa66"]
+  pullups:rscl -> bus:scl_rp [color="#aaaa66"]
 
-  sda_bus [label="SDA" shape=box style="rounded,filled" fillcolor="#3e3e5a" fontcolor="#e8e8e8" color="#8888cc" width=3.5 height=0.3]
-  scl_bus [label="SCL" shape=box style="rounded,filled" fillcolor="#3e3e5a" fontcolor="#e8e8e8" color="#88cc88" width=3.5 height=0.3]
+  // Devices
+  mcu  [label="MCU\n(master)" shape=box style="rounded,filled" fillcolor="#2a2a3a" fontcolor="#e8e8e8" color="#6666aa" width=1.0 height=0.55]
+  eep  [label="EEPROM\n0x50"  shape=box style="rounded,filled" fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66" width=1.0 height=0.55]
+  rtc  [label="RTC\n0x68"     shape=box style="rounded,filled" fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66" width=1.0 height=0.55]
+  sens [label="Sensor\n0x48"  shape=box style="rounded,filled" fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66" width=1.0 height=0.55]
+  { rank=same; mcu; eep; rtc; sens }
 
-  rp_sda -> sda_bus [color="#aaaa66"]
-  rp_scl -> scl_bus [color="#aaaa66"]
-
-  mcu  [label="MCU\n0x--"     shape=box style="rounded,filled" fillcolor="#2a2a3a" fontcolor="#e8e8e8" color="#6666aa" width=0.8 height=0.6]
-  sens [label="Sensor\n0x48"  shape=box style="rounded,filled" fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66" width=0.8 height=0.6]
-  eep  [label="EEPROM\n0x50"  shape=box style="rounded,filled" fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66" width=0.8 height=0.6]
-  rtc  [label="RTC\n0x68"     shape=box style="rounded,filled" fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66" width=0.8 height=0.6]
-
-  sda_bus -> mcu  [color="#8888cc"]
-  sda_bus -> sens [color="#8888cc"]
-  sda_bus -> eep  [color="#8888cc"]
-  sda_bus -> rtc  [color="#8888cc"]
-
-  scl_bus -> mcu  [color="#88cc88"]
-  scl_bus -> sens [color="#88cc88"]
-  scl_bus -> eep  [color="#88cc88"]
-  scl_bus -> rtc  [color="#88cc88"]
+  // Vertical drops per device column
+  bus:sda0 -> mcu  [color="#8888cc"]
+  bus:scl0 -> mcu  [color="#88cc88"]
+  bus:sda1 -> eep  [color="#8888cc"]
+  bus:scl1 -> eep  [color="#88cc88"]
+  bus:sda2 -> rtc  [color="#8888cc"]
+  bus:scl2 -> rtc  [color="#88cc88"]
+  bus:sda3 -> sens [color="#8888cc"]
+  bus:scl3 -> sens [color="#88cc88"]
 }
 {{< /graphviz >}}
 
