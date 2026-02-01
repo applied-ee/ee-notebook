@@ -160,30 +160,45 @@ digraph i2c {
   rankdir=TB
   bgcolor="transparent"
 
+  // key: edges behind nodes (so lines disappear under boxes)
   graph [
+    outputorder="edgesfirst",
     splines=ortho,
-    nodesep=0.35,
-    ranksep=0.55
+    nodesep=0.45,
+    ranksep=0.60
   ];
 
   node [fontname="Helvetica" fontsize=11];
   edge [fontname="Helvetica" fontsize=10 arrowsize=0.7, arrowhead=none];
 
-  // Pull-up section
+  // ---------- Pull-ups (CENTERED) ----------
+  // We pad left/right so the VDD/Rp pair sits centered over the bus width.
   pullups [label=<
-    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="12" CELLPADDING="4">
-      <TR>
-        <TD><FONT COLOR="#cccc88">VDD</FONT></TD>
-        <TD><FONT COLOR="#cccc88">VDD</FONT></TD>
-      </TR>
-      <TR>
-        <TD PORT="rsda" BORDER="1" BGCOLOR="#3a3a2a" COLOR="#aaaa66"><FONT COLOR="#cccc88">Rp 4.7k</FONT></TD>
-        <TD PORT="rscl" BORDER="1" BGCOLOR="#3a3a2a" COLOR="#aaaa66"><FONT COLOR="#cccc88">Rp 4.7k</FONT></TD>
-      </TR>
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0">
+      <TR><TD>
+        <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="12" CELLPADDING="4">
+          <TR>
+            <TD WIDTH="160"> </TD>
+            <TD><FONT COLOR="#cccc88">VDD</FONT></TD>
+            <TD><FONT COLOR="#cccc88">VDD</FONT></TD>
+            <TD WIDTH="160"> </TD>
+          </TR>
+          <TR>
+            <TD WIDTH="160"> </TD>
+            <TD PORT="rsda" BORDER="1" BGCOLOR="#3a3a2a" COLOR="#aaaa66">
+              <FONT COLOR="#cccc88">Rp 4.7k</FONT>
+            </TD>
+            <TD PORT="rscl" BORDER="1" BGCOLOR="#3a3a2a" COLOR="#aaaa66">
+              <FONT COLOR="#cccc88">Rp 4.7k</FONT>
+            </TD>
+            <TD WIDTH="160"> </TD>
+          </TR>
+        </TABLE>
+      </TD></TR>
     </TABLE>
   > shape=plain];
 
-  // Bus bar
+  // ---------- Bus bar ----------
   bus [label=<
     <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0">
       <TR><TD>
@@ -214,65 +229,38 @@ digraph i2c {
     </TABLE>
   > shape=plain];
 
-  pullups:rsda -> bus:sda_rp [color="#aaaa66" weight=6];
-  pullups:rscl -> bus:scl_rp [color="#aaaa66" weight=6];
+  pullups:rsda -> bus:sda_rp [color="#aaaa66" weight=10];
+  pullups:rscl -> bus:scl_rp [color="#aaaa66" weight=10];
 
-  // Devices
+  // ---------- Devices (centered row) ----------
   mcu  [label="MCU\n(master)" shape=box style="rounded,filled"
         fillcolor="#2a2a3a" fontcolor="#e8e8e8" color="#6666aa"
-        fixedsize=true width=1.2 height=0.65];
+        fixedsize=true width=1.25 height=0.75];
 
   eep  [label="EEPROM\n0x50" shape=box style="rounded,filled"
         fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66"
-        fixedsize=true width=1.2 height=0.65];
+        fixedsize=true width=1.25 height=0.75];
 
   rtc  [label="RTC\n0x68" shape=box style="rounded,filled"
         fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66"
-        fixedsize=true width=1.2 height=0.65];
+        fixedsize=true width=1.25 height=0.75];
 
   sens [label="Sensor\n0x48" shape=box style="rounded,filled"
         fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66"
-        fixedsize=true width=1.2 height=0.65];
+        fixedsize=true width=1.25 height=0.75];
 
   { rank=same; mcu; eep; rtc; sens; }
+  mcu -> eep -> rtc -> sens [style=invis weight=50];
 
-  // Alignment anchors (invisible)
-  a0 [shape=point width=0.01 label="" style=invis];
-  a1 [shape=point width=0.01 label="" style=invis];
-  a2 [shape=point width=0.01 label="" style=invis];
-  a3 [shape=point width=0.01 label="" style=invis];
-
-  { rank=same; a0; a1; a2; a3; }
-
-  a0 -> a1 -> a2 -> a3 [style=invis weight=50];
-
-  a0 -> mcu  [style=invis weight=80];
-  a1 -> eep  [style=invis weight=80];
-  a2 -> rtc  [style=invis weight=80];
-  a3 -> sens [style=invis weight=80];
-
-  bus:sda0 -> a0 [style=invis weight=80];
-  bus:sda1 -> a1 [style=invis weight=80];
-  bus:sda2 -> a2 [style=invis weight=80];
-  bus:sda3 -> a3 [style=invis weight=80];
-
-  bus:scl0 -> a0 [style=invis weight=80];
-  bus:scl1 -> a1 [style=invis weight=80];
-  bus:scl2 -> a2 [style=invis weight=80];
-  bus:scl3 -> a3 [style=invis weight=80];
-
-  // Visible drops per device
-  bus:sda0 -> mcu  [color="#8888cc" weight=2];
-  bus:scl0 -> mcu  [color="#88cc88" weight=2];
-
-  bus:sda1 -> eep  [color="#8888cc" weight=2];
-  bus:scl1 -> eep  [color="#88cc88" weight=2];
-
-  bus:sda2 -> rtc  [color="#8888cc" weight=2];
-  bus:scl2 -> rtc  [color="#88cc88" weight=2];
-
-  bus:sda3 -> sens [color="#8888cc" weight=2];
-  bus:scl3 -> sens [color="#88cc88" weight=2];
+  // ---------- Drops ----------
+  bus:sda0 -> mcu  [color="#8888cc"];
+  bus:scl0 -> mcu  [color="#88cc88"];
+  bus:sda1 -> eep  [color="#8888cc"];
+  bus:scl1 -> eep  [color="#88cc88"];
+  bus:sda2 -> rtc  [color="#8888cc"];
+  bus:scl2 -> rtc  [color="#88cc88"];
+  bus:sda3 -> sens [color="#8888cc"];
+  bus:scl3 -> sens [color="#88cc88"];
 }
 {{< /graphviz >}}
 
