@@ -13,11 +13,21 @@ Understanding integrated analog devices at an architectural level — what's ins
 
 Discrete analog circuits work. You can build a perfectly good differential amplifier from two matched BJTs, a handful of resistors, and a current source. But certain problems get dramatically easier when you integrate them onto a single die:
 
+### Matching and Thermal Coupling
+
 - **Matching** — Two transistors on the same die, fabricated in the same process step, sitting microns apart, will have nearly identical V_BE, beta, and V_th. Discrete components from the same production batch might differ by 10-20%. On-die matching can be better than 0.1%. Differential pairs, current mirrors, and bandgap references all depend on matching, not absolute accuracy
 - **Thermal coupling** — Devices on the same die are at nearly the same temperature. This makes temperature-compensated circuits (bandgap references, bias networks) far more effective than discrete equivalents where components are at different temperatures and track differently
+
+### Complexity Without Assembly Cost
+
 - **Complexity without assembly cost** — Adding transistors to an IC is nearly free. A discrete current mirror is two transistors, two resistors, and careful layout. An integrated one is just part of the mask. This means IC designers use topologies that would be impractical to build discretely — cascode stacks, Wilson mirrors, folded cascodes, startup circuits
+
+### Trimming and Parasitics
+
 - **Trimming** — Laser trimming or fuse-blowing during production can adjust resistor values, offset voltages, or reference levels on each individual die. This achieves precision that would require hand-selection of discrete components
 - **Parasitics under control** — The designer knows the parasitic capacitances, substrate coupling, and interconnect resistance at design time. In a discrete circuit, parasitics depend on your layout, your wiring, your PCB — and they change every time you rearrange something
+
+### The Tradeoff: Loss of Flexibility
 
 The tradeoff: you lose flexibility. A discrete circuit can be modified, probed at every node, and adapted. An integrated circuit does exactly what the designer intended, with the constraints the designer chose. If those constraints don't match your application, you work around them externally or pick a different part.
 
@@ -29,7 +39,7 @@ The building blocks inside an analog IC are the same devices covered in this sec
 
 IC resistors have poor absolute accuracy — process variations can shift values by 20% or more. But two resistors of the same type, same geometry, placed side by side, will **ratio** to within a fraction of a percent. The same applies to transistor pairs.
 
-This is why integrated circuits are designed around ratios and differences, not absolute values. A bandgap reference doesn't depend on any single V_BE being exactly 0.6 V — it depends on the *difference* in V_BE between two transistors running at different current densities. A current mirror doesn't depend on beta being 200 — it depends on two transistors having the *same* beta.
+This is why integrated circuits are designed around **ratios and differences**, not absolute values. A bandgap reference doesn't depend on any single V_BE being exactly 0.6 V — it depends on the *difference* in V_BE between two transistors running at different current densities. A current mirror doesn't depend on beta being 200 — it depends on two transistors having the *same* beta.
 
 If you've wondered why analog IC schematics look different from textbook discrete circuits, this is the reason. The design style is fundamentally ratio-metric.
 
@@ -52,7 +62,7 @@ IC designers exploit this deliberately. Bandgap voltage references work because 
 
 But thermal coupling can also be a problem. A high-power output stage heats the die, shifting the bias points of nearby precision circuits. This is why many analog ICs specify warm-up drift or have thermally-sensitive specifications that depend on power dissipation.
 
-### Available Component Palette
+### The On-Die Component Palette
 
 Not everything translates well to silicon:
 
@@ -66,7 +76,7 @@ This palette shapes every integrated analog architecture. When you see an IC tha
 
 ## Common Classes of Integrated Analog Devices
 
-Integrated analog devices cluster into recognizable architectural patterns. Each class solves a specific problem by combining the building blocks described above. The intent here is orientation, not theory — detailed treatment of each class belongs in its own section.
+Integrated analog devices cluster into recognizable architectural patterns. Each class solves a specific problem by combining the building blocks described above. The intent here is orientation, not theory — detailed treatment of each class belongs in its own section. The following classes are covered in detail elsewhere; this section exists to show how they relate architecturally.
 
 - **Op-amps and instrumentation amplifiers** — Differential input, high gain, feedback-configured. The canonical integrated analog building block. Internal architecture: differential pair input stage, gain stage (often a current mirror load), output stage, bias network, and compensation. Instrumentation amplifiers add precision gain-setting and high common-mode rejection through matched internal resistor networks
 - **Comparators** — Structurally similar to op-amps (differential input, high gain) but designed without frequency compensation, optimized for speed to a defined output state rather than linear operation. Not interchangeable with op-amps despite superficial similarity
