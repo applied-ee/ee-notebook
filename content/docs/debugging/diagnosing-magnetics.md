@@ -1,9 +1,9 @@
 ---
-title: "Bench Measurement & Diagnostic Clues"
-weight: 70
+title: "Diagnosing Magnetics on the Bench"
+weight: 46
 ---
 
-# Bench Measurement & Diagnostic Clues
+# Diagnosing Magnetics on the Bench
 
 Magnetic components don't fail in obvious ways. A saturated inductor looks identical to a healthy one on the bench. A transformer with excessive leakage inductance measures the same DC resistance as a good one. Diagnosing magnetics problems requires the right instruments and knowing what waveforms, temperatures, and current-draw patterns tell you.
 
@@ -110,7 +110,7 @@ Monitoring input current to a power supply during different operating conditions
 
 ### Current Spikes at Startup
 
-- Inrush through a transformer and rectifier into an uncharged capacitor (see [Inrush Current]({{< relref "inrush-current" >}}))
+- Inrush through a transformer and rectifier into an uncharged capacitor (see [Inrush Current]({{< relref "/docs/fundamentals/magnetics-in-practice/inrush-current" >}}))
 - Inductor saturation during the first few switching cycles before the converter's soft-start ramps up
 
 ### Current That Increases Over Time (Minutes to Hours)

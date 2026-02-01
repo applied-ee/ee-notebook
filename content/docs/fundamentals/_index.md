@@ -25,7 +25,7 @@ All of it seems simple until you actually need to apply it to a real circuit on 
   *What this section covers:* Resistors · Capacitors · Inductors · Transformers
 
 - **[Magnetics in Practice]({{< relref "magnetics-in-practice" >}})** — Inductors and transformers beyond the ideal: saturation, losses, parasitics, noise, inrush, and what to look for on the bench.
-  *What this section covers:* Saturation · Winding & Core Losses · Leakage & Ringing · Audible Noise · Inrush Current · Selection Guide · Bench Measurement
+  *What this section covers:* Saturation · Winding & Core Losses · Leakage & Ringing · Audible Noise · Inrush Current · Selection Guide
 
 - **[Electromechanical Devices]({{< relref "electromechanical-devices" >}})** — Components where electrical signals create physical motion or sound: relays, reed switches, contactors, speakers, and buzzers.
   *What this section covers:* Relays · Reed Switches · Contactors · Speakers & Buzzers

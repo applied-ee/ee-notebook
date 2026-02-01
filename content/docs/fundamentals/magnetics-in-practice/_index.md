@@ -18,4 +18,5 @@ Real magnetic components are lossy, nonlinear, and frequency-dependent. Their be
 - **[Audible Noise: Whine, Hum & Buzz]({{< relref "audible-noise" >}})** — Magnetostriction, loose windings, and why power supplies and transformers make noise you can hear.
 - **[Inrush Current & Startup Stress]({{< relref "inrush-current" >}})** — Why magnetics create current spikes at power-on that blow fuses, trip breakers, and stress components.
 - **[Selecting Magnetics by Application]({{< relref "selection-guide" >}})** — What specs matter for a buck converter inductor vs. an audio transformer vs. an isolation barrier — and how to read a magnetics datasheet without drowning.
-- **[Bench Measurement & Diagnostic Clues]({{< relref "bench-measurement" >}})** — Scope waveforms, thermal signatures, and current-draw patterns that tell you what a magnetic component is actually doing.
+
+For diagnosing magnetics problems at the bench — scope waveforms, thermal signatures, LCR meter checks, and current-draw patterns — see **[Diagnosing Magnetics on the Bench]({{< relref "/docs/debugging/diagnosing-magnetics" >}})** in the Debugging section.

@@ -25,6 +25,8 @@ Entries capture debugging strategies, common failure patterns, repair procedures
 - **[Tools & Fixtures for Debugging]({{< relref "tools-and-fixtures" >}})** — Physical setup that makes debugging possible and safe
   *What this section covers:* Dummy Load (Car Audio)
 
+- **[Diagnosing Magnetics on the Bench]({{< relref "diagnosing-magnetics" >}})** — Scope waveforms, thermal signatures, LCR meter checks, and current-draw patterns for inductors and transformers
+
 - **[Rework & Repair Techniques]({{< relref "rework-and-repair" >}})** — Desoldering, replacement, trace repair, and cleanup
 
 - **[Verification After Repair]({{< relref "verification-after-repair" >}})** — Confirming the fix and catching regressions

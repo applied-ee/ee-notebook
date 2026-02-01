@@ -1,6 +1,6 @@
 ---
 title: "Interfacing Playbook: Modern ↔ Legacy"
-weight: 90
+weight: 80
 bookCollapseSection: true
 ---
 
@@ -8,7 +8,7 @@ bookCollapseSection: true
 
 This is the capstone for the Retro & Legacy section. Everything else in this section — [era constraints]({{< relref "../design-constraints-of-earlier-eras" >}}), [electrical assumptions]({{< relref "../electrical-assumptions" >}}), [legacy signaling]({{< relref "../legacy-signaling-and-interfaces" >}}), [aging behavior]({{< relref "../aging-drift-and-failure-modes" >}}) — leads here: actually connecting a modern microcontroller, SBC, or USB device to an older system without destroying either one.
 
-The [Interfacing Legacy Systems with Modern Electronics]({{< relref "../interfacing-with-modern-electronics" >}}) section covers the building-block components (level translators, optocouplers, protocol converters). This page is the systematic playbook: how to characterize an unknown interface, identify what can damage your modern hardware, select the right protection and conversion topology, and bring it up safely on the bench.
+This page is the systematic playbook: how to characterize an unknown interface, identify what can damage your modern hardware, select the right protection and conversion topology, and bring it up safely on the bench.
 
 ## Step 1: Domain Identification Checklist
 
@@ -117,6 +117,8 @@ Use when the domain identification checklist reveals safety risk, ground loops, 
 
 **Isolation transformers:** Best for AC signals (audio) and power transfer. Provide inherent common-mode rejection for the signal. Audio isolation transformers break ground loops without digitizing the signal. Best for: audio interfaces, Ethernet (already transformer-isolated by design), pulse/gate drive.
 
+**Isolated DC-DC converters:** When the isolated side needs its own power rail, a small isolated DC-DC module (Murata NME, Recom R1S) generates a secondary supply with galvanic isolation. Common in RS-485 interfaces, 4–20 mA loop adapters, and anywhere an interface circuit needs an isolated power domain. Without a truly separate supply, isolation is only on paper — if both sides of an optocoupler share the same non-isolated DC-DC, the ground paths reconnect through the shared supply.
+
 **When to use which:**
 
 | Criterion | Optocoupler | Digital Isolator | Transformer |
@@ -149,7 +151,7 @@ Physical-layer and framing differences between legacy and modern:
 | 4–20 mA | Current loop, not voltage | Analog (continuous) or HART (FSK modulated) | 250 ohm sense resistor → ADC |
 | Relay/contact | Dry contact or voltage output | On/off (no framing) | Optocoupler input or voltage divider + GPIO |
 | Analog audio | AC, ±1V to ±10V, 600 ohm or high-Z | Continuous analog | Op-amp buffer + ADC, or isolation transformer |
-| Parallel port | TTL levels, active-low strobes | Handshake-based | FTDI MPSSE or MCU bit-bang |
+| Parallel port | TTL levels, active-low strobes, directly memory-mapped I/O | Handshake-based (nStrobe/nAck) | FTDI FT232H in MPSSE mode or MCU bit-bang. Legacy software often assumes direct I/O port access (inb/outb), which USB adapters don't support — may require a shim driver or a dedicated PCIe parallel card |
 | MIDI | 5V current loop, opto-isolated by spec | 31.25 kbaud serial | UART at 31250 baud + optocoupler on input |
 
 ## Step 4: Grounding and Shielding Patterns
