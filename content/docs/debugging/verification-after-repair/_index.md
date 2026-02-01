@@ -91,9 +91,7 @@ The circuit passes functional tests under stress conditions (temperature, load, 
 
 ## DUT-Specific Verification Plans
 
-The general framework above applies to everything. The pages below are full verification checklists for specific device types — what to measure, in what order, and what the pass criteria are.
-
-- **[Car Audio Amplifier]({{< relref "car-audio-amp" >}})** — Full verification plan for high-power 12 V automotive amplifiers
+The general framework above applies to any device, but each repair should have a verification plan tailored to the specific device — what to measure, in what order, and what the pass criteria are. Develop and record this plan alongside the repair project itself, where the device-specific context lives.
 
 ## Cross-References
 
