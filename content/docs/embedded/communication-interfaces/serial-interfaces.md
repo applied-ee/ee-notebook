@@ -1,5 +1,5 @@
 ---
-title: "Serial Interfaces"
+title: "UART, SPI & I2C"
 weight: 10
 ---
 

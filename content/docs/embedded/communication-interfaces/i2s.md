@@ -1,6 +1,6 @@
 ---
 title: "I2S"
-weight: 15
+weight: 65
 ---
 
 # I2S

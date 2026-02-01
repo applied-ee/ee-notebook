@@ -1,11 +1,11 @@
 ---
-title: "Other Serial Interfaces"
+title: "1-Wire & SMBus"
 weight: 80
 ---
 
-# Other Serial Interfaces
+# 1-Wire & SMBus
 
-The [serial interfaces]({{< relref "serial-interfaces" >}}) page covers UART, SPI, I2C, and I2S — the buses you encounter on most embedded projects. But MCU work eventually leads to a couple of interfaces that sit outside that core set: a quirky single-wire protocol with a devoted following, and I2C's stricter cousin used in power management.
+Two niche serial interfaces that come up often enough to be worth knowing. 1-Wire is a Dallas/Maxim single-wire protocol with a devoted following in temperature sensing and device identification. SMBus is I2C's stricter cousin, used in power management and battery systems.
 
 ## 1-Wire
 
