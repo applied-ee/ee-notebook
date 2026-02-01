@@ -7,13 +7,13 @@ This is a personal engineer learning notebook — not a blog, tutorial site, or 
 ## Repository Structure
 
 - **Hugo static site** using the [hugo-book](https://github.com/alex-shpak/hugo-book) theme
-- Content lives in `content/docs/` organized into nine sections
+- Content lives in `content/docs/` organized into ten sections
 - Built with `make html` (runs `hugo --minify`)
 - Local dev server with `make server`
 
 ## Section Structure
 
-Content is organized into nine sections, each a subdirectory of `content/docs/`:
+Content is organized into ten sections, each a subdirectory of `content/docs/`:
 
 | Weight | Directory | Title |
 |--------|-----------|-------|
@@ -26,6 +26,7 @@ Content is organized into nine sections, each a subdirectory of `content/docs/`:
 | 7 | `design-development/` | Design & Development |
 | 8 | `measurement/` | Measurement & Test |
 | 9 | `debugging/` | Debugging, Failure & Repair |
+| 10 | `retro-legacy/` | Retro & Legacy Systems |
 
 ## Adding a New Entry
 
