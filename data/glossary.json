@@ -24,7 +24,7 @@
   },
   {
     "term": "A-weighting",
-    "definition": "Frequency-weighting curve approximating human hearing sensitivity, attenuating low and high frequencies while emphasizing 1–6 kHz.",
+    "definition": "Frequency-weighting curve approximating human hearing sensitivity at moderate listening levels, attenuating low and high frequencies while emphasizing 1–6 kHz.",
     "anchor": "a-weighting"
   },
   {
@@ -71,7 +71,7 @@
   },
   {
     "term": "Aging",
-    "definition": "Logarithmic capacitance loss over time in Class II and III ceramic capacitors.",
+    "definition": "Logarithmic capacitance loss over time in Class II and III ceramic capacitors due to dielectric relaxation.",
     "anchor": "aging"
   },
   {
@@ -197,7 +197,7 @@
   },
   {
     "term": "Balun",
-    "definition": "Transformer converting between balanced and unbalanced impedances for interfacing antennas to transmission lines.",
+    "definition": "Transformer or transmission-line device converting between balanced and unbalanced systems; may also perform impedance transformation.",
     "anchor": "balun"
   },
   {
