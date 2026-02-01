@@ -1,6 +1,6 @@
 ---
-title: "🏛️ Retro & Legacy Systems"
-weight: 10
+title: "👾 Retro & Legacy Systems"
+weight: 7
 bookCollapseSection: true
 ---
 

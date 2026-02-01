@@ -23,10 +23,10 @@ Content is organized into ten sections, each a subdirectory of `content/docs/`:
 | 4 | `embedded/` | Microcontrollers & Embedded Systems |
 | 5 | `audio-signal/` | Audio & Signal Processing |
 | 6 | `radio-rf/` | Radio & RF |
-| 7 | `design-development/` | Design & Development |
-| 8 | `measurement/` | Measurement & Test |
-| 9 | `debugging/` | Debugging, Failure & Repair |
-| 10 | `retro-legacy/` | Retro & Legacy Systems |
+| 7 | `retro-legacy/` | Retro & Legacy Systems |
+| 8 | `design-development/` | Design & Development |
+| 9 | `measurement/` | Measurement & Test |
+| 10 | `debugging/` | Debugging, Failure & Repair |
 
 ## Adding a New Entry
 
