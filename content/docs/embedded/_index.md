@@ -18,7 +18,7 @@ Entries here cover microcontroller architectures, peripherals, firmware patterns
 
 - **[MCU Architecture]({{< relref "mcu-architecture" >}})** — Core types, memory maps, clock trees, and power modes: what's inside the chip.
 - **[Peripherals & I/O]({{< relref "peripherals-and-io" >}})** — GPIO, timers, and analog peripherals: how the MCU interacts with the physical world.
-- **[Communication Interfaces]({{< relref "communication-interfaces" >}})** — UART, SPI, I²C, DMA, and higher-level protocols: talking to other devices.
+- **[Communication Interfaces]({{< relref "communication-interfaces" >}})** — Serial buses, USB, CAN, Bluetooth, WiFi, and DMA: talking to other devices.
 - **[Firmware Structure & Patterns]({{< relref "firmware-structure" >}})** — Startup sequences, interrupt handling, and state machines: making code predictable.
 - **[Real-Time Concepts]({{< relref "real-time-concepts" >}})** — Determinism, RTOS fundamentals, and concurrency: why timing is everything.
 - **[Toolchains & Debugging]({{< relref "toolchains-and-debugging" >}})** — Build systems, debug interfaces, and observability: seeing what the system is doing.
