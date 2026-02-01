@@ -160,45 +160,51 @@ digraph i2c {
   rankdir=TB
   bgcolor="transparent"
 
-  // key: edges behind nodes (so lines disappear under boxes)
   graph [
     outputorder="edgesfirst",
     splines=ortho,
     nodesep=0.45,
-    ranksep=0.60
+    ranksep=0.65
   ];
 
   node [fontname="Helvetica" fontsize=11];
   edge [fontname="Helvetica" fontsize=10 arrowsize=0.7, arrowhead=none];
 
-  // ---------- Pull-ups (CENTERED) ----------
-  // We pad left/right so the VDD/Rp pair sits centered over the bus width.
-  pullups [label=<
-    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0">
-      <TR><TD>
-        <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="12" CELLPADDING="4">
-          <TR>
-            <TD WIDTH="160"> </TD>
-            <TD><FONT COLOR="#cccc88">VDD</FONT></TD>
-            <TD><FONT COLOR="#cccc88">VDD</FONT></TD>
-            <TD WIDTH="160"> </TD>
-          </TR>
-          <TR>
-            <TD WIDTH="160"> </TD>
-            <TD PORT="rsda" BORDER="1" BGCOLOR="#3a3a2a" COLOR="#aaaa66">
-              <FONT COLOR="#cccc88">Rp 4.7k</FONT>
-            </TD>
-            <TD PORT="rscl" BORDER="1" BGCOLOR="#3a3a2a" COLOR="#aaaa66">
-              <FONT COLOR="#cccc88">Rp 4.7k</FONT>
-            </TD>
-            <TD WIDTH="160"> </TD>
-          </TR>
-        </TABLE>
-      </TD></TR>
-    </TABLE>
-  > shape=plain];
+  // ---------------- Pull-ups (as nodes so we can center them) ----------------
+  puL [shape=point label="" width=0.01 style=invis];
+  puR [shape=point label="" width=0.01 style=invis];
 
-  // ---------- Bus bar ----------
+  vdd_sda [label="VDD" shape=none fontcolor="#cccc88"];
+  vdd_scl [label="VDD" shape=none fontcolor="#cccc88"];
+
+  rp_sda [label="Rp 4.7k" shape=box style="filled"
+          fillcolor="#3a3a2a" fontcolor="#cccc88" color="#aaaa66"
+          fixedsize=true width=1.3 height=0.35];
+
+  rp_scl [label="Rp 4.7k" shape=box style="filled"
+          fillcolor="#3a3a2a" fontcolor="#cccc88" color="#aaaa66"
+          fixedsize=true width=1.3 height=0.35];
+
+  // Two-row pullup stack
+  { rank=same; puL; vdd_sda; vdd_scl; puR; }
+  { rank=same; puL2; rp_sda; rp_scl; puR2; }
+
+  puL2 [shape=point label="" width=0.01 style=invis];
+  puR2 [shape=point label="" width=0.01 style=invis];
+
+  // Centering + spacing
+  puL  -> vdd_sda [style=invis weight=50];
+  vdd_sda -> vdd_scl [style=invis weight=30];
+  vdd_scl -> puR [style=invis weight=50];
+
+  puL2 -> rp_sda [style=invis weight=50];
+  rp_sda -> rp_scl [style=invis weight=30];
+  rp_scl -> puR2 [style=invis weight=50];
+
+  vdd_sda -> rp_sda [color="#aaaa66"];
+  vdd_scl -> rp_scl [color="#aaaa66"];
+
+  // ---------------- Bus bar ----------------
   bus [label=<
     <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0">
       <TR><TD>
@@ -229,10 +235,11 @@ digraph i2c {
     </TABLE>
   > shape=plain];
 
-  pullups:rsda -> bus:sda_rp [color="#aaaa66" weight=10];
-  pullups:rscl -> bus:scl_rp [color="#aaaa66" weight=10];
+  // Pull-up drops: draw them, but DO NOT let them affect layout
+  rp_sda -> bus:sda_rp [color="#aaaa66" constraint=false weight=0];
+  rp_scl -> bus:scl_rp [color="#aaaa66" constraint=false weight=0];
 
-  // ---------- Devices (centered row) ----------
+  // ---------------- Devices ----------------
   mcu  [label="MCU\n(master)" shape=box style="rounded,filled"
         fillcolor="#2a2a3a" fontcolor="#e8e8e8" color="#6666aa"
         fixedsize=true width=1.25 height=0.75];
@@ -249,10 +256,13 @@ digraph i2c {
         fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66"
         fixedsize=true width=1.25 height=0.75];
 
-  { rank=same; mcu; eep; rtc; sens; }
-  mcu -> eep -> rtc -> sens [style=invis weight=50];
+  // Center the whole device block under the bus using invisible spacers
+  dL [shape=point label="" width=0.01 style=invis];
+  dR [shape=point label="" width=0.01 style=invis];
+  { rank=same; dL; mcu; eep; rtc; sens; dR; }
+  dL -> mcu -> eep -> rtc -> sens -> dR [style=invis weight=80];
 
-  // ---------- Drops ----------
+  // Drops
   bus:sda0 -> mcu  [color="#8888cc"];
   bus:scl0 -> mcu  [color="#88cc88"];
   bus:sda1 -> eep  [color="#8888cc"];
