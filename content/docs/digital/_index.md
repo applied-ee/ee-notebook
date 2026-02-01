@@ -17,8 +17,19 @@ Entries range from basic combinational logic to complex sequential systems, with
 ## Sections
 
 - **[Logic Foundations]({{< relref "logic-foundations" >}})** — Boolean logic, logic families, and combinational circuits: the rules of the digital abstraction.
+  *What this section covers:* Boolean Logic · Logic Families · Combinational Logic
+
 - **[Sequential Logic]({{< relref "sequential-logic" >}})** — Latches, flip-flops, registers, counters, and state machines: adding memory and time.
+  *What this section covers:* Latches & Flip-Flops · Registers & Counters · State Machines
+
 - **[Timing & Synchronization]({{< relref "timing-and-synchronization" >}})** — Clocks, timing constraints, and clock domain crossing: where digital designs succeed or fail.
+  *What this section covers:* Clocks · Timing Constraints · Clock Domain Crossing
+
 - **[Data Transfer & Buses]({{< relref "data-transfer-and-buses" >}})** — Parallel vs serial, common bus protocols, and signal integrity: moving information reliably.
+  *What this section covers:* Parallel vs Serial · Common Bus Protocols · Signal Integrity Basics
+
 - **[Programmable Logic]({{< relref "programmable-logic" >}})** — PLDs, CPLDs, FPGAs, and HDL concepts: scaling digital systems beyond fixed-function chips.
+  *What this section covers:* PLDs & CPLDs · FPGAs · HDL Concepts
+
 - **[When Digital Breaks Down]({{< relref "when-digital-breaks-down" >}})** — Metastability, power integrity, and high-speed effects: where the abstraction leaks.
+  *What this section covers:* Metastability · Power Integrity · High-Speed Effects

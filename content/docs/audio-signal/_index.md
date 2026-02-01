@@ -15,9 +15,22 @@ The focus is hardware-oriented DSP intuition: understanding what converters, fil
 ## Sections
 
 - **[Signals & Waveforms]({{< relref "signals-and-waveforms" >}})** — Time-domain and frequency-domain fundamentals: how signals are described, measured, and characterized.
+  *What this section covers:* Time-Domain Signals · Frequency-Domain View · Noise & Signal Quality
+
 - **[Analog Front Ends]({{< relref "analog-front-ends" >}})** — Preamps, analog filters, and signal conditioning: preparing real-world signals for conversion.
+  *What this section covers:* Microphone & Sensor Preamps · Analog Filtering · Level Shifting & Conditioning
+
 - **[Sampling & Conversion]({{< relref "sampling-and-conversion" >}})** — ADCs, DACs, and sampling theory: bridging the analog and digital domains.
+  *What this section covers:* Sampling Theory · Analog-to-Digital Converters · Digital-to-Analog Converters
+
 - **[DSP Fundamentals]({{< relref "dsp-fundamentals" >}})** — Discrete-time signals, digital filters, and transforms: processing signals in the digital domain.
+  *What this section covers:* Discrete-Time Signals · Digital Filters · Transforms
+
 - **[Modulation & Encoding]({{< relref "modulation-and-encoding" >}})** — AM, FM, PWM, PDM, and digital modulation: moving information by reshaping signals.
+  *What this section covers:* Amplitude & Frequency Modulation · Pulse-Based Encoding · Digital Modulation & Data Encoding
+
 - **[Audio Systems & Signal Chains]({{< relref "audio-systems-and-signal-chains" >}})** — Gain staging, latency, and multistage design: building complete systems from individual blocks.
+  *What this section covers:* Gain Staging · Latency & Throughput · Multistage Signal Chains
+
 - **[Practical Signal Reality]({{< relref "practical-signal-reality" >}})** — Quantization, jitter, and measurement: where theory meets the bench.
+  *What this section covers:* Quantization Effects · Clocking & Jitter · Measurement & Perception
