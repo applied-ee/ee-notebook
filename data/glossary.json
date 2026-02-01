@@ -173,6 +173,11 @@
     "anchor": "avalanche-breakdown"
   },
   {
+    "term": "AVR",
+    "definition": "Atmel/Microchip 8-bit RISC microcontroller core with true Harvard architecture and 32 registers. Used in the Arduino Uno (ATmega328P) and ATtiny series.",
+    "anchor": "avr"
+  },
+  {
     "term": "Axial ratio",
     "definition": "For circularly polarized antennas, the ratio of major to minor axis of the polarization ellipse.",
     "anchor": "axial-ratio"
@@ -181,6 +186,14 @@
     "term": "Backed-out terminal",
     "definition": "A wire terminal that has slipped partially out of its connector housing, appearing connected but making intermittent or no electrical contact.",
     "anchor": "backed-out-terminal"
+  },
+  {
+    "term": "Balanced line",
+    "definition": "A transmission path where both signal conductors have equal impedance to ground, enabling common-mode rejection through symmetry.",
+    "anchor": "balanced-line",
+    "aliases": [
+      "Balanced signaling"
+    ]
   },
   {
     "term": "Balun",
@@ -271,6 +284,14 @@
     "anchor": "bga",
     "aliases": [
       "Ball Grid Array"
+    ]
+  },
+  {
+    "term": "big.LITTLE",
+    "definition": "ARM heterogeneous multi-core architecture pairing high-performance cores (e.g., Cortex-A76) with power-efficient cores (e.g., Cortex-A55) on one SoC.",
+    "anchor": "big-little",
+    "aliases": [
+      "DynamIQ"
     ]
   },
   {
@@ -430,6 +451,14 @@
     "term": "C0G / NP0",
     "definition": "Class I ceramic dielectric.",
     "anchor": "c0g"
+  },
+  {
+    "term": "Cache coherency",
+    "definition": "The problem of maintaining consistent data between CPU caches and DMA controllers or other bus masters that access DRAM directly, bypassing the cache.",
+    "anchor": "cache-coherency",
+    "aliases": [
+      "Cache coherence"
+    ]
   },
   {
     "term": "CAN bus",
@@ -631,6 +660,11 @@
     "anchor": "common-source"
   },
   {
+    "term": "Common-mode choke",
+    "definition": "An inductor with two windings on a shared core that presents high impedance to common-mode current while passing differential-mode signal through unimpeded.",
+    "anchor": "common-mode-choke"
+  },
+  {
     "term": "Common-mode noise",
     "definition": "Noise voltage that appears equally on both signal conductors relative to ground, often from ground loops or radiated pickup.",
     "anchor": "common-mode-noise"
@@ -638,7 +672,18 @@
   {
     "term": "Common-mode rejection",
     "definition": "An instrument's or amplifier's ability to ignore voltage that appears equally on both inputs.",
-    "anchor": "common-mode-rejection"
+    "anchor": "common-mode-rejection",
+    "aliases": [
+      "CMRR"
+    ]
+  },
+  {
+    "term": "Common-mode voltage",
+    "definition": "The average voltage on two conductors relative to ground: V_cm = (V(A) + V(B)) / 2. Noise that shifts both conductors equally is common-mode.",
+    "anchor": "common-mode-voltage",
+    "aliases": [
+      "V_cm"
+    ]
   },
   {
     "term": "Comparator",
@@ -711,6 +756,11 @@
     "term": "Corner frequency (noise)",
     "definition": "The frequency below which flicker noise exceeds white noise in a device's noise spectrum.",
     "anchor": "corner-frequency-noise"
+  },
+  {
+    "term": "Cortex-A",
+    "definition": "ARM application processor core family designed for throughput and OS support, featuring out-of-order execution, deep pipelines, caches, and an MMU.",
+    "anchor": "cortex-a"
   },
   {
     "term": "Cortex-M",
@@ -1008,6 +1058,15 @@
     ]
   },
   {
+    "term": "Device tree",
+    "definition": "A data structure (.dts/.dtb) that describes hardware to the Linux kernel — peripheral addresses, interrupt wiring, pin configuration — without requiring kernel recompilation.",
+    "anchor": "device-tree",
+    "aliases": [
+      "DTB",
+      "DTS"
+    ]
+  },
+  {
     "term": "DI box",
     "definition": "Direct Injection box — an audio device using a transformer or active circuit to convert unbalanced high-impedance signals to balanced low-impedance, breaking ground loops.",
     "anchor": "di-box",
@@ -1045,6 +1104,11 @@
     "term": "Differential probe",
     "definition": "An oscilloscope probe that measures the voltage difference between two points, neither of which needs to be ground.",
     "anchor": "differential-probe"
+  },
+  {
+    "term": "Differential signaling",
+    "definition": "Signal transmission using two conductors carrying equal and opposite voltages; the receiver measures only the difference, rejecting noise that appears equally on both.",
+    "anchor": "differential-signaling"
   },
   {
     "term": "Differential-mode noise",
@@ -1280,6 +1344,14 @@
     "term": "Emitter follower",
     "definition": "A BJT buffer with unity voltage gain and low output impedance, also called common collector.",
     "anchor": "emitter-follower"
+  },
+  {
+    "term": "eMMC",
+    "definition": "Embedded MultiMediaCard — soldered-on flash storage with an integrated controller, common on SBCs and embedded Linux boards as a more reliable alternative to SD cards.",
+    "anchor": "emmc",
+    "aliases": [
+      "Embedded MultiMediaCard"
+    ]
   },
   {
     "term": "Encoder",
@@ -1522,6 +1594,11 @@
       "floating node",
       "floating input"
     ]
+  },
+  {
+    "term": "Floating ground",
+    "definition": "A ground reference with no galvanic connection to earth, as in battery-powered or transformer-isolated circuits. Voltages are defined only relative to the local reference.",
+    "anchor": "floating-ground"
   },
   {
     "term": "Flux residue",
@@ -1981,6 +2058,14 @@
     "anchor": "ir-thermometer"
   },
   {
+    "term": "ISA",
+    "definition": "Instruction Set Architecture — the set of instructions a processor can execute, defining registers, addressing modes, and data types.",
+    "anchor": "isa",
+    "aliases": [
+      "Instruction Set Architecture"
+    ]
+  },
+  {
     "term": "ISM band",
     "definition": "Unlicensed frequency bands for Industrial, Scientific, and Medical use; includes 915 MHz and 2.4 GHz.",
     "anchor": "ism-band"
@@ -2242,6 +2327,11 @@
     "anchor": "loop"
   },
   {
+    "term": "Loop area",
+    "definition": "The area enclosed between a signal's go and return current paths. Larger loop area increases EMI radiation and noise pickup proportionally to area and frequency squared.",
+    "anchor": "loop-area"
+  },
+  {
     "term": "Loop compensation",
     "definition": "Design of the feedback network in a switching regulator to ensure stability across all operating conditions.",
     "anchor": "loop-compensation"
@@ -2425,6 +2515,19 @@
     "term": "MMIC",
     "definition": "Monolithic Microwave Integrated Circuit — RF IC containing amplifiers, mixers, and passives on a semiconductor substrate.",
     "anchor": "mmic"
+  },
+  {
+    "term": "MMU",
+    "definition": "Memory Management Unit — hardware between the CPU and memory bus that translates virtual addresses to physical addresses, enabling process isolation and virtual memory.",
+    "anchor": "mmu",
+    "aliases": [
+      "Memory Management Unit"
+    ]
+  },
+  {
+    "term": "Modified Harvard architecture",
+    "definition": "Processor design with separate internal instruction and data buses for pipeline efficiency, but a unified address space visible to software. Used by Cortex-M and most modern MCUs.",
+    "anchor": "modified-harvard-architecture"
   },
   {
     "term": "Modulation",
@@ -2785,6 +2888,11 @@
     "anchor": "oversampling"
   },
   {
+    "term": "Page fault",
+    "definition": "Exception raised when the CPU accesses a virtual address with no valid mapping in the page table. The kernel handles it by allocating a page, loading data, or killing the process.",
+    "anchor": "page-fault"
+  },
+  {
     "term": "Parallel",
     "definition": "Components connected across the same two nodes so that they share the same voltage.",
     "anchor": "parallel"
@@ -2939,6 +3047,14 @@
     ]
   },
   {
+    "term": "PMIC",
+    "definition": "Power Management IC — manages multiple voltage rails, power sequencing, and power-good signaling for complex SoCs requiring carefully ordered supply bringup.",
+    "anchor": "pmic",
+    "aliases": [
+      "Power Management IC"
+    ]
+  },
+  {
     "term": "Polarity",
     "definition": "The directional convention for voltage measurement.",
     "anchor": "polarity"
@@ -3048,6 +3164,14 @@
     ]
   },
   {
+    "term": "Power-on reset",
+    "definition": "Hardware reset generated when supply voltage rises through its threshold at initial power-up. SRAM contents are undefined after POR.",
+    "anchor": "power-on-reset",
+    "aliases": [
+      "POR"
+    ]
+  },
+  {
     "term": "ppm",
     "definition": "A measure of ratio.",
     "anchor": "ppm",
@@ -3075,6 +3199,11 @@
     "aliases": [
       "Repeatability"
     ]
+  },
+  {
+    "term": "PREEMPT_RT",
+    "definition": "Linux kernel patch set that converts most spinlocks to sleeping mutexes and makes interrupt handlers schedulable, reducing worst-case latency from milliseconds to tens of microseconds.",
+    "anchor": "preempt-rt"
   },
   {
     "term": "Prescaler",
@@ -3128,6 +3257,14 @@
     "term": "Protocol decode",
     "definition": "Oscilloscope or logic analyzer feature that interprets captured waveforms as bus transactions (I2C addresses, SPI bytes, UART frames, etc.).",
     "anchor": "protocol-decode"
+  },
+  {
+    "term": "PRU",
+    "definition": "Programmable Real-time Unit — deterministic 200 MHz co-processor on TI Sitara SoCs (BeagleBone) providing single-cycle, guaranteed-timing I/O alongside Linux.",
+    "anchor": "pru",
+    "aliases": [
+      "Programmable Real-time Unit"
+    ]
   },
   {
     "term": "PTC",
@@ -3206,6 +3343,11 @@
     "term": "Race condition",
     "definition": "Concurrency bug where outcome depends on timing of access to shared data across execution contexts.",
     "anchor": "race-condition"
+  },
+  {
+    "term": "Race to sleep",
+    "definition": "Low-power design strategy: run the MCU at full speed to complete work quickly, then enter deep sleep. More energy-efficient than running continuously at a slow clock.",
+    "anchor": "race-to-sleep"
   },
   {
     "term": "Radiated emission",
@@ -3363,6 +3505,11 @@
     "anchor": "return-loss"
   },
   {
+    "term": "Return path",
+    "definition": "The conductor carrying current back to the source to complete the signal loop. Not synonymous with ground — it is a physical path with impedance that affects signal quality.",
+    "anchor": "return-path"
+  },
+  {
     "term": "Reverse polarity protection",
     "definition": "Using a series or parallel diode to block current if the supply is connected backwards.",
     "anchor": "reverse-polarity-protection"
@@ -3484,6 +3631,19 @@
     "term": "SAW filter",
     "definition": "Surface Acoustic Wave filter using acoustic waves on a piezoelectric substrate; compact, used up to 3 GHz.",
     "anchor": "saw-filter"
+  },
+  {
+    "term": "SBC",
+    "definition": "Single-Board Computer — a complete Linux-capable system on one PCB: SoC, DRAM, storage interface, power regulation, and I/O connectors.",
+    "anchor": "sbc",
+    "aliases": [
+      "Single-Board Computer"
+    ]
+  },
+  {
+    "term": "Scatter-gather DMA",
+    "definition": "DMA transfer mode that reads from or writes to non-contiguous physical memory pages described by a list of address/length pairs, solving the virtual memory fragmentation problem.",
+    "anchor": "scatter-gather-dma"
   },
   {
     "term": "Schottky diode",
@@ -3675,6 +3835,11 @@
     "anchor": "sinad"
   },
   {
+    "term": "Single-ended signaling",
+    "definition": "Signal transmission where one conductor carries the signal voltage referenced to a shared ground. Simple and cheap, but any noise on the ground adds directly to the signal.",
+    "anchor": "single-ended-signaling"
+  },
+  {
     "term": "Skin effect",
     "definition": "High-frequency phenomenon where current flows only in a thin surface layer of a conductor.",
     "anchor": "skin-effect"
@@ -3723,6 +3888,14 @@
     "anchor": "soa",
     "aliases": [
       "Safe Operating Area"
+    ]
+  },
+  {
+    "term": "SoC",
+    "definition": "System on Chip — a single die integrating CPU core(s), memory controller, GPU, and various peripheral controllers. The CPU is one block among many.",
+    "anchor": "soc",
+    "aliases": [
+      "System on Chip"
     ]
   },
   {
@@ -3858,6 +4031,11 @@
     "anchor": "stiff-source"
   },
   {
+    "term": "Stitching via",
+    "definition": "A ground via placed near a signal via on a multilayer PCB to provide a low-impedance return current path when a signal transitions between layers.",
+    "anchor": "stitching-via"
+  },
+  {
     "term": "Storage time",
     "definition": "The delay caused by excess base charge that must be removed before a saturated BJT can turn off.",
     "anchor": "storage-time"
@@ -3952,6 +4130,11 @@
     "term": "T flip-flop",
     "definition": "A flip-flop that toggles its output when T input is 1.",
     "anchor": "t-flip-flop"
+  },
+  {
+    "term": "Tail-chaining",
+    "definition": "NVIC optimization on Cortex-M where consecutive pending interrupts skip the context unstacking/restacking, reducing back-to-back interrupt overhead.",
+    "anchor": "tail-chaining"
   },
   {
     "term": "Tank circuit",
@@ -4121,6 +4304,14 @@
     "anchor": "tip-and-barrel"
   },
   {
+    "term": "TLB",
+    "definition": "Translation Lookaside Buffer — a small, fast cache of recent virtual-to-physical address translations, avoiding the cost of a full page table walk on most memory accesses.",
+    "anchor": "tlb",
+    "aliases": [
+      "Translation Lookaside Buffer"
+    ]
+  },
+  {
     "term": "Tolerance",
     "definition": "The allowable deviation of a component's actual value from its nominal value, expressed as a percentage.",
     "anchor": "tolerance"
@@ -4223,6 +4414,15 @@
     ]
   },
   {
+    "term": "Twisted pair",
+    "definition": "Two insulated conductors twisted together at a controlled rate so that external noise couples equally to both, enabling common-mode rejection without shielding.",
+    "anchor": "twisted-pair",
+    "aliases": [
+      "UTP",
+      "STP"
+    ]
+  },
+  {
     "term": "Two-flip-flop synchronizer",
     "definition": "Two flip-flops in series for safely synchronizing signals between clock domains.",
     "anchor": "two-flip-flop-synchronizer"
@@ -4231,6 +4431,11 @@
     "term": "Type K thermocouple",
     "definition": "A chromel-alumel thermocouple covering -200 to +1260 degrees C, the most common general-purpose thermocouple type.",
     "anchor": "type-k-thermocouple"
+  },
+  {
+    "term": "U-Boot",
+    "definition": "The dominant open-source bootloader for embedded Linux. Initializes DRAM, loads kernel and device tree from storage, and provides a serial console for debugging.",
+    "anchor": "u-boot"
   },
   {
     "term": "UART",
@@ -4246,6 +4451,14 @@
     "anchor": "uart-serial",
     "aliases": [
       "Universal Asynchronous Receiver/Transmitter"
+    ]
+  },
+  {
+    "term": "Unbalanced line",
+    "definition": "A transmission path where one conductor is the signal and the other is a shared ground reference; vulnerable to ground noise.",
+    "anchor": "unbalanced-line",
+    "aliases": [
+      "Unbalanced signaling"
     ]
   },
   {
@@ -4331,6 +4544,11 @@
     "anchor": "virtual-ground"
   },
   {
+    "term": "Virtual memory",
+    "definition": "Memory management scheme where each process sees its own address space, with the MMU translating virtual addresses to physical pages. Enables process isolation and memory protection.",
+    "anchor": "virtual-memory"
+  },
+  {
     "term": "VNA",
     "definition": "Vector Network Analyzer — instrument measuring magnitude and phase of S-parameters for impedance and filter characterization.",
     "anchor": "vna",
@@ -4396,6 +4614,11 @@
     "term": "Voltage reference",
     "definition": "A circuit producing a precise, stable voltage used as a comparison standard in regulators, ADCs, and measurement.",
     "anchor": "voltage-reference"
+  },
+  {
+    "term": "Von Neumann architecture",
+    "definition": "Processor architecture using a single bus for both instructions and data. Simple but limited by bus contention — the CPU cannot fetch an instruction and access data simultaneously.",
+    "anchor": "von-neumann-architecture"
   },
   {
     "term": "VSWR",
