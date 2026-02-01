@@ -21,65 +21,63 @@ A microcontroller is a complete system on a single chip: CPU core, flash, SRAM, 
 
 This directness is the MCU's greatest strength. Interrupt latency is deterministic and measured in clock cycles (12-15 cycles on Cortex-M). Context switching in an RTOS is microseconds. You can toggle a GPIO pin in response to an interrupt and know exactly how many nanoseconds the response will take. See [Determinism & Timing]({{< relref "/docs/embedded/real-time-concepts/determinism-and-timing" >}}) for why this matters.
 
-MCUs also bring simplicity. A bare-metal firmware image is a single binary that starts executing from the reset vector. There is no bootloader chain, no kernel, no driver model, no filesystem (unless you add one). The entire system state is visible through a debugger connected via SWD or JTAG. When something goes wrong, you can inspect every register and memory location.
+MCUs also bring simplicity. A bare-metal firmware image is a single binary that starts executing from the reset vector. There is no bootloader chain, no kernel, no driver model, no filesystem (unless you add one). The entire system state is visible through a debugger connected via SWD or JTAG.
 
 The tradeoff is capability. MCUs typically have kilobytes to low megabytes of RAM, limited or no networking stack, no process isolation, and no standard way to run complex software like databases, web servers, or machine learning frameworks.
 
 ## What an MPU Gives You
 
-An MPU (microprocessor) is a CPU core with an MMU but without the integrated peripherals and memory of an MCU. In practice, MPUs almost always come as Systems-on-Chip (SoCs) that include the CPU core(s), DDR memory controller, GPU, and a collection of peripherals — but external DRAM, storage (eMMC, NAND, SD), and a power management IC (PMIC) are required on the board. The system is inherently more complex than an MCU.
+An MPU (microprocessor) is a CPU core with an MMU but without the integrated peripherals and memory of an MCU. In practice, MPUs almost always come as Systems-on-Chip (SoCs) that include the CPU core(s), DDR memory controller, GPU, and a collection of peripherals — but external DRAM, storage (eMMC, NAND, SD), and a power management IC (PMIC) are required on the board.
 
 What you get for that complexity:
 
-- **Virtual memory and process isolation** — Each process gets its own address space. A bug in one process cannot corrupt another. The kernel enforces memory protection.
-- **A full operating system** — Linux provides a networking stack (TCP/IP, WiFi, Bluetooth), filesystems, USB host support, a device driver model, and package management.
-- **Rich software ecosystem** — Python, Node.js, databases, OpenCV, TensorFlow Lite, and thousands of existing libraries run without modification.
-- **Multi-core processing** — Most application processors have 2-4 cores, enabling true parallelism for compute-heavy tasks.
+- **Virtual memory and process isolation** — Each process gets its own address space. A bug in one process cannot corrupt another.
+- **A full operating system** — Linux provides a networking stack, filesystems, USB host support, a device driver model, and package management.
+- **Rich software ecosystem** — Python, Node.js, databases, OpenCV, TensorFlow Lite, and thousands of libraries run without modification.
+- **Multi-core processing** — Most application processors have 2-4 cores, enabling true parallelism.
 
-The cost is indirection. Your application code talks to the kernel, the kernel talks to the hardware. GPIO access from user space goes through `libgpiod` or `sysfs`, not register writes. Interrupt response is measured in microseconds to milliseconds, not clock cycles. Boot time is seconds to tens of seconds, not the instant-on of an MCU.
+The cost is indirection. Your application code talks to the kernel, the kernel talks to the hardware. Interrupt response is measured in microseconds to milliseconds, not clock cycles. Boot time is seconds to tens of seconds, not the instant-on of an MCU.
 
 ## The Gray Zone
 
 The boundary between MCU and MPU is not always clean. Several devices deliberately blur the line:
 
-**High-end MCUs approaching MPU territory.** The Cortex-M7 (as found in STM32H7 or i.MX RT1060) runs at 400-600 MHz, has megabytes of RAM (including tightly-coupled memory and external SDRAM via a memory controller), and can run sophisticated firmware. Some of these parts support external memory and even LCD displays. They remain MCUs — no MMU, no Linux — but their raw capability overlaps with low-end MPUs.
+**High-end MCUs approaching MPU territory.** The Cortex-M7 (STM32H7, i.MX RT1060) runs at 400-600 MHz with megabytes of RAM. They remain MCUs — no MMU, no Linux — but their raw capability overlaps with low-end MPUs.
 
-**Low-end MPUs running an RTOS.** A Cortex-A5 or A7 has an MMU and can run Linux, but it can also run FreeRTOS or Zephyr if you need the hardware capability without the OS overhead. This is unusual but not unheard of, particularly in cost-sensitive industrial applications.
+**Low-end MPUs running an RTOS.** A Cortex-A5 or A7 can run FreeRTOS or Zephyr instead of Linux, trading OS capability for reduced overhead.
 
-**Hybrid devices.** The STM32MP1 from ST includes both a Cortex-A7 (running Linux) and a Cortex-M4 (running bare-metal or RTOS firmware) on the same die. NXP's i.MX 8M family pairs Cortex-A53 cores with a Cortex-M4 or M7. These hybrids let you run Linux for networking and UI while offloading hard real-time tasks to the MCU core. This architecture is compelling because it sidesteps the "MCU or MPU" choice entirely — you get both. The complexity cost is real, though: you need two toolchains, two debug setups, and an inter-processor communication mechanism.
+**Hybrid devices.** The STM32MP1 includes both a Cortex-A7 (Linux) and a Cortex-M4 (bare-metal or RTOS) on the same die. NXP's i.MX 8M pairs A53 cores with M4/M7. These sidestep the choice entirely — you get both, at the cost of two toolchains, two debug setups, and an IPC mechanism.
 
-**The i.MX RT crossover.** NXP's i.MX RT series (RT1010, RT1050, RT1060, RT1170) uses Cortex-M7 cores but adds features typically found in MPU-class devices: external SDRAM support, LCD controllers, camera interfaces. They run at 500+ MHz with no MMU — high-performance MCU work without Linux. This family is worth knowing about because it often appears in designs where an MPU was considered but the software requirements did not justify Linux.
+**The i.MX RT crossover.** NXP's i.MX RT series uses Cortex-M7 cores with MPU-class features: external SDRAM, LCD controllers, camera interfaces. They run at 500+ MHz with no MMU — high-performance MCU work without Linux.
 
 ## When to Choose Which
 
-Rather than a comparison table, it is more useful to think about what drives the decision:
-
 **Choose an MCU when:**
 - Hard real-time deadlines matter (motor control, safety systems, tight protocol timing)
-- The system does minimal or no networking, or networking is handled by a dedicated module (e.g., ESP32 for WiFi)
+- The system does minimal networking, or networking is handled by a dedicated module
 - Power consumption must be microamps-to-milliamps in sleep
 - Cost pressure is extreme (sub-dollar BOM for the controller)
-- The firmware is well-defined and unlikely to need field updates of a complex software stack
-- Fast, deterministic boot is required (milliseconds, not seconds)
+- The firmware is well-defined and unlikely to need a complex software stack
+- Fast, deterministic boot is required
 
 **Choose an MPU when:**
 - The system needs a full networking stack (TCP/IP, HTTP, MQTT, SSH)
 - A camera, display, or GPU is involved
 - The software stack is complex: databases, ML inference, multiple concurrent services
-- You need process isolation for reliability or security (one crashed service should not take down the system)
-- Rapid prototyping with existing Linux packages matters more than per-unit cost optimization
-- Storage and logging requirements exceed what MCU flash can provide
+- Process isolation matters for reliability or security
+- Rapid prototyping with existing Linux packages matters more than per-unit cost
+- Storage and logging requirements exceed MCU flash capacity
 
 **Consider a hybrid when:**
-- Real-time control and complex software coexist in the same product (e.g., an industrial controller with a web interface)
+- Real-time control and complex software coexist (e.g., an industrial controller with a web interface)
 - The MCU handles motor control or sensor acquisition while the MPU runs the network stack and UI
 
-The decision is not always obvious. Designs sometimes start on a Raspberry Pi for convenience, then move to a custom MPU board for production, only to discover that the real-time requirements should have been on an MCU all along. Understanding the architectural tradeoffs early saves expensive redesigns later.
+The decision is not always obvious. Designs sometimes start on a Raspberry Pi for convenience, then discover the real-time requirements should have been on an MCU all along. Understanding the architectural tradeoffs early saves expensive redesigns.
 
 ## Gotchas
 
-- **"MPU" means two things in embedded** — In the Cortex-M world, MPU is the Memory Protection Unit (a peripheral on the chip). In the broader embedded world, MPU means microprocessor. Context usually makes it clear, but datasheets and forum posts can be confusing
-- **Clock speed is not the dividing line** — A 600 MHz Cortex-M7 is still an MCU. A 200 MHz Cortex-A5 is still an MPU. The architecture (MMU, privilege levels, cache hierarchy) matters more than the clock frequency
-- **"Can it run Linux?" is a useful litmus test** — If a part can run mainline Linux, it is an MPU (or at least has an MMU). If it cannot, it is an MCU. There are edge cases (MMU-less Linux exists, via uClinux), but they are rare and come with severe limitations
-- **MPU development requires more infrastructure** — An MCU project needs a cross-compiler and a debug probe. An MPU project needs a cross-compiler, a bootloader, a kernel (possibly custom-configured), a root filesystem, a device tree, and often a build system like Yocto or Buildroot. The toolchain overhead is substantial
-- **Hybrid chips are not twice as easy** — Running a Cortex-A + Cortex-M hybrid like the STM32MP1 means maintaining two firmware images, debugging two cores (with different tools), and designing an IPC mechanism. The hardware gives you both worlds, but the engineering effort is real
+- **"MPU" means two things in embedded** — In the Cortex-M world, MPU is the Memory Protection Unit. In the broader embedded world, MPU means microprocessor. Context usually makes it clear, but datasheets and forum posts can be confusing
+- **Clock speed is not the dividing line** — A 600 MHz Cortex-M7 is still an MCU. A 200 MHz Cortex-A5 is still an MPU. The architecture (MMU, privilege levels, cache hierarchy) matters more than clock frequency
+- **"Can it run Linux?" is a useful litmus test** — If a part can run mainline Linux, it is an MPU. If it cannot, it is an MCU. Edge cases exist (uClinux) but are rare
+- **MPU development requires more infrastructure** — An MCU project needs a cross-compiler and a debug probe. An MPU project needs a bootloader, kernel, root filesystem, device tree, and often Yocto or Buildroot
+- **Hybrid chips are not twice as easy** — Running a Cortex-A + Cortex-M hybrid means maintaining two firmware images, debugging two cores with different tools, and designing an IPC mechanism
