@@ -5,7 +5,7 @@ type: docs
 
 # EE Notebook
 
-A working reference for electronics and electrical engineering — concepts, procedures, gotchas, and patterns organized for practical use. The goal is a single resource that covers the full landscape from fundamentals through design and manufacturing, organized so that any topic can scale from a concise overview into deeper treatment as the subject demands.
+A working reference for electronics and electrical engineering — concepts, procedures, gotchas, and patterns organized for practical use. The goal is a single resource that covers the full landscape from fundamentals through design and repair, organized so that any topic can scale from a concise overview into the depth that professional engineering demands. The emphasis is on selecting the right components and patterns, understanding why circuits behave the way they do, and building the judgment to design and fix real hardware.
 
 ## How It's Organized
 
@@ -19,13 +19,13 @@ The sections follow a rough layering. Nature's constraints come first. Human-eng
 
 - **[Analog Electronics]({{< relref "/docs/analog" >}})** — Transistors, op-amps, amplifiers, filters, regulators. Continuous-signal design where everything is a tradeoff between gain, bandwidth, noise, and stability.
 - **[Digital Electronics]({{< relref "/docs/digital" >}})** — Logic gates, flip-flops, timing, buses, state machines. Discrete abstraction layered over analog reality — until edges get fast enough that the analog reality shows through.
-- **[MCUs & Embedded]({{< relref "/docs/embedded" >}})** — MCU architecture, peripherals, firmware, toolchains. Where hardware meets software and timing constraints define what's possible.
+- **[Embedded Systems]({{< relref "/docs/embedded" >}})** — MCU and MPU architecture, single-board computers, peripherals, firmware, toolchains. Where hardware meets software and timing constraints define what's possible.
 - **[Audio & Signal Processing]({{< relref "/docs/audio-signal" >}})** — Filters, FFT, DACs, ADCs, sampling theory. The information layer — capturing, transforming, and reproducing signals.
 - **[Radio & RF]({{< relref "/docs/radio-rf" >}})** — Antennas, impedance matching, transmission lines, propagation. Where wavelength matters and low-frequency intuition breaks down.
 
 **The design process layer** — turning ideas into working hardware:
 
-- **[Design & Development]({{< relref "/docs/design-development" >}})** — From requirements through schematic, layout, prototyping, validation, and manufacturing. The workflow and discipline of bringing a design from concept to reality.
+- **[Design & Development]({{< relref "/docs/design-development" >}})** — From requirements through schematic, layout, prototyping, and validation. The workflow and discipline of turning a concept into working hardware.
 
 **The practice layer** — verifying and fixing the things you build:
 
