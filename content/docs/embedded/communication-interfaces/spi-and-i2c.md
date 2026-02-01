@@ -11,84 +11,18 @@ The two synchronous serial buses that show up on nearly every embedded project. 
 
 Synchronous, full-duplex, fast. The master generates the clock, so there is no baud rate matching problem — the slave just follows the clock edges.
 
-{{< graphviz >}}
-digraph spi {
-  rankdir=LR
-  bgcolor="transparent"
-  node [fontname="Helvetica" fontsize=11]
-  edge [fontname="Helvetica" fontsize=10]
-  splines=ortho
-  nodesep=0.4
-  ranksep=1.2
+```
+  MCU          MOSI ──┬────────┬────────┐
+  (Master)     MISO ──┤────────┤────────┤  (shared)
+               SCK  ──┤────────┤────────┤
+                      │        │        │
+               CS0  ──┘        │        │
+               CS1  ───────────┘        │  (one per device)
+               CS2  ────────────────────┘
+                    Flash     ADC    Display
+```
 
-  mcu [shape=plain label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="2" CELLPADDING="4" BGCOLOR="#2a2a3a" COLOR="#6666aa">
-      <TR><TD COLSPAN="1"><B><FONT COLOR="#cccccc">MCU (Master)</FONT></B></TD></TR>
-      <TR><TD PORT="mosi" BGCOLOR="#3e3e5a"><FONT COLOR="#8888cc"> MOSI </FONT></TD></TR>
-      <TR><TD PORT="miso" BGCOLOR="#3e3e5a"><FONT COLOR="#88cc88"> MISO </FONT></TD></TR>
-      <TR><TD PORT="sck"  BGCOLOR="#3e3e5a"><FONT COLOR="#cccc88"> SCK </FONT></TD></TR>
-      <TR><TD PORT="cs0"  BGCOLOR="#3e3e5a"><FONT COLOR="#cc8888"> CS0 (GPIO) </FONT></TD></TR>
-      <TR><TD PORT="cs1"  BGCOLOR="#3e3e5a"><FONT COLOR="#cc8888"> CS1 (GPIO) </FONT></TD></TR>
-      <TR><TD PORT="cs2"  BGCOLOR="#3e3e5a"><FONT COLOR="#cc8888"> CS2 (GPIO) </FONT></TD></TR>
-    </TABLE>
-  >]
-
-  flash [shape=plain label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="2" CELLPADDING="4" BGCOLOR="#2a3a2a" COLOR="#66aa66">
-      <TR><TD COLSPAN="1"><B><FONT COLOR="#cccccc">Flash</FONT></B></TD></TR>
-      <TR><TD PORT="di"  BGCOLOR="#3e5a3e"><FONT COLOR="#8888cc"> DI </FONT></TD></TR>
-      <TR><TD PORT="do"  BGCOLOR="#3e5a3e"><FONT COLOR="#88cc88"> DO </FONT></TD></TR>
-      <TR><TD PORT="clk" BGCOLOR="#3e5a3e"><FONT COLOR="#cccc88"> CLK </FONT></TD></TR>
-      <TR><TD PORT="cs"  BGCOLOR="#3e5a3e"><FONT COLOR="#cc8888"> C&#x305;S&#x305; </FONT></TD></TR>
-    </TABLE>
-  >]
-
-  adc [shape=plain label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="2" CELLPADDING="4" BGCOLOR="#2a3a2a" COLOR="#66aa66">
-      <TR><TD COLSPAN="1"><B><FONT COLOR="#cccccc">ADC</FONT></B></TD></TR>
-      <TR><TD PORT="di"  BGCOLOR="#3e5a3e"><FONT COLOR="#8888cc"> DI </FONT></TD></TR>
-      <TR><TD PORT="do"  BGCOLOR="#3e5a3e"><FONT COLOR="#88cc88"> DO </FONT></TD></TR>
-      <TR><TD PORT="clk" BGCOLOR="#3e5a3e"><FONT COLOR="#cccc88"> CLK </FONT></TD></TR>
-      <TR><TD PORT="cs"  BGCOLOR="#3e5a3e"><FONT COLOR="#cc8888"> C&#x305;S&#x305; </FONT></TD></TR>
-    </TABLE>
-  >]
-
-  display [shape=plain label=<
-    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="2" CELLPADDING="4" BGCOLOR="#2a3a2a" COLOR="#66aa66">
-      <TR><TD COLSPAN="1"><B><FONT COLOR="#cccccc">Display</FONT></B></TD></TR>
-      <TR><TD PORT="di"  BGCOLOR="#3e5a3e"><FONT COLOR="#8888cc"> DI </FONT></TD></TR>
-      <TR><TD PORT="do"  BGCOLOR="#3e5a3e"><FONT COLOR="#88cc88"> DO </FONT></TD></TR>
-      <TR><TD PORT="clk" BGCOLOR="#3e5a3e"><FONT COLOR="#cccc88"> CLK </FONT></TD></TR>
-      <TR><TD PORT="cs"  BGCOLOR="#3e5a3e"><FONT COLOR="#cc8888"> C&#x305;S&#x305; </FONT></TD></TR>
-    </TABLE>
-  >]
-
-  // Stack peripherals vertically
-  flash -> adc -> display [style=invis]
-
-  // Shared bus: MOSI (blue)
-  mcu:mosi -> flash:di   [color="#8888cc"]
-  mcu:mosi -> adc:di     [color="#8888cc"]
-  mcu:mosi -> display:di [color="#8888cc"]
-
-  // Shared bus: MISO (green) — data flows slave→master
-  flash:do   -> mcu:miso [color="#88cc88"]
-  adc:do     -> mcu:miso [color="#88cc88"]
-  display:do -> mcu:miso [color="#88cc88"]
-
-  // Shared bus: SCK (yellow)
-  mcu:sck -> flash:clk   [color="#cccc88"]
-  mcu:sck -> adc:clk     [color="#cccc88"]
-  mcu:sck -> display:clk [color="#cccc88"]
-
-  // Individual CS lines (red) — one per device
-  mcu:cs0 -> flash:cs   [color="#cc8888"]
-  mcu:cs1 -> adc:cs     [color="#cc8888"]
-  mcu:cs2 -> display:cs [color="#cc8888"]
-}
-{{< /graphviz >}}
-
-MOSI (blue), MISO (green), and SCK (yellow) are shared — all slaves see the same clock and data lines. Chip select lines (red) are individual: only the device whose CS is pulled LOW responds. The master controls CS via GPIO, selecting one device at a time. Devices with CS HIGH ignore the bus and tri-state their DO output.
+MOSI, MISO, and SCK are shared — all slaves see the same clock and data lines. Chip select lines are individual: only the device whose CS is pulled LOW responds. The master controls CS via GPIO, selecting one device at a time. Devices with CS HIGH ignore the bus and tri-state their DO output.
 
 ### Configuration Essentials
 
@@ -108,106 +42,13 @@ There is no addressing, no ACK, and no flow control. The selected device respond
 
 Synchronous, half-duplex, two wires, addressing built in. I2C is the go-to bus for connecting a handful of slow peripherals — sensors, EEPROMs, RTCs, I/O expanders — with minimal pin count.
 
-{{< graphviz >}}
-digraph i2c_bus {
-  graph [
-    bgcolor="transparent",
-    rankdir=LR,
-    splines=ortho,
-    nodesep=0.25,
-    ranksep=0.65,
-    outputorder="edgesfirst"
-  ];
-
-  node [fontname="Helvetica" fontsize=11];
-  edge [fontname="Helvetica" fontsize=10 arrowsize=0.7, arrowhead=none];
-
-  // ---------- Devices ----------
-  mcu  [label="MCU\n(master)" shape=box style="rounded,filled"
-        fillcolor="#2a2a3a" fontcolor="#e8e8e8" color="#6666aa"
-        fixedsize=true width=1.35 height=0.85];
-
-  eep  [label="EEPROM\n0x50" shape=box style="rounded,filled"
-        fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66"
-        fixedsize=true width=1.25 height=0.75];
-
-  rtc  [label="RTC\n0x68" shape=box style="rounded,filled"
-        fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66"
-        fixedsize=true width=1.25 height=0.75];
-
-  sens [label="Sensor\n0x48" shape=box style="rounded,filled"
-        fillcolor="#2a3a2a" fontcolor="#e8e8e8" color="#66aa66"
-        fixedsize=true width=1.25 height=0.75];
-
-  // ---------- Rails: SDA + SCL made from point nodes ----------
-  sda0 [shape=point width=0.01 label=""];
-  sda1 [shape=point width=0.01 label=""];
-  sda2 [shape=point width=0.01 label=""];
-  sda3 [shape=point width=0.01 label=""];
-  sda4 [shape=point width=0.01 label=""];
-
-  scl0 [shape=point width=0.01 label=""];
-  scl1 [shape=point width=0.01 label=""];
-  scl2 [shape=point width=0.01 label=""];
-  scl3 [shape=point width=0.01 label=""];
-  scl4 [shape=point width=0.01 label=""];
-
-  // Keep SDA and SCL rails as two horizontal lanes
-  { rank=same; sda0; sda1; sda2; sda3; sda4; }
-  { rank=same; scl0; scl1; scl2; scl3; scl4; }
-
-  // Make each tap column share the same X position
-  { rank=same; sda0; scl0; mcu; }
-  { rank=same; sda1; scl1; eep; }
-  { rank=same; sda2; scl2; rtc; }
-  { rank=same; sda3; scl3; sens; }
-  { rank=same; sda4; scl4; }
-
-  // Draw rails (thick lines)
-  sda0 -> sda1 -> sda2 -> sda3 -> sda4 [color="#8888cc" penwidth=6];
-  scl0 -> scl1 -> scl2 -> scl3 -> scl4 [color="#88cc88" penwidth=6];
-
-  // Labels near the left of rails
-  sda_lbl [label="SDA" shape=none fontcolor="#e8e8e8"];
-  scl_lbl [label="SCL" shape=none fontcolor="#e8e8e8"];
-
-  sda_lbl -> sda0 [style=invis weight=2];
-  scl_lbl -> scl0 [style=invis weight=2];
-
-  // ---------- Master connections ----------
-  mcu -> sda0 [color="#8888cc" penwidth=2];
-  mcu -> scl0 [color="#88cc88" penwidth=2];
-
-  // ---------- Device taps ----------
-  eep -> sda1 [color="#8888cc" penwidth=2];
-  eep -> scl1 [color="#88cc88" penwidth=2];
-
-  rtc -> sda2 [color="#8888cc" penwidth=2];
-  rtc -> scl2 [color="#88cc88" penwidth=2];
-
-  sda3 -> sens [color="#8888cc" penwidth=2];
-  scl3 -> sens [color="#88cc88" penwidth=2];
-
-  // ---------- Pull-ups on the right ----------
-  vdd [label="VDD" shape=none fontcolor="#cccc88"];
-  rp1 [label="Rp 4.7k" shape=box style="filled"
-       fillcolor="#3a3a2a" fontcolor="#cccc88" color="#aaaa66"
-       fixedsize=true width=1.15 height=0.35];
-  rp2 [label="Rp 4.7k" shape=box style="filled"
-       fillcolor="#3a3a2a" fontcolor="#cccc88" color="#aaaa66"
-       fixedsize=true width=1.15 height=0.35];
-
-  { rank=same; vdd; rp1; rp2; }
-
-  vdd -> rp1 [color="#aaaa66"];
-  vdd -> rp2 [color="#aaaa66"];
-
-  rp1 -> sda4 [color="#aaaa66" constraint=false penwidth=2];
-  rp2 -> scl4 [color="#aaaa66" constraint=false penwidth=2];
-
-  sda4 -> vdd [style=invis weight=5];
-}
-{{< /graphviz >}}
+```
+  SDA ──┬──────────┬──────────┬──────────┬── Rp ── VDD
+  SCL ──┼──────────┼──────────┼──────────┼── Rp ── VDD
+        │          │          │          │
+       MCU      EEPROM      RTC      Sensor
+     (master)    0x50       0x68      0x48
+```
 
 All devices share the same two wires — SDA (data) and SCL (clock). Pull-up resistors to VDD are required because all drivers are open-drain. The master addresses each device by its 7-bit address; no chip select lines needed. Any number of devices can share the bus as long as addresses don't conflict.
 
