@@ -95,10 +95,102 @@ Key identities:
 
 ### De Morgan's Theorem
 
-The most important simplification rule in digital logic:
+The most important simplification rule in digital logic. The core idea: inverting the output of a gate is the same as swapping the gate type (AND ↔ OR) and inverting every input instead. Put another way:
 
-- **(A x B)' = A' + B'** — The complement of AND is OR with complemented inputs (NAND = bubbled OR)
-- **(A + B)' = A' x B'** — The complement of OR is AND with complemented inputs (NOR = bubbled AND)
+- A **NAND** gate behaves identically to an **OR** gate with inverted inputs.
+- A **NOR** gate behaves identically to an **AND** gate with inverted inputs.
+
+{{< graphviz >}}
+digraph demorgan {
+  bgcolor="transparent"
+  node [fontname="Helvetica" fontsize=11]
+  edge [fontname="Helvetica" fontsize=10]
+  nodesep=0.8
+  ranksep=0.7
+
+  subgraph {
+    rank=same
+
+    nand [shape=plain label=<
+      <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD COLSPAN="4" ALIGN="CENTER"><FONT COLOR="#777777" POINT-SIZE="9">NAND</FONT></TD></TR>
+        <TR>
+          <TD ALIGN="RIGHT"><FONT COLOR="#8888cc">A &#8594; </FONT></TD>
+          <TD ROWSPAN="2" BGCOLOR="#2a2a3a" BORDER="1" COLOR="#6666aa" CELLPADDING="8"><B><FONT COLOR="#cccccc"> AND </FONT></B></TD>
+          <TD ROWSPAN="2"><FONT COLOR="#cc8888"> &#9675; &#8594; </FONT></TD>
+          <TD ROWSPAN="2"><FONT COLOR="#cccccc">Q</FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="RIGHT"><FONT COLOR="#8888cc">B &#8594; </FONT></TD>
+        </TR>
+      </TABLE>
+    >]
+
+    eq1 [shape=plaintext label=<<FONT POINT-SIZE="20" COLOR="#cccccc"><B>&#8801;</B></FONT>>]
+
+    bubor [shape=plain label=<
+      <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD COLSPAN="4" ALIGN="CENTER"><FONT COLOR="#777777" POINT-SIZE="9">bubbled-input OR</FONT></TD></TR>
+        <TR>
+          <TD ALIGN="RIGHT"><FONT COLOR="#8888cc">A &#8594; </FONT></TD>
+          <TD><FONT COLOR="#cc8888">&#9675; &#8594; </FONT></TD>
+          <TD ROWSPAN="2" BGCOLOR="#2a3a2a" BORDER="1" COLOR="#66aa66" CELLPADDING="8"><B><FONT COLOR="#cccccc"> OR </FONT></B></TD>
+          <TD ROWSPAN="2"><FONT COLOR="#cccccc"> &#8594; Q</FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="RIGHT"><FONT COLOR="#8888cc">B &#8594; </FONT></TD>
+          <TD><FONT COLOR="#cc8888">&#9675; &#8594; </FONT></TD>
+        </TR>
+      </TABLE>
+    >]
+
+    nand -> eq1 -> bubor [style=invis]
+  }
+
+  subgraph {
+    rank=same
+
+    nor [shape=plain label=<
+      <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD COLSPAN="4" ALIGN="CENTER"><FONT COLOR="#777777" POINT-SIZE="9">NOR</FONT></TD></TR>
+        <TR>
+          <TD ALIGN="RIGHT"><FONT COLOR="#8888cc">A &#8594; </FONT></TD>
+          <TD ROWSPAN="2" BGCOLOR="#2a2a3a" BORDER="1" COLOR="#6666aa" CELLPADDING="8"><B><FONT COLOR="#cccccc"> OR </FONT></B></TD>
+          <TD ROWSPAN="2"><FONT COLOR="#cc8888"> &#9675; &#8594; </FONT></TD>
+          <TD ROWSPAN="2"><FONT COLOR="#cccccc">Q</FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="RIGHT"><FONT COLOR="#8888cc">B &#8594; </FONT></TD>
+        </TR>
+      </TABLE>
+    >]
+
+    eq2 [shape=plaintext label=<<FONT POINT-SIZE="20" COLOR="#cccccc"><B>&#8801;</B></FONT>>]
+
+    buband [shape=plain label=<
+      <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4">
+        <TR><TD COLSPAN="4" ALIGN="CENTER"><FONT COLOR="#777777" POINT-SIZE="9">bubbled-input AND</FONT></TD></TR>
+        <TR>
+          <TD ALIGN="RIGHT"><FONT COLOR="#8888cc">A &#8594; </FONT></TD>
+          <TD><FONT COLOR="#cc8888">&#9675; &#8594; </FONT></TD>
+          <TD ROWSPAN="2" BGCOLOR="#2a3a2a" BORDER="1" COLOR="#66aa66" CELLPADDING="8"><B><FONT COLOR="#cccccc"> AND </FONT></B></TD>
+          <TD ROWSPAN="2"><FONT COLOR="#cccccc"> &#8594; Q</FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="RIGHT"><FONT COLOR="#8888cc">B &#8594; </FONT></TD>
+          <TD><FONT COLOR="#cc8888">&#9675; &#8594; </FONT></TD>
+        </TR>
+      </TABLE>
+    >]
+
+    nor -> eq2 -> buband [style=invis]
+  }
+
+  nand -> nor [style=invis]
+  eq1 -> eq2 [style=invis]
+  bubor -> buband [style=invis]
+}
+{{< /graphviz >}}
 
 De Morgan's theorem is why NAND and NOR gates can implement any function — by applying inversions (bubbles) at the right places, any gate type converts to any other. It also provides a systematic way to convert between gate types when redesigning for a particular logic family.
 
@@ -121,10 +213,19 @@ The path from a Boolean function to a physical circuit:
 
 Each step introduces practical considerations: propagation delay through each gate level, fan-out limits on gate outputs, power consumption per gate, and the physical routing of signals on a PCB or within a chip.
 
-## Gotchas
+## Tips
 
-- **Don't-care conditions matter** — If certain input combinations can never occur (or the output doesn't matter for them), marking them as "don't care" in the truth table allows better simplification. Missing this optimization leads to unnecessarily complex logic
-- **Gate count is not the only metric** — A simpler expression might use fewer gates but more levels of logic, increasing total propagation delay. In timing-critical paths, a less-simplified but flatter implementation (fewer gate levels) may be better
-- **Bubble matching** — When connecting gates from different logic families or mixing NAND/NOR implementations, the inversions (bubbles) must be tracked carefully. An output bubble should connect to an input bubble to cancel. Mismatched bubbles invert the logic
-- **XOR is expensive** — In terms of transistor count, XOR is more complex than AND or OR. Designs that use XOR heavily (arithmetic, parity) consume more area and power per function
-- **Boolean simplification assumes static logic** — The simplified expression gives the correct steady-state output but says nothing about transient behavior. Hazards and glitches (see [Combinational Logic]({{< relref "combinational-logic" >}})) can produce incorrect outputs during transitions even when the Boolean function is correct
+- **Mark input combinations that cannot occur as don't-cares in the truth table before simplifying.** Don't-care entries give the simplification algorithm (or Karnaugh map) extra flexibility, often producing significantly fewer gates. Missing this step leads to logic that is correct but unnecessarily complex.
+- **Track inversions by matching bubbles at every gate-to-gate connection.** An output bubble should meet an input bubble to cancel. Reading a NAND/NOR-heavy schematic becomes straightforward once each bubble is accounted for — if two bubbles face each other across a wire, the logic at that connection is non-inverting.
+- **Use a Karnaugh map for manual simplification up to about 5 variables; beyond that, use a synthesis tool.** K-maps are fast and visual for small functions, but the Gray-code adjacency that makes them work becomes impractical to manage above 5–6 variables. EDA tools apply Quine-McCluskey or heuristic algorithms that scale where maps cannot.
+- **When building from discrete gates, prefer NAND-only or NOR-only implementations.** Single-gate-type designs simplify sourcing, reduce board variety, and align with how CMOS implements logic natively. De Morgan's theorem provides the conversion: any AND/OR expression translates systematically to all-NAND or all-NOR.
+
+## Caveats
+
+- **Gate count is not the only metric** — A simpler expression might use fewer gates but more levels of logic, increasing total propagation delay. In timing-critical paths, a less-simplified but flatter implementation (fewer gate levels) may be better.
+- **XOR is expensive** — In terms of transistor count, XOR is more complex than AND or OR. Designs that use XOR heavily (arithmetic, parity) consume more area and power per function.
+- **Boolean simplification assumes static logic** — The simplified expression gives the correct steady-state output but says nothing about transient behavior. Hazards and glitches (see [Combinational Logic]({{< relref "combinational-logic" >}})) can produce incorrect outputs during transitions even when the Boolean function is correct.
+
+## Bench Relevance
+
+Boolean logic most visibly shows up on the bench when verifying combinational circuits — driving inputs through all relevant combinations and checking outputs against the expected truth table. De Morgan's equivalences are immediately useful when reading schematics that mix NAND, NOR, AND, and OR symbols; recognizing that a NAND with inverted inputs acts as an OR gate (and similar transformations) prevents misreading the logic. Simplification has direct resource implications in FPGA and CPLD work, where fewer product terms mean fewer look-up tables consumed and shorter propagation paths. When a digital output does not match expectations, re-deriving the Boolean expression from the schematic and checking it against the truth table is often the fastest path to finding the error.

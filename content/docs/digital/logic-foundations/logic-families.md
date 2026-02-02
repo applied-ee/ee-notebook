@@ -118,10 +118,19 @@ Some outputs have only a pull-down transistor (NMOS for open-drain, NPN for open
 **Disadvantages:**
 - Asymmetric rise/fall times. Pulling LOW is fast (active transistor). Pulling HIGH is slow (passive pull-up resistor charging the bus capacitance). The pull-up resistor value is a compromise: smaller = faster rise but more current; larger = lower current but slower rise
 
-## Gotchas
+## Tips
 
-- **Floating CMOS inputs are dangerous** — A floating CMOS input can sit at mid-supply, causing both transistors to conduct, drawing excessive current and potentially destroying the gate. Always tie unused inputs HIGH or LOW. TTL inputs are more forgiving (they float HIGH) but should still be tied off for reliability
-- **HCT solves most TTL-to-CMOS problems** — The 74HCT family accepts TTL voltage levels on its inputs and produces CMOS output levels. It's the standard bridge between old TTL systems and modern CMOS
-- **Fast edges cause problems** — Advanced CMOS families (74AC, 74AUC) have sub-nanosecond edges that cause ringing, reflections, and crosstalk. Series termination resistors (22-47 ohm) at the output are often needed. Slower families (74HC) rarely need this
-- **Supply voltage determines speed and power** — A 74HC gate at 2 V is much slower and has much less drive strength than the same gate at 5 V. The datasheet specifies performance at multiple supply voltages. Operating at lower voltage saves power but costs speed and noise margin
-- **Mixed-voltage systems need careful power sequencing** — If a 3.3 V chip powers up before its 5 V neighbor, its inputs may see 5 V signals while its supply is still ramping. Clamping diodes in the input protection circuit can latch up or be damaged. Power-up sequence matters in mixed-voltage designs
+- **Use the 74HCT family as the standard bridge between TTL-level and CMOS-level logic.** HCT inputs accept TTL thresholds (0.8 V / 2.0 V) while outputs swing to full CMOS levels. In mixed systems this eliminates most interfacing problems without dedicated level-shifter ICs.
+- **Check datasheet specifications at the actual operating voltage, not just the nominal maximum.** A 74HC gate at 2 V is much slower, has less drive strength, and offers narrower noise margins than the same gate at 5 V. Performance tables in the datasheet are indexed by supply voltage for this reason.
+- **Add a series termination resistor (22–47 Ω) at the output when using fast-edge CMOS families like 74AC or 74AUC.** The resistor damps reflections at the source before they propagate down the trace. Slower families like 74HC rarely need this.
+- **Keep fan-out to 4–6 loads per output in CMOS designs; add a buffer beyond that.** Each additional input adds capacitance that slows edges and degrades timing. DC fan-out is rarely the limit in CMOS — it is the accumulated capacitance that matters.
+
+## Caveats
+
+- **Floating CMOS inputs are dangerous** — A floating CMOS input can sit at mid-supply, causing both transistors to conduct, drawing excessive current and potentially destroying the gate. Always tie unused inputs HIGH or LOW. TTL inputs are more forgiving (they float HIGH) but should still be tied off for reliability.
+- **Fast edges cause ringing and reflections** — Advanced CMOS families (74AC, 74AUC) have sub-nanosecond edges that cause ringing, reflections, and crosstalk on traces longer than a few centimeters. Controlled impedance layout and termination become necessary at these speeds.
+- **Mixed-voltage systems need careful power sequencing** — If a 3.3 V chip powers up before its 5 V neighbor, its inputs may see 5 V signals while its supply is still ramping. Clamping diodes in the input protection circuit can latch up or be damaged. Power-up sequence matters in mixed-voltage designs.
+
+## Bench Relevance
+
+Logic family compatibility shows up most directly when interfacing ICs from different families or voltage domains — measuring actual output HIGH and input LOW thresholds with a multimeter or scope confirms whether the receiving device's specifications are met. An oscilloscope reveals the dynamic side: ringing from fast-edge CMOS, slow rise times from excessive fan-out or weak pull-ups, and voltage levels that sag under load. Open-drain buses like I2C show the pull-up tradeoff directly — rising-edge shape reveals whether the resistor value suits the bus capacitance. Level-shifting problems often present as intermittent behavior; the signal crosses the threshold but with insufficient margin, and noise or temperature shifts push it into the undefined region.
