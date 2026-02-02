@@ -165,10 +165,19 @@ That said, shielding and differential signaling are even more effective in combi
 | Routing complexity | One trace | Matched pair, length-matched |
 | Best for | Short, low-speed, low-noise environments | Long runs, high speed, noisy environments, precision measurement |
 
-## Gotchas
+## Tips
+
+- **Match trace lengths, impedances, and spacing on differential pairs.** Symmetry is what makes common-mode rejection work — matched routing preserves the balance that rejects noise
+- **Use a true differential probe for differential measurements.** Scope math (Ch1 − Ch2) has poor CMRR because both channels share a ground through the scope chassis. A differential probe takes the difference at the tip, before the ground path matters
+- **Twisted pair without shielding provides effective noise rejection through symmetry alone.** Adding a shield helps in demanding environments, but the primary rejection mechanism is the differential cancellation, not the shielding
+- **Check that the common-mode voltage stays within the receiver's input range.** Differential receivers reject common-mode noise only up to a specified limit — beyond that, the output saturates or distorts regardless of the differential signal quality
+
+## Caveats
 
 - **"Differential" does not mean "balanced."** Differential describes how the signal is defined (as a difference). Balanced describes a physical property of the transmission path (equal impedance to ground on both conductors). A differential signal can be sent on an unbalanced path, and vice versa. In practice they often go together, but they're separate concepts (see [Balanced vs Unbalanced]({{< relref "balanced-vs-unbalanced" >}}))
 - **Single-ended signals don't have zero common-mode noise — they have uncontrolled common-mode noise.** The ground reference in a single-ended system carries the common-mode noise, but there's no cancellation mechanism. The receiver sees all of it
-- **Differential pair routing rules exist for symmetry, not aesthetics.** Matched trace lengths, matched impedances, consistent spacing — all of these maintain the symmetry that makes common-mode rejection work. Violating them degrades CMRR, and you lose the advantage of differential signaling
-- **A differential oscilloscope measurement requires a differential probe.** Using two single-ended channels and the scope's math function (Ch1 - Ch2) gives poor CMRR because the two scope channels share a ground through the scope chassis. A true differential probe measures V(A) - V(B) at the probe tip, before the ground connection matters
-- **Converting between single-ended and differential requires active circuitry or a transformer.** You can't just connect one wire to ground and call it differential. A proper single-ended to differential converter (balun, differential amplifier, or dedicated driver IC) generates the complementary signal
+- **Converting between single-ended and differential requires active circuitry or a transformer.** Connecting one wire to ground does not make a signal differential. A proper single-ended to differential converter (balun, differential amplifier, or dedicated driver IC) generates the complementary signal
+
+## Bench Relevance
+
+Most modern interfaces are differential — USB, Ethernet, HDMI, PCIe, LVDS — so recognizing differential signaling determines probe choice and measurement interpretation on the bench. Noise appearing equally on both lines of a pair is common-mode and gets rejected by the receiver; noise on one line only degrades the signal, making it important to identify which case is present. Checking pair symmetry (equal amplitude, equal timing) is often the fastest diagnostic for differential signal problems. Converting between single-ended test equipment and a differential device under test is a recurring bench challenge that requires understanding both the signal topology and the limitations of the conversion method.

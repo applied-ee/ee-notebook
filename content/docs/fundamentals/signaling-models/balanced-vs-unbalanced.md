@@ -233,11 +233,20 @@ Direction matters: a balun designed for a specific impedance transformation (e.g
 
 The choice is almost always a noise-vs-cost tradeoff. Unbalanced is simpler, cheaper, and fine for short runs in low-noise environments. Balanced costs more (two conductors, differential drivers and receivers) but rejects noise over long runs and in harsh environments. As cable length or interference increases, balanced becomes worth the extra cost quickly.
 
-## Gotchas
+## Tips
+
+- **Ground the shield at one end for audio, both ends for RF.** Audio practice grounds one end to avoid ground loops. RF practice grounds both ends for continuous high-frequency shielding. Using the wrong convention in either domain degrades performance
+- **Check that the expected common-mode voltage stays within the receiver's rated range.** A differential receiver rated for ±10 V common-mode will saturate or sustain damage beyond that limit — including ground potential differences and noise peaks
+- **Use a proper balun when converting between balanced and unbalanced, rather than floating or grounding one leg.** Improvised connections break the symmetry that makes common-mode rejection work. A transformer balun also provides galvanic isolation, which eliminates ground loops entirely
+- **Test balance by comparing impedance to ground on each leg.** A significant difference indicates asymmetry that will degrade CMRR — a fast diagnostic before looking at the signal itself
+
+## Caveats
 
 - **Balanced is not the same as shielded.** A balanced cable can be unshielded (like Cat5e Ethernet UTP), and an unbalanced cable can be shielded (like coax). The shield provides electrostatic screening; balance provides common-mode rejection. They address different noise mechanisms and are often used together, but one does not imply the other
 - **The shield on a balanced cable is not a signal conductor.** In a shielded balanced cable (like XLR audio cable), the shield is separate from the two signal conductors. The signal is the difference between the two inner conductors; the shield handles electrostatic interference. Connecting the shield as a signal return defeats the balanced topology
-- **Driving a balanced input with an unbalanced source loses CMRR.** If you connect a single-ended source to one leg of a differential input and ground the other leg, the input is no longer balanced — noise on the ground appears on one input but not the other, and CMRR drops to near zero. Use a balun or drive both inputs properly
+- **Driving a balanced input with an unbalanced source loses CMRR.** Connecting a single-ended source to one leg of a differential input and grounding the other leg removes the balance — noise on the ground appears on one input but not the other, and CMRR drops to near zero. A balun or proper differential drive is needed to maintain rejection
 - **"Balanced" in RF mixer terminology is related but distinct.** A "balanced mixer" or "double-balanced mixer" refers to the internal topology of the mixer (how the diodes or transistors are arranged for port-to-port isolation), not to balanced signal transmission. The concepts share the idea of symmetry and cancellation, but the context is different
-- **Shield grounding conventions differ between audio and RF.** Audio practice typically grounds the shield at one end only (to avoid ground loops). RF practice grounds the shield at both ends (for continuous shielding at high frequencies). Using the wrong convention in either domain causes problems
-- **Common-mode range limits are real.** A differential receiver rated for ±10 V common-mode range will not reject a 20 V ground offset — it will saturate or be damaged. Always check that the expected common-mode voltage (including ground potential differences and noise) stays within the receiver's rated range
+
+## Bench Relevance
+
+Balanced vs unbalanced is one of the first things to identify when connecting any audio, instrumentation, or communications signal path. Ground loop symptoms — hum, buzz, or a DC offset that disappears with a DI box or isolation transformer — often point directly to a balanced/unbalanced topology mismatch. Measuring a balanced signal with single-ended equipment (a typical oscilloscope input) breaks the balance and injects the very noise the balanced topology was designed to reject; a differential probe preserves the rejection. In many practical setups, the choice of balanced vs unbalanced cables and connectors determines the noise floor of the entire signal chain before any other design decision matters.
