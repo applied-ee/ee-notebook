@@ -5,7 +5,7 @@ type: docs
 
 # EE Notebook
 
-A working reference for electronics and electrical engineering — concepts, procedures, gotchas, and patterns organized for practical use. The goal is a single resource that covers the full landscape from fundamentals through design and repair, organized so that any topic can scale from a concise overview into the depth that professional engineering demands. The emphasis is on selecting the right components and patterns, understanding why circuits behave the way they do, and building the judgment to design and fix real hardware.
+A working reference for electronics and electrical engineering — concepts, procedures, gotchas, and patterns organized for practical use. The goal is a single resource that spans the full landscape from fundamentals through design and repair, structured so any topic can scale from a concise overview into the depth that professional engineering demands. The emphasis is on selecting the right components and patterns, understanding why circuits behave the way they do, and building the knowledge and skills needed to design, troubleshoot, and repair real hardware.
 
 ## How It's Organized
 

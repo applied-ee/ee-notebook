@@ -3758,8 +3758,11 @@
   },
   {
     "term": "Lumped element",
-    "definition": "A component modeled as having a single value at a point, valid when physically much smaller than a wavelength.",
-    "anchor": "lumped-element"
+    "definition": "A component modeled as having a single value at a point, valid when physically much smaller than a wavelength. A lumped-element circuit is one where all components satisfy this assumption, so Kirchhoff's laws apply directly.",
+    "anchor": "lumped-element",
+    "aliases": [
+      "lumped-element circuit"
+    ]
   },
   {
     "term": "LUT",
