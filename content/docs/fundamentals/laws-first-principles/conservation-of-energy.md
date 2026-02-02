@@ -5,7 +5,7 @@ weight: 30
 
 # Conservation of Energy
 
-Where does the power go? Every watt sourced by a supply or battery must be accounted for — dissipated as heat, stored in a field, or radiated. When you can't find the missing power, you're not looking in the right place, not violating physics.
+Where does the power go? Every watt sourced by a supply or battery must be accounted for — dissipated as heat, stored in a field, or radiated. When the missing power can't be found, it's the accounting that's off, not the physics.
 
 ## Power In = Power Out
 
@@ -17,7 +17,7 @@ For a simple DC circuit:
 - Power consumed by each element: P = V_drop x I (for series elements) or P = V x I_branch (for parallel elements)
 - Sum of all consumed power = source power
 
-If these don't balance, there's a path, a drop, or a dissipation you haven't accounted for.
+If these don't balance, there's a path, a drop, or a dissipation that hasn't been accounted for.
 
 ## Where Power Goes
 
@@ -46,17 +46,21 @@ When something doesn't add up:
 - **Snubber and clamp losses** — Voltage clamps and snubber networks absorb energy from switching transients. This power appears as heat in the snubber resistor
 - **Switching losses** — In transistors, the transition between on and off states dissipates power. Not captured by the simple on-resistance model
 - **Leakage currents** — Small but nonzero. In high-voltage circuits, leakage through PCB contamination or component insulation can add up
-- **Ground path resistance** — Current flowing through the ground return path drops voltage across ground impedance. That's real power dissipation that doesn't show up if you assume ground is zero ohms everywhere
+- **Ground path resistance** — Current flowing through the ground return path drops voltage across ground impedance. That's real power dissipation that doesn't show up if the model assumes ground is zero ohms everywhere
 
-## Why This Matters at the Bench
+## Tips
 
-- **Thermal troubleshooting** — If a component is hotter than expected, it's dissipating more power than your model predicts. Find the extra current or voltage drop
-- **Efficiency calculations** — Output power / input power. The difference is losses, and you should be able to identify where each watt goes
-- **Battery life estimation** — Total energy consumed determines runtime. Every milliwatt you can't account for is eating into battery life
+- **Thermal troubleshooting** — If a component is hotter than expected, it's dissipating more power than the model predicts. Find the extra current or voltage drop
+- **Efficiency calculations** — Output power / input power. The difference is losses, and each watt of loss should be identifiable
+- **Battery life estimation** — Total energy consumed determines runtime. Every milliwatt that can't be accounted for is eating into battery life
 - **Debugging overcurrent** — If a supply is delivering more current than expected, that power is going somewhere. Follow the energy to find the fault
 
-## Gotchas
+## Caveats
 
-- **Reactive power isn't "lost"** — In AC circuits, capacitors and inductors cause current to flow without doing real work. The power factor tells you how much of the apparent power is actually being dissipated. Don't confuse VA with W
+- **Reactive power isn't "lost"** — In AC circuits, capacitors and inductors cause current to flow without doing real work. The power factor tells how much of the apparent power is actually being dissipated. Don't confuse VA with W
 - **Transient vs. steady state** — During power-up, energy is being stored in caps and inductors. The power balance only works as "source = dissipation" after everything has settled
 - **Negative resistance isn't free energy** — Tunnel diodes and certain oscillator circuits exhibit negative resistance in a limited region. This doesn't violate energy conservation — there's always an external energy source enabling the behavior
+
+## Bench Relevance
+
+Conservation of energy is the logic behind every thermal surprise and every power budget that doesn't close. A component running hotter than expected means the power model is missing something — a current path, a voltage drop, or a loss mechanism that isn't in the schematic. A supply delivering more current than the load should need points to the same gap. The discipline is always the same: find where each watt goes, and the ones that seem to be missing will point directly to the part of the circuit that isn't understood yet.
