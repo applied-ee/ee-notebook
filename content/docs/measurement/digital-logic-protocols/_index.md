@@ -8,12 +8,6 @@ bookCollapseSection: true
 
 Logic levels, bus health, protocol decode (SPI, I2C, UART, CAN). MCU I/O verification. Where analog measurement meets digital communication.
 
-## What This Section Covers
-
-This section bridges analog measurement and digital communication — logic levels, bus activity, and protocol decode.
-
-Measurement intent — the questions you're trying to answer at the bench:
-
 - **[Are logic levels correct for this voltage domain?]({{< relref "logic-levels" >}})** — VOH, VOL, VIH, VIL thresholds. Level shifting between 3.3V and 5V domains. Marginal logic levels that work sometimes.
 - **[Is this bus communicating?]({{< relref "bus-activity" >}})** — Quick checks: is there activity? Are clock and data both toggling? Is the bus stuck high, low, or floating?
 - **[Is the device ACKing / responding?]({{< relref "device-responding" >}})** — Protocol-level verification. I2C ACK/NACK, SPI response bytes, UART framing. Using protocol decode to see what's actually on the wire.

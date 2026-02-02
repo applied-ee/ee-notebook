@@ -11,8 +11,6 @@ categories:
 
 A dummy load replaces the speaker during bench testing. It presents the same impedance as a speaker without producing ear-splitting volume, without risking a driver you care about, and without the mechanical and acoustic variables that make real speakers unreliable as test loads. If you're verifying a car amp after repair, you need one of these before you need a scope.
 
-For the full verification procedure that uses this fixture, see [Car Audio Amplifier — Verification Plan]({{< relref "/docs/debugging/verification-after-repair/car-audio-amp" >}}).
-
 ## Why Not Just Use a Speaker?
 
 - **Volume** — A car amp at full power into a speaker on your bench is dangerously loud and will annoy everyone within earshot
@@ -108,6 +106,5 @@ Car amps are typically 2-channel or 4-channel (sometimes more with bridging). Yo
 
 ## Cross-References
 
-- Full verification procedure using this fixture: [Car Audio Amplifier — Verification Plan]({{< relref "/docs/debugging/verification-after-repair/car-audio-amp" >}})
 - Current-limited power supply setup: [Tools & Fixtures for Debugging]({{< relref "/docs/debugging/tools-and-fixtures" >}})
 - Current draw measurement: [Is Current Draw Expected?]({{< relref "/docs/measurement/power-rails-supplies/current-draw" >}})

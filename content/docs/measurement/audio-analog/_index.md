@@ -8,12 +8,6 @@ bookCollapseSection: true
 
 Audio-specific and analog measurement: THD, SNR, frequency response, gain structure, sensor interfaces. Where the signal is the product, not just a means of communication.
 
-## What This Section Covers
-
-This section covers measurements where the signal itself is the product — distortion, noise floor, and frequency response all matter to the end result.
-
-Measurement intent — the questions you're trying to answer at the bench:
-
 - **[What's the THD / noise floor?]({{< relref "thd-noise-floor" >}})** — Distortion and noise measurements. Audio analyzers, FFT-based THD, and understanding what the numbers mean in practice.
 - **[Is the frequency response flat where it should be?]({{< relref "frequency-response" >}})** — Swept or stepped frequency response measurements. Filters, EQ stages, speaker crossovers, and amplifier bandwidth.
 - **[Is the gain structure correct through the signal chain?]({{< relref "gain-structure" >}})** — Level at each stage. Headroom, clipping points, and making sure no stage is running too hot or too cold.

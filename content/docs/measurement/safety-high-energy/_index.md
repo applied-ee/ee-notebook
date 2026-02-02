@@ -8,12 +8,6 @@ bookCollapseSection: true
 
 Mains, high voltage, CAT ratings, isolation, and the habits that keep you alive. This comes first because no measurement matters if you get hurt taking it.
 
-## What This Section Covers
-
-Everything here is about assessing hazard *before* you connect anything — not after you see sparks.
-
-Measurement intent — the questions you're trying to answer at the bench:
-
 - **[Can I touch/probe this safely?]({{< relref "can-i-probe-safely" >}})** — Assessing hazard before connecting anything. Is it de-energized? Are stored charges drained? What's the worst case?
 - **[What voltage/energy am I dealing with?]({{< relref "voltage-energy-domain" >}})** — Identifying the energy domain: low-voltage DC, mains AC, high-voltage DC (tube amps, CRTs, switchmode rails), stored energy in capacitors or inductors.
 - **[Do I need isolation or differential measurement?]({{< relref "isolation-differential" >}})** — When a floating measurement will fool you or kill you. Isolation transformers, differential probes, and when ground-referenced instruments are dangerous.

@@ -8,14 +8,7 @@ bookCollapseSection: true
 
 Tracking down unwanted signals. EMI, ground loops, crosstalk, coupling. The measurements you make when the circuit "should work" but something invisible is ruining it.
 
-## What This Section Covers
-
-This section is about finding and fixing the invisible signals you didn't put there — the ones ruining your circuit.
-
 - **[EMI/EMC Reality (When Your Circuit Becomes a Radio)]({{< relref "emi-emc-reality" >}})** — The conceptual anchor: coupling mechanisms, why fast edges cause RF, real-world symptoms, first moves that usually work, and measurement approaches with basic tools.
-
-Measurement intent — the questions you're trying to answer at the bench:
-
 - **[Where is this noise coming from?]({{< relref "noise-source" >}})** — Identifying noise sources: switching converters, digital clocks, motor drives, external interference. Near-field probing, spectrum analysis, and process of elimination.
 - **[Is there a ground loop?]({{< relref "ground-loop" >}})** — Hum, buzz, and ground-referenced interference. Identifying ground loops between instruments, between boards, or between a DUT and test equipment.
 - **[Is this conducted or radiated?]({{< relref "conducted-radiated" >}})** — Distinguishing coupling paths. Does the noise travel on wires or through the air? Shielding experiments, common-mode vs. differential-mode, and ferrite tests.

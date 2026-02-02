@@ -8,12 +8,6 @@ bookCollapseSection: true
 
 Supply verification, ripple, regulation, current draw, sequencing, energy storage behavior. Power is the first thing to check and the last thing people suspect — and it causes more mysterious failures than almost anything else.
 
-## What This Section Covers
-
-This section focuses on supply behavior under real operating conditions, not ideal no-load measurements.
-
-Measurement intent — the questions you're trying to answer at the bench:
-
 - **[Is voltage present?]({{< relref "voltage-present" >}})** — First check at power-up. Confirm the rail exists before looking at anything downstream.
 - **[Is voltage correct under load?]({{< relref "voltage-correct-under-load" >}})** — Static regulation and load-dependent droop. What the rail looks like when the circuit is actually drawing current.
 - **[How much ripple / noise on the rail?]({{< relref "ripple-and-noise" >}})** — AC on top of DC. Switching converter ripple, LDO noise, and knowing what's acceptable vs. problematic.

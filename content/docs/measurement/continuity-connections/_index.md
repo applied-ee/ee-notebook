@@ -8,12 +8,6 @@ bookCollapseSection: true
 
 Is this connected to that? Opens, shorts, solder joints, cables, traces. The simplest measurements, but often the first ones that matter when something doesn't work.
 
-## What This Section Covers
-
-This section covers the simplest measurements — but they're often the first ones that matter when something doesn't work.
-
-Measurement intent — the questions you're trying to answer at the bench:
-
 - **[Is this joint making contact?]({{< relref "joint-contact" >}})** — Solder joints, crimp connections, header pins, socket contacts. Continuity beep vs. resistance measurement for marginal joints.
 - **[Is there a short between these nets?]({{< relref "short-between-nets" >}})** — Board faults, solder bridges, damaged traces. Using resistance and diode mode to find shorts, and techniques for narrowing down location.
 - **[Which pin maps to which wire?]({{< relref "pin-wire-mapping" >}})** — Cable tracing, connector pinouts, and verifying wiring against a schematic. Especially useful for unfamiliar harnesses or hand-wired assemblies.

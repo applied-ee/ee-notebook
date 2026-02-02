@@ -17,25 +17,17 @@ Entries here cover microcontroller and microprocessor architectures, peripherals
 ## Sections
 
 - **[MCU Architecture]({{< relref "mcu-architecture" >}})** — Core types, memory maps, clock trees, and power modes: what's inside the chip.
-  *What this section covers:* Core Architectures · Memory Map · Clocks, Reset & Power Modes
 
 - **[MPU & SBC Architecture]({{< relref "mpu-and-sbc-architecture" >}})** — Microprocessors, SoCs, and single-board computers: where embedded meets Linux, virtual memory, and multi-stage boot.
-  *What this section covers:* MCU vs MPU · CPU Cores & SoC Architecture · Device Tree & Hardware Description · MMU, Virtual Memory & Address Spaces · Drivers, Kernel Space & User Space · DMA in MPU Systems · Timing, Latency & Determinism · Where MPUs Fit · Boot Chain · Single-Board Computers as Systems
 
 - **[Peripherals & I/O]({{< relref "peripherals-and-io" >}})** — GPIO, timers, and analog peripherals: how the MCU interacts with the physical world.
-  *What this section covers:* GPIO · Timers & Counters · Analog Peripherals
 
 - **[Communication Interfaces]({{< relref "communication-interfaces" >}})** — Serial buses, USB, CAN, Bluetooth, WiFi, and DMA: talking to other devices.
-  *What this section covers:* UART · SPI & I2C · CAN & LIN · USB · I2S · Bluetooth · WiFi & Networking · Other Serial · DMA
 
 - **[Firmware Structure & Patterns]({{< relref "firmware-structure" >}})** — Startup sequences, interrupt handling, and state machines: making code predictable.
-  *What this section covers:* Startup & Initialization · Interrupts · State Machines & Event Loops
 
 - **[Real-Time Concepts]({{< relref "real-time-concepts" >}})** — Determinism, RTOS fundamentals, and concurrency: why timing is everything.
-  *What this section covers:* Determinism & Timing · RTOS Fundamentals · Concurrency & Shared Resources
 
 - **[Toolchains & Debugging]({{< relref "toolchains-and-debugging" >}})** — Build systems, debug interfaces, and observability: seeing what the system is doing.
-  *What this section covers:* Build Systems & Toolchains · Debug Interfaces · Observability
 
 - **[Embedded Reality]({{< relref "embedded-reality" >}})** — Power-up issues, faults, and recovery strategies: where designs succeed or fail.
-  *What this section covers:* Power-Up & Reset · Faults & Exceptions · Watchdogs & Recovery
