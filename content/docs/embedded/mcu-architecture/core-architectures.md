@@ -82,9 +82,20 @@ The ISA matters, but in practice a learner picks a chip family, not an instructi
 
 The pattern across these families: the choice is about the combination of core architecture, peripherals, software ecosystem, and community — not just the ISA. For learning, start where the community and examples are strongest, then branch out as projects demand different capabilities.
 
-## Gotchas
+## Tips
+
+- **When choosing a first MCU platform, weight the ecosystem over the core** — documentation, community examples, and toolchain maturity determine how quickly concepts can be tested at the bench
+- **On RISC-V, check the ISA extension string** — "RV32IMAC" specifies exactly which hardware features are present; missing extensions mean missing compiler support for those operations
+- **The NVIC is the same across all Cortex-M parts** — interrupt handling code written for one Cortex-M chip largely transfers to another, regardless of vendor or M-profile variant
+- **AVR datasheets are short enough to read cover-to-cover** — register-level understanding built on an 8-bit part transfers well to more complex architectures
+
+## Caveats
 
 - **Cortex-M0 faults on unaligned access** — Code that works on M3 or M4 may hard-fault on M0. Packed structs and careless pointer casts are the usual triggers
 - **RISC-V interrupt handling is not portable** — Unlike Cortex-M's standardized NVIC, RISC-V interrupt controllers vary by vendor. Moving firmware between RISC-V chips often means rewriting the interrupt setup
 - **AVR flash reads require special handling** — String constants and lookup tables stored in flash on AVR cannot be read with normal pointer dereferences. Forgetting `PROGMEM` and `pgm_read_*` produces garbage data at runtime
 - **Soft-float on an FPU-equipped core wastes the hardware** — If the compiler flags do not enable hard float, the FPU sits idle while software emulation burns cycles. Check the build flags whenever floating-point performance seems wrong
+
+## Bench Relevance
+
+Knowing the core architecture turns confusing failures into directed diagnoses. Firmware that runs on Cortex-M4 but hard-faults on M0 almost certainly involves an unaligned access — M4 handles it silently, M0 does not. Floating-point code that is unexpectedly slow on an FPU-equipped core often means the build system is using software emulation despite the hardware being present — a compiler flag issue, not a silicon issue. On AVR, string data displaying as garbage typically means flash data was read with a normal SRAM pointer, missing the `PROGMEM` handling. In each case the symptom is opaque until the architectural constraint behind it is understood; once it is, the fix is usually a single line or a build flag change.

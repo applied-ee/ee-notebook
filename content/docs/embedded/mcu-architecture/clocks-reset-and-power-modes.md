@@ -5,7 +5,7 @@ weight: 30
 
 # Clocks, Reset & Power Modes
 
-The clock system, reset logic, and power management are deeply intertwined. The clock determines how fast the MCU runs — and how much power it consumes. The reset system determines what state the MCU starts in. Power modes let you trade performance for battery life. Getting these right is not optional: a misconfigured clock means peripherals run at the wrong speed (UART baud rate is wrong, timers are off), a misunderstood reset means firmware initializes into an unexpected state, and poor power management means a battery-powered device dies in hours instead of years.
+The clock system, reset logic, and power management are deeply intertwined. The clock determines how fast the MCU runs — and how much power it consumes. The reset system determines what state the MCU starts in. Power modes trade performance for battery life. Getting these right is not optional: a misconfigured clock means peripherals run at the wrong speed (UART baud rate is wrong, timers are off), a misunderstood reset means firmware initializes into an unexpected state, and poor power management means a battery-powered device dies in hours instead of years.
 
 ## Internal vs External Oscillators
 
@@ -68,9 +68,20 @@ MCUs offer multiple power modes that progressively shut down more of the chip to
 
 The key insight for low-power design is "race to sleep": a sensor node that wakes for 1 ms every second at full speed and sleeps the rest uses far less energy than one that runs continuously at a slow clock. Running slower does not save energy for compute-bound work — it saves instantaneous power draw but doubles the time to finish, leaving total energy roughly constant. The real savings come from finishing fast and entering a deep sleep mode.
 
-## Gotchas
+## Tips
+
+- **Set flash wait states before increasing the clock** — configuring the PLL and switching to a faster clock with default wait states corrupts instruction fetches; always raise wait states first, then increase clock speed
+- **Check the crystal ready flag before switching** — vendor startup code may or may not have a timeout on crystal startup; verifying the ready flag explicitly avoids hanging or running at the wrong frequency
+- **Use "race to sleep" for battery-powered designs** — finishing a task at full speed and entering deep sleep uses far less energy than running slowly and continuously, because total energy is power multiplied by time
+- **Read the reset cause register early in `main()`** — distinguishing a watchdog reset from a power-on reset allows firmware to skip slow initialization or log the fault before proceeding
+
+## Caveats
 
 - **Flash wait states must match clock speed** — If the PLL is configured for a fast clock but flash wait states remain at the reset default, the CPU reads corrupted instructions. Always set wait states before switching to the faster clock. See [Memory Map]({{< relref "memory-map" >}}) for more on flash access timing
 - **Crystal startup failure is silent** — If the external crystal does not oscillate, the MCU stays on the internal RC with no indication unless firmware checks the ready flag. Everything appears to work, but at the wrong frequency — UART baud rates are off, USB fails enumeration
 - **Peripheral clock gating hides hard faults** — Accessing a peripheral register before enabling its clock causes a bus fault. The first thing to check during bringup
 - **Wake-up from stop mode restarts on the internal RC** — After exiting stop mode, the system clock is the internal oscillator, not the PLL. Firmware must re-initialize the clock tree before timing-sensitive peripherals can resume
+
+## Bench Relevance
+
+A UART producing garbled output at a steady wrong baud rate almost always means the system clock is not what the firmware expects — typically the PLL was not configured or the crystal failed to start, leaving the MCU on its internal RC oscillator. A device that works on the bench but resets in the field often traces to a brownout: the supply dips below the BOR threshold under transient load, triggering a reset that looks like a power cycle. When firmware hangs at startup with no debug output, the external crystal is the first suspect — a bad solder joint or incorrect load capacitors can prevent oscillation entirely, and if the startup code waits for the crystal ready flag without a timeout, the MCU stalls before reaching `main()`. These symptoms are opaque until the clock and reset architecture is understood; once it is, the diagnosis follows directly from the reset cause register or a frequency measurement on the clock output pin.

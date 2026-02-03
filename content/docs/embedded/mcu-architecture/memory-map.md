@@ -5,7 +5,7 @@ weight: 20
 
 # Memory Map
 
-The memory map is the contract between hardware and software. Every address in the microcontroller's address space has a defined meaning: some ranges are flash (where code lives), some are SRAM (where variables live), some are peripheral registers (where writing a value actually toggles a pin or starts a timer). When a hard fault fires, the faulting address tells you whether you hit an unmapped region, a peripheral with its clock disabled, or the end of your stack.
+The memory map is the contract between hardware and software. Every address in the microcontroller's address space has a defined meaning: some ranges are flash (where code lives), some are SRAM (where variables live), some are peripheral registers (where writing a value actually toggles a pin or starts a timer). When a hard fault fires, the faulting address reveals whether the access hit an unmapped region, a peripheral with its clock disabled, or the end of the stack.
 
 ## The Address Space
 
@@ -63,9 +63,20 @@ The linker script (`.ld` file on GCC-based toolchains) is where the firmware's v
 
 The startup code is responsible for copying initialized data from flash to SRAM and zeroing the `.bss` section before `main()` runs. If the linker script is wrong — say, the SRAM size is larger than what the chip actually has — the system may appear to work but corrupt memory silently.
 
-## Gotchas
+## Tips
+
+- **Read the memory map chapter first** — the vendor reference manual's memory map is the single most-referenced chapter during firmware development; it defines where every peripheral register, flash region, and SRAM block sits in the address space
+- **Every peripheral register pointer must be `volatile`** — without it, the compiler may cache a register read or reorder writes, producing intermittent bugs that disappear at lower optimization levels
+- **Avoid `malloc` on bare-metal** — heap fragmentation in a long-running system with limited SRAM leads to allocation failures that are nearly impossible to reproduce; use statically allocated buffers instead
+- **Check the linker script when switching chip variants** — a different part number in the same family may have different flash and SRAM sizes; the linker script must match the actual hardware
+
+## Caveats
 
 - **Accessing an unclocked peripheral faults** — On most Cortex-M MCUs, peripheral registers are inaccessible until the peripheral's clock is enabled. Reading an unclocked peripheral returns a bus fault. This is the most common cause of hard faults in new firmware bringup
 - **Stack overflow corrupts silently** — Without an MPU region guarding the stack boundary, overflow writes into adjacent memory with no exception. The symptom is usually mysterious data corruption or a crash far removed from the actual overflow
 - **Flash wait states must match clock speed** — If the system clock increases but flash wait states remain at the reset default, the CPU reads garbage from flash. Always configure wait states before increasing the clock
 - **Linker script errors are silent until they crash** — If the linker script declares more SRAM than the chip has, the linker happily places data in nonexistent addresses. Everything builds cleanly; the firmware crashes at runtime
+
+## Bench Relevance
+
+A hard fault on first access to a peripheral register almost always means the peripheral clock has not been enabled — the register address is valid, but the bus returns a fault because the peripheral is powered down. Mysterious data corruption that appears only under load often traces to stack overflow: the stack grows into the heap or `.bss` region, overwriting variables with return addresses and saved registers. When initialized variables contain wrong values at startup, the linker script is the first suspect — either the SRAM region is declared larger than the physical memory, or the startup code is not copying `.data` from flash correctly. In each case, the memory map is the reference that connects the faulting address to the subsystem involved.
