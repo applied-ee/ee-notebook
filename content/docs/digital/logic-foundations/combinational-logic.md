@@ -101,10 +101,21 @@ In purely synchronous designs, hazards are usually harmless — the output is on
 - **Set/Reset inputs** — a glitch on an asynchronous reset can corrupt state
 - **Level-sensitive latches** — a glitch while the latch is transparent passes through to the output
 
-## Gotchas
+## Tips
+
+- **Use Karnaugh maps to check for static hazards as well as to simplify** — adjacent 1-groups not covered by a common term indicate a static-1 hazard; adding the bridging term eliminates the glitch
+- **In synchronous designs, ignore combinational glitches unless they feed asynchronous inputs** — flip-flops sample after the combinational logic settles, so transient glitches between clock edges have no effect on registered outputs
+- **A multiplexer can implement any truth table directly** — connect the function's output values to the mux data inputs and the input variables to the select lines; this avoids gate-level design entirely for small functions
+- **Check the propagation delay through the entire critical path, not just individual gates** — a chain of fast gates can still violate timing if there are enough levels; the sum of delays determines the maximum clock frequency
+
+## Caveats
 
 - **Propagation delay varies with conditions** — Temperature, supply voltage, and output loading all affect delay. Datasheet values are worst-case (slow corner). Typical delays may be 2-3x faster than worst-case, which means a design that "works on the bench" may fail at temperature extremes
 - **Glitches are hard to see on a scope** — A 1 ns glitch on a 10 MHz signal requires high bandwidth and fast sampling to capture. If a design has intermittent misbehavior that disappears when probed more carefully, glitches are a likely suspect
 - **Don't gate clocks with combinational logic** — Passing a clock signal through AND or OR gates to create gated clocks introduces hazards and uncontrolled delay. Use dedicated clock gating cells or clock enable inputs on flip-flops instead
 - **Unused inputs on combinational ICs must be tied off** — An unconnected input on a gate, decoder, or mux floats to an undefined level. This causes unpredictable behavior and, in CMOS, excessive power draw. Tie unused inputs to VDD or GND as appropriate for the function
 - **Decoder enables and mux selects have setup timing** — In synchronous designs, the select and enable signals must be stable before the data is sampled. If the select changes while the mux output is being used, the output momentarily reflects the wrong input
+
+## Bench Relevance
+
+A combinational circuit that gives the right output most of the time but occasionally produces wrong results points to a timing problem — either a hazard causing a glitch that propagates through an asynchronous path, or a critical path that barely meets timing and fails under temperature or voltage variation. On an oscilloscope, these show up as narrow spikes (glitches) or as output transitions that arrive too close to the clock edge (setup violations). When verifying a decoder or mux on the bench, systematically stepping through every input combination against the truth table catches wiring errors and stuck outputs that functional testing at speed would mask. If an FPGA design fails timing closure, the synthesis report's critical path traces back to the longest combinational chain between registers — the same concept as the ripple-carry delay, expressed in the tool's timing analysis.
