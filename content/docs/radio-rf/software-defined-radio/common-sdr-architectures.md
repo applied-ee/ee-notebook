@@ -5,7 +5,7 @@ weight: 50
 
 # Common SDR Architectures
 
-SDR hardware comes in a wide range of designs, from $20 USB dongles to multi-thousand-dollar research platforms. Each makes different architectural choices about how to get from the antenna connector to the digital samples that software processes. Understanding these architectures helps you choose the right tool for a given task and explains why different platforms have such different performance characteristics.
+SDR hardware comes in a wide range of designs, from $20 USB dongles to multi-thousand-dollar research platforms. Each makes different architectural choices about how to get from the antenna connector to the digital samples that software processes. Understanding these architectures clarifies how to choose the right tool for a given task and explains why different platforms have such different performance characteristics.
 
 ## Direct Sampling
 
@@ -57,7 +57,7 @@ The RTL-SDR is remarkably capable for its price. It can receive FM broadcast, am
 - **Interface:** USB 2.0
 - **Price:** $300-350
 
-HackRF's distinguishing feature is its enormous frequency range and transmit capability. It covers almost every band from HF through WiFi's 5 GHz band. The 20 MHz bandwidth is wide enough to see entire broadcast bands or capture wide signals. The transmit capability enables experiments with signal generation, replay attacks (legally and ethically, on your own devices), and antenna testing.
+HackRF's distinguishing feature is its enormous frequency range and transmit capability. It covers almost every band from HF through WiFi's 5 GHz band. The 20 MHz bandwidth is wide enough to see entire broadcast bands or capture wide signals. The transmit capability enables experiments with signal generation, replay attacks (legally and ethically, on owned devices), and antenna testing.
 
 The limitation is still 8-bit resolution. HackRF has the same dynamic range challenges as the RTL-SDR, just with wider bandwidth and TX capability. It is a breadth tool, not a depth tool.
 
@@ -73,7 +73,7 @@ The limitation is still 8-bit resolution. HackRF has the same dynamic range chal
 
 The Pluto is Analog Devices' educational SDR platform, built around the AD9363 — a real transceiver IC used in commercial radio equipment. It has 12-bit resolution (a significant step up from 8-bit), full-duplex operation (simultaneous transmit and receive), and an onboard ARM processor that can run GNU Radio or custom applications.
 
-The Pluto is particularly well-suited for learning digital communications — modulation, coding, and protocol design — because it can both transmit and receive simultaneously. With two Plutos, you can build a complete wireless communication link.
+The Pluto is particularly well-suited for learning digital communications — modulation, coding, and protocol design — because it can both transmit and receive simultaneously. With two Plutos, a complete wireless communication link can be built.
 
 ### Airspy (Mini, R2, HF+, HF+ Discovery)
 
@@ -109,7 +109,7 @@ SDRplay platforms offer 14-bit resolution at a moderate price. The RSPduo has tw
 
 ## Choosing a Platform
 
-The right SDR depends on what you want to do:
+The right SDR depends on the intended use case:
 
 **Casual exploration, ADS-B, FM, weather satellites:** RTL-SDR. It is cheap enough to buy without deliberation and capable enough for hundreds of interesting experiments.
 
@@ -121,11 +121,25 @@ The right SDR depends on what you want to do:
 
 **Antenna testing, spectrum monitoring:** Depends on frequency range. Airspy or SDRplay for general VHF/UHF. HackRF for microwave bands.
 
-## Gotchas
+## Tips
 
-- **8-bit and 12-bit are not just "slightly different"** — The jump from 8-bit to 12-bit is 24 dB of dynamic range — a factor of 250 in power. In a strong-signal environment, 12 bits is qualitatively different from 8 bits, not just quantitatively better.
-- **Frequency range on paper versus in practice** — The HackRF covers 1 MHz to 6 GHz, but performance varies enormously across that range. Sensitivity and filtering are better in some bands than others. Check user reports for your specific frequency of interest.
-- **TX capability requires legal awareness** — Transmitting on most frequencies requires a license. Even licensed transmission must comply with power limits and out-of-band emission standards. An unfiltered SDR transmitter produces harmonics that can interfere with other services. Always use appropriate filtering and power levels.
-- **USB 2.0 is a bandwidth bottleneck** — USB 2.0's practical throughput is about 30-40 MB/s. At 16-bit I/Q and 20 MSPS, that is 80 MB/s — beyond what USB 2.0 can sustain. Higher-end SDRs use USB 3.0, Ethernet, or PCIe to overcome this limitation.
-- **Software support varies** — Not all SDR hardware works with all SDR software. RTL-SDR has the broadest software ecosystem because of its popularity. More specialized platforms may require specific software or plugins. Check compatibility before purchasing.
-- **The antenna is still the most important component** — A $300 SDR with a poor antenna performs worse than a $20 RTL-SDR with a good antenna tuned for the frequency of interest. Budget for antennas, not just the SDR hardware.
+- Start with an RTL-SDR for general exploration — it is inexpensive enough to experiment freely, and most SDR software supports it out of the box
+- Match the platform to the task: use high-dynamic-range receivers (Airspy HF+, SDRplay) for HF work with strong broadcast interference, and wideband platforms (HackRF) for security research or microwave bands
+- Before purchasing, verify software compatibility for the intended platform and operating system — not all SDR hardware works with all SDR software
+- Budget for a good antenna matched to the frequency of interest alongside the SDR hardware — a $300 SDR with a poor antenna underperforms a $20 RTL-SDR with a well-matched antenna
+
+## Caveats
+
+- **8-bit and 12-bit are not just "slightly different"** — The jump from 8-bit to 12-bit is 24 dB of dynamic range — a factor of 250 in power; in a strong-signal environment, 12 bits is qualitatively different from 8 bits, not just quantitatively better
+- **Frequency range on paper versus in practice** — The HackRF covers 1 MHz to 6 GHz, but performance varies enormously across that range; sensitivity and filtering are better in some bands than others, and checking user reports for the specific frequency of interest is essential before purchasing
+- **TX capability requires legal awareness** — Transmitting on most frequencies requires a license; even licensed transmission must comply with power limits and out-of-band emission standards; an unfiltered SDR transmitter produces harmonics that can interfere with other services
+- **USB 2.0 is a bandwidth bottleneck** — USB 2.0's practical throughput is about 30-40 MB/s; at 16-bit I/Q and 20 MSPS, that is 80 MB/s — beyond what USB 2.0 can sustain; higher-end SDRs use USB 3.0, Ethernet, or PCIe to overcome this limitation
+- **Software support varies** — Not all SDR hardware works with all SDR software; RTL-SDR has the broadest software ecosystem because of its popularity, and more specialized platforms may require specific software or plugins
+- **The antenna is still the most important component** — A $300 SDR with a poor antenna performs worse than a $20 RTL-SDR with a good antenna tuned for the frequency of interest; budget for antennas, not just the SDR hardware
+
+## Bench Relevance
+
+- If dropped samples or gaps appear in the waterfall at high sample rates, the bottleneck is likely USB 2.0 throughput rather than the SDR hardware itself — reducing sample rate or switching to a USB 3.0 platform resolves this
+- Comparing the same signal on an 8-bit SDR versus a 12-bit SDR in a strong-signal environment makes the dynamic range difference immediately visible: the 12-bit platform shows clean reception where the 8-bit platform shows intermodulation products
+- Harmonics and spurious transmissions from an unfiltered SDR transmitter are visible on a second SDR used as a spectrum monitor — always verify TX spectral purity before transmitting
+- When an SDR platform shows degraded sensitivity at the edges of its specified frequency range, the issue is typically reduced front-end filtering or LNA gain at those frequencies, not a software problem

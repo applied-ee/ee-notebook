@@ -5,11 +5,11 @@ weight: 30
 
 # Sampling Theory at RF
 
-Sampling theory is the bridge between the continuous analog world and the discrete digital world. At audio frequencies, the rules are straightforward — sample at twice the bandwidth. At RF, the same rules apply, but the numbers are larger, the consequences of getting it wrong are more severe, and a technique called bandpass sampling turns aliasing from an enemy into a tool. Understanding sampling at RF is essential for knowing what your SDR can and cannot do.
+Sampling theory is the bridge between the continuous analog world and the discrete digital world. At audio frequencies, the rules are straightforward — sample at twice the bandwidth. At RF, the same rules apply, but the numbers are larger, the consequences of getting it wrong are more severe, and a technique called bandpass sampling turns aliasing from an enemy into a tool. Understanding sampling at RF is essential for knowing what an SDR can and cannot do.
 
 ## Nyquist: The Fundamental Rule
 
-The Nyquist-Shannon sampling theorem states: to perfectly reconstruct a signal, you must sample at a rate of at least twice the signal's bandwidth. Not twice the highest frequency — twice the bandwidth.
+The Nyquist-Shannon sampling theorem states: to perfectly reconstruct a signal, the sample rate must be at least twice the signal's bandwidth. Not twice the highest frequency — twice the bandwidth.
 
 For a baseband signal (one that starts at DC and extends to some maximum frequency f_max), the minimum sample rate is 2 * f_max. This is the familiar case: audio signals up to 20 kHz need at least 40 kHz sampling (CD audio uses 44.1 kHz with some margin).
 
@@ -17,22 +17,22 @@ For an I/Q SDR signal centered on zero frequency (after downconversion), the com
 
 ## Bandwidth, Not Center Frequency
 
-This distinction is critical for understanding SDR. You do not need to sample at twice the center frequency — you need to sample at twice the signal bandwidth.
+This distinction is critical for understanding SDR. Sampling at twice the center frequency is not necessary — sampling at twice the signal bandwidth is sufficient.
 
-An FM broadcast station at 100 MHz has about 200 kHz of bandwidth. After analog downconversion to baseband, you need only about 400 kHz sample rate (or 200 kHz complex sample rate) to capture it fully. You do not need to sample at 200 MHz.
+An FM broadcast station at 100 MHz has about 200 kHz of bandwidth. After analog downconversion to baseband, only about 400 kHz sample rate (or 200 kHz complex sample rate) is needed to capture it fully. Sampling at 200 MHz is not necessary.
 
 This is exactly what an SDR does: the analog front end downconverts the signal of interest to baseband (or a low IF), and the ADC samples this much lower frequency signal. The tuner handles the high frequency; the ADC handles the bandwidth.
 
 ## Bandpass Sampling (Undersampling)
 
-Here is where RF sampling gets interesting. If you have a bandpass signal — one that occupies a narrow band centered on a high frequency — you can deliberately sample below the Nyquist rate for the center frequency and use aliasing to fold the signal down to a lower frequency.
+Here is where RF sampling gets interesting. Given a bandpass signal — one that occupies a narrow band centered on a high frequency — it is possible to deliberately sample below the Nyquist rate for the center frequency and use aliasing to fold the signal down to a lower frequency.
 
-Consider a signal centered at 70 MHz with 10 MHz bandwidth (occupying 65-75 MHz). The Nyquist rate for the highest frequency is 150 MHz. But if you sample at just 20 MSPS, the 65-75 MHz band aliases down to 5-15 MHz — perfectly captured with no information loss, as long as nothing else occupies the 5-15 MHz alias band.
+Consider a signal centered at 70 MHz with 10 MHz bandwidth (occupying 65-75 MHz). The Nyquist rate for the highest frequency is 150 MHz. But sampling at just 20 MSPS aliases the 65-75 MHz band down to 5-15 MHz — perfectly captured with no information loss, as long as nothing else occupies the 5-15 MHz alias band.
 
 Conditions for bandpass sampling to work:
 - The signal bandwidth must be less than half the sample rate (B < fs/2)
 - The alias bands must not overlap (the signal and its aliases must not fold onto each other)
-- No unwanted signals can be present in any alias band — they will fold in on top of your desired signal
+- No unwanted signals can be present in any alias band — they will fold in on top of the desired signal
 
 The third condition is why analog anti-alias filtering is critical in bandpass sampling systems. Any signal in any of the alias bands — noise, interference, or spurious signals — folds into the same digital frequency range as the desired signal and cannot be removed.
 
@@ -80,7 +80,7 @@ The rule: every factor of 4 in oversampling provides approximately 6 dB of SNR i
 
 This is why some SDR architectures deliberately oversample. A 1-bit sigma-delta ADC sampling at hundreds of MHz, combined with digital decimation filtering, can achieve 16+ effective bits of resolution at a much lower output sample rate. This is common in modern receiver ICs.
 
-For a practical example: an 8-bit RTL-SDR sampling at 2.4 MSPS has about 48 dB of instantaneous dynamic range across the full 2.4 MHz bandwidth. If you only need 10 kHz of bandwidth for an FM channel, you are effectively oversampling by 240x. The decimation process narrows the noise bandwidth and provides roughly 24 dB of processing gain, bringing the effective dynamic range to about 72 dB for that 10 kHz channel — much more usable.
+For a practical example: an 8-bit RTL-SDR sampling at 2.4 MSPS has about 48 dB of instantaneous dynamic range across the full 2.4 MHz bandwidth. If only 10 kHz of bandwidth is needed for an FM channel, the effective oversampling is 240x. The decimation process narrows the noise bandwidth and provides roughly 24 dB of processing gain, bringing the effective dynamic range to about 72 dB for that 10 kHz channel — much more usable.
 
 ## Real ADC Limitations
 
@@ -96,11 +96,25 @@ At 100 MHz with 1 ps of jitter, the SNR ceiling is about 64 dB. No amount of ADC
 
 **Spurious-free dynamic range (SFDR):** Real ADCs produce spurious signals (harmonics, intermodulation products) at specific frequencies related to the input signal. SFDR measures the distance from the signal to the strongest spurious component. A 12-bit ADC might have 80 dB SFDR — better than its 72 dB SNR — meaning spurious tones are below the noise floor.
 
-## Gotchas
+## Tips
 
-- **Aliasing is invisible once it happens** — If an unwanted signal aliases into your band of interest, it looks exactly like a real signal at the aliased frequency. You cannot tell the difference after digitization. Anti-alias filtering must happen in analog, before the ADC.
-- **Oversampling helps SNR but not SFDR** — Processing gain from oversampling improves the noise floor but does not remove spurious tones from ADC nonlinearity. Spurs fold into the decimated output and remain visible.
-- **Clock quality limits high-frequency performance** — At RF frequencies, aperture jitter and phase noise often limit dynamic range more than ADC bit count. An 8-bit ADC with a superb clock can outperform a 12-bit ADC with a mediocre clock at high frequencies.
-- **Sample rate determines bandwidth, not frequency range** — An SDR with 2.4 MSPS can tune to any frequency its front end supports but only sees 2.4 MHz at a time. To observe a wider band, you need a higher sample rate or must scan across frequencies sequentially.
-- **Decimation requires computation** — The processing gain from oversampling is not free. The digital decimation filter must process every sample at the full rate before outputting at the reduced rate. Higher oversampling ratios demand more computational power.
-- **The 6.02N + 1.76 formula assumes ideal conditions** — Real ADCs with real clocks at real frequencies rarely achieve theoretical SNR. Use ENOB (effective number of bits) from the datasheet, measured at your frequency of interest, not the headline bit count.
+- When working with narrowband signals on a wideband SDR, take advantage of processing gain by oversampling and decimating — the effective dynamic range improves significantly for narrow channels
+- Always verify the anti-alias filter performance before trusting bandpass-sampled data; any signal leaking through alias bands is indistinguishable from a real signal after digitization
+- Use ENOB from the ADC datasheet at the actual operating frequency rather than the headline bit count — the gap between theoretical and actual performance grows at higher frequencies
+- For clock-limited systems, improving the sampling clock (e.g., adding an external TCXO or OCXO) can yield more dynamic range improvement than upgrading the ADC bit depth
+
+## Caveats
+
+- **Aliasing is invisible once it happens** — If an unwanted signal aliases into the band of interest, it looks exactly like a real signal at the aliased frequency; there is no way to tell the difference after digitization, so anti-alias filtering must happen in analog, before the ADC
+- **Oversampling helps SNR but not SFDR** — Processing gain from oversampling improves the noise floor but does not remove spurious tones from ADC nonlinearity; spurs fold into the decimated output and remain visible
+- **Clock quality limits high-frequency performance** — At RF frequencies, aperture jitter and phase noise often limit dynamic range more than ADC bit count; an 8-bit ADC with a superb clock can outperform a 12-bit ADC with a mediocre clock at high frequencies
+- **Sample rate determines bandwidth, not frequency range** — An SDR with 2.4 MSPS can tune to any frequency its front end supports but only sees 2.4 MHz at a time; observing a wider band requires a higher sample rate or sequential scanning across frequencies
+- **Decimation requires computation** — The processing gain from oversampling is not free; the digital decimation filter must process every sample at the full rate before outputting at the reduced rate, and higher oversampling ratios demand more computational power
+- **The 6.02N + 1.76 formula assumes ideal conditions** — Real ADCs with real clocks at real frequencies rarely achieve theoretical SNR; ENOB (effective number of bits) from the datasheet, measured at the frequency of interest, is the correct figure to use rather than the headline bit count
+
+## Bench Relevance
+
+- When an unexpected signal appears in the passband and does not shift with retuning, it is likely an alias of an out-of-band signal folding through inadequate anti-alias filtering
+- A noise floor that drops noticeably when narrowing the SDR software bandwidth (without changing sample rate) demonstrates processing gain from decimation in real time
+- Spurious tones that remain at fixed positions relative to the input signal regardless of decimation settings indicate ADC nonlinearity (SFDR limitation), not quantization noise
+- Replacing the SDR's stock oscillator with an external low-jitter clock and observing a cleaner noise floor around strong signals confirms that clock phase noise was the limiting factor

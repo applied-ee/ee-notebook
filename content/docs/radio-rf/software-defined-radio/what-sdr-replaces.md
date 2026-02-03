@@ -75,9 +75,9 @@ SDR provides several capabilities that are difficult or impossible with traditio
 
 **Flexibility.** The same hardware can receive AM, FM, SSB, digital modes, and anything else — just by changing software. Adding a new modulation type means writing code, not building a circuit.
 
-**Wideband capture.** An SDR can digitize and process a wide swath of spectrum simultaneously. An RTL-SDR captures about 2.4 MHz of bandwidth at once; a HackRF captures 20 MHz. This means you can see and decode multiple signals simultaneously.
+**Wideband capture.** An SDR can digitize and process a wide swath of spectrum simultaneously. An RTL-SDR captures about 2.4 MHz of bandwidth at once; a HackRF captures 20 MHz. This makes it possible to see and decode multiple signals simultaneously.
 
-**Recording and playback.** Raw I/Q samples can be saved to disk and replayed later. This is invaluable for debugging, for offline analysis, and for sharing interesting signals with others. You can record a satellite pass and decode it at your leisure.
+**Recording and playback.** Raw I/Q samples can be saved to disk and replayed later. This is invaluable for debugging, for offline analysis, and for sharing interesting signals with others. A satellite pass can be recorded and decoded at leisure.
 
 **Programmable filtering.** Digital filters can have characteristics that are impractical or impossible in analog — extremely sharp rolloff, precisely controlled phase response, or adaptive characteristics that change in real time based on the received signal.
 
@@ -95,11 +95,25 @@ SDR is not strictly superior to traditional receivers. There are real tradeoffs:
 
 **Cost of high performance.** A good 16-bit ADC running at 100+ MSPS is expensive. Achieving the dynamic range and spurious-free performance of a traditional analog receiver requires high-end hardware that costs as much or more than the analog equivalent.
 
-## Gotchas
+## Tips
 
-- **SDR does not eliminate analog problems, it hides them** — The analog front end still determines sensitivity, dynamic range, and susceptibility to overload. Software cannot fix what the hardware corrupts before digitization.
-- **"Software-defined" does not mean "no hardware required"** — A good antenna, proper filtering, and a quality LNA matter as much for an SDR as for a traditional receiver. Plugging a rubber duck antenna into an RTL-SDR and expecting to receive weak signals is unrealistic.
-- **ADC bits directly limit dynamic range** — 8 bits gives ~48 dB, 12 bits gives ~72 dB, 16 bits gives ~96 dB. If you need to receive a -100 dBm signal while a -20 dBm signal is present in the same bandwidth, you need 80 dB of dynamic range — more than an 8-bit SDR can provide without analog filtering.
-- **Sample rate limits bandwidth, not frequency** — An RTL-SDR can tune to 1 GHz, but it only captures ~2.4 MHz of bandwidth around that center frequency. This is enough for a single FM broadcast station but not enough to see the entire FM band at once.
-- **Raw I/Q files are large** — At 2.4 MSPS with 8-bit I/Q samples, the data rate is about 4.8 MB/s — roughly 17 GB per hour. At higher sample rates and bit depths, storage fills quickly.
-- **The computer is now part of the receiver** — CPU performance, USB bandwidth, and operating system scheduling all affect SDR performance. A USB dropout causes a gap in the received signal. A CPU spike causes dropped samples. The computer must be treated as a reliability-critical part of the receive chain.
+- Start by identifying which analog stages a given SDR platform replaces and which it retains — this clarifies where performance bottlenecks originate
+- When evaluating an SDR for a specific task, check the ADC bit depth and front-end filtering first — these determine what the software can realistically accomplish
+- Compare the "What Is Gained" and "What Is Lost" tradeoffs for each use case before committing to an SDR-only approach versus a hybrid analog/digital solution
+- Budget for analog accessories (antennas, preselectors, LNAs) alongside the SDR hardware — the analog front end is not optional
+
+## Caveats
+
+- **SDR does not eliminate analog problems, it hides them** — The analog front end still determines sensitivity, dynamic range, and susceptibility to overload; software cannot fix what the hardware corrupts before digitization
+- **"Software-defined" does not mean "no hardware required"** — A good antenna, proper filtering, and a quality LNA matter as much for an SDR as for a traditional receiver; plugging a rubber duck antenna into an RTL-SDR and expecting to receive weak signals is unrealistic
+- **ADC bits directly limit dynamic range** — 8 bits gives ~48 dB, 12 bits gives ~72 dB, 16 bits gives ~96 dB; receiving a -100 dBm signal while a -20 dBm signal is present in the same bandwidth requires 80 dB of dynamic range — more than an 8-bit SDR can provide without analog filtering
+- **Sample rate limits bandwidth, not frequency** — An RTL-SDR can tune to 1 GHz, but it only captures ~2.4 MHz of bandwidth around that center frequency; this is enough for a single FM broadcast station but not enough to see the entire FM band at once
+- **Raw I/Q files are large** — At 2.4 MSPS with 8-bit I/Q samples, the data rate is about 4.8 MB/s — roughly 17 GB per hour; at higher sample rates and bit depths, storage fills quickly
+- **The computer is now part of the receiver** — CPU performance, USB bandwidth, and operating system scheduling all affect SDR performance; a USB dropout causes a gap in the received signal, a CPU spike causes dropped samples, and the computer must be treated as a reliability-critical part of the receive chain
+
+## Bench Relevance
+
+- If the waterfall display shows intermodulation products or a raised noise floor across the entire bandwidth, the ADC is likely being overloaded by a strong signal that the analog front end failed to reject
+- A persistent bright line at the center frequency of the waterfall is a DC offset artifact from I/Q processing, not a real signal — it confirms the SDR is using quadrature downconversion
+- When switching from a rubber duck antenna to a tuned antenna, the waterfall should show a dramatic increase in signal strength for the target band — if it does not, the issue is likely cabling or connector loss
+- Clipping indicators or distorted audio on known clean signals (e.g., FM broadcast) indicate the tuner gain is set too high and the ADC is saturating
