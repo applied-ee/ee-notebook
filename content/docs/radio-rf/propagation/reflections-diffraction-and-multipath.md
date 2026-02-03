@@ -5,7 +5,7 @@ weight: 30
 
 # Reflections, Diffraction & Multipath
 
-Free-space path loss describes signal behavior in a perfect vacuum with nothing between transmitter and receiver. The real world is full of surfaces, edges, and objects that interact with radio waves. Signals bounce off walls, bend around corners, scatter from rough surfaces, and arrive at the receiver via multiple paths. These effects can either help or hurt — multipath can fill in coverage shadows, but it can also cause deep signal nulls exactly where you need coverage.
+Free-space path loss describes signal behavior in a perfect vacuum with nothing between transmitter and receiver. The real world is full of surfaces, edges, and objects that interact with radio waves. Signals bounce off walls, bend around corners, scatter from rough surfaces, and arrive at the receiver via multiple paths. These effects can either help or hurt — multipath can fill in coverage shadows, but it can also cause deep signal nulls exactly where coverage is needed.
 
 ## Reflection
 
@@ -45,7 +45,7 @@ A half wavelength at 2.4 GHz is about 6.25 cm. Moving the receiver by just a few
 
 Fading describes signal strength variations caused by multipath, and it comes in several flavors:
 
-**Small-scale (fast) fading:** Rapid signal variation over distances of a wavelength or less. Moving the antenna a few centimeters changes the multipath combination. At 2.4 GHz in an indoor environment, you can observe 20-30 dB signal variation over a few centimeters.
+**Small-scale (fast) fading:** Rapid signal variation over distances of a wavelength or less. Moving the antenna a few centimeters changes the multipath combination. At 2.4 GHz in an indoor environment, 20-30 dB signal variation over a few centimeters is common.
 
 **Large-scale (slow) fading / shadowing:** Gradual signal variation over distances of many wavelengths, caused by obstacles blocking the path. Walking behind a concrete pillar or around a corner creates slow fading. Log-normal shadowing models describe this, with standard deviations typically 4-12 dB depending on the environment.
 
@@ -76,11 +76,25 @@ Practical systems use several approaches to cope with multipath:
 - **OFDM:** Divides data across many narrowband subcarriers, each of which sees flat fading even when the overall channel is frequency-selective.
 - **Spread spectrum:** Spreads the signal across a wide bandwidth, making it resistant to narrowband fading. Used in GPS, CDMA, and Bluetooth frequency hopping.
 
-## Gotchas
+## Tips
 
-- **Moving the antenna a few centimeters can change everything** — At 2.4 GHz, a half wavelength is 6.25 cm. A deep null and a strong peak can be separated by less than the length of your finger. If a link is marginal, try shifting the antenna position slightly before adding power or gain.
-- **Multipath makes coverage prediction unreliable** — Simple path-loss models predict smooth coverage contours. Real environments have pockets of strong and weak signal that can only be found by measurement. Walk testing with a signal strength meter is the only way to know for sure.
-- **Reflections are not always bad** — In indoor environments, reflections fill in coverage behind obstacles. A room with metal walls might have better average coverage than one with RF-absorbing walls, even though the metal room has worse multipath variation.
-- **Frequency-selective fading is why high data rates are hard** — Wider bandwidth means more susceptibility to frequency-selective fading. This is a fundamental tradeoff: higher data rates require more bandwidth, which makes the channel harder to equalize.
-- **People are RF absorbers and reflectors** — A human body absorbs and scatters 2.4 GHz signals significantly. A person standing between transmitter and receiver can cause 10-15 dB of additional loss. Indoor propagation models that ignore people are optimistic.
-- **Symmetry is rare in multipath environments** — The path from A to B may have different multipath characteristics than from B to A if the environments around the two antennas differ. Do not assume link quality is symmetric.
+- When a wireless link is marginal, shift the antenna position by a few centimeters before increasing power or swapping hardware — at 2.4 GHz, moving 6 cm can swing signal strength by 20-30 dB
+- Use spatial diversity (two antennas spaced a half wavelength apart) to mitigate small-scale fading; if one antenna sits in a null, the other almost certainly does not
+- Perform walk testing with a signal strength meter to map actual coverage — models predict smooth contours, but real environments have sharp pockets of strong and weak signal
+- When deploying in a metal-rich environment, expect strong multipath but also good average coverage; reflections scatter energy into areas that a direct path alone would not reach
+
+## Caveats
+
+- **Moving the antenna a few centimeters can change everything** — At 2.4 GHz, a half wavelength is 6.25 cm; a deep null and a strong peak can be separated by less than a finger length; if a link is marginal, try shifting the antenna position slightly before adding power or gain
+- **Multipath makes coverage prediction unreliable** — Simple path-loss models predict smooth coverage contours; real environments have pockets of strong and weak signal that can only be found by measurement; walk testing with a signal strength meter is the only reliable approach
+- **Reflections are not always bad** — In indoor environments, reflections fill in coverage behind obstacles; a room with metal walls might have better average coverage than one with RF-absorbing walls, even though the metal room has worse multipath variation
+- **Frequency-selective fading is why high data rates are hard** — Wider bandwidth means more susceptibility to frequency-selective fading; this is a fundamental tradeoff: higher data rates require more bandwidth, which makes the channel harder to equalize
+- **People are RF absorbers and reflectors** — A human body absorbs and scatters 2.4 GHz signals significantly; a person standing between transmitter and receiver can cause 10-15 dB of additional loss; indoor propagation models that ignore people are optimistic
+- **Symmetry is rare in multipath environments** — The path from A to B may have different multipath characteristics than from B to A if the environments around the two antennas differ; do not assume link quality is symmetric
+
+## Bench Relevance
+
+- Monitoring RSSI on a WiFi or Bluetooth link while slowly sliding the receiver across a table reveals the spatial fading pattern — signal strength visibly oscillates over distances of a few centimeters at 2.4 GHz
+- A wireless link that drops intermittently in a room full of people but works reliably in the same room empty points to body absorption and multipath changes as the root cause
+- When a spectrum analyzer connected to a fixed antenna shows signal level fluctuations of 10-20 dB without any change at the transmitter, multipath fading from environmental movement (doors, people, vehicles) is the likely explanation
+- Testing a link in both directions and observing different RSSI values confirms asymmetric multipath — the environment around each antenna contributes differently to the channel

@@ -9,7 +9,7 @@ Antenna selection gets most of the attention in wireless system design, but plac
 
 ## Height Above Ground
 
-For VHF and UHF frequencies, antenna height is one of the most powerful variables you can control. Raising the antenna extends the radio horizon, clears nearby obstacles, and reduces ground-reflection nulls.
+For VHF and UHF frequencies, antenna height is one of the most powerful variables available. Raising the antenna extends the radio horizon, clears nearby obstacles, and reduces ground-reflection nulls.
 
 The radio horizon distance (in kilometers) for an antenna at height h (in meters) is approximately:
 
@@ -47,7 +47,7 @@ Where r1 is in meters, d is the total link distance in kilometers, and f is the 
 
 The rule of thumb: at least 60% of the first Fresnel zone must be clear of obstructions for the link to perform near its free-space potential. If the zone is partially blocked — by terrain, buildings, or vegetation — additional loss occurs beyond what free-space path loss predicts.
 
-For a 5 km link at 900 MHz, the first Fresnel zone radius at midpoint is about 20 meters. This means that even with visual line of sight, if there is a tree line or building within 12 meters (60%) of the direct path at the midpoint, you will experience additional loss. This is a surprisingly large clearance requirement and is the most common reason that links that "should work" do not.
+For a 5 km link at 900 MHz, the first Fresnel zone radius at midpoint is about 20 meters. This means that even with visual line of sight, if there is a tree line or building within 12 meters (60%) of the direct path at the midpoint, additional loss results. This is a surprisingly large clearance requirement and is the most common reason that links that "should work" do not.
 
 ## Ground Reflections
 
@@ -61,7 +61,7 @@ Over water or flat ground (salt marshes, desert, parking lots), ground reflectio
 
 ## Mounting Location
 
-Where on a building or structure you mount the antenna matters:
+Where on a building or structure the antenna is mounted matters:
 
 **Edge vs center of rooftop:** An antenna at the edge of a flat roof benefits from ground gain — diffraction over the roof edge enhances the signal in the horizontal plane. An antenna at the center of a large flat roof may suffer because the roof itself blocks low-angle radiation and reflects signal back upward.
 
@@ -86,16 +86,30 @@ When multiple antennas are mounted nearby — common on commercial buildings and
 Based on patterns seen over many installations:
 
 - **Higher is almost always better** for range and reliability, until structural and cost constraints dominate.
-- **Clear the Fresnel zone** — do the calculation for your link distance and frequency. You may be surprised at how much clearance is needed.
+- **Clear the Fresnel zone** — do the calculation for the specific link distance and frequency; the required clearance is often surprisingly large.
 - **Avoid metal surfaces within a wavelength** — nearby metal distorts the radiation pattern and detunes the antenna. If metal is unavoidable, include it in the design (as a ground plane or reflector) rather than ignoring it.
-- **Cable loss increases with length and frequency** — a long cable run from a low mounting point may lose more signal than you gained by using a better antenna. At 5.8 GHz, LMR-400 cable loses about 0.36 dB/m. A 10-meter run costs 3.6 dB — more than the difference between many antenna choices. Mount the radio close to the antenna or use low-loss cable.
+- **Cable loss increases with length and frequency** — a long cable run from a low mounting point may lose more signal than is gained by using a better antenna. At 5.8 GHz, LMR-400 cable loses about 0.36 dB/m. A 10-meter run costs 3.6 dB — more than the difference between many antenna choices. Mount the radio close to the antenna or use low-loss cable.
 - **Polarization alignment matters** — a vertically polarized transmitter and a horizontally polarized receiver lose 20+ dB from polarization mismatch. Ensure both ends of a link use the same polarization, or use circular polarization if orientation is uncertain.
 
-## Gotchas
+## Tips
 
-- **Visual line of sight does not guarantee RF line of sight** — Fresnel zone clearance is required, not just an unobstructed view. A link that visually clears a hill by 2 meters may still lose 10-15 dB if the Fresnel zone is partially blocked.
-- **Ground reflections create height-dependent nulls** — Moving an antenna up or down by as little as half a wavelength can change a null into a peak. If a link is marginal, try adjusting antenna height by 10-30 cm before making larger changes.
-- **Cable loss is often the biggest loss in the system** — A 15-meter run of RG-58 at 2.4 GHz loses about 12 dB. That is more than the difference between a 3 dBi and a 15 dBi antenna. Use the shortest cable possible and the lowest-loss cable you can afford.
-- **The building itself is part of the antenna environment** — A metal roof, HVAC equipment, or a parapet wall near the antenna affects the radiation pattern. Do not assume the antenna's datasheet pattern is what you will actually get once it is installed on a real structure.
-- **Nearby antennas can detune each other** — Two antennas mounted close together on the same frequency band will couple and shift each other's resonant frequency and impedance. If adding a second antenna degrades the first, separation is insufficient.
-- **Do not forget about snow and ice** — An antenna designed for summer conditions may detune or degrade significantly when covered in ice. Radomes help, but ice on a radome still adds loss and changes the electrical environment.
+- Calculate the Fresnel zone radius for the specific link distance and frequency before finalizing antenna height — the required clearance is often much larger than expected
+- When a link is marginal, try adjusting antenna height by 10-30 cm before swapping hardware; at UHF frequencies, moving half a wavelength can convert a null into a peak
+- Keep cable runs as short as possible and use low-loss cable — a 15-meter run of RG-58 at 2.4 GHz costs 12 dB, which is more than the difference between many antenna upgrades
+- Match polarization at both ends of a link; a 20+ dB mismatch penalty from crossed polarization dwarfs most other optimization efforts
+
+## Caveats
+
+- **Visual line of sight does not guarantee RF line of sight** — Fresnel zone clearance is required, not just an unobstructed view; a link that visually clears a hill by 2 meters may still lose 10-15 dB if the Fresnel zone is partially blocked
+- **Ground reflections create height-dependent nulls** — Moving an antenna up or down by as little as half a wavelength can change a null into a peak; if a link is marginal, try adjusting antenna height by 10-30 cm before making larger changes
+- **Cable loss is often the biggest loss in the system** — A 15-meter run of RG-58 at 2.4 GHz loses about 12 dB; that is more than the difference between a 3 dBi and a 15 dBi antenna; use the shortest cable possible and the lowest-loss cable available
+- **The building itself is part of the antenna environment** — A metal roof, HVAC equipment, or a parapet wall near the antenna affects the radiation pattern; do not assume the antenna's datasheet pattern matches what is actually achieved once it is installed on a real structure
+- **Nearby antennas can detune each other** — Two antennas mounted close together on the same frequency band will couple and shift each other's resonant frequency and impedance; if adding a second antenna degrades the first, separation is insufficient
+- **Do not forget about snow and ice** — An antenna designed for summer conditions may detune or degrade significantly when covered in ice; radomes help, but ice on a radome still adds loss and changes the electrical environment
+
+## Bench Relevance
+
+- Measuring RSSI while slowly raising an antenna on a telescoping mast reveals the height-dependent null pattern — signal strength oscillates as the antenna moves through ground-reflection nulls and peaks
+- A VNA sweep of an antenna's return loss that shifts noticeably when the antenna is moved from a test jig to its final mounting location shows the effect of nearby metal and building structures on tuning
+- Comparing signal strength readings at both ends of a coax run against the manufacturer's specified loss-per-meter at the operating frequency confirms whether cable loss matches expectations or whether a connector is faulty
+- Installing a second antenna on the same mast and watching the first antenna's SWR change on a VNA demonstrates mutual coupling — increasing separation until the SWR stabilizes reveals the minimum safe spacing

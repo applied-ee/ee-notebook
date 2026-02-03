@@ -87,10 +87,24 @@ The absorption peaks create natural "fences" in the spectrum. The 60 GHz peak is
 
 Between these peaks are "windows" of relatively low absorption — at 35 GHz, 94 GHz, and 140 GHz — which are used for radar and communication.
 
-## Gotchas
+## Tips
 
-- **Ionospheric propagation is not reliable** — HF skywave can reach thousands of kilometers, but it depends on solar conditions, time of day, and season. A frequency that works today may not work tomorrow. HF communication requires constant frequency management and the willingness to try several bands.
-- **"Line of sight" includes Fresnel zone clearance** — Having visual line of sight is not enough. The first Fresnel zone must be substantially clear (60%+) for reliable propagation. A link that visually clears a hill by a few meters may still lose 10-20 dB from Fresnel zone obstruction (see [Antenna Height & Placement Effects]({{< relref "/docs/radio-rf/propagation/antenna-height-and-placement" >}})).
-- **Rain fade matters above 10 GHz but is often forgotten** — Outdoor microwave links that work perfectly in clear weather can fail during heavy rain. Link budgets must include rain margin based on local rainfall statistics, not just clear-air loss.
-- **Lower frequency does not always mean better coverage** — While lower frequencies penetrate and diffract better, they also require larger antennas and have less bandwidth. A 900 MHz link through two walls may deliver 100 kbps; a 5 GHz link in the same room with line-of-sight delivers 100 Mbps. The right frequency depends on the application, not just the propagation.
-- **The 2.4 GHz band is brutally congested** — WiFi, Bluetooth, Zigbee, microwave ovens, baby monitors, and countless other devices all share the 2.4 GHz ISM band. In a dense apartment building, interference can be a bigger problem than propagation loss. Moving to 5 GHz or 6 GHz may improve performance despite worse propagation because of reduced interference.
+- Match the frequency band to the application requirements: sub-GHz for range and penetration with modest data rates, UHF for the best compromise of range and throughput, and microwave/mmWave only when high bandwidth justifies the propagation limitations
+- When evaluating a new wireless technology, check the frequency band first — it determines the propagation physics more than any other single parameter
+- For outdoor links above 10 GHz, always include rain margin in the link budget based on local climate data, not clear-sky conditions
+- In congested environments, moving from 2.4 GHz to 5 or 6 GHz can improve performance despite worse propagation, because reduced interference outweighs the additional path loss
+
+## Caveats
+
+- **Ionospheric propagation is not reliable** — HF skywave can reach thousands of kilometers, but it depends on solar conditions, time of day, and season; a frequency that works today may not work tomorrow; HF communication requires constant frequency management and the willingness to try several bands
+- **"Line of sight" includes Fresnel zone clearance** — Having visual line of sight is not enough; the first Fresnel zone must be substantially clear (60%+) for reliable propagation; a link that visually clears a hill by a few meters may still lose 10-20 dB from Fresnel zone obstruction (see [Antenna Height & Placement Effects]({{< relref "/docs/radio-rf/propagation/antenna-height-and-placement" >}}))
+- **Rain fade matters above 10 GHz but is often forgotten** — Outdoor microwave links that work perfectly in clear weather can fail during heavy rain; link budgets must include rain margin based on local rainfall statistics, not just clear-air loss
+- **Lower frequency does not always mean better coverage** — While lower frequencies penetrate and diffract better, they also require larger antennas and have less bandwidth; a 900 MHz link through two walls may deliver 100 kbps; a 5 GHz link in the same room with line-of-sight delivers 100 Mbps; the right frequency depends on the application, not just the propagation
+- **The 2.4 GHz band is brutally congested** — WiFi, Bluetooth, Zigbee, microwave ovens, baby monitors, and countless other devices all share the 2.4 GHz ISM band; in a dense apartment building, interference can be a bigger problem than propagation loss; moving to 5 GHz or 6 GHz may improve performance despite worse propagation because of reduced interference
+
+## Bench Relevance
+
+- A spectrum analyzer sweep across bands reveals the congestion difference firsthand — the 2.4 GHz ISM band typically shows dozens of signals in a residential area, while 5 GHz channels appear comparatively empty
+- Testing the same wireless link at 900 MHz and 2.4 GHz through a concrete wall shows the penetration difference directly: the 900 MHz signal may come through 5-8 dB stronger
+- An HF receiver tuned to the same frequency at different times of day demonstrates ionospheric variability — bands that are dead at noon may come alive after sunset as the D layer fades
+- A point-to-point microwave link that shows stable signal in clear weather but drops 5-10 dB during heavy rain confirms rain fade and validates the need for weather margin in the link budget

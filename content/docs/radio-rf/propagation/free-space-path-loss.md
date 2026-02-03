@@ -5,13 +5,13 @@ weight: 10
 
 # Free-Space Path Loss
 
-When you transmit RF energy into open space, the power spreads out over an ever-growing sphere. By the time it reaches a distant receiver, only a tiny fraction of the original power is intercepted by the receiving antenna. This geometric spreading is called free-space path loss (FSPL), and it is the absolute minimum loss you will ever see between two antennas — real environments always add more.
+When RF energy is transmitted into open space, the power spreads out over an ever-growing sphere. By the time it reaches a distant receiver, only a tiny fraction of the original power is intercepted by the receiving antenna. This geometric spreading is called free-space path loss (FSPL), and it is the absolute minimum loss between two antennas — real environments always add more.
 
 ## The Inverse Square Law
 
 Electromagnetic waves radiate outward from a source. At distance d, the power is spread over the surface of a sphere with area 4*pi*d^2. Double the distance and the sphere's surface area quadruples, so the power density drops to one quarter. This is the inverse square law, and it applies to all radiation — light, sound, and radio.
 
-In decibels, doubling the distance costs 6 dB. Every factor of 10 in distance costs 20 dB. This is a fundamental geometric reality, not something you can engineer around — you can only compensate for it with more transmit power, higher antenna gain, or better receiver sensitivity.
+In decibels, doubling the distance costs 6 dB. Every factor of 10 in distance costs 20 dB. This is a fundamental geometric reality, not something that can be engineered around — the only compensation is more transmit power, higher antenna gain, or better receiver sensitivity.
 
 ## The FSPL Formula
 
@@ -33,7 +33,7 @@ The frequency dependence sometimes confuses people. Space itself does not attenu
 | 1 km | 85.2 dB | 91.7 dB | 100.0 dB | 107.7 dB |
 | 10 km | 105.2 dB | 111.7 dB | 120.0 dB | 127.7 dB |
 
-At 2.4 GHz across a 100-meter line-of-sight link, you lose 80 dB just from geometric spreading. That is a factor of 10^8 — one hundred million — in power. The signal still gets through because transmitters output milliwatts to watts, and receivers can detect signals down to roughly -90 to -100 dBm.
+At 2.4 GHz across a 100-meter line-of-sight link, 80 dB is lost just from geometric spreading. That is a factor of 10^8 — one hundred million — in power. The signal still gets through because transmitters output milliwatts to watts, and receivers can detect signals down to roughly -90 to -100 dBm.
 
 ## Link Budget Basics
 
@@ -52,7 +52,7 @@ A typical WiFi receiver can decode at -70 to -80 dBm, so this link has 21-31 dB 
 
 ## Link Margin
 
-Link margin is the difference between the received signal level and the minimum required signal level (receiver sensitivity). It is your safety cushion against real-world impairments that FSPL does not account for:
+Link margin is the difference between the received signal level and the minimum required signal level (receiver sensitivity). It is the safety cushion against real-world impairments that FSPL does not account for:
 
 - Multipath fading (5-20 dB variations)
 - Body absorption (3-10 dB when a person is in the path)
@@ -64,15 +64,15 @@ For indoor consumer links (WiFi, Bluetooth), 10-15 dB of margin is reasonable. F
 
 ## Why Higher Frequencies Need More Help
 
-The FSPL table shows that moving from 433 MHz to 2.4 GHz adds about 15 dB of path loss at every distance. Moving to 5.8 GHz adds another 7.7 dB. This is a significant penalty — 15 dB means you need 30 times more transmit power or 30 times more antenna gain to achieve the same received signal level.
+The FSPL table shows that moving from 433 MHz to 2.4 GHz adds about 15 dB of path loss at every distance. Moving to 5.8 GHz adds another 7.7 dB. This is a significant penalty — 15 dB means 30 times more transmit power or 30 times more antenna gain is needed to achieve the same received signal level.
 
 In practice, higher frequencies compensate with directional antennas. Because antenna gain scales with frequency for a given physical size, a small dish or patch array at 5.8 GHz can deliver substantial gain. A 30 cm dish at 5.8 GHz has roughly 23 dBi of gain, which more than compensates for the additional path loss compared to 433 MHz with an omnidirectional antenna.
 
-This is the fundamental tradeoff: lower frequencies propagate farther with simple antennas, but higher frequencies can focus energy more tightly with compact antennas. The right choice depends on whether you need omnidirectional coverage or a directed link.
+This is the fundamental tradeoff: lower frequencies propagate farther with simple antennas, but higher frequencies can focus energy more tightly with compact antennas. The right choice depends on whether omnidirectional coverage or a directed link is needed.
 
 ## Receiver Sensitivity Sets the Limit
 
-The link budget ends at the receiver. Receiver sensitivity is the weakest signal the receiver can detect with acceptable performance (usually defined as a specific bit error rate or signal-to-noise ratio).
+The link budget ends at the receiver. Receiver sensitivity is the weakest signal a receiver can detect with acceptable performance (usually defined as a specific bit error rate or signal-to-noise ratio).
 
 Typical receiver sensitivities:
 - FM broadcast radio: -90 dBm
@@ -84,11 +84,25 @@ Typical receiver sensitivities:
 
 The difference between WiFi's -82 dBm and LoRa's -137 dBm is 55 dB — a factor of over 300,000 in power. LoRa achieves this by using very narrow bandwidth and spread-spectrum techniques, trading data rate for sensitivity. GPS is even more extreme, using spreading codes and very long integration times. These numbers explain why LoRa and GPS can work over vastly greater distances than WiFi for the same transmit power.
 
-## Gotchas
+## Tips
 
-- **FSPL is the best case, never the real case** — Real environments add reflection loss, absorption, diffraction, and multipath fading on top of free-space spreading. Use FSPL as a baseline and add margin for everything else.
-- **The frequency term is not atmospheric absorption** — Higher FSPL at higher frequencies comes from the shrinking effective aperture of an isotropic antenna, not from the air absorbing more. Atmospheric effects are separate and additional.
-- **Antenna gain compensates path loss, but narrows coverage** — A 15 dBi antenna adds 15 dB to your link budget, but it concentrates the signal into a narrow beam. If the receiver moves out of that beam, the link fails. Gain is not free — it comes from directionality.
-- **Cable loss eats your link budget before the signal leaves** — A 3-meter run of RG-174 at 2.4 GHz loses about 3 dB. That is half your transmit power gone before it reaches the antenna. Use low-loss cable or mount the radio close to the antenna.
-- **dBm and dBi are not the same thing** — dBm is absolute power referenced to 1 milliwatt. dBi is antenna gain referenced to an isotropic radiator. Mixing them up in a link budget produces nonsense. Keep units straight.
-- **Link budgets assume clear line of sight** — If there is no direct line of sight between antennas, the actual loss can be 20-40 dB worse than FSPL. Always check whether the path is actually clear, including Fresnel zone clearance (see [Antenna Height & Placement Effects]({{< relref "/docs/radio-rf/propagation/antenna-height-and-placement" >}})).
+- Start every link analysis by computing FSPL at the target frequency and distance, then add at least 10-15 dB of margin for real-world impairments before selecting hardware
+- Use the FSPL table to quickly sanity-check whether a link is feasible at a given frequency — if path loss alone exceeds the transmit power plus antenna gains minus receiver sensitivity, no amount of optimization will save it
+- When choosing between frequency bands, compare the FSPL penalty of moving up in frequency against the antenna gain available at that frequency for a given physical size
+- Keep cable runs as short as possible — every dB lost in cable is a dB subtracted from the link budget before the signal even reaches free space
+
+## Caveats
+
+- **FSPL is the best case, never the real case** — Real environments add reflection loss, absorption, diffraction, and multipath fading on top of free-space spreading; use FSPL as a baseline and add margin for everything else
+- **The frequency term is not atmospheric absorption** — Higher FSPL at higher frequencies comes from the shrinking effective aperture of an isotropic antenna, not from the air absorbing more; atmospheric effects are separate and additional
+- **Antenna gain compensates path loss, but narrows coverage** — A 15 dBi antenna adds 15 dB to the link budget, but it concentrates the signal into a narrow beam; if the receiver moves out of that beam, the link fails; gain is not free — it comes from directionality
+- **Cable loss eats the link budget before the signal leaves** — A 3-meter run of RG-174 at 2.4 GHz loses about 3 dB; that is half the transmit power gone before it reaches the antenna; use low-loss cable or mount the radio close to the antenna
+- **dBm and dBi are not the same thing** — dBm is absolute power referenced to 1 milliwatt; dBi is antenna gain referenced to an isotropic radiator; mixing them up in a link budget produces nonsense; keep units straight
+- **Link budgets assume clear line of sight** — If there is no direct line of sight between antennas, the actual loss can be 20-40 dB worse than FSPL; always check whether the path is actually clear, including Fresnel zone clearance (see [Antenna Height & Placement Effects]({{< relref "/docs/radio-rf/propagation/antenna-height-and-placement" >}}))
+
+## Bench Relevance
+
+- A WiFi link reading -75 dBm at 10 meters with clear line of sight is already 15 dB below what FSPL alone predicts — the gap reveals how much loss the local environment is adding
+- When a short-range wireless module (Bluetooth, Zigbee) loses connectivity at distances well within its rated range, computing the FSPL at the operating frequency helps distinguish between a propagation problem and a hardware fault
+- Measuring received signal strength at several known distances and comparing against the 6 dB-per-doubling rule reveals whether the environment is behaving like free space or adding substantial extra loss
+- A sudden 3 dB drop in link budget on an otherwise stable bench setup often points to a bad cable or connector rather than a propagation issue — FSPL does not change, so the loss is local
