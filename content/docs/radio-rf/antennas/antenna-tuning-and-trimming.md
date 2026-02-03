@@ -15,12 +15,12 @@ These three concepts are related but distinct, and confusing them leads to frust
 
 **Matching** means the antenna's impedance equals the transmission line's characteristic impedance (typically 50 ohms). A perfectly matched antenna has Z = 50 + j0 at the feedpoint, giving VSWR = 1:1. Matching requires both the resistive and reactive parts to be correct.
 
-**Efficiency** is the fraction of input power that's radiated. A well-matched, resonant antenna can still have low efficiency if R_loss is comparable to R_rad (see [Radiation Resistance & Efficiency]({{< relref "/docs/radio-rf/antennas/radiation-resistance-and-efficiency" >}})). You can have VSWR 1:1 and still radiate almost nothing.
+**Efficiency** is the fraction of input power that's radiated. A well-matched, resonant antenna can still have low efficiency if R_loss is comparable to R_rad (see [Radiation Resistance & Efficiency]({{< relref "/docs/radio-rf/antennas/radiation-resistance-and-efficiency" >}})). It is possible to have VSWR 1:1 and still radiate almost nothing.
 
 The relationship:
-- Resonance helps matching (eliminating reactance gets you halfway there)
+- Resonance helps matching (eliminating reactance gets halfway there)
 - Matching minimizes reflections but doesn't guarantee efficiency
-- Efficiency is what you ultimately care about, but it's the hardest to measure
+- Efficiency is what ultimately matters, but it is the hardest to measure
 
 ## How Physical Length Controls Resonance
 
@@ -40,7 +40,7 @@ The 0.95 factor (sometimes 0.93-0.97 depending on wire diameter) accounts for th
 | Add a capacitance hat (end cap) | Frequency goes down | Increasing end capacitance, lowering resonance |
 | Move feedpoint position | Changes impedance, minor frequency shift | Adjusting impedance without changing length |
 
-The standard workflow: cut the antenna slightly longer than calculated, measure, and trim. You can always cut shorter, but you can't easily add length back. Start with 5% extra and trim in small increments.
+The standard workflow: cut the antenna slightly longer than calculated, measure, and trim. It is always possible to cut shorter, but not easy to add length back. Start with 5% extra and trim in small increments.
 
 ## Matching Networks
 
@@ -48,7 +48,7 @@ When the antenna's impedance at resonance isn't 50 ohms, a matching network tran
 
 Common antenna matching approaches:
 
-**Gamma match**: a rod parallel to one arm of a dipole, connected to the feedline center conductor. The other feedline conductor connects to the dipole center. By adjusting the rod length and spacing, you can transform the impedance. Widely used on Yagi driven elements.
+**Gamma match**: a rod parallel to one arm of a dipole, connected to the feedline center conductor. The other feedline conductor connects to the dipole center. By adjusting the rod length and spacing, the impedance can be transformed. Widely used on Yagi driven elements.
 
 **Hairpin match (beta match)**: a shorted transmission line stub across the feedpoint of a split dipole. The stub provides shunt inductance that, combined with the antenna's capacitive reactance at a slightly lower-than-resonant frequency, produces a match. Common on Yagi antennas.
 
@@ -60,7 +60,7 @@ Common antenna matching approaches:
 
 ## Using a VNA or Antenna Analyzer
 
-The VNA (or its simpler cousin, the antenna analyzer) is the essential tool for antenna tuning. It measures the complex impedance at the antenna feedpoint across a range of frequencies, showing you:
+The VNA (or its simpler cousin, the antenna analyzer) is the essential tool for antenna tuning. It measures the complex impedance at the antenna feedpoint across a range of frequencies, showing:
 
 - Where the antenna resonates (X crosses zero)
 - What the resistive impedance is at resonance
@@ -71,7 +71,7 @@ The VNA (or its simpler cousin, the antenna analyzer) is the essential tool for 
 
 1. Calibrate at the measurement plane (the end of the cable, not the VNA port)
 2. Connect to the antenna feedpoint
-3. Sweep across the expected frequency range (wider than you think — maybe 20% above and below the target)
+3. Sweep across the expected frequency range (wider than expected -- maybe 20% above and below the target)
 4. Look for the resonance dip (minimum VSWR or X = 0 crossing)
 5. Note the resonant frequency and impedance at that frequency
 6. Trim or adjust to move the resonance to the target frequency
@@ -119,15 +119,28 @@ Coil placement matters: a coil at the center of the antenna is more efficient th
 
 This is a subtle but important distinction. Minimizing VSWR ensures maximum power transfer from the transmitter to the antenna system. But it doesn't guarantee that power is being radiated — it could be absorbed by lossy matching components, a lossy coil, or ground resistance.
 
-A matching network can always bring the VSWR down to 1:1 at the feedline input, regardless of the antenna's actual efficiency. This is a trap: you might achieve a beautiful VSWR sweep and think the antenna is working great, when in fact the matching network is dissipating half the power.
+A matching network can always bring the VSWR down to 1:1 at the feedline input, regardless of the antenna's actual efficiency. This is a trap: a beautiful VSWR sweep may appear while the matching network is actually dissipating half the power.
 
 The safest approach is to first optimize the antenna itself (maximize radiation resistance, minimize loss) and then add matching components only as needed. If the matching network requires large reactive values or many components, it's a sign that the antenna design needs improvement rather than more matching.
 
-## Gotchas
+## Tips
 
-- **Start long and trim short** — You can remove wire but you can't easily add it back. Always start with an antenna that's 5-10% longer than calculated, then trim to frequency.
-- **Resonance and match are different targets** — An antenna can be resonant (X = 0) at 146 MHz with R = 120 ohms, giving VSWR = 2.4:1. It's resonant but not matched. You need a matching network to bring R to 50 ohms.
-- **The cable is part of the measurement** — If your cable isn't calibrated out, the VNA shows the impedance at the VNA port, not at the antenna feedpoint. The cable transforms the impedance. Always calibrate at the antenna end.
-- **Good VSWR doesn't mean good antenna** — A lossy matching network or a lossy loading coil can produce VSWR 1:1 while wasting most of the power as heat. Check efficiency independently if possible.
-- **Environmental coupling changes during tuning** — Your body, the metal workbench, and nearby equipment all affect the antenna during measurement. Step back from the antenna, use a remote readout if possible, and don't touch the antenna while measuring.
-- **Trimming is one-directional** — If you overshoot (cut too short), you need to add extension pieces, use loading, or start with a new element. Be conservative with each trim increment.
+- Always start with an antenna 5-10% longer than calculated and trim toward the target frequency -- wire can be removed but not easily added back
+- Change only one variable at a time during tuning iterations and measure after each change -- adjusting two things simultaneously makes it impossible to attribute the effect
+- Calibrate the VNA at the cable end (not the VNA port) so that impedance readings reflect the antenna feedpoint, not the cable-transformed impedance
+- Step away from the antenna during measurement and use a remote readout if possible -- body proximity detunes VHF/UHF antennas by several MHz
+
+## Caveats
+
+- **Resonance and match are different targets** -- an antenna can be resonant (X = 0) at 146 MHz with R = 120 ohms, giving VSWR = 2.4:1; it is resonant but not matched; a matching network is needed to bring R to 50 ohms
+- **The cable is part of the measurement** -- if the cable is not calibrated out, the VNA shows the impedance at the VNA port, not at the antenna feedpoint; the cable transforms the impedance; always calibrate at the antenna end
+- **Good VSWR does not mean good antenna** -- a lossy matching network or a lossy loading coil can produce VSWR 1:1 while wasting most of the power as heat; check efficiency independently if possible
+- **Environmental coupling changes during tuning** -- the body, the metal workbench, and nearby equipment all affect the antenna during measurement; step back from the antenna, use a remote readout if possible, and do not touch the antenna while measuring
+- **Trimming is one-directional** -- if the cut overshoots (too short), extension pieces, loading, or a new element are needed; be conservative with each trim increment
+
+## Bench Relevance
+
+- Trimming 1 cm from each arm of a VHF dipole and re-measuring on a NanoVNA shows the resonant frequency shift upward by a predictable amount, building intuition for the length-to-frequency relationship
+- Measuring a resonant antenna before and after adding an L/C matching network reveals how the Smith chart trajectory moves toward 50 ohms -- and whether any loss is introduced
+- Connecting a VNA through two different cable lengths without re-calibrating produces visibly different impedance readings for the same antenna, demonstrating why calibration plane matters
+- Measuring VSWR while standing next to a 2m dipole versus stepping 3 meters away shows the body coupling effect as a frequency shift of several MHz and a change in minimum VSWR
