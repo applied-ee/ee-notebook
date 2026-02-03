@@ -5,7 +5,7 @@ weight: 30
 
 # Coax, Twisted Pair, Microstrip & Stripline
 
-There are only a few basic ways to build a transmission line, and each one is a different answer to the same question: how do you guide electromagnetic energy between two conductors with controlled impedance, acceptable loss, and useful isolation? The choice depends on the application — whether you need shielding, bandwidth, ease of fabrication, or integration onto a PCB. Understanding the trade-offs between these structures is fundamental to any work involving RF signals or high-speed digital interconnects.
+There are only a few basic ways to build a transmission line, and each one is a different answer to the same question: how to guide electromagnetic energy between two conductors with controlled impedance, acceptable loss, and useful isolation? The choice depends on the application — whether shielding, bandwidth, ease of fabrication, or integration onto a PCB is the priority. Understanding the trade-offs between these structures is fundamental to any work involving RF signals or high-speed digital interconnects.
 
 ## Coaxial Cable
 
@@ -13,7 +13,7 @@ Coaxial cable is the most familiar RF transmission line. A center conductor (sol
 
 The geometry gives coax several key properties:
 
-**Self-shielding.** The outer conductor completely surrounds the signal, containing the electric and magnetic fields within the cable. No energy radiates out (ideally), and external fields do not couple in. This makes coax inherently well-isolated — you can run it next to other cables without crosstalk.
+**Self-shielding.** The outer conductor completely surrounds the signal, containing the electric and magnetic fields within the cable. No energy radiates out (ideally), and external fields do not couple in. This makes coax inherently well-isolated — it can run next to other cables without crosstalk.
 
 **Well-defined Z0.** The impedance is set by the ratio of the outer conductor diameter to the center conductor diameter and the dielectric constant. Because these dimensions are controlled during manufacturing, Z0 is consistent and predictable.
 
@@ -92,10 +92,24 @@ Stripline places the signal trace between two ground planes, fully immersed in t
 
 Coplanar waveguide (CPW) places the signal trace between ground areas on the same PCB layer, with or without a ground plane beneath. It is used at very high frequencies (mmWave) because it allows easy ground connections for surface-mount components (no via needed — ground is right there on the same layer). CPW has its own impedance formulas based on trace width and gap to the coplanar ground. It is common in MMIC (Monolithic Microwave Integrated Circuit) and chip-level RF design.
 
-## Gotchas
+## Tips
 
-- **Not all 50-ohm cables are equal** — RG-58 and LMR-400 are both 50 ohm, but LMR-400 has less than one-third the loss at 1 GHz. The impedance match is perfect, but the signal arrives 10 dB weaker on the lossy cable. Always check loss specifications, not just Z0.
-- **Microstrip impedance changes with solder mask** — A solder mask layer over a microstrip trace increases the effective dielectric constant and lowers Z0 by 2-5 ohm. Specify impedance with or without mask, and communicate this to the fabricator.
-- **Stripline needs good ground plane stitching** — The two ground planes enclosing a stripline must be connected by closely-spaced vias to prevent the ground cavity from resonating. Without stitching, the ground planes act as a parallel-plate waveguide that supports unwanted modes.
-- **Twisted pair impedance varies with bending** — Bending a twisted pair changes the spacing between conductors, altering Z0. For impedance-sensitive applications, maintain consistent bend radii and avoid sharp bends or crushing.
-- **Mixing transmission line types creates discontinuities** — A coax-to-microstrip transition, for example, changes the field geometry even if both are nominally 50 ohm. Well-designed transitions (like edge-mount SMA connectors with proper ground via fencing) minimize the discontinuity, but there is always some reflection at the transition.
+- When selecting cable for a bench setup, check the loss-per-length specification at the operating frequency rather than assuming all 50-ohm cables perform equally
+- For microstrip designs, specify to the fabricator whether impedance targets are with or without solder mask — this avoids a 2-5 ohm ambiguity in Z0
+- Place ground-stitching vias at intervals no greater than lambda/10 along stripline routing to suppress parallel-plate resonances between the ground planes
+- At coax-to-PCB transitions, use edge-mount connectors with ground via fencing to maintain impedance continuity across the field-geometry change
+
+## Caveats
+
+- **Not all 50-ohm cables are equal** — RG-58 and LMR-400 are both 50 ohm, but LMR-400 has less than one-third the loss at 1 GHz; the impedance match is perfect, but the signal arrives 10 dB weaker on the lossy cable
+- **Microstrip impedance changes with solder mask** — A solder mask layer over a microstrip trace increases the effective dielectric constant and lowers Z0 by 2-5 ohm; specifying impedance with or without mask and communicating this to the fabricator is essential
+- **Stripline needs good ground plane stitching** — The two ground planes enclosing a stripline must be connected by closely-spaced vias to prevent the ground cavity from resonating; without stitching, the ground planes act as a parallel-plate waveguide that supports unwanted modes
+- **Twisted pair impedance varies with bending** — Bending a twisted pair changes the spacing between conductors, altering Z0; for impedance-sensitive applications, maintaining consistent bend radii and avoiding sharp bends or crushing is important
+- **Mixing transmission line types creates discontinuities** — A coax-to-microstrip transition, for example, changes the field geometry even if both are nominally 50 ohm; well-designed transitions minimize the discontinuity, but there is always some reflection at the boundary
+
+## Bench Relevance
+
+- Comparing S21 insertion loss on a VNA between two cables of the same Z0 but different construction (e.g., RG-58 vs. LMR-400) shows the dramatic difference in attenuation at GHz frequencies
+- A TDR measurement across a coax-to-microstrip connector launch reveals the impedance bump at the transition — the size of this bump indicates how well the launch geometry is designed
+- Sweeping S11 on a stripline structure that lacks ground-stitching vias shows resonant nulls at frequencies where the parallel-plate cavity mode is excited
+- Flexing a twisted-pair cable while monitoring a TDR trace shows the impedance shifting in real time, illustrating how mechanical handling affects Z0

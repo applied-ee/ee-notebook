@@ -80,7 +80,7 @@ Higher return loss means less reflection (better match). A return loss of 20 dB 
 
 Return loss is often the preferred specification in professional RF work because it is expressed in dB (additive, easy to work with in cascade analysis) and directly relates to the power reflected. Most RF data sheets specify input and output return loss rather than VSWR.
 
-Relationship summary: VSWR, Gamma, return loss, and reflected power all describe the same physical reality — how much of the wave reflects at an impedance boundary. You will encounter all four representations and need to convert between them fluently.
+Relationship summary: VSWR, Gamma, return loss, and reflected power all describe the same physical reality — how much of the wave reflects at an impedance boundary. All four representations appear regularly, and converting between them fluently is essential.
 
 ## What Happens in Time
 
@@ -120,11 +120,25 @@ Different applications tolerate different levels of mismatch:
 
 Most RF transmitters include protection circuits that reduce power or shut down when VSWR exceeds a threshold (often 3:1) to prevent damage from reflected power heating the output stage.
 
-## Gotchas
+## Tips
 
-- **VSWR does not tell you where the mismatch is** — VSWR measured at the source is a composite of all reflections in the system. A single VSWR measurement cannot distinguish between a mismatched load, a bad connector, or a damaged cable. Use TDR to localize impedance discontinuities.
-- **A matched line with loss also shows low VSWR** — A 50 ohm load on a lossy cable may show an excellent VSWR at the source even if the load is mismatched, because the reflected wave is attenuated twice (once going out, once coming back). This masks problems. Measure at the load end if possible.
-- **Reflected power goes somewhere** — In a transmitter, reflected power returns to the output stage. If the output stage cannot absorb it, it heats up or is re-reflected. Continuous operation into a severe mismatch can destroy the transmitter's final amplifier.
-- **VSWR varies with frequency** — An antenna that is 1.5:1 at 915 MHz may be 3:1 at 930 MHz. Always check VSWR across the entire operating bandwidth, not just at the center frequency.
-- **Multiple cascaded mismatches can cancel or compound** — Two mismatches spaced lambda/4 apart may cancel at one frequency but compound at twice that frequency. This creates frequency-dependent ripple in insertion loss and return loss.
-- **Digital ringing is a reflection problem** — If a digital signal overshoots and rings, it is because of impedance mismatch and unterminated transmission lines, not because of "bad signal quality." Proper termination eliminates ringing.
+- When measuring VSWR, always sweep across the full operating bandwidth rather than spot-checking the center frequency — mismatch can vary dramatically over even a few percent of bandwidth
+- Use TDR in addition to VSWR measurements to pinpoint the location of impedance discontinuities rather than relying on a single aggregate number
+- For transmitter protection, set the VSWR fold-back threshold conservatively (2:1 or lower) to prevent reflected power from stressing the output stage
+- On digital designs, if ringing is observed, treat it as an impedance matching problem and add proper termination rather than trying to fix it with filtering or slew-rate limiting
+
+## Caveats
+
+- **VSWR does not reveal where the mismatch is** — VSWR measured at the source is a composite of all reflections in the system; a single VSWR measurement cannot distinguish between a mismatched load, a bad connector, or a damaged cable
+- **A matched line with loss also shows low VSWR** — A 50 ohm load on a lossy cable may show an excellent VSWR at the source even if the load is mismatched, because the reflected wave is attenuated twice (once going out, once coming back); this masks problems
+- **Reflected power goes somewhere** — In a transmitter, reflected power returns to the output stage; if the output stage cannot absorb it, it heats up or is re-reflected, and continuous operation into a severe mismatch can destroy the final amplifier
+- **VSWR varies with frequency** — An antenna that is 1.5:1 at 915 MHz may be 3:1 at 930 MHz; always check VSWR across the entire operating bandwidth, not just at the center frequency
+- **Multiple cascaded mismatches can cancel or compound** — Two mismatches spaced lambda/4 apart may cancel at one frequency but compound at twice that frequency, creating frequency-dependent ripple in insertion loss and return loss
+- **Digital ringing is a reflection problem** — If a digital signal overshoots and rings, it is because of impedance mismatch and unterminated transmission lines, not because of "bad signal quality"; proper termination eliminates ringing
+
+## Bench Relevance
+
+- Ringing visible on an oscilloscope after a digital edge — overshoot followed by decaying oscillation — is a direct time-domain manifestation of reflections on an unterminated line
+- A VNA sweep showing S11 ripple with a regular period indicates multiple cascaded impedance discontinuities, and the ripple spacing reveals the electrical distance between them
+- Measuring VSWR at the source end of a long lossy cable and seeing a suspiciously good result (e.g., 1.1:1) while the load is clearly mismatched is a sign that cable loss is masking the true reflection
+- A transmitter that folds back power or shuts down intermittently is often responding to VSWR excursions at specific frequencies within the operating band

@@ -27,7 +27,7 @@ The standard impedance values in use today are historical compromises:
 
 **100 ohm (differential)** — Common for differential digital signaling (USB, Ethernet, HDMI, PCIe). A 100 ohm differential pair is typically two 50 ohm single-ended traces. The differential impedance is approximately twice the single-ended impedance (exactly 2x for loosely-coupled pairs, somewhat less for tightly-coupled pairs).
 
-There is nothing magical about these values. A 37 ohm or 93 ohm transmission line works perfectly well, as long as everything in the system is matched. The standards exist because you need agreement between equipment manufacturers, cable suppliers, and connector designers. Once an ecosystem is built around 50 ohm, everything connects to everything else without reflections.
+There is nothing magical about these values. A 37 ohm or 93 ohm transmission line works perfectly well, as long as everything in the system is matched. The standards exist because agreement is needed between equipment manufacturers, cable suppliers, and connector designers. Once an ecosystem is built around 50 ohm, everything connects to everything else without reflections.
 
 ## Geometry Determines Z0
 
@@ -71,7 +71,7 @@ Real cables have loss (conductor resistance, dielectric loss), which is modeled 
 
 **"Z0 changes with frequency."** Mostly no. For an ideal lossless line, Z0 = sqrt(L/C) and is frequency-independent. Real cables have a slight frequency dependence because conductor loss and skin effect alter the effective L at different frequencies. But for practical purposes, the Z0 of a good cable or controlled-impedance trace is essentially constant over the operating bandwidth.
 
-**"You need a special instrument to measure Z0."** A TDR (Time Domain Reflectometer) directly shows Z0 by launching a step and observing the voltage level on the line before reflections return. A VNA can also determine Z0 from S-parameter measurements. In a pinch, you can estimate Z0 from the capacitance per unit length (measured with an LCR meter on a short cable with the far end open) and the known velocity factor: Z0 = 1 / (v x C_per_length).
+**"A special instrument is needed to measure Z0."** A TDR (Time Domain Reflectometer) directly shows Z0 by launching a step and observing the voltage level on the line before reflections return. A VNA can also determine Z0 from S-parameter measurements. In a pinch, Z0 can be estimated from the capacitance per unit length (measured with an LCR meter on a short cable with the far end open) and the known velocity factor: Z0 = 1 / (v x C_per_length).
 
 ## Impedance in System Design
 
@@ -86,10 +86,24 @@ Any deviation from Z0 at any point creates a [reflection]({{< relref "/docs/radi
 
 In practice, nothing is perfectly matched. A connector might be 49.5 ohm instead of 50. A PCB trace might be 52 ohm due to etch tolerance. A cable might be 50.5 ohm. Each imperfection creates a small reflection, and the cumulative effect of many small reflections determines the overall system performance. This is why system-level specifications are given in terms of return loss (dB of reflected power) or VSWR rather than demanding exact impedance values.
 
-## Gotchas
+## Tips
 
-- **Solder mask changes microstrip impedance** — Solder mask adds a thin dielectric layer on top of the trace, increasing the effective dielectric constant and lowering Z0 by a few ohms. Impedance-controlled PCB processes account for this, but if you are hand-calculating, remember that the bare-copper formula will overestimate Z0.
-- **Differential impedance is not simply twice single-ended** — For tightly-coupled differential pairs, the coupling between traces reduces the differential impedance below 2 x Z0_single. A pair of 55 ohm single-ended traces might have a 100 ohm differential impedance only if they are loosely coupled. Tight coupling might give 90 ohm differential.
-- **Etch tolerance affects Z0 more than you expect** — A 0.3 mm trace (target 50 ohm) that etches to 0.27 mm (10% narrower) might measure 55 ohm. At RF, that 5 ohm difference produces measurable reflections. Specify impedance control in the PCB fab notes, not just trace width.
-- **Connector choice must match the system impedance** — Mixing 50 ohm and 75 ohm connectors and cables creates a 6 dB return loss mismatch at every interface. BNC connectors come in both 50 and 75 ohm versions that are physically compatible but electrically mismatched.
-- **Via transitions disrupt Z0** — A via through a PCB is not a transmission line with controlled Z0. It is a short, uncontrolled-impedance structure (typically 25-40 ohm for a standard via in FR4). At frequencies where the via is electrically significant, this discontinuity causes reflections. Back-drilled vias and via-in-pad designs minimize this effect.
+- Use the PCB fabricator's impedance calculator rather than textbook formulas — it accounts for solder mask, copper weight, and etch compensation specific to the fab process
+- Specify impedance control in the fabrication notes (e.g., "50 ohm +/- 10% on layer 1 microstrip") rather than relying on trace width alone, since etch tolerances vary between shops
+- When mixing connector families or cable types, verify that everything in the signal chain shares the same Z0 — a single mismatched adapter can dominate the system return loss
+- For differential pairs, request the fabricator's coupling-aware impedance model rather than assuming differential Z = 2x single-ended Z
+
+## Caveats
+
+- **Solder mask changes microstrip impedance** — Solder mask adds a thin dielectric layer on top of the trace, increasing the effective dielectric constant and lowering Z0 by a few ohms; impedance-controlled PCB processes account for this, but when hand-calculating, the bare-copper formula will overestimate Z0
+- **Differential impedance is not simply twice single-ended** — For tightly-coupled differential pairs, the coupling between traces reduces the differential impedance below 2 x Z0_single; a pair of 55 ohm single-ended traces might have a 100 ohm differential impedance only if they are loosely coupled, and tight coupling might give 90 ohm differential
+- **Etch tolerance affects Z0 more than expected** — A 0.3 mm trace (target 50 ohm) that etches to 0.27 mm (10% narrower) might measure 55 ohm; at RF, that 5 ohm difference produces measurable reflections
+- **Connector choice must match the system impedance** — Mixing 50 ohm and 75 ohm connectors and cables creates a 6 dB return loss mismatch at every interface; BNC connectors come in both 50 and 75 ohm versions that are physically compatible but electrically mismatched
+- **Via transitions disrupt Z0** — A via through a PCB is not a transmission line with controlled Z0; it is a short, uncontrolled-impedance structure (typically 25-40 ohm for a standard via in FR4), and at frequencies where the via is electrically significant, this discontinuity causes reflections
+
+## Bench Relevance
+
+- A TDR trace that dips at a via location reveals the impedance drop caused by the via's uncontrolled geometry — a common sight on high-speed PCB measurements
+- Measuring a microstrip test coupon with and without solder mask shows the 2-5 ohm impedance shift directly on a TDR or VNA
+- An S11 measurement that shows worse return loss than expected at a connector junction often indicates a 50/75 ohm mismatch or a worn connector interface
+- Probing a differential pair with a TDR and seeing asymmetric impedance between the P and N legs points to etch variation or unequal coupling

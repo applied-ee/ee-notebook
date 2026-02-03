@@ -43,7 +43,7 @@ The velocity factor depends on the dielectric material:
 | Solid PTFE (Teflon) | 0.69 - 0.70 | 30-31% shorter |
 | Solid polyethylene | 0.66 | 34% shorter |
 
-This means a half-wavelength of cable at 100 MHz (free-space wavelength 3 meters) is only about 1 meter long in solid polyethylene coax (VF = 0.66). If you are cutting a cable to a specific electrical length — for an impedance-matching stub, a phased array feed, or a delay line — you must use the velocity factor, not the free-space wavelength.
+This means a half-wavelength of cable at 100 MHz (free-space wavelength 3 meters) is only about 1 meter long in solid polyethylene coax (VF = 0.66). When cutting a cable to a specific electrical length — for an impedance-matching stub, a phased array feed, or a delay line — the velocity factor must be used, not the free-space wavelength.
 
 Velocity factor can be measured by determining the frequency at which a cable of known physical length is exactly one quarter wavelength (the impedance from an open end goes through a minimum on a VNA, or TDR shows the first reflection at the expected time).
 
@@ -84,7 +84,7 @@ This transformation effect means the impedance measured at the end of a cable de
 
 Cable loss is frequency-dependent, which means a cable acts as a low-pass filter. Higher frequency components are attenuated more than lower ones. For wideband signals (like digital pulses or noise), the cable progressively rounds the edges and attenuates high-frequency content.
 
-This filtering effect is sometimes useful (it can reduce EMI by attenuating harmonics) and sometimes harmful (it degrades signal integrity for wideband signals). In precision pulse measurements, cable-induced filtering must be accounted for — the pulse you see at the far end of a cable is not identical to the pulse at the near end.
+This filtering effect is sometimes useful (it can reduce EMI by attenuating harmonics) and sometimes harmful (it degrades signal integrity for wideband signals). In precision pulse measurements, cable-induced filtering must be accounted for — the pulse observed at the far end of a cable is not identical to the pulse at the near end.
 
 At extreme lengths or frequencies, the cable becomes essentially opaque. A 100-meter run of RG-58 at 5 GHz has 44 dB of loss — the signal is attenuated by a factor of 25,000. At that point, the cable is not a signal path; it is a termination (it absorbs all the energy before it reaches the far end).
 
@@ -116,11 +116,25 @@ RF cables are more fragile than they appear:
 - **Phase stability** — Flexing a cable slightly changes its electrical length (by altering the dielectric geometry). Phase-stable cables (with special dielectric supports) are used in VNA measurements and phase-sensitive systems. Standard cables can shift by several degrees of phase when flexed.
 - **Adapter quality** — Every adapter (BNC-to-SMA, N-to-BNC, etc.) adds an impedance discontinuity and loss. Minimize adapters in the signal path. Use cables with the correct connectors on each end rather than using adapters whenever possible.
 
-## Gotchas
+## Tips
 
-- **Cable loss is a one-way number, but reflections travel both ways** — If a cable has 3 dB loss and the load reflects all the power, the reflected signal sees another 3 dB of loss on the return trip. The return loss measured at the source includes 6 dB of cable attenuation on top of the load's actual return loss. This makes bad loads look acceptable through lossy cables.
-- **Velocity factor varies slightly between cable batches** — Two RG-58 cables from different manufacturers may have velocity factors of 0.65 and 0.67. For phase-matched assemblies, measure the actual velocity factor of your specific cable stock.
-- **BNC and SMA connectors exist in both 50 and 75 ohm versions** — They are physically compatible but electrically mismatched. Mixing them produces a 6 dB return loss at every interface. The 75 ohm BNC has a narrower center pin, but hand-feel is not a reliable way to distinguish them. Check the markings.
-- **UHF/PL-259 connectors are not RF connectors** — Despite the name "UHF," PL-259 connectors have no controlled impedance and are essentially useless above 150-300 MHz. They persist in amateur radio by tradition, not merit.
-- **Cable assemblies degrade over time** — Connector wear, moisture ingress, UV damage to the jacket, and repeated flexing all increase loss and impedance irregularities. Test cable assemblies periodically in critical applications, and replace cables that show degraded return loss.
-- **Do not coil excess cable at RF** — A coil of cable acts as an inductor at lower frequencies and a common-mode choke. If you have excess cable length, route it in a non-inductive pattern (figure-8) or cut it to length. Excess cable also adds unnecessary loss.
+- Choose cable based on loss at the operating frequency, not just impedance — a link budget calculation early in the design prevents surprises after installation
+- For phase-matched cable assemblies, measure the velocity factor of the actual cable stock rather than relying on datasheet nominal values
+- Protect unused connectors with dust caps and store cables without sharp bends to preserve both impedance consistency and connector interface quality
+- Minimize the number of adapters in any RF signal path; each adapter adds an impedance discontinuity and measurable loss
+
+## Caveats
+
+- **Cable loss is a one-way number, but reflections travel both ways** — If a cable has 3 dB loss and the load reflects all the power, the reflected signal sees another 3 dB of loss on the return trip; the return loss measured at the source includes 6 dB of cable attenuation on top of the load's actual return loss, making bad loads look acceptable through lossy cables
+- **Velocity factor varies slightly between cable batches** — Two RG-58 cables from different manufacturers may have velocity factors of 0.65 and 0.67; for phase-matched assemblies, measuring the actual velocity factor of the specific cable stock in use is essential
+- **BNC and SMA connectors exist in both 50 and 75 ohm versions** — They are physically compatible but electrically mismatched; mixing them produces a 6 dB return loss at every interface, and hand-feel is not a reliable way to distinguish them
+- **UHF/PL-259 connectors are not RF connectors** — Despite the name "UHF," PL-259 connectors have no controlled impedance and are essentially useless above 150-300 MHz; they persist in amateur radio by tradition, not merit
+- **Cable assemblies degrade over time** — Connector wear, moisture ingress, UV damage to the jacket, and repeated flexing all increase loss and impedance irregularities
+- **Do not coil excess cable at RF** — A coil of cable acts as an inductor at lower frequencies and a common-mode choke; if there is excess cable length, route it in a non-inductive pattern (figure-8) or cut it to length, since excess cable also adds unnecessary loss
+
+## Bench Relevance
+
+- Measuring S21 insertion loss on a cable at the operating frequency — and comparing it against the datasheet specification — immediately reveals whether the cable is degraded or whether a different cable type is needed for the link budget
+- A TDR sweep along a cable that shows a localized impedance bump at a connector or bend point pinpoints physical damage that would be invisible to a simple continuity check
+- Comparing the phase of S21 on two supposedly identical cable assemblies and seeing a difference indicates velocity-factor variation between the cables — critical for phased-array feeds and matched-length interconnects
+- Observing that return loss measured at the source improves after shortening the cable (removing loss) while the load stays the same confirms that cable attenuation was masking a load mismatch

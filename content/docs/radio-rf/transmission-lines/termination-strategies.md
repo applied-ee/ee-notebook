@@ -5,7 +5,7 @@ weight: 50
 
 # Termination Strategies
 
-Termination is the act of placing an impedance at the end of a transmission line to absorb the traveling wave and prevent reflections. Without termination, energy bounces back and forth on the line, creating standing waves, ringing, and signal degradation. The choice of termination strategy depends on the application — whether you are building an RF system or a digital bus, whether DC power consumption matters, and whether you need to terminate at the source, the load, or both.
+Termination is the act of placing an impedance at the end of a transmission line to absorb the traveling wave and prevent reflections. Without termination, energy bounces back and forth on the line, creating standing waves, ringing, and signal degradation. The choice of termination strategy depends on the application — whether the system is RF or digital, whether DC power consumption matters, and whether termination belongs at the source, the load, or both.
 
 ## Why Terminate
 
@@ -121,10 +121,24 @@ Leaving a transmission line unterminated is the most common signal integrity mis
 
 **In both cases:** EMI increases because the standing waves on the line create localized high-current or high-voltage points that radiate more efficiently than a properly terminated line. Unterminated lines are often the root cause of unexpected EMC failures.
 
-## Gotchas
+## Tips
 
-- **Series termination only works for point-to-point** — If there are receivers tapped along the middle of the line (like a bus), they see the half-amplitude intermediate state. Only the far end sees the clean, full-amplitude signal after reflection return.
-- **Termination resistor tolerance matters at RF** — A 5% tolerance on a 50 ohm resistor gives 47.5-52.5 ohm. At 50 ohm nominal, 52.5 ohm gives Gamma = 0.024 (return loss = 32 dB), which is fine. But a 10% tolerance gives 45-55 ohm, and at 55 ohm, Gamma = 0.048 (return loss = 26 dB). Use 1% resistors for RF terminations.
-- **Parasitic inductance in termination resistors degrades performance** — A through-hole resistor with 5 mm leads is useless as an RF termination above 100 MHz. Use 0402 or 0201 chip resistors placed close to the load with short, direct ground connections.
-- **Do not forget the return path** — A termination resistor to "ground" must have a low-impedance path to the actual ground plane. A via to the ground plane directly under the resistor pad is ideal. A long trace to a distant ground point adds inductance that defeats the termination.
-- **Differential termination needs a resistor between the pair, not just to ground** — A 100 ohm differential pair is terminated with a 100 ohm resistor between the two lines, not with two 50 ohm resistors to ground (which would be common-mode termination only).
+- For RF terminations, use 1% tolerance chip resistors (0402 or smaller) placed as close to the load as possible with a direct ground via beneath the pad
+- When choosing between series and parallel termination for digital lines, consider whether the topology is point-to-point (series works) or multi-drop (parallel is required)
+- Calculate the DC power dissipation of parallel terminations early in the design — for a bus with many lines, the aggregate current draw can be substantial
+- For differential pairs, always place the termination resistor between the P and N lines rather than from each line to ground, unless both differential and common-mode termination are intentionally needed
+
+## Caveats
+
+- **Series termination only works for point-to-point** — If there are receivers tapped along the middle of the line (like a bus), they see the half-amplitude intermediate state; only the far end sees the clean, full-amplitude signal after the reflection returns
+- **Termination resistor tolerance matters at RF** — A 5% tolerance on a 50 ohm resistor gives 47.5-52.5 ohm, which is acceptable, but a 10% tolerance gives 45-55 ohm and at 55 ohm, Gamma = 0.048 (return loss = 26 dB); use 1% resistors for RF terminations
+- **Parasitic inductance in termination resistors degrades performance** — A through-hole resistor with 5 mm leads is ineffective as an RF termination above 100 MHz; use 0402 or 0201 chip resistors placed close to the load with short, direct ground connections
+- **The return path must not be neglected** — A termination resistor to "ground" must have a low-impedance path to the actual ground plane; a via directly under the resistor pad is ideal, and a long trace to a distant ground point adds inductance that defeats the termination
+- **Differential termination needs a resistor between the pair, not just to ground** — A 100 ohm differential pair is terminated with a 100 ohm resistor between the two lines, not with two 50 ohm resistors to ground (which would be common-mode termination only)
+
+## Bench Relevance
+
+- On an oscilloscope, the characteristic two-step staircase waveform at the far end of a series-terminated line is visible — the signal steps to half amplitude on the incident wave and settles to full amplitude after one round-trip delay
+- Ringing that persists on a multi-drop bus with series termination (and disappears when switching to parallel termination) confirms that mid-line receivers are seeing the reflected intermediate state
+- Touching an oscilloscope probe to the ground side of a termination resistor and seeing a voltage spike indicates the ground return path has excessive inductance
+- Swapping a 5% termination resistor for a 1% part and observing improved return loss on a VNA confirms that resistor tolerance was limiting the match quality

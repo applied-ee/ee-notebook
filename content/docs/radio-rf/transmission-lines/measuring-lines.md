@@ -45,14 +45,14 @@ A Vector Network Analyzer (VNA) measures the complex reflection coefficient and 
 
 **S-parameters:** The VNA measures scattering parameters:
 - **S11** — Reflection at port 1 (return loss). This is Gamma as a function of frequency.
-- **S21** — Transmission from port 1 to port 2 (insertion loss). This tells you how much signal gets through.
+- **S21** — Transmission from port 1 to port 2 (insertion loss). This shows how much signal gets through.
 - **S22** — Reflection at port 2
 - **S12** — Reverse transmission (usually equals S21 for passive, reciprocal networks)
 
-**What you learn from S-parameters:**
+**What S-parameters reveal:**
 - S11 magnitude shows return loss across frequency — peaks indicate frequencies where reflections are worst (resonances, mismatches)
 - S21 magnitude shows insertion loss — the signal attenuation through the line or device
-- S11 on a Smith chart shows the impedance as a function of frequency — you can read off whether the impedance is capacitive, inductive, or resistive at any frequency
+- S11 on a Smith chart shows the impedance as a function of frequency — it is straightforward to read off whether the impedance is capacitive, inductive, or resistive at any frequency
 - S21 phase shows the electrical length (phase delay) through the device
 
 **Calibration is critical.** A VNA must be calibrated before measurements. The standard calibration procedure (SOLT: Short, Open, Load, Through) uses known impedance standards to correct for the VNA's systematic errors and the cables/connectors used. Without calibration, VNA measurements are meaningless. The reference plane (where the measurement starts) is at the calibration standard, not at the VNA ports.
@@ -66,7 +66,7 @@ A regular oscilloscope cannot directly measure impedance or reflection coefficie
 **Step response testing.** Drive one end of a line with a fast pulse generator and observe the waveform at both ends:
 - At the source: look for reflected bumps arriving after the round-trip time
 - At the load: look for the characteristic two-step waveform of a series-terminated line, or ringing of an unterminated line
-- The delay between the incident and reflected pulses gives you the cable length (if you know the velocity factor) or the velocity factor (if you know the length)
+- The delay between the incident and reflected pulses gives the cable length (if the velocity factor is known) or the velocity factor (if the length is known)
 
 **Impedance estimation.** With a known source impedance (typically 50 ohm from a pulse generator), the voltage of the initial step on the line reveals Z0:
 
@@ -74,13 +74,13 @@ V_initial = V_source x Z0 / (Z_source + Z0)
 
 If V_source is 1 V (into the matched load) and V_initial is 0.5 V, Z0 = Z_source = 50 ohm. If V_initial is higher, Z0 > Z_source. This is rough but can give a quick sanity check.
 
-**Bandwidth limitations.** An oscilloscope's bandwidth limits what you can see. A 100 MHz scope misses fast reflections and small impedance discontinuities. For meaningful transmission line work, you need at least 1 GHz bandwidth, and ideally a sampling scope or TDR option.
+**Bandwidth limitations.** An oscilloscope's bandwidth limits what is observable. A 100 MHz scope misses fast reflections and small impedance discontinuities. For meaningful transmission line work, at least 1 GHz bandwidth is needed, and ideally a sampling scope or TDR option.
 
 ## Practical Field Tests
 
 Not every situation requires a VNA or TDR. Some useful field measurements for cables and lines:
 
-**Cable length measurement.** Send a pulse into an open-ended cable and measure the time until the reflection returns. Length = v x t_round_trip / 2. With a known velocity factor (0.66 for most polyethylene coax), you can determine cable length to within a few percent using an oscilloscope and a pulse generator.
+**Cable length measurement.** Send a pulse into an open-ended cable and measure the time until the reflection returns. Length = v x t_round_trip / 2. With a known velocity factor (0.66 for most polyethylene coax), cable length can be determined to within a few percent using an oscilloscope and a pulse generator.
 
 **Velocity factor determination.** Cut a cable to a known length, measure the round-trip time, and calculate v = 2L / t. Or use a VNA to find the frequency at which the cable is exactly one-quarter wavelength (the phase of S11 crosses through 180 degrees from the cable's open end). Velocity factor = v / c.
 
@@ -90,7 +90,7 @@ Not every situation requires a VNA or TDR. Some useful field measurements for ca
 
 Z0 = 1 / (v x C_per_length)
 
-If you know the velocity factor is 0.66, and you measure 100 pF/m:
+If the velocity factor is 0.66, and the measured capacitance is 100 pF/m:
 
 Z0 = 1 / (0.66 x 3 x 10^8 x 100 x 10^-12) = 50.5 ohm
 
@@ -108,11 +108,25 @@ This is a quick bench technique when a TDR or VNA is not available.
 | Ringing on digital signal at specific frequency | Unterminated trace, ringing period = 2x propagation delay |
 | High S11 across band with ripple | Multiple reflections from cascaded mismatches |
 
-## Gotchas
+## Tips
 
-- **VNA calibration drifts** — Temperature changes, cable flexure, and connector wear all degrade calibration accuracy. Recalibrate if anything in the setup changes, and always use phase-stable cables for the VNA ports.
-- **Probe loading changes the measurement** — Connecting an oscilloscope probe to a transmission line adds capacitance (5-15 pF for a passive probe) that changes the impedance at the measurement point. Use a high-impedance active probe or a proper directional coupler for in-circuit measurements.
-- **TDR rise time limits spatial resolution** — A TDR with a 200 ps step can resolve features about 15 mm apart on FR4. Closer features blur together. For sub-millimeter resolution (IC packages, via transitions), you need sub-50 ps rise times or frequency-domain techniques.
-- **Cable loss masks load mismatch** — A lossy cable attenuates the reflected wave twice (once on the way out, once on the way back). A badly mismatched load on a long, lossy cable may show an acceptable return loss at the source. Always measure mismatch as close to the discontinuity as possible.
-- **SMA connectors have a torque specification** — SMA connectors must be tightened to 5-8 in-lb (0.56-0.90 N-m) with a torque wrench. Hand-tight connections have inconsistent contact resistance that produces measurement artifacts, especially above 6 GHz. Over-tightening damages the connector interface.
-- **Open and short calibration standards are not perfect** — They have their own parasitic capacitance and inductance, which is accounted for in the calibration model. Using an unknown open (like an unconnected cable end) as a calibration standard introduces systematic error.
+- Recalibrate the VNA any time the setup changes — swapping a cable, moving a connector, or even a significant temperature shift in the lab can degrade calibration accuracy
+- Use phase-stable test cables for VNA port connections to minimize measurement drift during sweeps and repositioning
+- When probing a transmission line with an oscilloscope, use an active probe or a directional coupler rather than a passive probe to avoid loading the line with parasitic capacitance
+- Always tighten SMA connectors with a torque wrench (5-8 in-lb) rather than by hand — consistent contact pressure is essential for repeatable measurements above a few GHz
+
+## Caveats
+
+- **VNA calibration drifts** — Temperature changes, cable flexure, and connector wear all degrade calibration accuracy; recalibrating whenever anything in the setup changes is essential
+- **Probe loading changes the measurement** — Connecting an oscilloscope probe to a transmission line adds capacitance (5-15 pF for a passive probe) that changes the impedance at the measurement point
+- **TDR rise time limits spatial resolution** — A TDR with a 200 ps step can resolve features about 15 mm apart on FR4; closer features blur together, and for sub-millimeter resolution, sub-50 ps rise times or frequency-domain techniques are required
+- **Cable loss masks load mismatch** — A lossy cable attenuates the reflected wave twice (once on the way out, once on the way back); a badly mismatched load on a long, lossy cable may show an acceptable return loss at the source
+- **SMA connectors have a torque specification** — SMA connectors must be tightened to 5-8 in-lb (0.56-0.90 N-m) with a torque wrench; hand-tight connections have inconsistent contact resistance that produces measurement artifacts, especially above 6 GHz
+- **Open and short calibration standards are not perfect** — They have their own parasitic capacitance and inductance, which is accounted for in the calibration model; using an unknown open (like an unconnected cable end) as a calibration standard introduces systematic error
+
+## Bench Relevance
+
+- A TDR trace that shows a sudden impedance step at a known connector location confirms a damaged or improperly torqued connector — retorquing or replacing it and re-measuring provides immediate verification
+- Measuring S11 on a VNA and seeing a result that slowly drifts during repeated sweeps (without touching anything) indicates calibration drift, often caused by temperature changes or a flexing test cable
+- Comparing the return loss measured at the source end of a long cable versus directly at the load shows the masking effect of cable attenuation — the difference is twice the cable loss in dB
+- Attaching a passive probe to a microstrip and observing the signal waveform change (slower edges, reduced amplitude) demonstrates probe loading in real time
