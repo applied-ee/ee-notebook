@@ -94,10 +94,24 @@ Strategies that help:
 - **Implement an early HardFault handler** that blinks an LED or writes to a known SRAM location you can inspect after halting. The default handler is usually an infinite loop, which tells you nothing.
 - **Check the `.map` file** — verify that `.data`, `.bss`, and the stack are placed in valid SRAM regions. A linker script error that places the stack outside physical SRAM is a silent, immediate crash.
 
-## Gotchas
+## Tips
 
-- **Writing to a peripheral before enabling its clock does nothing** — On STM32 and similar parts, peripheral register writes are silently ignored if the peripheral clock is off in the RCC. No fault, no error flag. The peripheral just does not respond. This is the single most common embedded initialization bug.
-- **Flash wait states must be set before increasing the clock** — If you raise the system clock without adding flash wait states first, the CPU outruns flash and fetches corrupted instructions. The resulting hard faults appear random and are extremely difficult to correlate with the root cause.
-- **The initial stack pointer must be 8-byte aligned and point to the top of SRAM** — An invalid or misaligned initial SP in the vector table causes an immediate fault at reset. The system never reaches the reset handler, and most debuggers do not show a useful state because no code has executed.
-- **Static constructors in C++ run before main() in unspecified order** — If a static object's constructor touches a peripheral or depends on another static object, the result is undefined. This is a strong argument for performing all hardware initialization explicitly in `main()` rather than relying on constructor side effects.
-- **SystemInit() varies wildly between vendors and chip families** — The function's behavior is not standardized beyond the name. Some implementations configure clocks, some only set flash wait states, some are nearly empty. Always read the vendor's implementation rather than assuming what it does.
+- Enable peripheral clocks in RCC before writing to any peripheral register — this is the most common initialization bug
+- Set flash wait states before increasing the system clock, not after
+- Toggle a GPIO pin at the start of the reset handler as a minimal "alive" indicator for debugging startup issues
+- Read the vendor's actual `SystemInit()` implementation — its behavior varies widely between chip families
+
+## Caveats
+
+- **Writing to a peripheral before enabling its clock does nothing** — On STM32 and similar parts, peripheral register writes are silently ignored if the peripheral clock is off in the RCC. No fault, no error flag. The peripheral just does not respond. This is the single most common embedded initialization bug
+- **Flash wait states must be set before increasing the clock** — Raising the system clock without adding flash wait states first causes the CPU to outrun flash and fetch corrupted instructions. The resulting hard faults appear random and are extremely difficult to correlate with the root cause
+- **The initial stack pointer must be 8-byte aligned and point to the top of SRAM** — An invalid or misaligned initial SP in the vector table causes an immediate fault at reset. The system never reaches the reset handler, and most debuggers do not show a useful state because no code has executed
+- **Static constructors in C++ run before main() in unspecified order** — If a static object's constructor touches a peripheral or depends on another static object, the result is undefined. Performing all hardware initialization explicitly in `main()` avoids this problem
+- **SystemInit() varies wildly between vendors and chip families** — The function's behavior is not standardized beyond the name. Some implementations configure clocks, some only set flash wait states, some are nearly empty
+
+## Bench Relevance
+
+- A system that immediately enters a HardFault loop at reset likely has a vector table problem — check the initial SP and reset handler address
+- Peripheral configuration that has no effect suggests the peripheral clock was not enabled in RCC
+- Random hard faults after increasing the clock speed indicate flash wait states were not set properly
+- A startup sequence that works on one chip revision but fails on another points to power-on state differences or timing dependencies

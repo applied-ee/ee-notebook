@@ -108,11 +108,25 @@ This is a blunt instrument. While interrupts are disabled, every pending interru
 
 On Cortex-M3+, `BASEPRI` offers a finer tool: it masks interrupts below a given priority without affecting higher-priority ones. This lets you protect shared data from a specific set of ISRs without blocking time-critical higher-priority handlers. I have not used `BASEPRI` extensively yet, but it seems like the right approach for systems with both hard-real-time and background interrupts.
 
-## Gotchas
+## Tips
 
-- **Forgetting to clear the interrupt flag causes an interrupt storm** — The ISR runs, returns, and immediately re-enters because the peripheral still asserts the interrupt. The main loop starves. The system appears frozen. Always clear the source flag in the ISR, and check with a debugger that the flag actually clears.
-- **Priority number 0 is the highest priority, not the lowest** — This is backwards from most people's intuition. On Cortex-M, a lower numeric value means a higher urgency level. Setting a non-critical interrupt to priority 0 means nothing else can preempt it.
-- **volatile does not mean atomic** — Declaring a shared variable `volatile` prevents the compiler from caching it in a register, but it does not prevent torn reads or writes for types wider than the bus width. A 16-bit variable on an 8-bit AVR requires interrupt protection even if it is `volatile`.
-- **Enabling an interrupt before its peripheral is configured risks an immediate spurious ISR** — If the peripheral's interrupt flag is already set (from a previous configuration or power-on state), enabling the interrupt in the NVIC causes an immediate entry into the handler. Always clear pending flags before enabling.
-- **Interrupt nesting depends on priority grouping configuration** — If all priority bits are assigned to sub-priority (grouping set to 0 preemption bits), no ISR can preempt any other, regardless of assigned priority numbers. This is a system-level setting that affects all interrupts and should be configured once at startup.
-- **Long ISRs cause jitter in all lower-priority interrupts** — A 100 us ISR at priority 1 adds up to 100 us of jitter to every interrupt at priority 2 or lower. Measuring ISR execution time with a scope (toggle a pin at entry and exit) is the fastest way to find this problem.
+- Keep ISRs as short as possible — set a flag, copy data to a buffer, clear the interrupt source, and return
+- Always clear the peripheral's interrupt flag before returning from the ISR to prevent interrupt storms
+- Clear pending interrupt flags before enabling interrupts in the NVIC to avoid spurious immediate entry
+- Configure priority grouping once at startup before enabling any interrupts
+
+## Caveats
+
+- **Forgetting to clear the interrupt flag causes an interrupt storm** — The ISR runs, returns, and immediately re-enters because the peripheral still asserts the interrupt. The main loop starves. The system appears frozen. Always clear the source flag in the ISR
+- **Priority number 0 is the highest priority, not the lowest** — This is backwards from most people's intuition. On Cortex-M, a lower numeric value means a higher urgency level. Setting a non-critical interrupt to priority 0 means nothing else can preempt it
+- **volatile does not mean atomic** — Declaring a shared variable `volatile` prevents the compiler from caching it in a register, but it does not prevent torn reads or writes for types wider than the bus width. A 16-bit variable on an 8-bit AVR requires interrupt protection even if it is `volatile`
+- **Enabling an interrupt before its peripheral is configured risks an immediate spurious ISR** — If the peripheral's interrupt flag is already set (from a previous configuration or power-on state), enabling the interrupt in the NVIC causes immediate entry into the handler
+- **Interrupt nesting depends on priority grouping configuration** — If all priority bits are assigned to sub-priority (grouping set to 0 preemption bits), no ISR can preempt any other, regardless of assigned priority numbers
+- **Long ISRs cause jitter in all lower-priority interrupts** — A 100 µs ISR at priority 1 adds up to 100 µs of jitter to every interrupt at priority 2 or lower
+
+## Bench Relevance
+
+- A system that appears frozen with high CPU utilization likely has an interrupt storm — verify interrupt flags are being cleared
+- Timing jitter in periodic interrupts often traces to long higher-priority ISRs — measure ISR execution time with GPIO toggling
+- Shared variables that occasionally show corrupted values may have atomicity issues — verify access is protected or naturally atomic
+- An ISR that fires immediately when enabled suggests the peripheral's interrupt flag was already set — clear pending flags before enabling

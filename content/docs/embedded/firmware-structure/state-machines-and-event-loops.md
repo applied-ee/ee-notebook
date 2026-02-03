@@ -147,11 +147,25 @@ void set_state(system_state_t new_state) {
 
 Where `log_transition` writes to a circular buffer in SRAM, outputs on a debug UART, or toggles trace pins. Even in production firmware, a small transition log in RAM costs almost nothing and is invaluable when diagnosing field failures. On the bench, adding the state variable to the debugger's watch window gives you a live view of the machine. For complex machines, drawing the state diagram on paper and tracing actual transitions against it helps — sometimes the code does not match the intended design, and the diagram makes the discrepancy obvious.
 
-## Gotchas
+## Tips
 
-- **Implicit state hidden in global flags is a maintenance trap** — Every boolean flag is a hidden two-state machine. Three flags create eight possible combinations, most of which are probably invalid but never checked. Consolidate related flags into an explicit state enum.
-- **Forgetting a default case in the switch means unhandled states execute no code silently** — Always include a default case that logs or asserts. In production, transitioning to an error/safe state from default is better than doing nothing.
-- **Event queue overflow drops events with no indication** — If the ISR posts events faster than the main loop processes them, the ring buffer wraps and overwrites unread events. Size the queue conservatively, and consider adding an overflow counter or assertion.
-- **Cooperative tasks that exceed their time budget break all other tasks' timing** — There is no enforcement in a cooperative scheduler. One slow task cascades into system-wide timing violations. Measure task execution time on the bench and add a watchdog or assertion if a task overruns.
-- **State machine transitions from ISR context introduce race conditions** — If both the ISR and the main loop can modify the state variable, you have a classic data race. Either limit transitions to one context (main loop reads events, only main loop changes state) or protect the state variable with an interrupt-disable guard.
-- **Testing state machines in isolation requires decoupling hardware** — If state transition logic is tangled with direct register access, you cannot test it off-target. Passing events and reading outputs through function pointers or abstraction layers makes the state machine testable on a PC, which dramatically speeds up development.
+- Consolidate related boolean flags into explicit state enums — this makes valid/invalid combinations visible
+- Always include a default case in state machine switches that logs or transitions to a safe state
+- Log state transitions to a circular buffer — this is invaluable for debugging both in development and in the field
+- Keep state machine transitions in one context (main loop only) to avoid race conditions with ISRs
+
+## Caveats
+
+- **Implicit state hidden in global flags is a maintenance trap** — Every boolean flag is a hidden two-state machine. Three flags create eight possible combinations, most of which are probably invalid but never checked. Consolidate related flags into an explicit state enum
+- **Forgetting a default case in the switch means unhandled states execute no code silently** — Always include a default case that logs or asserts. In production, transitioning to an error/safe state from default is better than doing nothing
+- **Event queue overflow drops events with no indication** — If the ISR posts events faster than the main loop processes them, the ring buffer wraps and overwrites unread events. Size the queue conservatively and consider adding an overflow counter
+- **Cooperative tasks that exceed their time budget break all other tasks' timing** — There is no enforcement in a cooperative scheduler. One slow task cascades into system-wide timing violations
+- **State machine transitions from ISR context introduce race conditions** — If both the ISR and the main loop can modify the state variable, this is a classic data race. Either limit transitions to one context or protect the state variable with an interrupt-disable guard
+- **Testing state machines in isolation requires decoupling hardware** — If state transition logic is tangled with direct register access, off-target testing is impossible. Abstraction layers make state machines testable on a PC
+
+## Bench Relevance
+
+- Erratic behavior that correlates with specific event sequences suggests missed state transitions — add transition logging
+- A system that processes events in wrong order may have event queue overflow — check queue sizing and add overflow detection
+- Timing violations that appear under load in cooperative systems often trace to one task exceeding its time budget — measure task execution times
+- State machines that behave differently in debug vs. release builds may have race conditions between ISR and main loop contexts
