@@ -5,76 +5,50 @@ weight: 40
 
 # Is Current Draw Expected?
 
-Total supply current, per-rail current, and spotting overcurrent or undercurrent conditions. Current tells you what the circuit is actually doing — voltage tells you what the supply is providing.
+Total supply current, per-rail current, and spotting overcurrent or undercurrent conditions. Current tells what the circuit is actually doing — voltage tells what the supply is providing.
 
-## DMM: Series Current Measurement
+## DMM Series Current Measurement
 
-**Tool:** DMM, A⎓ (DC Amps) mode
-**Setup:** DMM in series with the supply (break the circuit and insert the meter)
+Power off, break the supply connection, set DMM to DC Amps (start with highest range if unknown), connect DMM in series: power source → DMM → circuit. Power on and read current.
 
-### Procedure
-
-1. Power off the circuit
-2. Break the supply connection (disconnect one lead of the power source)
-3. Set DMM to DC Amps, appropriate range (start with the highest range if unknown)
-4. Connect DMM in series: power source → DMM → circuit
-5. Power on and read current
-
-### What You Learn
-
-- Total supply current — compare to datasheet estimates or previous known-good measurements
-- Whether a fault is drawing excess current (possible short, latch-up, or runaway oscillation)
-- Whether the circuit is drawing less than expected (something not powering up, or a broken connection)
-
-### Gotchas
-
-- The DMM current shunt adds resistance (often 0.1–1Ω on low ranges). This drops voltage and can affect circuit behavior, especially on low-voltage or high-current rails
-- **Fuse risk:** Most DMMs have a current fuse (typically 500 mA or 10A). Exceeding it blows the fuse. Always start on the highest current range
-- **Never connect a DMM in current mode across a voltage source.** This is a dead short through the meter's low-impedance shunt. It blows the fuse or damages the meter
-- The meter leads must be in the correct jacks — many DMMs have separate jacks for current measurement
+Compare to datasheet estimates or previous known-good measurements. Higher than expected suggests a fault drawing excess current (short, latch-up, runaway oscillation). Lower than expected suggests something isn't powering up or a connection is broken.
 
 ## Current Sense Resistor + Oscilloscope
 
-**Tool:** Oscilloscope + known sense resistor in series
-**Use case:** When you need to see current waveform over time, not just a DC average
+When current waveform over time is needed — startup inrush, pulsed loads, sleep/wake transitions — insert a low-value resistor (0.1–1 Ω) in series and measure voltage across it with the scope.
 
-### Procedure
+**I = V / R_sense**
 
-1. Insert a low-value resistor (e.g., 0.1Ω to 1Ω) in series with the supply
-2. Measure voltage across the sense resistor with the scope (differential measurement is ideal)
-3. Calculate current: I = V / R_sense
-
-### What You Learn
-
-- Current waveform: startup inrush, pulsed loads, sleep/wake transitions
-- Peak current vs. average current — important for battery life and supply sizing
-- Correlation with other signals (trigger scope on an event, see what current does)
-
-### Gotchas
-
-- The sense resistor drops voltage: a 1Ω resistor at 100 mA drops 100 mV. Choose a value that's measurable but doesn't significantly affect the circuit
-- If measuring ground-side current, be careful of ground-referenced scope probes — you may need a differential probe or two-channel subtraction
-- Sense resistor inductance matters at high frequencies. Use a non-inductive type for fast transient measurements
+This shows peak vs average current and correlates current with other signals.
 
 ## Current Clamp Probe
 
-**Tool:** AC/DC current clamp probe on the oscilloscope
-**Use case:** Non-intrusive current measurement — no need to break the circuit
+Non-intrusive current measurement without breaking the circuit. Clamp around one conductor only (supply and return together cancel). Zero the probe before measuring.
 
-### Procedure
+DC/AC clamps (Hall sensor) can see DC but have limited bandwidth (< 100 kHz) and DC drift. AC-only clamps (transformer) have better bandwidth but can't see DC.
 
-1. Clamp the probe around one conductor only (not a power cable with supply and return together — the fields cancel)
-2. Zero the probe (most have a zero button for DC offset)
-3. Set scope scale based on probe sensitivity (e.g., 100 mV/A → 10 mA resolution at 1 mV/div)
+## Tips
 
-### What You Learn
+- Always start on the highest current range to avoid blowing the DMM fuse
+- Verify DMM leads are in the correct jacks — many meters have separate current jacks
+- Choose sense resistor value that's measurable but doesn't significantly affect the circuit (1 Ω at 100 mA drops 100 mV)
+- Position wire in center of current clamp jaw for best accuracy
 
-- Current without breaking the circuit — useful for monitoring in systems you can't easily disassemble
-- Dynamic current waveform with good time resolution (depending on probe bandwidth)
+## Caveats
 
-### Gotchas
+- DMM current shunt adds resistance (often 0.1–1 Ω on low ranges) — this drops voltage and can affect circuit behavior
+- **Never connect a DMM in current mode across a voltage source** — this is a dead short through the meter's low-impedance shunt and will blow the fuse or damage the meter
+- Current clamp probes need a single conductor — supply and return in the same cable cancel out
+- Hall sensor clamps have DC drift — zero frequently
+- Most clamps are designed for hundreds of mA to amps — sensitivity at microamps is poor
+- Sense resistor inductance matters at high frequencies — use non-inductive types for fast transients
+- Ground-referenced scope probes measuring ground-side sense resistor may need differential probe or two-channel subtraction
 
-- DC current clamps use Hall sensors and have limited bandwidth (typically < 100 kHz) and noticeable DC drift
-- AC-only clamps (transformer type) can't see DC — they only show AC current components
-- Sensitivity at low currents is poor — most clamps are designed for hundreds of mA to amps, not microamps
-- Position the wire in the center of the clamp jaw for best accuracy
+## Bench Relevance
+
+- Current significantly higher than expected indicates possible short, latch-up, or component drawing excess current
+- Current significantly lower than expected indicates something isn't powering up or a connection is broken
+- Current that pulses when it should be steady indicates oscillation or unstable behavior
+- Startup current spike (inrush) that exceeds supply or fuse rating can cause brownout or fuse blowing — check bulk capacitor inrush
+- Current waveform that correlates with specific events (transmit, motor motion) helps identify which function draws what
+- Sleep current that's higher than datasheet spec indicates something isn't entering low-power mode properly

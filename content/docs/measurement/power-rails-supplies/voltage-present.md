@@ -7,60 +7,43 @@ weight: 10
 
 First check at power-up. Before anything else, confirm the rail exists. A missing rail explains a lot of downstream weirdness, and it takes ten seconds to check.
 
-## DMM: DC Voltage Check
+## DMM DC Voltage Check
 
-**Tool:** DMM (any general-purpose multimeter)
-**Mode:** V⎓ (DC Volts)
-**Probes:** Red to rail, black to GND (parallel measurement)
+Set DMM to DC Volts, probe the rail test point versus ground, compare reading to schematic expected value.
 
-### Procedure
+- **Rail present and approximately correct** → move on to downstream checks
+- **Rail is zero** → supply isn't running, trace is open, or fuse is blown
+- **Rail is low but nonzero** → possible short loading it down, or regulator not regulating
 
-1. Set DMM to V⎓, auto-range
-2. Probe the rail test point (or component lead) vs. ground
-3. Compare reading to schematic expected value
+## Oscilloscope Quick DC Check
 
-### What You Learn
+Use a scope instead of DMM when:
+- Startup behavior needs to be visible (does the rail come up clean or oscillate?)
+- Intermittent dropout is suspected
+- AC content on the DC needs to be seen (ripple, noise, oscillation)
+- Multiple rails need simultaneous monitoring
 
-- Rail is present and approximately correct → move on to downstream checks
-- Rail is zero → supply isn't running, trace is open, or fuse is blown
-- Rail is low but nonzero → possible short loading it down, or regulator not regulating
+DC-couple the channel, set vertical scale to show the expected voltage, set timebase based on what's being observed (100 ms/div for startup, 1 ms/div for steady-state). The scope shows DC level plus any visible AC content and startup waveform shape.
 
-### Gotchas
+## Tips
 
-- DMM averages the reading — it won't reveal transient dropout or brief power cycling
-- High-impedance nodes can show "ghost voltages" from capacitive coupling. If the reading seems wrong, try loading the node lightly or switching to a lower impedance range
-- Auto-range can be slow on unstable or oscillating rails; manual range is faster if you know what to expect
-- Make sure you're on the right ground — checking a 3.3V rail against the wrong ground reference gives a meaningless number
+- Check at the load, not just at the regulator output — trace and connector resistance can drop voltage
+- Use the DMM for accurate DC value, scope for waveform shape — scope vertical accuracy is typically 3–5%
+- If a reading seems wrong on a high-impedance node, try loading it lightly or switching to LoZ mode to reject ghost voltages
 
-## Oscilloscope: Quick DC Check
+## Caveats
 
-**Tool:** Oscilloscope, DC-coupled, 1x or 10x probe
-**Trigger:** Auto (free-running), DC coupling
+- DMM averages the reading — transient dropout or brief power cycling won't be revealed
+- High-impedance nodes can show ghost voltages from capacitive coupling
+- Auto-range can be slow on unstable or oscillating rails — manual range is faster if the expected value is known
+- Verify the ground reference is correct — checking a 3.3V rail against the wrong ground gives a meaningless number
+- At 10x probe attenuation, small voltages can be hard to read on a scope — consider 1x for low-voltage rails
+- Scope ground clips are earth-referenced — connecting to a signal pin instead of ground creates a short
 
-### When to Use Instead of DMM
+## Bench Relevance
 
-- You need to see startup behavior (does the rail come up clean or oscillate?)
-- You suspect intermittent dropout
-- You want to see AC riding on the DC (ripple, noise, oscillation)
-- Multiple rails and you want to watch them simultaneously on different channels
-
-### Procedure
-
-1. DC-couple the channel, set vertical scale to show the expected voltage (e.g., 1V/div for a 3.3V rail)
-2. Set timebase depending on what you're looking for:
-   - Startup: 100 ms/div or slower
-   - Steady-state presence: 1 ms/div is fine
-3. Probe the rail vs. ground
-4. Confirm the DC level matches expectations
-
-### What You Learn
-
-- DC level plus any visible AC content
-- Startup waveform shape — does it ramp up cleanly or ring?
-- Whether the rail is truly stable or wobbling
-
-### Gotchas
-
-- At 10x probe attenuation, small voltages can be hard to read — consider 1x if the rail is low-voltage and low-frequency content is all you need
-- Scope vertical accuracy is typically 3–5%, worse than a DMM for absolute voltage. Use the scope for waveform shape and the DMM for accurate DC value
-- Make sure the probe ground clip is on a solid ground point, not a signal pin — scope grounds are earth-referenced and will short things out if connected wrong
+- Rail reading zero when it should be present indicates supply not running, open trace, or blown fuse — check upstream
+- Rail reading low but nonzero suggests excessive load (possible short) or regulator in current limit
+- Rail that measures correctly on DMM but circuit doesn't work suggests the problem is downstream, not the supply
+- Rail that shows oscillation or ringing on scope during startup indicates possible instability — check compensation
+- Multiple rails where one is missing and others are present suggests sequencing issue or fault on that specific supply

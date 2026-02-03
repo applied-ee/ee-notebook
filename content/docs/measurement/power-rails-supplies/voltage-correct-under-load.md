@@ -5,58 +5,41 @@ weight: 20
 
 # Is Voltage Correct Under Load?
 
-A rail can measure perfectly at no load and sag badly when the circuit draws current. Static regulation, load-dependent droop, and dropout are all things you catch by measuring under real operating conditions.
+A rail can measure perfectly at no load and sag badly when the circuit draws current. Static regulation, load-dependent droop, and dropout are caught by measuring under real operating conditions.
 
-## DMM: Static Regulation Check
+## Static Regulation Check
 
-**Tool:** DMM, V⎓ mode
-**Setup:** Circuit powered and running its normal workload
+Measure rail voltage with circuit idle (minimal load), then again with circuit running its heaviest load (transmitting, motors running, LEDs on). The difference is load regulation error.
 
-### Procedure
+- **Small drop (< 1–2% of nominal):** Regulation is healthy
+- **Noticeable drop:** Regulator may be near dropout, trace resistance may be high, or bulk capacitance insufficient
+- **Rail collapses:** Supply can't handle the load, or a fault is drawing excess current
 
-1. Measure rail voltage with the circuit idle (minimal load)
-2. Measure again with the circuit running its heaviest load (e.g., transmitting, motors running, LEDs on)
-3. Compare the two readings — the difference is load regulation error
+## Load Transient Response
 
-### What You Learn
+Use an oscilloscope to see dynamic response — how fast the rail recovers after a load step. This reveals transient droop that a DMM averages out, and is essential for pulsed loads (RF transmitter, motor PWM, LED strobe).
 
-- Small drop (< 1–2% of nominal): regulation is healthy
-- Noticeable drop: regulator may be near dropout, trace resistance may be too high, or bulk capacitance is insufficient
-- Rail collapses: supply can't handle the load, or there's a fault drawing excess current
+DC-couple the channel, set vertical scale to see expected droop (e.g., 100 mV/div), set timebase to capture the transient (10–100 µs/div for switcher transients, 1–10 ms/div for bulk cap effects). Trigger on the load event or use single-shot.
 
-### Gotchas
+Observe initial droop depth, recovery time, and any ringing or overshoot.
 
-- "Idle" isn't always low-load — some MCUs draw significant current even when the firmware looks idle
-- Measure at the load, not at the regulator output — trace and connector resistance can drop voltage between the two points
-- If the rail has a sense line (remote sensing), make sure you're measuring what the regulator sees, not what the load sees
+## Tips
 
-## Oscilloscope: Load Transient Response
-
-**Tool:** Oscilloscope, DC-coupled, 10x probe
-**Trigger:** Edge trigger on the transient event, or use single-shot capture
-
-### When to Use Instead of DMM
-
-- You need to see the dynamic response — how fast the rail recovers after a load step
-- You suspect transient droop that the DMM averages out
-- The load is pulsed (e.g., RF transmitter, motor PWM, LED strobe)
-
-### Procedure
-
-1. DC-couple the channel, set vertical scale to see the expected droop (e.g., 100 mV/div for a 3.3V rail)
-2. Set timebase to capture the transient: 10–100 µs/div for switcher transients, 1–10 ms/div for bulk cap effects
-3. Trigger on the load event if possible (or use single-shot and provoke the event)
-4. Observe: initial droop depth, recovery time, any ringing or overshoot
-
-### What You Learn
-
-- Peak transient droop — how far the voltage drops before the regulator catches up
-- Recovery time — how long it takes to return to regulation
-- Ringing — LC resonance between output cap and supply inductance
-- Whether the bulk capacitance is doing its job
-
-### Gotchas
-
+- Measure at the load, not at the regulator output — trace and connector resistance drops voltage between the two points
 - Use a short ground lead or spring-tip ground to avoid ringing artifacts from the probe
-- AC coupling can be useful to zoom in on the transient, but be aware of the coupling time constant — it distorts slow events
-- If the load step is very fast (nanoseconds), you may be measuring probe artifacts rather than actual supply behavior. Check with a slower load step to compare
+- For pulsed loads, trigger the scope on the load event to capture the transient reliably
+
+## Caveats
+
+- "Idle" isn't always low-load — some MCUs draw significant current even when firmware looks idle
+- If the rail has a sense line (remote sensing), measure what the regulator sees vs what the load sees separately
+- AC coupling can zoom in on transients but distorts slow events due to coupling time constant
+- If the load step is very fast (nanoseconds), probe artifacts may dominate — compare with a slower load step
+
+## Bench Relevance
+
+- Rail that measures correct at idle but sags under load indicates regulation or capacity problem — check regulator headroom
+- Large transient droop with slow recovery suggests insufficient output capacitance or high ESR
+- Ringing after load step indicates LC resonance — check output capacitor ESL and PCB inductance
+- Rail that collapses completely under load suggests supply is undersized for the load or a fault is drawing excess current
+- Voltage measured at regulator output that's correct while voltage at load is low indicates trace or connector resistance drop
