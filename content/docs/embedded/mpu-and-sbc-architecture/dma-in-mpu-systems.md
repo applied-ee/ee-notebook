@@ -31,9 +31,23 @@ For the vast majority of embedded Linux work — SPI devices, I2C sensors, UARTs
 
 User-space DMA exists for specialized high-performance scenarios (networking with DPDK, camera capture with V4L2, GPU rendering with DRM/KMS), but for typical embedded work, understanding that these frameworks exist and handle the DMA complexity is more important than knowing the implementation details.
 
-## Gotchas
+## Tips
 
-- **Using virtual addresses for DMA is a guaranteed bug** — The DMA controller will read or write the wrong physical location. This mistake is easy to make when porting MCU code (where all addresses are physical) to an MPU environment
-- **Forgetting to sync caches with streaming DMA mappings causes intermittent data corruption** — The hardest kind of bug to diagnose because it depends on cache state, which varies with system load and timing. The corruption appears and disappears seemingly at random
-- **Coherent DMA memory is uncacheable and slow for CPU access** — `dma_alloc_coherent()` memory bypasses the CPU cache. Do not use it as general-purpose working memory
-- **CMA pool size is fixed at boot** — The Contiguous Memory Allocator reserves its pool during early boot. If undersized, large contiguous allocations fail at runtime with no way to expand without rebooting
+- Always use the kernel DMA API for address translation and cache management — never pass virtual addresses directly to DMA controllers
+- Use streaming DMA mappings for performance-critical transfers and call sync functions at the right points
+- Reserve coherent DMA memory only for buffers that must be shared with devices — it is uncacheable and slow for CPU access
+- Size the CMA pool adequately at boot time — it cannot be expanded at runtime
+
+## Caveats
+
+- **Using virtual addresses for DMA is a guaranteed bug** — The DMA controller will read or write the wrong physical location. This mistake is easy to make when porting MCU code to an MPU
+- **Forgetting to sync caches with streaming DMA mappings causes intermittent data corruption** — The hardest kind of bug to diagnose because it depends on cache state, which varies with system load
+- **Coherent DMA memory is uncacheable and slow for CPU access** — `dma_alloc_coherent()` memory bypasses the CPU cache. Do not use it as general-purpose memory
+- **CMA pool size is fixed at boot** — The Contiguous Memory Allocator reserves its pool during early boot. If undersized, large contiguous allocations fail at runtime
+
+## Bench Relevance
+
+- Data corruption that appears and disappears randomly with DMA transfers suggests missing cache sync calls — the bug depends on cache state
+- DMA transfers that work on MCU code but fail when ported to Linux likely pass virtual addresses instead of using the DMA API
+- CPU operations on DMA buffers that are unexpectedly slow may be using `dma_alloc_coherent()` memory — it is uncacheable
+- Allocation failures for large contiguous buffers at runtime indicate an undersized CMA pool

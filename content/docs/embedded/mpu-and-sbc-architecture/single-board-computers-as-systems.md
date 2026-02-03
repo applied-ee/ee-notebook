@@ -53,12 +53,26 @@ SBCs are designed for development convenience, not production reliability.
 
 For production, **compute modules** (Raspberry Pi CM4/CM5) separate the hard part (SoC + DRAM routing) from the application-specific carrier board design. See [Embedded Reality]({{< relref "/docs/embedded/embedded-reality" >}}) for broader discussion of reliability.
 
-## Gotchas
+## Tips
 
-- **SD card corruption is the number-one SBC reliability problem in the field** — Use read-only root filesystems, eMMC, or NVMe for anything that runs unattended
-- **USB power supplies are not all equal** — Measure actual voltage at the board under load, not at the supply
-- **GPIO voltage levels vary by platform** — Raspberry Pi is 3.3V. Some boards use 1.8V on some pins. Connecting 5V signals directly will damage the SoC
-- **SBC GPIO is not as fast as MCU GPIO** — Toggling from Linux user space takes microseconds. An MCU toggles in nanoseconds with a single register write
-- **Not all SBCs have mainline kernel support** — Vendor kernels based on old versions may not receive security patches. Check kernel support before committing
+- Use read-only root filesystems, eMMC, or NVMe for anything deployed unattended — SD card corruption is the number-one field reliability problem
+- Measure actual voltage at the board under load to verify power supply adequacy — not all USB supplies are equal
+- Check mainline Linux kernel support before selecting an SBC — vendor kernels may not receive security patches
+- Add heatsinks and active cooling for sustained workloads — thermal throttling is silent
+
+## Caveats
+
+- **SD card corruption is the number-one SBC reliability problem in the field** — Consumer SD cards lack write endurance for Linux's constant writes
+- **USB power supplies are not all equal** — Voltage droop under load causes brownouts that appear as random reboots
+- **GPIO voltage levels vary by platform** — Raspberry Pi is 3.3V. Some boards use 1.8V. Connecting 5V signals directly damages the SoC
+- **SBC GPIO is not as fast as MCU GPIO** — Toggling from Linux user space takes microseconds versus nanoseconds on an MCU
+- **Not all SBCs have mainline kernel support** — Vendor kernels based on old versions may not receive security patches
 - **The 40-pin header is a Pi convention, not a standard** — Other boards may use the same connector with completely different pinouts
-- **Thermal throttling is silent** — The SoC reduces clock speed with no log message or notification unless you actively monitor thermal zones
+- **Thermal throttling is silent** — The SoC reduces clock speed with no log message unless actively monitored
+
+## Bench Relevance
+
+- An SBC that reboots randomly likely has power supply issues — measure voltage at the board under load
+- File system corruption that develops over weeks of operation points to SD card wear — switch to eMMC or read-only root
+- An SBC that runs slower after minutes of sustained load is thermal throttling — check thermal zones with `cat /sys/class/thermal/thermal_zone*/temp`
+- GPIO operations that are orders of magnitude slower than expected confirm the user-space syscall overhead — this is normal for SBCs

@@ -55,10 +55,24 @@ A handful of SoC families dominate the embedded Linux and SBC world. Each has a 
 
 The pattern across these families: you are choosing a combination of silicon capability, software maturity, documentation quality, and supply chain characteristics. For learning, start with whatever has the strongest community. For production, documentation and vendor support matter more than raw specs.
 
-## Gotchas
+## Tips
 
-- **Cache misses destroy determinism** — A single L2 cache miss can add 50-200 cycles to an operation that normally completes in 5 cycles. If your application has timing constraints, characterize worst-case behavior, not average behavior
-- **Multi-core does not mean multi-threaded code runs faster automatically** — An application must be explicitly written to use multiple threads, and the workload must be parallelizable. A single-threaded Python script on a quad-core A72 uses exactly one core
-- **GPU driver support on embedded SoCs is often poor** — Mali GPUs historically relied on closed-source Android-derived drivers. The Panfrost and Lima open-source drivers have improved the situation, but hardware video acceleration remains incomplete on many SoCs
-- **SoC documentation is often under NDA or incomplete** — Budget time for discovering what the documentation does not tell you
-- **Thermal throttling on small SBCs limits sustained performance** — A Cortex-A72 in a fanless case will throttle within minutes under sustained load. The quoted clock speed is a peak, not a sustained guarantee
+- Characterize worst-case timing behavior, not average — cache misses can add 50-200 cycles to operations that normally take 5 cycles
+- Verify GPU and video hardware block driver support under mainline Linux before selecting an SoC — many impressive hardware features lack working drivers
+- For learning, start with platforms that have the strongest community support regardless of raw specs
+- Budget time for discovering what SoC documentation does not tell — vendor docs are often incomplete or under NDA
+
+## Caveats
+
+- **Cache misses destroy determinism** — A single L2 cache miss can add 50-200 cycles to an operation that normally completes in 5 cycles. Cortex-A cores are not suitable for hard real-time work
+- **Multi-core does not mean multi-threaded code runs faster automatically** — An application must be explicitly written to use multiple threads, and the workload must be parallelizable
+- **GPU driver support on embedded SoCs is often poor** — Mali GPUs historically relied on closed-source drivers. Panfrost and Lima have improved the situation, but hardware video acceleration remains incomplete on many SoCs
+- **SoC documentation is often under NDA or incomplete** — Expect to discover missing information through experimentation
+- **Thermal throttling on small SBCs limits sustained performance** — A Cortex-A72 in a fanless case throttles within minutes under sustained load. Quoted clock speed is a peak, not a sustained guarantee
+
+## Bench Relevance
+
+- Performance that varies unpredictably under similar conditions suggests cache behavior differences — run timing tests multiple times and look at worst case, not average
+- A multi-core SoC with one core at 100% and others idle indicates a single-threaded workload — parallelizing will help, but only if the workload is parallelizable
+- Hardware video acceleration that does not work despite being listed in the SoC specs likely lacks driver support — check mainline kernel status
+- A fanless SBC that runs slower after a few minutes of load is thermal throttling — add a heatsink or active cooling

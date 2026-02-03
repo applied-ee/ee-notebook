@@ -37,11 +37,25 @@ The Raspberry Pi is a notable exception — it uses a proprietary bootloader run
 
 The total time from power-on to a shell prompt depends on the platform and configuration. A minimal Buildroot system on a fast SoC can boot in under 5 seconds. A full Debian installation with systemd takes 15-30 seconds. Most time is spent probing devices (especially slow ones like USB) and starting services. Even an optimized MPU boot is orders of magnitude slower than an MCU — this is one of the key tradeoffs of the architecture.
 
-## Gotchas
+## Tips
 
-- **The serial console is your single most important debug tool** — UART is almost always the first peripheral initialized, and every boot stage outputs messages to it. Without a serial console, you are debugging blind. A USB-to-UART adapter and a terminal emulator are non-negotiable tools for embedded Linux work
-- **Bricking is real if you corrupt the bootloader** — If the bootloader on eMMC is corrupted and no fallback boot mode exists, the board cannot boot. Always ensure a recovery path — USB boot, UART boot, or SD card fallback
-- **Kernel panic at boot usually means a bad device tree or missing root filesystem** — "Unable to mount root fs" means the `root=` command line is wrong, the storage driver is missing, or the filesystem driver is missing. No output at all often means the wrong device tree was loaded
-- **Boot device order causes surprises** — Some SoCs try boot devices in a fixed order. A development SD card left in the slot boots instead of the eMMC image you just flashed
-- **Boot ROM bugs exist and cannot be fixed** — Mask ROM errata persist for the lifetime of the silicon revision. The only workarounds are software mitigations in the bootloader
-- **Initramfs is not always optional** — If the kernel needs modules to access the root filesystem (common when storage drivers are built as modules), an initramfs is required
+- Always connect a serial console before attempting embedded Linux bringup — every boot stage outputs messages to it
+- Ensure a recovery path exists (USB boot, UART boot, SD card fallback) before flashing bootloaders to eMMC
+- Check the boot device order and remove development SD cards before flashing production images to eMMC
+- Interrupt U-Boot at the serial console to manually inspect boot media, load files, and test configurations when things go wrong
+
+## Caveats
+
+- **The serial console is essential for debugging boot** — Without a serial console, boot problems are nearly impossible to diagnose. A USB-to-UART adapter and terminal emulator are non-negotiable
+- **Bricking is real if the bootloader is corrupted** — If the bootloader on eMMC is corrupted and no fallback boot mode exists, the board cannot boot
+- **Kernel panic at boot usually means a bad device tree or missing root filesystem** — "Unable to mount root fs" means the `root=` command line is wrong, the storage driver is missing, or the filesystem driver is missing
+- **Boot device order causes surprises** — Some SoCs try boot devices in a fixed order. A development SD card left in the slot boots instead of the intended eMMC image
+- **Boot ROM bugs exist and cannot be fixed** — Mask ROM errata persist for the lifetime of the silicon revision
+- **Initramfs is not always optional** — If the kernel needs modules to access the root filesystem, an initramfs is required
+
+## Bench Relevance
+
+- A board that hangs at power-on with no serial output has a boot ROM or first-stage bootloader problem
+- "Unable to mount root fs" in serial output indicates the kernel booted but cannot find the root filesystem — check the `root=` command line and storage drivers
+- A board that boots an old image despite flashing a new one likely has an SD card in a higher-priority boot slot
+- No output at all after U-Boot often means the wrong device tree was loaded

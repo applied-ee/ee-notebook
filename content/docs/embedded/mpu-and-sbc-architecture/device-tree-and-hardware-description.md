@@ -37,11 +37,25 @@ Bindings are the contract between the device tree and drivers — a specificatio
 
 The critical insight is what happens when the matching process fails. If a node's `compatible` string does not match any loaded driver, the kernel silently ignores it. There is no warning in `dmesg`, no error message, nothing. The device simply does not exist from the kernel's perspective. This is by design, but it makes debugging painful. If you add a device tree node and the device does not appear, the first thing to check is whether the `compatible` string exactly matches what the driver registers. A single typo means no match.
 
-## Gotchas
+## Tips
 
-- **Wrong `compatible` string means no driver binds, silently** — No error, no warning, nothing in `dmesg`. Always verify the exact string against the driver source's `of_match_table`
-- **`status = "disabled"` is the default for many SoC-level nodes** — The board .dts must explicitly set `status = "okay"` for each peripheral that is actually used. Forgetting this is one of the most common reasons a device tree node exists but nothing happens
-- **Pin mux conflicts are not always caught at boot** — Two device tree nodes claiming the same pin can result in electrical contention. Some pin controllers detect conflicts, many do not
+- Verify the `compatible` string exactly matches the driver source's `of_match_table` — a single typo means no match and no error
+- Explicitly set `status = "okay"` for each peripheral used on the board — SoC-level .dtsi files often default to `status = "disabled"`
+- Check for pin mux conflicts when using multiple overlays — not all pin controllers detect conflicts
+- Test device tree changes by rebooting — no practical hot-reload mechanism exists
+
+## Caveats
+
+- **Wrong `compatible` string means no driver binds, silently** — No error, no warning, nothing in `dmesg`. The kernel ignores unmatched nodes
+- **`status = "disabled"` is the default for many SoC-level nodes** — Forgetting to set `status = "okay"` is one of the most common reasons a device tree node exists but nothing happens
+- **Pin mux conflicts are not always caught at boot** — Two device tree nodes claiming the same pin can result in electrical contention
 - **Overlay load order matters** — Later overlays override earlier ones. If two overlays modify the same property, the last one wins
-- **The device tree is not validated against actual hardware** — You can describe a device that does not physically exist. The kernel will try to probe it, and the probe will fail or succeed by reading garbage from an unpopulated bus
-- **Device tree changes require a reboot in most configurations** — The kernel consumes the device tree at boot and builds its device model from it. No practical hot-reload mechanism exists
+- **The device tree is not validated against actual hardware** — A device tree can describe hardware that does not physically exist. The kernel will try to probe it
+- **Device tree changes require a reboot** — The kernel consumes the device tree at boot. No practical hot-reload mechanism exists
+
+## Bench Relevance
+
+- A device that does not appear in `/dev/` despite having a device tree node likely has a wrong `compatible` string or is `status = "disabled"`
+- An overlay that "does nothing" may be overridden by a later overlay or may conflict with the base device tree
+- A peripheral that fails to probe with errors about missing resources may have pin mux conflicts with another device
+- Adding a node for hardware that is not populated causes probe failures, not boot failures — the kernel tries anyway

@@ -45,10 +45,24 @@ User-space access is convenient but has hard limits.
 
 Before writing a custom kernel driver, always check whether one already exists. The Linux kernel has drivers for thousands of devices. A sensor might already be supported by an IIO driver, a display controller by DRM/KMS, an audio codec by ALSA.
 
-## Gotchas
+## Tips
 
-- **Sysfs GPIO is deprecated but still everywhere in tutorials** — The `/sys/class/gpio/` interface was deprecated in favor of `libgpiod`. Use `libgpiod` for any new work
-- **User-space SPI and I2C are slow compared to kernel drivers** — Every transaction involves at least one syscall. For sensors read once per second, this does not matter. For a display updated at 30 fps, it absolutely does
-- **Running as root does not make your code kernel-space code** — Root is a user-space privilege concept. A root process still runs at EL0 with all the associated overhead and limitations
-- **Loading a kernel module can crash the system** — Kernel modules run with full privilege. A null pointer dereference produces a kernel oops or panic, not a segfault. Test modules on a development board with serial console attached
-- **`/dev/mem` bypasses all protections and is dangerous in production** — Enormously useful for quick experiments, but a security hole and reliability hazard. Most modern distributions restrict access via `CONFIG_STRICT_DEVMEM`
+- Use `libgpiod` for GPIO access, not the deprecated `/sys/class/gpio/` interface
+- Before writing a custom kernel driver, check whether one already exists — the kernel has drivers for thousands of devices
+- Test kernel modules on a development board with serial console attached — bugs produce oops or panic, not segfaults
+- Use kernel drivers rather than user-space access for anything requiring interrupt handling, DMA, or high-frequency I/O
+
+## Caveats
+
+- **Sysfs GPIO is deprecated but still everywhere in tutorials** — The `/sys/class/gpio/` interface was deprecated in favor of `libgpiod`. Use `libgpiod` for new work
+- **User-space SPI and I2C are slow compared to kernel drivers** — Every transaction involves at least one syscall. For high-frequency access, this overhead is significant
+- **Running as root does not make code kernel-space code** — Root is a user-space privilege concept. A root process still runs at EL0 with syscall overhead
+- **Loading a kernel module can crash the system** — Kernel modules run with full privilege. A null pointer dereference produces a kernel oops or panic
+- **`/dev/mem` bypasses all protections and is dangerous in production** — Useful for experiments but a security hole and reliability hazard
+
+## Bench Relevance
+
+- GPIO toggling from user space that cannot exceed ~100 kHz is hitting syscall overhead — use a kernel driver or hardware peripheral
+- A sensor driver that works but is too slow for the required update rate may benefit from moving to a kernel driver
+- A crash with no segfault that takes down the entire system came from kernel space — check recently loaded modules
+- Code that runs as root but cannot access hardware directly is discovering the EL0/EL1 privilege split

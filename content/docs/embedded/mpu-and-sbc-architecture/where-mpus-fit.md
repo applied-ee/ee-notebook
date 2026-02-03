@@ -45,11 +45,25 @@ An MPU is never just a chip. External DRAM, storage (eMMC for production), a PMI
 
 Power consumption diverges sharply. A Cortex-M4 in stop mode draws single-digit microamps. An MPU running Linux draws hundreds of milliamps as a floor — DRAM refresh alone is continuous. In battery-powered designs, the common pattern is MCU-as-gatekeeper: the MCU handles always-on sensing at microamp levels, waking the MPU only when something interesting happens — boot, process, communicate, sleep.
 
-## Gotchas
+## Tips
 
-- **Over-specifying the MPU** — Choosing a quad-core A72 when a single A7 would suffice wastes cost, power, and thermal budget. Profile first, then select the SoC
-- **Under-specifying the MCU** — Trying to run a complex networking stack with TLS on a Cortex-M0+ with 32 KB of RAM. When the firmware starts feeling like a bad reimplementation of an OS, reconsider the platform
-- **Ignoring boot time** — An MCU is instant-on. An MPU takes 5-30 seconds. This matters for automotive, safety systems, and user experience. Fast-boot optimizations exist but still cannot match MCU instant-on
-- **Neglecting long-term maintenance** — An MCU firmware image can run unchanged for a decade. An MPU running Linux needs security patches, kernel updates, and userland maintenance over the product lifecycle
-- **Prototype-to-production gap** — A Raspberry Pi prototype does not map cleanly to a production board. The boot process, device tree, and SoC availability are all Pi-specific. Compute modules or evaluation boards from SoC vendors with production-friendly parts reduce this gap
-- **Assuming "just add Linux" solves the problem** — Linux adds extraordinary capability but also boot time, security surface area, update mechanisms, and failure modes. If the system can be done well on an MCU, that is often the better engineering choice
+- Profile workload requirements before selecting an SoC — choosing a quad-core when a single core suffices wastes cost and power
+- When MCU firmware starts reimplementing OS services, reconsider whether an MPU running Linux is the more honest choice
+- Plan for long-term maintenance on MPU systems — Linux requires security patches, kernel updates, and userland maintenance over the product lifecycle
+- Use vendor compute modules or evaluation boards rather than Raspberry Pi for prototypes intended to become production products
+
+## Caveats
+
+- **Over-specifying the MPU** — Choosing a quad-core A72 when a single A7 would suffice wastes cost, power, and thermal budget
+- **Under-specifying the MCU** — Trying to run a complex networking stack with TLS on a Cortex-M0+ with 32 KB of RAM leads to fragile, partial reimplementations of OS services
+- **Ignoring boot time** — An MCU is instant-on. An MPU takes 5-30 seconds. Fast-boot optimizations exist but cannot match MCU instant-on
+- **Neglecting long-term maintenance** — An MCU firmware image can run unchanged for a decade. An MPU running Linux needs ongoing security and kernel maintenance
+- **Prototype-to-production gap** — A Raspberry Pi prototype does not map cleanly to a production board. The boot process, device tree, and SoC availability are Pi-specific
+- **Assuming "just add Linux" solves the problem** — Linux adds boot time, security surface area, update mechanisms, and failure modes along with its capabilities
+
+## Bench Relevance
+
+- A design that meets requirements on an MCU but is implemented on an MPU "for convenience" carries unnecessary complexity and maintenance burden
+- Firmware that runs fine in development but has security vulnerabilities in the field suggests maintenance planning was neglected
+- A prototype on a Pi that cannot meet real-time requirements reveals an architectural mismatch — consider a hybrid SoC or dedicated MCU for real-time tasks
+- A product that boots too slowly for user acceptance was designed without considering MPU boot time constraints

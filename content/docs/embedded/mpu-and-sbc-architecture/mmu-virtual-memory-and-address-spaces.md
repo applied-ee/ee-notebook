@@ -39,10 +39,24 @@ Virtual memory allows the system to promise more memory than physically exists. 
 
 When physical memory is exhausted and there is no swap, the kernel invokes the OOM (Out of Memory) killer, selecting a process to terminate. On an embedded system with a well-defined workload, the OOM killer should never fire. If it does, the memory budget was wrong. Embedded Linux configurations often set `vm.overcommit_memory=2` with no swap, so that `malloc` fails early rather than allowing processes to allocate memory that cannot be backed.
 
-## Gotchas
+## Tips
 
-- **Page faults cause non-deterministic latency** — A page fault triggers kernel code to allocate a page, possibly zeroing it or reading from disk. For hard real-time tasks, all memory should be pre-faulted (`mlockall`) to eliminate this jitter source
-- **Swap on SD cards kills the card and the performance** — Flash storage has limited write cycles, and swap generates enormous write traffic. Disable swap on embedded systems and budget physical RAM instead
-- **OOM killer picks victims heuristically and may kill the wrong process** — Tune `oom_score_adj` for critical processes (set to -1000 to make them immune) and fix the memory budget so OOM never fires
-- **/dev/mem access bypasses all kernel protections and can crash the system** — Mapping physical memory into user space lets you read or write anything: kernel data structures, DMA buffers, peripheral registers the kernel thinks it owns exclusively. Use it for quick experiments, never in production
-- **Faults manifest differently on MCUs and MPUs** — On a Cortex-M, a bad memory access triggers a HardFault. On an MPU running Linux, the MMU raises a page fault and the kernel delivers a SIGSEGV, killing just that process while the rest of the system continues. See [Faults & Exceptions]({{< relref "/docs/embedded/embedded-reality/faults-and-exceptions" >}}) for how faults work on the MCU side
+- Use `mlockall()` early in real-time applications to pre-fault all memory and eliminate page fault jitter
+- Disable swap on embedded systems and budget physical RAM instead — swap on SD cards kills both performance and card lifespan
+- Set `oom_score_adj` to -1000 for critical processes to make them immune to the OOM killer
+- Use `/dev/mem` only for quick experiments, never in production — it bypasses all kernel protections
+
+## Caveats
+
+- **Page faults cause non-deterministic latency** — A page fault triggers kernel code to allocate a page, possibly zeroing it or reading from disk. This can add hundreds of microseconds to milliseconds
+- **Swap on SD cards kills the card and the performance** — Flash storage has limited write cycles, and swap generates enormous write traffic
+- **OOM killer picks victims heuristically and may kill the wrong process** — If physical memory is exhausted, the kernel selects a process to terminate based on heuristics
+- **/dev/mem access bypasses all kernel protections and can crash the system** — Mapping physical memory lets user space write to kernel data structures, DMA buffers, or peripheral registers
+- **Faults manifest differently on MCUs and MPUs** — On a Cortex-M, a bad memory access triggers a HardFault. On an MPU, the kernel delivers a SIGSEGV, killing just that process
+
+## Bench Relevance
+
+- Latency spikes that appear randomly in otherwise fast code suggest page faults — use `mlockall()` and pre-allocate all memory at startup
+- An embedded system that slows dramatically over time and eventually corrupts the SD card likely has swap enabled — disable it
+- A critical process that gets killed under memory pressure has the default `oom_score_adj` — set it to -1000
+- A SIGSEGV in one process while the rest of the system continues running demonstrates MMU protection working as designed

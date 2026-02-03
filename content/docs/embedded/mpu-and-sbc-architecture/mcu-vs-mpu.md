@@ -74,10 +74,23 @@ The boundary between MCU and MPU is not always clean. Several devices deliberate
 
 The decision is not always obvious. Designs sometimes start on a Raspberry Pi for convenience, then discover the real-time requirements should have been on an MCU all along. Understanding the architectural tradeoffs early saves expensive redesigns.
 
-## Gotchas
+## Tips
 
-- **"MPU" means two things in embedded** — In the Cortex-M world, MPU is the Memory Protection Unit. In the broader embedded world, MPU means microprocessor. Context usually makes it clear, but datasheets and forum posts can be confusing
-- **Clock speed is not the dividing line** — A 600 MHz Cortex-M7 is still an MCU. A 200 MHz Cortex-A5 is still an MPU. The architecture (MMU, privilege levels, cache hierarchy) matters more than clock frequency
-- **"Can it run Linux?" is a useful litmus test** — If a part can run mainline Linux, it is an MPU. If it cannot, it is an MCU. Edge cases exist (uClinux) but are rare
-- **MPU development requires more infrastructure** — An MCU project needs a cross-compiler and a debug probe. An MPU project needs a bootloader, kernel, root filesystem, device tree, and often Yocto or Buildroot
+- Use "can it run Linux?" as a quick litmus test — if a part can run mainline Linux, it is an MPU; if not, it is an MCU
+- Consider a hybrid SoC when hard real-time control and complex software must coexist on the same board
+- Start the MCU-vs-MPU decision by mapping requirements against real-time needs, software complexity, and production constraints
+- For learning, pick the platform with the strongest community and documentation before optimizing for silicon features
+
+## Caveats
+
+- **"MPU" means two things in embedded** — In the Cortex-M world, MPU is the Memory Protection Unit. In the broader embedded world, MPU means microprocessor. Context usually clarifies, but confusion is common
+- **Clock speed is not the dividing line** — A 600 MHz Cortex-M7 is still an MCU. A 200 MHz Cortex-A5 is still an MPU. The architecture (MMU, privilege levels, cache hierarchy) matters more
+- **MPU development requires more infrastructure** — An MCU project needs a cross-compiler and debug probe. An MPU project needs a bootloader, kernel, root filesystem, device tree, and often Yocto or Buildroot
 - **Hybrid chips are not twice as easy** — Running a Cortex-A + Cortex-M hybrid means maintaining two firmware images, debugging two cores with different tools, and designing an IPC mechanism
+
+## Bench Relevance
+
+- A design that starts on a Raspberry Pi for convenience but later discovers hard real-time requirements should have been on an MCU from the start
+- Instant-on requirements rule out MPUs — boot takes seconds to tens of seconds versus the instant-on of an MCU
+- Networking complexity that forces reimplementing TCP/IP, TLS, and HTTP on an MCU suggests an MPU running Linux is the more honest choice
+- A battery-powered device drawing hundreds of milliamps at idle is running an MPU — MCUs in stop mode draw single-digit microamps

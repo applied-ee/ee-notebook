@@ -41,11 +41,25 @@ For tasks requiring deterministic code execution, dedicated co-processors are th
 
 A rough decision framework: for anything requiring better than ~100 microseconds worst-case response, use PREEMPT_RT. For better than ~20 microseconds, use a co-processor or dedicated MCU. For sub-microsecond determinism, bare-metal MCU code or a specialized peripheral like the PRU.
 
-## Gotchas
+## Tips
 
-- **PREEMPT_RT is not a magic fix on its own** — User-space code must also cooperate: use `SCHED_FIFO` scheduling, call `mlockall()` to prevent page faults, pre-fault stack and heap at startup, and avoid blocking syscalls during real-time operation
-- **Page faults in RT code paths destroy latency** — A single demand page fault can cost hundreds of microseconds. Call `mlockall()` early and allocate all buffers at startup
-- **The RT throttling safety net catches people off guard** — `/proc/sys/kernel/sched_rt_runtime_us` defaults to 950 ms per second. If an RT task tries to use more, latency explodes. Set to -1 to disable (with caution) or ensure the RT task does not monopolize the CPU
+- Use `SCHED_FIFO` via `chrt`, call `mlockall()`, and pre-allocate all memory at startup for RT user-space code
+- Characterize worst-case latency under load, not average — the tail matters, not the peak
+- Check `/proc/sys/kernel/sched_rt_runtime_us` when RT tasks exhibit unexpected latency spikes — the default throttles RT tasks to 95% CPU
+- For requirements below ~20 microseconds worst-case, use a co-processor or dedicated MCU rather than fighting Linux
+
+## Caveats
+
+- **PREEMPT_RT is not a magic fix on its own** — User-space code must use `SCHED_FIFO`, call `mlockall()`, pre-fault stack and heap, and avoid blocking syscalls
+- **Page faults in RT code paths destroy latency** — A single demand page fault can cost hundreds of microseconds
+- **The RT throttling safety net catches people off guard** — `/proc/sys/kernel/sched_rt_runtime_us` defaults to 950 ms per second. If an RT task tries to use more, latency explodes
 - **One bad driver ruins system-wide RT latency** — A single driver that disables preemption for too long creates spikes regardless of tuning elsewhere
-- **`nice` is not RT priority** — The `nice` value only affects the CFS scheduler's fairness weighting. For actual real-time behavior, use `SCHED_FIFO` or `SCHED_RR` via `chrt`
-- **Worst case matters, not average** — An average latency of 10 microseconds is meaningless if the worst case is 2 milliseconds. In a real-time system, the tail kills you
+- **`nice` is not RT priority** — The `nice` value only affects CFS scheduler fairness. For real-time behavior, use `SCHED_FIFO` or `SCHED_RR`
+- **Worst case matters, not average** — An average latency of 10 microseconds is meaningless if the worst case is 2 milliseconds
+
+## Bench Relevance
+
+- Latency histograms with a sharp peak and a long tail reveal the difference between average and worst case — measure both
+- RT tasks that run fine for a few seconds then stall are hitting the RT throttling limit — check `sched_rt_runtime_us`
+- Latency spikes that correlate with specific drivers or peripherals indicate a non-RT-safe driver
+- A task using `nice` that still has poor latency under load needs `SCHED_FIFO`, not a lower nice value
