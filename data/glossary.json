@@ -3091,6 +3091,14 @@
     ]
   },
   {
+    "term": "I_CC",
+    "definition": "Supply current drawn from VCC. Datasheets often list I_CC for both quiescent and active operating conditions to characterize total power consumption. I_DD is the CMOS equivalent.",
+    "anchor": "i-cc",
+    "aliases": [
+      "I_DD"
+    ]
+  },
+  {
     "term": "I2C",
     "definition": "Inter-Integrated Circuit — a synchronous, half-duplex, multi-master serial bus using two open-drain lines.",
     "anchor": "i2c",
@@ -3192,6 +3200,16 @@
     "aliases": [
       "Integral Non-Linearity"
     ]
+  },
+  {
+    "term": "I_OH",
+    "definition": "Maximum output current a device can source when driving a logic HIGH. Often significantly lower than I_OL, making it the limiting factor for source-mode loads.",
+    "anchor": "i-oh"
+  },
+  {
+    "term": "I_OL",
+    "definition": "Maximum output current a device can sink when driving a logic LOW. Typically higher than I_OH, which is why many circuits connect loads in the sinking configuration.",
+    "anchor": "i-ol"
   },
   {
     "term": "Input bias current",
@@ -6958,6 +6976,14 @@
     "anchor": "v-score",
     "aliases": [
       "V-groove"
+    ]
+  },
+  {
+    "term": "VCC",
+    "definition": "Positive supply voltage in bipolar/TTL circuits, named for the collector supply. VDD is the CMOS equivalent, named for the drain supply, though both labels are used loosely in modern datasheets.",
+    "anchor": "vcc",
+    "aliases": [
+      "VDD"
     ]
   },
   {
