@@ -105,10 +105,24 @@ The voltage regulator maintains the DC supply voltage, but it has a finite bandw
 
 **Solution:** Overlap the frequency ranges. Use enough bulk capacitance that the capacitors are still effective at the regulator's bandwidth limit, and enough ceramic capacitance that the high-frequency range is covered. PDN impedance analysis (using simulation tools or impedance measurements) identifies gaps.
 
-## Gotchas
+## Tips
 
-- **Power integrity problems look like signal integrity problems** — A design with excessive ground bounce shows signal ringing, jitter, and intermittent bit errors. The root cause is the power rail, not the signal path. Probing the power pins (with a proper technique — short ground lead, close to the pin) is the first diagnostic step
+- When debugging signal integrity problems, probe the power rails first — PI problems often masquerade as SI problems
+- Place decoupling caps as close to IC power pins as possible — mounting inductance matters more than capacitance value
+- Use a mix of capacitor values (bulk + ceramic + small ceramic) to cover the full frequency range
+- Use short ground leads or tip-and-barrel probing when measuring power rail noise
+
+## Caveats
+
+- **Power integrity problems look like signal integrity problems** — A design with excessive ground bounce shows signal ringing, jitter, and intermittent bit errors. The root cause is the power rail, not the signal path. Probing the power pins (with proper technique — short ground lead, close to the pin) is the first diagnostic step
 - **Decoupling cap placement matters more than value** — A 100 nF cap with 0.5 nH of mounting inductance resonates at ~22 MHz and is ineffective above ~50 MHz. The same cap with 0.1 nH mounting inductance (shorter vias, smaller pad spacing) resonates at ~50 MHz and is effective to ~100 MHz
-- **Oscilloscope probing technique affects measurements** — The standard 6-inch ground lead on a scope probe has ~10 nH of inductance, which rings at high frequencies and obscures the actual power rail noise. Use a ground spring, tip-and-barrel technique, or dedicated power integrity probes to measure PDN noise accurately. See the [Measurement & Test]({{< relref "/docs/measurement" >}}) section
-- **More capacitors don't always help** — Adding capacitors of the same value in parallel reduces ESR and increases capacitance, but the mounting inductance of each cap in parallel also adds up. At some point, additional caps have diminishing returns. A mix of values (for different frequency ranges) is more effective than many identical caps
-- **Core voltage tolerance is tight** — Modern FPGAs and processors use core voltages of 0.8-1.0 V with ±3-5% tolerance. A 3% tolerance on 0.85 V is ±25 mV. The total PDN noise budget (regulator accuracy + ripple + transient droop + ground bounce) must fit within this margin. There is no room for sloppy power design at these voltages
+- **Oscilloscope probing technique affects measurements** — The standard 6-inch ground lead on a scope probe has ~10 nH of inductance, which rings at high frequencies and obscures the actual power rail noise. Use a ground spring, tip-and-barrel technique, or dedicated power integrity probes
+- **More capacitors don't always help** — Adding capacitors of the same value in parallel reduces ESR but the mounting inductance of each cap also adds up. A mix of values (for different frequency ranges) is more effective than many identical caps
+- **Core voltage tolerance is tight** — Modern FPGAs and processors use core voltages of 0.8-1.0 V with ±3-5% tolerance. A 3% tolerance on 0.85 V is ±25 mV. The total PDN noise budget must fit within this margin
+
+## Bench Relevance
+
+- Signal ringing and jitter that correlate with bus switching activity suggest ground bounce — measure the power rails
+- Noise on power rails that increases with clock frequency or switching activity confirms PDN impedance is too high
+- Measurements that show clean power rails with a long ground lead may be missing high-frequency noise — use proper PI probing techniques
+- Systems that work at low clock speeds but fail at higher speeds may have PDN resonances in the higher frequency range

@@ -107,10 +107,24 @@ While clock domain crossing is the most common context for metastability, it can
 - Using Schmitt trigger inputs — Schmitt triggers have hysteresis that helps with noisy signals, but they do not prevent metastability in flip-flops
 - Using "special" flip-flops — All CMOS flip-flops have metastability. Some have better (smaller) tau, but none are immune
 
-## Gotchas
+## Tips
+
+- Use two-stage synchronizers for all signals crossing clock domain boundaries — no exceptions
+- Calculate MTBF at worst-case temperature and maximum clock frequency before committing to a synchronizer design
+- Use vendor-provided synchronizer cells — they may have optimized layouts with reduced metastability time constants
+- Run CDC analysis tools to automatically find unsynchronized crossings
+
+## Caveats
 
 - **Metastability is probabilistic, not deterministic** — A design with a metastability MTBF of 1 year might work for months, then fail multiple times in a week. Testing cannot prove the absence of metastability problems — only MTBF calculation and CDC analysis can
 - **Higher clock frequencies increase metastability risk** — Both by increasing the number of opportunities per second (more clock edges) and by reducing the resolution time available per stage. Doubling the clock frequency can reduce MTBF by orders of magnitude
-- **Temperature affects metastability** — Higher temperatures slow transistor switching, increasing the resolution time constant tau. A design with adequate MTBF at 25 C may have marginal MTBF at 85 C. Always calculate MTBF at the worst-case operating temperature
-- **Simulation doesn't show metastability** — RTL simulation models flip-flops as perfect digital elements. A metastable condition in simulation produces either 0, 1, or X (unknown) — it doesn't model the analog resolution process. Gate-level simulation with back-annotated timing can detect setup/hold violations but still doesn't model the resolution behavior accurately
-- **Metastability is not the same as a wrong value** — A flip-flop that captures the wrong value (because it sampled during a transition but resolved quickly) is not metastable — it simply captured the old or new value. Metastability is the prolonged indeterminate state. Both are problems, but they require different analysis
+- **Temperature affects metastability** — Higher temperatures slow transistor switching, increasing the resolution time constant tau. A design with adequate MTBF at 25°C may have marginal MTBF at 85°C. Always calculate MTBF at the worst-case operating temperature
+- **Simulation doesn't show metastability** — RTL simulation models flip-flops as perfect digital elements. A metastable condition in simulation produces either 0, 1, or X (unknown) — it doesn't model the analog resolution process
+- **Metastability is not the same as a wrong value** — A flip-flop that captures the wrong value (because it sampled during a transition but resolved quickly) is not metastable — it simply captured the old or new value. Both are problems, but they require different analysis
+
+## Bench Relevance
+
+- Intermittent data corruption on signals crossing clock domains suggests unsynchronized or under-synchronized crossings
+- A metastable output on an oscilloscope appears as a mid-rail voltage or high-frequency oscillation lasting longer than expected
+- Systems that fail more frequently at elevated temperature may have marginal MTBF — recalculate with worst-case tau
+- Testing that "passes" does not prove absence of metastability problems — only MTBF analysis provides confidence

@@ -100,11 +100,25 @@ Fast edges radiate electromagnetic energy. The PCB traces act as antennas, and t
 - Filter high-frequency content at board edges and connectors
 - Reduce edge rates to the minimum required for the application (slower edges = less high-frequency content = less radiation)
 
-## Gotchas
+## Tips
+
+- Use the slowest logic family adequate for the application — faster edges create unnecessary SI and EMI challenges
+- Route high-speed signals on inner layers (stripline) to minimize crosstalk and radiation
+- Never route high-speed signals across gaps or splits in the reference plane
+- Use active or differential probes for accurate high-speed measurements — passive probes add too much loading
+
+## Caveats
 
 - **Edge rate, not clock frequency, determines high-speed challenges** — A 74AUC buffer toggling at 1 MHz with 300 ps edges has the same SI and EMI challenges as a 1 GHz SerDes. Don't use faster logic families than necessary; the edge rate determines the bandwidth of the noise and radiation
-- **FR4 is lossy above 5 GHz** — For interfaces operating at 10 Gbps and above, standard FR4 may not be adequate. Low-loss dielectrics (Megtron 6, Rogers 4350) reduce channel attenuation but increase board cost. The choice depends on trace length and data rate
-- **Ground bounce is a high-speed effect** — Simultaneous switching of many outputs creates high dI/dt current transients that cause ground bounce. This is not a power supply problem — it's an inductance problem in the ground path. Minimizing ground path inductance (multiple ground vias, wide ground planes, short package leads) is the solution. See [Power Integrity]({{< relref "power-integrity" >}})
-- **Decoupling and signal integrity are coupled** — Power rail noise from switching transients modulates the output voltage of every driver. A driver with a 100 mV ground bounce has its output shifted by 100 mV, which directly reduces the noise margin of every signal it drives. PI and SI must be designed together
-- **"It passed simulation" is not enough** — SI simulation models the ideal trace geometry, nominal dielectric properties, and typical component models. Real boards have manufacturing tolerances (±10% trace width, ±5% dielectric constant, copper roughness). Margin analysis across these tolerances is necessary for reliable high-speed design
-- **Probing high-speed signals is itself a high-speed problem** — A standard oscilloscope probe adds 8-12 pF and 5-10 nH to the node. This changes the signal enough to mask the actual behavior. Active probes, differential probes, and proper probing techniques are essential for accurate high-speed measurement
+- **FR4 is lossy above 5 GHz** — For interfaces operating at 10 Gbps and above, standard FR4 may not be adequate. Low-loss dielectrics (Megtron 6, Rogers 4350) reduce channel attenuation but increase board cost
+- **Ground bounce is a high-speed effect** — Simultaneous switching of many outputs creates high dI/dt current transients that cause ground bounce. This is not a power supply problem — it's an inductance problem in the ground path
+- **Decoupling and signal integrity are coupled** — Power rail noise from switching transients modulates the output voltage of every driver. A driver with 100 mV ground bounce has its output shifted by 100 mV, directly reducing noise margin. PI and SI must be designed together
+- **"It passed simulation" is not enough** — SI simulation models ideal trace geometry and nominal component values. Real boards have manufacturing tolerances (±10% trace width, ±5% dielectric constant). Margin analysis across these tolerances is necessary for reliable design
+- **Probing high-speed signals is itself a high-speed problem** — A standard oscilloscope probe adds 8-12 pF and 5-10 nH to the node. This changes the signal enough to mask the actual behavior
+
+## Bench Relevance
+
+- Signal edges that look clean at low frequencies but ring at high frequencies indicate transmission line effects — add termination
+- EMI that fails compliance testing often traces to common-mode currents from ground plane discontinuities
+- Eye diagrams that close on long traces suggest channel loss — consider low-loss dielectrics or equalization
+- Signals that behave differently when probed have marginal timing or SI — the probe loading is revealing the margin issue
