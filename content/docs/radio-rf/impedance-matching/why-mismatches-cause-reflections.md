@@ -5,11 +5,11 @@ weight: 20
 
 # Why Mismatches Cause Reflections
 
-Reflections at impedance boundaries are one of those things that seem mysterious until you build the right mental model. The short version is: energy has to go somewhere. When a traveling wave hits a boundary where the impedance changes, part of the wave continues into the new medium and part bounces back. This isn't unique to RF — it happens with sound waves hitting walls, light hitting glass, and water waves hitting a shelf in a pool. The physics is the same.
+Reflections at impedance boundaries are one of those things that seem mysterious until the right mental model is in place. The short version is: energy has to go somewhere. When a traveling wave hits a boundary where the impedance changes, part of the wave continues into the new medium and part bounces back. This isn't unique to RF — it happens with sound waves hitting walls, light hitting glass, and water waves hitting a shelf in a pool. The physics is the same.
 
 ## The Rope Analogy
 
-The clearest mechanical analogy I've found is a wave pulse traveling along a rope. If the rope is tied to a fixed wall (short circuit in electrical terms), the pulse reflects back inverted — same energy, opposite polarity. If the rope end is free (open circuit), the pulse reflects back with the same polarity. If the rope is connected to another rope of different weight (impedance mismatch), part of the pulse continues into the second rope and part reflects back.
+The clearest mechanical analogy is a wave pulse traveling along a rope. If the rope is tied to a fixed wall (short circuit in electrical terms), the pulse reflects back inverted — same energy, opposite polarity. If the rope end is free (open circuit), the pulse reflects back with the same polarity. If the rope is connected to another rope of different weight (impedance mismatch), part of the pulse continues into the second rope and part reflects back.
 
 A matched termination is like connecting the rope to a dashpot or damper that absorbs all the energy perfectly — no reflection at all. In electrical terms, this is a load impedance equal to the characteristic impedance of the line.
 
@@ -25,7 +25,7 @@ The reflection coefficient (gamma) quantifies this:
 
 gamma = (Z_L - Z0) / (Z_L + Z0)
 
-This produces a value between -1 and +1 (or a complex number if Z_L is complex). The magnitude of gamma tells you how much of the incident wave amplitude is reflected.
+This produces a value between -1 and +1 (or a complex number if Z_L is complex). The magnitude of gamma indicates how much of the incident wave amplitude is reflected.
 
 ## The Extreme Cases
 
@@ -75,15 +75,29 @@ Reflections aren't just a theoretical concern. They cause several practical prob
 
 ## Connection to Other Metrics
 
-Reflection coefficient, VSWR, and return loss all describe the same physical phenomenon — they're just different ways of expressing it. I find return loss most intuitive for comparing match quality, VSWR most common in amateur radio and antenna work, and reflection coefficient most useful for calculations and Smith chart work. Converting between them is straightforward, and any instrument that measures one can display the others.
+Reflection coefficient, VSWR, and return loss all describe the same physical phenomenon — they're just different ways of expressing it. Return loss is most intuitive for comparing match quality, VSWR most common in amateur radio and antenna work, and reflection coefficient most useful for calculations and Smith chart work. Converting between them is straightforward, and any instrument that measures one can display the others.
 
 Mismatch loss — the power that fails to reach the load due to reflection — is another useful metric: ML (dB) = -10 * log10(1 - |gamma|^2). A VSWR of 2:1 corresponds to about 0.5 dB of mismatch loss, which is often less than the cable loss itself.
 
-## Gotchas
+## Tips
 
-- **Reflections aren't always bad** — Some circuits intentionally use reflections. A stub filter works by creating a deliberate mismatch at certain frequencies. An open or shorted stub is a pure reflector — and that's the point.
-- **Low VSWR doesn't mean low loss** — A lossy cable can show low VSWR at the transmitter end because the reflections are attenuated on the round trip. The power is being lost in the cable, not delivered to the antenna. Always measure VSWR at the antenna feedpoint if possible.
-- **VSWR is measured on the line, not at a point** — VSWR describes the standing wave pattern along the entire line. An SWR meter at the transmitter sees the mismatch transformed by the cable length and loss, which can be different from the mismatch at the antenna.
-- **Short transient signals don't "see" mismatches the same way** — A single pulse shorter than the round-trip time experiences the mismatch as a delayed echo, not as a standing wave. Standing waves are a steady-state phenomenon.
-- **A perfect match at one frequency may be terrible at another** — If the load impedance varies with frequency (as most antennas do), the match quality varies too. Always check VSWR across the intended operating bandwidth, not just at center frequency.
-- **Return loss and insertion loss are different things** — Return loss measures reflected power. Insertion loss measures power not delivered to the load (including both reflection and dissipation). A lossy matched cable has low return loss but high insertion loss.
+- Use return loss as the go-to metric for comparing match quality across different systems — it scales intuitively in dB and is directly readable on a VNA
+- When troubleshooting a mismatch, start by checking the termination at the far end of the cable before investigating the cable itself — most reflections originate at the load
+- Keep a reference table of VSWR-to-reflected-power handy on the bench; the 2:1 = 11% and 3:1 = 25% values are the most commonly encountered thresholds
+- For digital signal integrity work, think of reflections in time-domain terms (echoes) rather than frequency-domain terms (standing waves) — a TDR provides the most direct view
+
+## Caveats
+
+- **Reflections aren't always bad** — Some circuits intentionally use reflections. A stub filter works by creating a deliberate mismatch at certain frequencies. An open or shorted stub is a pure reflector — and that's the point
+- **Low VSWR doesn't mean low loss** — A lossy cable can show low VSWR at the transmitter end because the reflections are attenuated on the round trip. The power is being lost in the cable, not delivered to the antenna. Always measure VSWR at the antenna feedpoint if possible
+- **VSWR is measured on the line, not at a point** — VSWR describes the standing wave pattern along the entire line. An SWR meter at the transmitter sees the mismatch transformed by the cable length and loss, which can be different from the mismatch at the antenna
+- **Short transient signals don't "see" mismatches the same way** — A single pulse shorter than the round-trip time experiences the mismatch as a delayed echo, not as a standing wave. Standing waves are a steady-state phenomenon
+- **A perfect match at one frequency may be terrible at another** — If the load impedance varies with frequency (as most antennas do), the match quality varies too. Always check VSWR across the intended operating bandwidth, not just at center frequency
+- **Return loss and insertion loss are different things** — Return loss measures reflected power. Insertion loss measures power not delivered to the load (including both reflection and dissipation). A lossy matched cable has low return loss but high insertion loss
+
+## Bench Relevance
+
+- An SWR meter needle rising above 3:1 during transmission typically triggers the radio's foldback protection, visibly reducing output power — a direct sign of significant reflections
+- On a TDR trace, a sharp upward step indicates a high-impedance discontinuity (partial open) and a downward step indicates a low-impedance discontinuity (partial short), pinpointing the physical location of the mismatch
+- A VNA sweep of an unterminated coax cable shows periodic ripples in return loss corresponding to the cable's electrical length — each ripple represents a half-wavelength round trip
+- Swapping a known-good 50-ohm terminator onto a cable and seeing the VNA return loss jump above 30 dB confirms the cable and connectors are sound, isolating the problem to the original load

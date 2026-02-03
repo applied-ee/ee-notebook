@@ -5,7 +5,7 @@ weight: 70
 
 # Real-World Compromises & Tolerances
 
-Everything covered so far in this section — [matching networks]({{< relref "/docs/radio-rf/impedance-matching/simple-matching-networks" >}}), [Smith chart design]({{< relref "/docs/radio-rf/impedance-matching/smith-chart-intuition" >}}), [broadband techniques]({{< relref "/docs/radio-rf/impedance-matching/broadband-vs-narrowband-matching" >}}) — assumes perfect components, known impedances, and stable conditions. In the real world, component tolerances shift the match, temperature changes impedance, nearby objects detune antennas, and the thing you're matching doesn't present the impedance you calculated. Learning when to chase a better match and when to accept what you have is as important as learning how to design the match in the first place.
+Everything covered so far in this section — [matching networks]({{< relref "/docs/radio-rf/impedance-matching/simple-matching-networks" >}}), [Smith chart design]({{< relref "/docs/radio-rf/impedance-matching/smith-chart-intuition" >}}), [broadband techniques]({{< relref "/docs/radio-rf/impedance-matching/broadband-vs-narrowband-matching" >}}) — assumes perfect components, known impedances, and stable conditions. In the real world, component tolerances shift the match, temperature changes impedance, nearby objects detune antennas, and the thing being matched doesn't present the impedance that was calculated. Learning when to chase a better match and when to accept the current result is as important as learning how to design the match in the first place.
 
 ## Component Tolerances
 
@@ -28,7 +28,7 @@ The effect is worse for narrow-bandwidth (high-Q) matching networks, because the
 | 10% | ~10% | Match may fail | Moderate degradation |
 | 20% (X7R/X5R) | ~20% | Match almost certainly fails | Significant degradation |
 
-For critical matching applications, use C0G (NP0) capacitors with 1% or 2% tolerance. Avoid X7R and X5R dielectrics in matching networks — their capacitance varies with voltage, temperature, and aging. The extra cost of C0G capacitors is trivial compared to the debugging time saved.
+For critical matching applications, C0G (NP0) capacitors with 1% or 2% tolerance are the right choice. X7R and X5R dielectrics should be avoided in matching networks — their capacitance varies with voltage, temperature, and aging. The extra cost of C0G capacitors is trivial compared to the debugging time saved.
 
 ## Temperature Effects
 
@@ -69,7 +69,7 @@ This is the practical question that matters most. The answer depends on the appl
 
 For a transmitter, VSWR 1.5:1 is a common practical target. This corresponds to about 4% reflected power (0.18 dB mismatch loss) — barely detectable. Most transmitters can handle this without power reduction or risk of damage.
 
-For a receiver, VSWR 3:1 costs only 1.25 dB of signal — less than the loss in a typical connector or a meter of coax at UHF. Unless you're noise-limited and need every fraction of a dB, a 3:1 match on a receive antenna is fine.
+For a receiver, VSWR 3:1 costs only 1.25 dB of signal — less than the loss in a typical connector or a meter of coax at UHF. Unless the system is noise-limited and every fraction of a dB matters, a 3:1 match on a receive antenna is fine.
 
 ## The Cost of Chasing Perfection
 
@@ -83,9 +83,9 @@ There's a real cost to over-optimizing a match:
 
 ## Tuning and Trimming in Production
 
-For prototype and low-volume production, hand-tuning matching networks with a VNA is practical. You solder in components, measure, swap values, repeat until the match is acceptable.
+For prototype and low-volume production, hand-tuning matching networks with a VNA is practical. Components are soldered in, measured, and swapped until the match is acceptable.
 
-For high-volume production, this isn't feasible. Instead, the matching network is designed with margin — it's designed to give acceptable (not perfect) performance across the expected range of component tolerances and environmental conditions. Monte Carlo simulation with component tolerance distributions predicts the yield — what percentage of units will meet the VSWR specification.
+For high-volume production, this isn't feasible. Instead, the matching network is designed with margin — acceptable (not perfect) performance across the expected range of component tolerances and environmental conditions. Monte Carlo simulation with component tolerance distributions predicts the yield — what percentage of units will meet the VSWR specification.
 
 Some products include trimming capability in the matching network:
 
@@ -95,11 +95,25 @@ Some products include trimming capability in the matching network:
 
 The choice depends on volume, cost target, and how much variation the design can tolerate without adjustment.
 
-## Gotchas
+## Tips
 
-- **X7R capacitors have no place in matching networks** — Their capacitance changes with voltage (piezoelectric effect), temperature, and DC bias. A 10 pF X7R capacitor with 5V DC bias might actually be 7 pF. Use C0G/NP0 for matching.
-- **"Good enough" is a legitimate engineering decision** — Spending a week optimizing a match from VSWR 1.5 to 1.2 saves 0.1 dB. If the cable loss is 1 dB and the connector loss is 0.3 dB, that 0.1 dB improvement is invisible in the system budget.
-- **The antenna impedance you measured today will change tomorrow** — Environmental changes (snow on the antenna, wind changing its shape, corrosion at connections) shift the impedance over time. Design for robustness across expected variations, not for perfection at one moment.
-- **Simulation doesn't capture all environmental effects** — EM simulation tools model idealized geometry. They don't know about the connector that's 2 degrees off-axis, the solder blob on the ground plane, or the user's hand cupping the device. Bench measurement is essential.
-- **Production spread kills tight tolerances** — A matching network that works perfectly with hand-selected components might have 30% yield with standard tolerance parts. Simulate the tolerance stack before committing to a design.
-- **Don't match in a jig and deploy in a product** — If the antenna impedance changes between the test fixture and the final product enclosure, the matching network needs to be designed for the final environment, not the jig.
+- Specify C0G/NP0 capacitors for all matching networks — the cost premium over X7R is negligible and eliminates an entire category of drift and tolerance problems
+- Design matching networks to meet specification at the corners of the tolerance range, not just at nominal — a Monte Carlo simulation with 1000 trials using component tolerance distributions is a fast way to predict production yield
+- When bench-tuning a prototype, record the final component values and compare them to the calculated values — the difference reveals the magnitude of parasitic effects and guides future designs
+- Accept VSWR 1.5:1 as "good enough" for most transmitter applications; the 0.18 dB mismatch loss is smaller than typical connector and cable losses
+
+## Caveats
+
+- **X7R capacitors have no place in matching networks** — Their capacitance changes with voltage (piezoelectric effect), temperature, and DC bias. A 10 pF X7R capacitor with 5V DC bias might actually be 7 pF. Use C0G/NP0 for matching
+- **"Good enough" is a legitimate engineering decision** — Spending a week optimizing a match from VSWR 1.5 to 1.2 saves 0.1 dB. If the cable loss is 1 dB and the connector loss is 0.3 dB, that 0.1 dB improvement is invisible in the system budget
+- **The antenna impedance measured today will change tomorrow** — Environmental changes (snow on the antenna, wind changing its shape, corrosion at connections) shift the impedance over time. Design for robustness across expected variations, not for perfection at one moment
+- **Simulation doesn't capture all environmental effects** — EM simulation tools model idealized geometry. They don't know about the connector that's 2 degrees off-axis, the solder blob on the ground plane, or a hand cupping the device. Bench measurement is essential
+- **Production spread kills tight tolerances** — A matching network that works perfectly with hand-selected components might have 30% yield with standard tolerance parts. Simulate the tolerance stack before committing to a design
+- **Matching in a jig and deploying in a product are different things** — If the antenna impedance changes between the test fixture and the final product enclosure, the matching network needs to be designed for the final environment, not the jig
+
+## Bench Relevance
+
+- Measuring a matching network across temperature (e.g., with a heat gun and a VNA) shows the S11 dip shifting in frequency — C0G-based networks barely move, while X7R-based networks can shift by 10% or more
+- Placing a hand near an antenna under VNA measurement visibly moves the Smith chart trace, demonstrating proximity detuning in real time and revealing how much margin the matching network needs
+- Comparing VNA measurements of the same antenna in a test jig vs. the final product enclosure shows the impedance shift caused by the enclosure — this difference is the reason matching should be finalized in the production housing
+- Running a batch of identical PCBs through VNA testing reveals the spread in match quality due to component tolerances — this distribution directly predicts production yield and informs whether tighter tolerance parts are justified
