@@ -6,7 +6,7 @@ bookCollapseSection: true
 
 # Design Constraints of Earlier Eras
 
-Every circuit is a product of what was available and what it cost at the time. Designs from the 1960s through the 1990s reflect a world where silicon was expensive, board space was cheap, precision components cost real money, and a microcontroller cost more than the analog circuit it might replace. The patterns look strange through a modern lens until you understand the catalog the designer was working from.
+Every circuit is a product of what was available and what it cost at the time. Designs from the 1960s through the 1990s reflect a world where silicon was expensive, board space was cheap, precision components cost real money, and a microcontroller cost more than the analog circuit it might replace. The patterns look strange through a modern lens until the catalog the designer was working from becomes clear.
 
 ## What Was Expensive
 
@@ -34,8 +34,22 @@ Every circuit is a product of what was available and what it cost at the time. D
 
 **Standardized building blocks** — Despite the constraints, the industry converged on standard circuit patterns. The long-tailed pair (differential amplifier), current mirror, Widlar current source, cascode, and emitter-coupled logic cell appear repeatedly across manufacturers and decades. Recognizing these blocks in an unfamiliar schematic is the key to reading legacy circuits fluently.
 
-## Gotchas
+## Tips
 
-- **Don't assume older means worse** — Many vintage designs were carefully optimized by experienced engineers working within their constraints. A 1975 audio amplifier designed by a competent engineer may have better distortion performance than a hastily designed modern equivalent, because the designer put thought into every component choice
-- **Cost constraints weren't uniform** — Military and aerospace designs had very different cost profiles from consumer electronics. A military circuit from 1970 might use expensive precision parts that a consumer design of the same era couldn't afford. The era alone doesn't tell you the design philosophy — the application context matters too
-- **Discrete doesn't mean simple** — A discrete circuit with 40 components can be harder to analyze than a modern circuit with 5 ICs, because every component interacts with its neighbors. The parts count is lower, but the analysis complexity per part is higher
+- When encountering a legacy design, identify the era's cost drivers first -- knowing whether transistors, precision resistors, or board space was the scarce resource explains most of the design choices
+- Study the standard building blocks (voltage divider bias, current mirrors, long-tailed pairs) before attempting to read a full legacy schematic -- pattern recognition speeds analysis dramatically
+- Use manufacturer application notes from the era as references; companies like Fairchild, Motorola, and RCA published extensive design guides that explain the reasoning behind common circuit patterns
+- Compare a discrete circuit to the IC that eventually replaced it -- tracing the functional correspondence builds intuition for both the legacy design and the modern part's internal behavior
+
+## Caveats
+
+- **Older does not mean worse** -- Many vintage designs were carefully optimized by experienced engineers working within their constraints. A 1975 audio amplifier designed by a competent engineer may have better distortion performance than a hastily designed modern equivalent, because the designer put thought into every component choice
+- **Cost constraints were not uniform** -- Military and aerospace designs had very different cost profiles from consumer electronics. A military circuit from 1970 might use expensive precision parts that a consumer design of the same era could not afford. The era alone does not reveal the design philosophy -- the application context matters too
+- **Discrete does not mean simple** -- A discrete circuit with 40 components can be harder to analyze than a modern circuit with 5 ICs, because every component interacts with its neighbors. The parts count is lower, but the analysis complexity per part is higher
+
+## Bench Relevance
+
+- A board full of 7400-series logic ICs performing a simple sequencing function is a hallmark of pre-microcontroller design -- the physical size reflects the era's parts catalog, not the complexity of the function
+- Trimpots scattered across a vintage board indicate the designer compensated for component tolerance by hand-adjustment rather than paying for precision parts
+- Large heatsinks on linear regulators and Class A output stages reflect an era when power dissipation was an accepted tradeoff for simplicity and low noise
+- Wide trace spacing and through-hole components on single-sided boards are signs of hand-taped or hand-drawn layout, common in consumer and industrial equipment through the 1980s
