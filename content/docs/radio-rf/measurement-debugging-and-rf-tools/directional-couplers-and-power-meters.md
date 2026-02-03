@@ -36,7 +36,7 @@ Practical directivity ranges:
 
 - **Transmitter monitoring**: Place a coupler between the transmitter output and antenna. The coupled port feeds a power meter or spectrum analyzer, showing the transmitter's output level without disconnecting the antenna.
 - **VSWR measurement**: Use two couplers (or a dual-directional coupler) to sample both forward and reverse power simultaneously. The ratio of reverse to forward power gives the reflection coefficient, from which VSWR is calculated.
-- **Test points in amplifier chains**: A coupler between amplifier stages lets you monitor the signal without adding a probe or breaking the impedance match.
+- **Test points in amplifier chains**: A coupler between amplifier stages allows monitoring of the signal without adding a probe or breaking the impedance match.
 - **Feedback sampling**: Some automatic level control (ALC) circuits use a coupler to sample the output and feed a control loop.
 
 ## RF Power Meters
@@ -53,7 +53,7 @@ Typical thermal sensor specs: frequency range DC to 18+ GHz, power range -30 dBm
 
 A Schottky diode rectifies the RF signal, producing a DC voltage proportional to the RF power. Diode sensors are fast (microsecond response) and can measure very low power levels (down to -70 dBm). Below about -20 dBm, the diode operates in the square-law region and the output is proportional to true RMS power regardless of waveform. Above -20 dBm, the diode enters the linear detection region and the output depends on the waveform shape — a CW signal reads differently than a modulated signal with the same average power.
 
-Modern diode sensors use multiple diode paths and digital correction to extend the square-law-equivalent range, but there's always a waveform-dependent region.
+Modern diode sensors use multiple diode paths and digital correction to extend the square-law-equivalent range, but there is always a waveform-dependent region.
 
 | Characteristic | Thermal Sensor | Diode Sensor |
 |---|---|---|
@@ -86,11 +86,11 @@ A useful shortcut: every 3 dB doubles the power, every 10 dB multiplies by 10. S
 
 ## Return Loss Bridges
 
-A return loss bridge is a simpler, less expensive alternative to a VNA for measuring impedance mismatch. It's essentially a Wheatstone bridge at RF frequencies: one arm is a precision 50-ohm reference, the other arm is the device under test. When the DUT is exactly 50 ohms, the bridge is balanced and no signal appears at the detector port. Any deviation from 50 ohms produces an output proportional to the mismatch.
+A return loss bridge is a simpler, less expensive alternative to a VNA for measuring impedance mismatch. It is essentially a Wheatstone bridge at RF frequencies: one arm is a precision 50-ohm reference, the other arm is the device under test. When the DUT is exactly 50 ohms, the bridge is balanced and no signal appears at the detector port. Any deviation from 50 ohms produces an output proportional to the mismatch.
 
-Connected to a signal generator and spectrum analyzer (or even an oscilloscope), a return loss bridge measures scalar return loss — magnitude only, no phase. This tells you how well matched a device is at each frequency, but doesn't tell you whether the mismatch is capacitive, inductive, or resistive. For antenna tuning and cable testing, scalar return loss is often sufficient.
+Connected to a signal generator and spectrum analyzer (or even an oscilloscope), a return loss bridge measures scalar return loss — magnitude only, no phase. This indicates how well matched a device is at each frequency, but does not reveal whether the mismatch is capacitive, inductive, or resistive. For antenna tuning and cable testing, scalar return loss is often sufficient.
 
-Return loss bridges cost $20-50 and cover broad frequency ranges (1 MHz to 1+ GHz). They're a useful tool when a VNA is not available. See [Field-Expedient RF Measurement]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/field-expedient-measurement" >}}) for more on making do with affordable instruments.
+Return loss bridges cost $20-50 and cover broad frequency ranges (1 MHz to 1+ GHz). They are a useful tool when a VNA is not available. See [Field-Expedient RF Measurement]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/field-expedient-measurement" >}}) for more on making do with affordable instruments.
 
 ## Connecting It All Together
 
@@ -101,13 +101,27 @@ A typical transmitter test setup might include:
 3. Forward coupled port into a power meter or spectrum analyzer (through an attenuator if needed)
 4. Reverse coupled port into a second meter to monitor reflected power
 
-This setup lets you measure transmitter output power, harmonic content (on the spectrum analyzer), and load match simultaneously — without ever connecting the transmitter to an antenna. This is particularly important during development and debugging, when radiating the signal would be both illegal (if unlicensed) and unhelpful (if you're trying to isolate the transmitter from the antenna).
+This setup allows measurement of transmitter output power, harmonic content (on the spectrum analyzer), and load match simultaneously — without ever connecting the transmitter to an antenna. This is particularly important during development and debugging, when radiating the signal would be both illegal (if unlicensed) and unhelpful (when trying to isolate the transmitter from the antenna).
 
-## Gotchas
+## Tips
 
-- **Coupler frequency range** — A directional coupler designed for 100-500 MHz will have degraded directivity and coupling accuracy outside that range. Always check the coupler's specified frequency range before trusting measurements.
-- **Coupled port termination** — The isolated port of a directional coupler must be terminated in 50 ohms. Leaving it open creates reflections that degrade directivity and accuracy. Most couplers come with an internal termination on the isolated port, but verify this.
-- **Power sensor zeroing** — Diode power sensors have offset voltages that drift with temperature. Zero the sensor (disconnect the input and set the reading to zero) before each measurement session. Thermal sensors also need zeroing.
-- **Exceeding sensor power rating** — Power sensors have maximum input ratings, typically +20 to +30 dBm. A 5 W transmitter outputs +37 dBm — directly connecting it to a sensor rated for +20 dBm will destroy the sensor. Always calculate the expected power and use appropriate attenuation.
-- **Connector mismatch** — Mixing connector types (SMA, BNC, N-type) with adapters adds reflection and loss at each junction. For serious power measurements, use the same connector type throughout and keep adapters to a minimum.
-- **Forgetting cable loss** — A 20 dB attenuator followed by 2 dB of cable loss gives 22 dB total attenuation. If you correct for the attenuator but forget the cable, your reading is 2 dB high. Characterize or estimate all losses in the measurement path.
+- Zero the power sensor before every measurement session — diode sensors drift with temperature, and even a small offset skews low-power readings significantly
+- When setting up a transmitter test bench, calculate the total attenuation needed before connecting anything: transmitter power minus coupler coupling factor minus any inline attenuators must stay within the sensor's maximum input rating
+- Use a dual-directional coupler rather than two separate couplers for simultaneous forward and reverse power monitoring — the matched pair gives more consistent directivity
+- Keep a labeled 50-ohm termination in the toolbox as a quick sanity check: connecting it to a VNA or return loss bridge should show return loss better than 30 dB at the frequencies of interest
+
+## Caveats
+
+- **Coupler frequency range** — A directional coupler designed for 100-500 MHz will have degraded directivity and coupling accuracy outside that range. Always check the coupler's specified frequency range before trusting measurements
+- **Coupled port termination** — The isolated port of a directional coupler must be terminated in 50 ohms. Leaving it open creates reflections that degrade directivity and accuracy. Most couplers come with an internal termination on the isolated port, but this should be verified
+- **Power sensor zeroing** — Diode power sensors have offset voltages that drift with temperature. Zero the sensor (disconnect the input and set the reading to zero) before each measurement session. Thermal sensors also need zeroing
+- **Exceeding sensor power rating** — Power sensors have maximum input ratings, typically +20 to +30 dBm. A 5 W transmitter outputs +37 dBm — directly connecting it to a sensor rated for +20 dBm will destroy the sensor. Always calculate the expected power and use appropriate attenuation
+- **Connector mismatch** — Mixing connector types (SMA, BNC, N-type) with adapters adds reflection and loss at each junction. For serious power measurements, use the same connector type throughout and keep adapters to a minimum
+- **Forgetting cable loss** — A 20 dB attenuator followed by 2 dB of cable loss gives 22 dB total attenuation. If the attenuator is corrected for but the cable is forgotten, the reading is 2 dB high. Characterize or estimate all losses in the measurement path
+
+## Bench Relevance
+
+- Forward power reads +30 dBm (1 W) but reflected power reads +20 dBm (100 mW) — that 10 dB return loss means the antenna or load is poorly matched, and 10% of the power is bouncing back into the transmitter
+- A power meter shows 2 dB less output than expected from an amplifier — before suspecting the amplifier, check for cable loss and connector wear; 1 dB of connector loss plus 1 dB of cable loss accounts for the discrepancy
+- The coupled port reading fluctuates by 1-2 dB when the cable to the spectrum analyzer is moved — this indicates a failing connector or damaged cable, not instability in the transmitter
+- A thermal sensor and a diode sensor give different readings on the same modulated signal — the thermal sensor shows true average power while the diode sensor (operating above -20 dBm) responds to the waveform shape, explaining the discrepancy

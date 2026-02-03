@@ -5,7 +5,7 @@ weight: 20
 
 # Vector Network Analyzers
 
-A vector network analyzer (VNA) measures both the magnitude and phase of signals reflected from and transmitted through a device under test. This makes it the essential tool for characterizing impedance, filters, matching networks, antennas, and cables — anything where you need to know not just how much signal gets through, but how the signal's phase changes in the process.
+A vector network analyzer (VNA) measures both the magnitude and phase of signals reflected from and transmitted through a device under test. This makes it the essential tool for characterizing impedance, filters, matching networks, antennas, and cables — anything where it is important to know not just how much signal gets through, but how the signal's phase changes in the process.
 
 ## S-Parameters: The Language of RF Networks
 
@@ -18,7 +18,7 @@ A VNA measures scattering parameters (S-parameters), which describe how RF energ
 | S12 | Reverse transmission | How much signal passes from port 2 to port 1 (isolation or reverse gain) |
 | S22 | Output reflection coefficient | How much signal bounces back from port 2 (related to output impedance) |
 
-S-parameters are complex numbers — they have both magnitude and phase. The magnitude of S11, expressed as return loss in dB, tells you how well a device is impedance-matched. The magnitude of S21 tells you the insertion loss (or gain) of the device. The phase information is what makes a VNA a "vector" analyzer rather than a scalar one, and it's essential for computing impedance, group delay, and time-domain transforms.
+S-parameters are complex numbers — they have both magnitude and phase. The magnitude of S11, expressed as return loss in dB, indicates how well a device is impedance-matched. The magnitude of S21 indicates the insertion loss (or gain) of the device. The phase information is what makes a VNA a "vector" analyzer rather than a scalar one, and it is essential for computing impedance, group delay, and time-domain transforms.
 
 Return loss values to develop intuition for:
 
@@ -32,15 +32,15 @@ Return loss values to develop intuition for:
 
 ## What a VNA Reveals
 
-The power of a VNA comes from the variety of measurements you can derive from S-parameters:
+The power of a VNA comes from the variety of measurements derivable from S-parameters:
 
-- **Impedance**: S11 maps directly to impedance through the Smith chart. A VNA can show you the complex impedance (R + jX) at every frequency in the sweep — essential for designing matching networks.
+- **Impedance**: S11 maps directly to impedance through the Smith chart. A VNA can show the complex impedance (R + jX) at every frequency in the sweep — essential for designing matching networks.
 - **Return loss and VSWR**: Quantify how well a device (antenna, filter, amplifier input) is matched to 50 ohms. See [Impedance Matching]({{< relref "/docs/radio-rf/impedance-matching" >}}) for context on why this matters.
 - **Insertion loss**: How much signal a filter, cable, or connector absorbs. A good SMA connector has less than 0.1 dB insertion loss; a bandpass filter might have 2-5 dB.
 - **Group delay**: The derivative of phase with respect to frequency, measured in nanoseconds. Flat group delay means the device passes all frequencies with the same time delay. Variation in group delay distorts wideband signals.
 - **Smith chart display**: Plots S11 on a chart that maps reflection coefficient to impedance. The center is 50 ohms (perfect match). Moving right increases resistance; arcs upward are inductive, arcs downward are capacitive.
 
-## Calibration: You Cannot Skip This
+## Calibration: Do Not Skip This
 
 VNA measurements are only as good as the calibration. The analyzer must mathematically remove the effects of cables, connectors, and its own internal imperfections before measuring the device under test.
 
@@ -51,7 +51,7 @@ The standard calibration procedure is SOLT — Short, Open, Load, Through:
 3. **Load**: Connect a precision 50-ohm termination. This defines zero reflection.
 4. **Through**: Connect port 1 directly to port 2 (or through the test cables). This defines the transmission reference.
 
-After calibration, the VNA mathematically subtracts the effects of cables and connectors, leaving only the device under test. Calibration is valid for the specific cables, adapters, and frequency range used during the calibration process. Change a cable, and you need to recalibrate.
+After calibration, the VNA mathematically subtracts the effects of cables and connectors, leaving only the device under test. Calibration is valid for the specific cables, adapters, and frequency range used during the calibration process. Change a cable, and recalibration is necessary.
 
 The calibration plane is the physical point where the calibration standards were connected. Everything between the VNA ports and the calibration plane is "removed" by calibration. Everything beyond the calibration plane is measured.
 
@@ -89,16 +89,30 @@ Common VNA measurement tasks on the hobbyist and learning bench:
 | What is the impedance at each frequency? | VNA |
 | What does the signal look like in time? | Oscilloscope |
 | How much power is a transmitter producing? | Spectrum analyzer or power meter |
-| Is my antenna matched at 145 MHz? | VNA |
+| Is the antenna matched at 145 MHz? | VNA |
 | Are there spurious emissions? | Spectrum analyzer |
-| What is the insertion loss of my filter? | VNA |
-| What is the group delay through my cable? | VNA |
+| What is the insertion loss of the filter? | VNA |
+| What is the group delay through the cable? | VNA |
 
-## Gotchas
+## Tips
 
-- **Calibration drift** — Temperature changes and cable movement invalidate calibration. If your lab is cold in the morning and warm in the afternoon, recalibrate. On a NanoVNA, bumping a cable can shift readings by several dB.
-- **Connector torque matters** — SMA connectors should be tightened to 5 in-lbs with a torque wrench. Hand-tight connections are not repeatable and can introduce 0.5+ dB errors at high frequencies.
-- **Measuring through adapters** — Every adapter between the calibration plane and the DUT adds uncorrected loss and phase shift. Minimize adapters, or calibrate at the DUT reference plane.
-- **Port extension is not calibration** — Port extension mathematically shifts the reference plane by adding electrical delay, but it doesn't correct for cable loss or mismatch. It's a useful approximation, not a substitute for proper calibration.
-- **The NanoVNA display is small** — Use PC software (NanoVNA-Saver, NanoVNA-QT) for serious analysis. The built-in display is adequate for quick checks but makes it easy to misread markers and miss details.
-- **Phase noise limits close-in measurements** — The NanoVNA's oscillator phase noise means S11 measurements very close to a deep null (better than 40 dB return loss) become unreliable. The instrument's noise floor limits what you can resolve.
+- Always calibrate with the exact cables and adapters that will be used for the measurement — swapping even one cable invalidates the calibration
+- Use NanoVNA-Saver on a PC for serious analysis; the larger display and data export capabilities make it far easier to interpret Smith chart traces and compare saved sweeps
+- Place markers at both the center frequency and band edges when characterizing a filter to capture insertion loss, bandwidth, and return loss in a single sweep
+- When measuring antennas, perform the sweep with the antenna in its final installed position — nearby metal, ground proximity, and mounting hardware all shift impedance
+
+## Caveats
+
+- **Calibration drift** — Temperature changes and cable movement invalidate calibration. If the lab is cold in the morning and warm in the afternoon, recalibrate. On a NanoVNA, bumping a cable can shift readings by several dB
+- **Connector torque matters** — SMA connectors should be tightened to 5 in-lbs with a torque wrench. Hand-tight connections are not repeatable and can introduce 0.5+ dB errors at high frequencies
+- **Measuring through adapters** — Every adapter between the calibration plane and the DUT adds uncorrected loss and phase shift. Minimize adapters, or calibrate at the DUT reference plane
+- **Port extension is not calibration** — Port extension mathematically shifts the reference plane by adding electrical delay, but it does not correct for cable loss or mismatch. It is a useful approximation, not a substitute for proper calibration
+- **The NanoVNA display is small** — Use PC software (NanoVNA-Saver, NanoVNA-QT) for serious analysis. The built-in display is adequate for quick checks but makes it easy to misread markers and miss details
+- **Phase noise limits close-in measurements** — The NanoVNA's oscillator phase noise means S11 measurements very close to a deep null (better than 40 dB return loss) become unreliable. The instrument's noise floor limits what can be resolved
+
+## Bench Relevance
+
+- An antenna that worked well at 145 MHz suddenly shows poor VSWR after mounting — the Smith chart reveals the impedance has shifted capacitive, indicating the mounting bracket or feedline routing is detuning the antenna
+- A bandpass filter shows the expected passband shape on S21 but S11 reveals a poor input match (return loss below 6 dB), meaning significant power reflects back into the source — a problem invisible without a VNA
+- A coax cable run measures 2 dB more loss than its datasheet predicts — this often points to a damaged connector, a tight bend radius, or water ingress, all of which degrade the cable beyond its rated spec
+- The Smith chart trace for a matching network circles the wrong direction or lands far from 50 ohms, indicating a component value error or a parasitic resonance at the operating frequency

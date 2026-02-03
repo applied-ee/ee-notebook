@@ -5,11 +5,11 @@ weight: 30
 
 # Using Oscilloscopes at RF
 
-Oscilloscopes show voltage versus time — the time-domain view of a signal. At audio and low frequencies, this is the most natural way to observe a circuit. At RF, the oscilloscope becomes less useful for signal analysis but remains valuable for specific tasks: observing modulation envelopes, measuring pulse timing, catching transient events, and verifying that an oscillator is actually running. The key is understanding what the scope can and cannot tell you at RF frequencies.
+Oscilloscopes show voltage versus time — the time-domain view of a signal. At audio and low frequencies, this is the most natural way to observe a circuit. At RF, the oscilloscope becomes less useful for signal analysis but remains valuable for specific tasks: observing modulation envelopes, measuring pulse timing, catching transient events, and verifying that an oscillator is actually running. The key is understanding what the scope can and cannot reveal at RF frequencies.
 
 ## Bandwidth: The Hard Limit
 
-An oscilloscope's bandwidth is the frequency at which its response drops by 3 dB — the displayed amplitude is 70.7% of the actual amplitude. This is not a cliff; it's a gradual rolloff. At the rated bandwidth, you're already measuring 30% low. At twice the bandwidth, the signal is severely attenuated and distorted.
+An oscilloscope's bandwidth is the frequency at which its response drops by 3 dB — the displayed amplitude is 70.7% of the actual amplitude. This is not a cliff; it is a gradual rolloff. At the rated bandwidth, the measurement is already 30% low. At twice the bandwidth, the signal is severely attenuated and distorted.
 
 Practical consequences for common oscilloscope bandwidths:
 
@@ -24,15 +24,15 @@ The rule of thumb is that reliable amplitude measurements require 3-5x the signa
 
 ## Probe Bandwidth and Loading
 
-The probe is often the weakest link. A standard 10:1 passive probe is rated for a certain bandwidth (typically 100-500 MHz), but this rating assumes it's connected to the oscilloscope it was designed for. The probe's input capacitance — typically 10-15 pF for a passive probe — forms a low-pass filter with the circuit's source impedance.
+The probe is often the weakest link. A standard 10:1 passive probe is rated for a certain bandwidth (typically 100-500 MHz), but this rating assumes it is connected to the oscilloscope it was designed for. The probe's input capacitance — typically 10-15 pF for a passive probe — forms a low-pass filter with the circuit's source impedance.
 
-At 100 MHz, 12 pF of probe capacitance has an impedance of about 133 ohms. If the circuit you're probing has a source impedance of 50 ohms, the probe loads it significantly — the voltage at the probe tip drops, and the circuit behavior changes. At 500 MHz, that 12 pF looks like 27 ohms, essentially shorting out many RF circuits.
+At 100 MHz, 12 pF of probe capacitance has an impedance of about 133 ohms. If the circuit being probed has a source impedance of 50 ohms, the probe loads it significantly — the voltage at the probe tip drops, and the circuit behavior changes. At 500 MHz, that 12 pF looks like 27 ohms, essentially shorting out many RF circuits.
 
-The ground lead makes things worse. The standard ground clip and wire that come with every oscilloscope probe form an inductor of roughly 20-25 nH. At 100 MHz, this inductance has an impedance of about 15 ohms and resonates with the probe capacitance somewhere in the 100-300 MHz range. At resonance, the ground lead rings, creating overshoot and oscillation artifacts that look like they're part of the signal but are entirely probe-induced.
+The ground lead makes things worse. The standard ground clip and wire that come with every oscilloscope probe form an inductor of roughly 20-25 nH. At 100 MHz, this inductance has an impedance of about 15 ohms and resonates with the probe capacitance somewhere in the 100-300 MHz range. At resonance, the ground lead rings, creating overshoot and oscillation artifacts that look like they are part of the signal but are entirely probe-induced.
 
 ## Active Probes: The RF Solution
 
-Active probes place a buffer amplifier right at the probe tip, presenting very low capacitance (0.5-2 pF) and very short ground connections to the circuit. The amplifier drives the cable back to the oscilloscope, so cable capacitance doesn't load the circuit.
+Active probes place a buffer amplifier right at the probe tip, presenting very low capacitance (0.5-2 pF) and very short ground connections to the circuit. The amplifier drives the cable back to the oscilloscope, so cable capacitance does not load the circuit.
 
 Typical active probe characteristics:
 
@@ -50,19 +50,19 @@ The cost is the main barrier. For occasional RF probing, a compromise is to use 
 
 Despite the limitations, oscilloscopes serve several important roles in RF work:
 
-- **Envelope detection**: Observing the amplitude envelope of a modulated RF signal. AM modulation depth, pulse on/off timing, and burst behavior are all visible on a scope even if you can't resolve individual RF cycles.
+- **Envelope detection**: Observing the amplitude envelope of a modulated RF signal. AM modulation depth, pulse on/off timing, and burst behavior are all visible on a scope even when individual RF cycles cannot be resolved.
 - **Modulation waveforms**: Baseband modulation signals before they modulate the carrier — audio for FM, data for FSK, I/Q for digital modulation.
 - **Oscillator startup and settling**: How long it takes an oscillator to start and stabilize. A scope shows the amplitude growing from noise to steady-state, with any initial frequency wandering visible as changing waveform periods.
 - **Power supply transients**: Switching noise on the power rail that might cause problems for an RF circuit. The time-domain view shows the actual voltage spikes and their timing relative to switching events.
 - **Pulse timing**: For pulsed RF systems (radar, time-domain reflectometry), the scope shows pulse width, rise time, repetition rate, and duty cycle.
-- **Verifying that something is working**: Connecting a scope to an RF output quickly confirms whether an oscillator is running, a signal is present, or a circuit is dead. You don't need amplitude accuracy for this — you just need to see activity.
+- **Verifying that something is working**: Connecting a scope to an RF output quickly confirms whether an oscillator is running, a signal is present, or a circuit is dead. Amplitude accuracy is not needed for this — the goal is simply to see activity.
 
 ## What Oscilloscopes Are Not Useful For at RF
 
 - **Spectral analysis**: The FFT function on most oscilloscopes provides a quick-look spectrum, but the dynamic range is limited to roughly 40-50 dB (compared to 100+ dB on a spectrum analyzer), and frequency resolution depends on the time capture length. Use a [spectrum analyzer]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/spectrum-analyzers" >}}) for frequency-domain work.
-- **Impedance measurement**: An oscilloscope shows voltage, not impedance. You can estimate impedance by measuring voltage across a known load, but a [VNA]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/vector-network-analyzers" >}}) provides direct, calibrated impedance data.
+- **Impedance measurement**: An oscilloscope shows voltage, not impedance. Impedance can be estimated by measuring voltage across a known load, but a [VNA]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/vector-network-analyzers" >}}) provides direct, calibrated impedance data.
 - **Precise power measurement**: Oscilloscopes measure voltage, and converting to power requires knowing the exact impedance — which changes with frequency at RF. Use a power meter or spectrum analyzer for power measurements.
-- **Frequency accuracy**: Oscilloscope timebase accuracy is typically 10-50 ppm. For a 100 MHz signal, that's 1-5 kHz uncertainty. A frequency counter or spectrum analyzer gives far better frequency accuracy.
+- **Frequency accuracy**: Oscilloscope timebase accuracy is typically 10-50 ppm. For a 100 MHz signal, that is 1-5 kHz uncertainty. A frequency counter or spectrum analyzer gives far better frequency accuracy.
 
 ## The FFT Function: Useful but Limited
 
@@ -81,15 +81,29 @@ Standard edge triggering works well at low frequencies but becomes unreliable at
 
 Solutions for triggering at RF:
 
-- **External trigger from a reference**: If you have a reference signal at the same frequency, use it as the external trigger source.
+- **External trigger from a reference**: If a reference signal at the same frequency is available, use it as the external trigger source.
 - **Trigger on the envelope or modulation**: For modulated signals, trigger on the lower-frequency modulation rather than the carrier.
 - **Burst trigger**: For pulsed RF, trigger on the rising edge of the pulse envelope.
 - **High-frequency trigger input**: Some oscilloscopes have a dedicated trigger input with higher bandwidth and better sensitivity than the standard channel inputs.
 
-## Gotchas
+## Tips
 
-- **Trusting the amplitude at RF** — If your signal frequency is above one-third of the oscilloscope bandwidth, the displayed amplitude is wrong. The scope does not warn you about this.
-- **The ground clip is an antenna** — Above 30-50 MHz, the standard ground clip picks up ambient RF and radiates energy, creating measurement artifacts. Remove it and use the shortest ground path available.
-- **Probe compensation matters more than you think** — An improperly compensated probe shows incorrect rise times and ringing at edges. Always check compensation at the probe's low-frequency adjustment before measuring anything.
-- **50-ohm input vs 1 M-ohm input** — Many higher-bandwidth oscilloscopes offer 50-ohm input impedance. Use it for RF signals to avoid reflections on the cable between probe and scope. But never connect a DC bias or large signal to a 50-ohm input — the 50-ohm termination dissipates power and can be damaged (typically limited to 5 Vrms).
-- **Aliasing on digital scopes** — If the sample rate is less than 2x the signal frequency, the scope displays a false lower frequency (alias). Most modern scopes warn about this, but in FFT mode the aliased signals can look real.
+- Remove the ground clip and use the probe's spring-tip ground contact for any measurement above 30 MHz — this single change eliminates most probe-induced ringing artifacts
+- When checking whether an oscillator is running, use the FFT mode rather than the time-domain display; a spectral peak is easier to identify than a waveform at or near the scope's bandwidth limit
+- For envelope measurements on modulated RF, set the oscilloscope timebase slow enough that individual RF cycles blur together, revealing the modulation shape without trigger instability
+- Verify probe compensation on the scope's cal output before every RF measurement session — a miscompensated probe introduces amplitude and phase errors that compound at higher frequencies
+
+## Caveats
+
+- **Trusting the amplitude at RF** — If the signal frequency is above one-third of the oscilloscope bandwidth, the displayed amplitude is wrong. The scope does not warn about this
+- **The ground clip is an antenna** — Above 30-50 MHz, the standard ground clip picks up ambient RF and radiates energy, creating measurement artifacts. Remove it and use the shortest ground path available
+- **Probe compensation matters more than expected** — An improperly compensated probe shows incorrect rise times and ringing at edges. Always check compensation at the probe's low-frequency adjustment before measuring anything
+- **50-ohm input vs 1 M-ohm input** — Many higher-bandwidth oscilloscopes offer 50-ohm input impedance. Use it for RF signals to avoid reflections on the cable between probe and scope. But never connect a DC bias or large signal to a 50-ohm input — the 50-ohm termination dissipates power and can be damaged (typically limited to 5 Vrms)
+- **Aliasing on digital scopes** — If the sample rate is less than 2x the signal frequency, the scope displays a false lower frequency (alias). Most modern scopes warn about this, but in FFT mode the aliased signals can look real
+
+## Bench Relevance
+
+- A 100 MHz oscilloscope showing a clean 80 MHz sine wave at 3 Vpp is actually measuring low — the true amplitude is closer to 4 Vpp due to the 3 dB rolloff at the scope's bandwidth limit
+- Large overshoot and ringing on a digital clock edge that disappear when the ground clip is replaced with a short spring ground are probe artifacts, not real circuit behavior
+- An oscillator that shows a stable waveform on the scope but produces unexpected spurs on a spectrum analyzer may be oscillating at multiple frequencies — the scope locks to one while masking the others
+- Switching regulator noise visible as periodic spikes on the oscilloscope time-domain display correlates with spurs at the switching frequency and harmonics on a spectrum analyzer, confirming power rail coupling into the RF path

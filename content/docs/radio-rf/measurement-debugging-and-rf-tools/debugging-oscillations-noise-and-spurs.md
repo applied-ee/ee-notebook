@@ -5,7 +5,7 @@ weight: 60
 
 # Debugging Oscillations, Noise & Spurs
 
-Unwanted oscillations, spurious emissions, and elevated noise floors are among the most common and most frustrating RF problems. They're insidious because they can appear intermittently, change with temperature, disappear when you probe the circuit, and emerge from mechanisms that aren't obvious from the schematic. Debugging these problems requires a systematic approach and a willingness to consider physical causes — layout, grounding, coupling — not just circuit-level issues.
+Unwanted oscillations, spurious emissions, and elevated noise floors are among the most common and most frustrating RF problems. They are insidious because they can appear intermittently, change with temperature, disappear when the circuit is probed, and emerge from mechanisms that are not obvious from the schematic. Debugging these problems requires a systematic approach and a willingness to consider physical causes — layout, grounding, coupling — not just circuit-level issues.
 
 ## Oscillation: The Uninvited Signal
 
@@ -13,10 +13,10 @@ An oscillation occurs when a circuit with gain develops a feedback path that sat
 
 ### How to Identify Oscillation
 
-- **Spectrum analyzer**: The most direct method. An oscillating circuit produces a spectral line at the oscillation frequency and usually at harmonics. If the oscillation is strong, you can see it with a near-field probe held over the circuit without making contact.
+- **Spectrum analyzer**: The most direct method. An oscillating circuit produces a spectral line at the oscillation frequency and usually at harmonics. If the oscillation is strong, it is visible with a near-field probe held over the circuit without making contact.
 - **DC bias shift**: An oscillating amplifier's DC operating point often shifts because the transistor is spending time in nonlinear regions. If a transistor's collector current is higher than expected, it might be oscillating.
-- **Unexpected heat**: A transistor that's hotter than expected at its DC bias point may be oscillating, dissipating power at the oscillation frequency.
-- **Disappears when you probe**: This is a classic sign. The probe capacitance loads the circuit, changing the phase shift and killing the oscillation. You think the circuit is fine because it looks fine on the scope — but the act of measuring suppressed the problem.
+- **Unexpected heat**: A transistor that is hotter than expected at its DC bias point may be oscillating, dissipating power at the oscillation frequency.
+- **Disappears when probed**: This is a classic sign. The probe capacitance loads the circuit, changing the phase shift and killing the oscillation. The circuit appears fine on the scope — but the act of measuring suppressed the problem.
 
 ### Common Causes
 
@@ -36,7 +36,7 @@ Common spur mechanisms:
 
 - **Harmonics**: Any nonlinear element (amplifier, mixer, diode) generates harmonics of its input signal. A 100 MHz signal through an amplifier produces energy at 200, 300, 400 MHz, etc. The second harmonic is typically the strongest, often 20-30 dB below the fundamental in a reasonably linear amplifier. More nonlinear circuits (like mixers) produce harmonics 10-15 dB down.
 
-- **Intermodulation products**: When two signals at frequencies f1 and f2 pass through a nonlinear element, mixing products appear at f1 ± f2, 2f1 ± f2, f1 ± 2f2, and higher orders. The third-order products (2f1 - f2 and 2f2 - f1) are particularly troublesome because they fall close to the original signals and can't be filtered out easily.
+- **Intermodulation products**: When two signals at frequencies f1 and f2 pass through a nonlinear element, mixing products appear at f1 ± f2, 2f1 ± f2, f1 ± 2f2, and higher orders. The third-order products (2f1 - f2 and 2f2 - f1) are particularly troublesome because they fall close to the original signals and cannot be filtered out easily.
 
 - **Oscillator leakage**: In a superheterodyne system, the local oscillator signal can leak to the output through board-level coupling, inadequate isolation, or power supply coupling. A -40 dBc LO spur is common in simple designs without careful shielding.
 
@@ -44,17 +44,17 @@ Common spur mechanisms:
 
 ### Identifying Spurs
 
-When you see an unexpected spectral line, determine whether it's a harmonic, mixing product, or independent oscillation:
+When an unexpected spectral line appears, determine whether it is a harmonic, mixing product, or independent oscillation:
 
-1. **Change the input frequency slightly**: If the spur moves with the input, it's related (harmonic or mixing product). If it stays fixed, it's independent (oscillation or clock harmonic).
-2. **Check the frequency relationship**: If the spur is at exactly 2x or 3x the fundamental, it's a harmonic. If it's at f1 + f2 or 2f1 - f2, it's an intermodulation product.
-3. **Remove the input signal**: If the spur remains, it's generated internally — an oscillation or a leaking reference.
+1. **Change the input frequency slightly**: If the spur moves with the input, it is related (harmonic or mixing product). If it stays fixed, it is independent (oscillation or clock harmonic).
+2. **Check the frequency relationship**: If the spur is at exactly 2x or 3x the fundamental, it is a harmonic. If it is at f1 + f2 or 2f1 - f2, it is an intermodulation product.
+3. **Remove the input signal**: If the spur remains, it is generated internally — an oscillation or a leaking reference.
 
 ## Noise Floor Elevation
 
 A raised noise floor means something is adding broadband energy to the signal. This can be:
 
-- **Low-level oscillation**: An amplifier oscillating at a frequency outside the measurement span can generate broadband noise through intermodulation. The oscillation itself might not be visible if it's above the spectrum analyzer's range, but its noise products appear within the measurement band.
+- **Low-level oscillation**: An amplifier oscillating at a frequency outside the measurement span can generate broadband noise through intermodulation. The oscillation itself might not be visible if it is above the spectrum analyzer's range, but its noise products appear within the measurement band.
 - **Switching power supply noise**: Switch-mode regulators generate noise at the switching frequency and its harmonics, spreading into broadband noise through parasitic coupling. A boost converter switching at 1 MHz creates spurs at 1, 2, 3... MHz and potentially raises the noise floor across the HF band. See [RF Mistakes & Postmortems]({{< relref "/docs/radio-rf/practical-rf-projects/rf-mistakes-and-postmortems" >}}) for a case study.
 - **Thermal noise from lossy components**: A resistor in the signal path adds thermal noise. At room temperature, a 50-ohm resistor contributes -174 dBm/Hz noise power density. A lossy connector, corroded trace, or poorly soldered joint can act as a noisy resistor.
 - **Amplifier noise figure**: Every amplifier adds noise. If the first amplifier in a chain has a high noise figure (say 6 dB instead of 1 dB), the entire system's noise floor rises by 5 dB. Early-stage noise contribution dominates in cascaded systems.
@@ -63,7 +63,7 @@ A raised noise floor means something is adding broadband energy to the signal. T
 
 When facing an oscillation, spur, or noise problem, resist the urge to randomly change components. Follow a systematic procedure:
 
-1. **Characterize the problem**: Use a spectrum analyzer to measure the frequency, amplitude, and bandwidth of the unwanted signal. Record it. Note whether it's stable, drifting, or intermittent.
+1. **Characterize the problem**: Use a spectrum analyzer to measure the frequency, amplitude, and bandwidth of the unwanted signal. Record it. Note whether it is stable, drifting, or intermittent.
 
 2. **Check DC bias points**: Measure the DC voltages at every transistor or amplifier. Compare to the expected values from the schematic. A bias shift is a strong indicator of oscillation.
 
@@ -71,7 +71,7 @@ When facing an oscillation, spur, or noise problem, resist the urge to randomly 
 
 4. **Probe the power rails**: Use a spectrum analyzer or oscilloscope to look at the power supply at each stage. Switching noise, oscillation feedback, and coupling all appear on the power rail.
 
-5. **Modify bypassing**: Add capacitors (100 nF, 1 nF, 10 pF) close to the supply pins of the suspect stage. If the problem changes, you've found a supply coupling issue.
+5. **Modify bypassing**: Add capacitors (100 nF, 1 nF, 10 pF) close to the supply pins of the suspect stage. If the problem changes, the source is a supply coupling issue.
 
 6. **Add isolation**: Ferrite beads (600 ohm at 100 MHz is a common value) in series with the supply rail to each stage. Series resistors (10-47 ohms) at amplifier outputs to reduce gain at frequencies outside the design band.
 
@@ -89,7 +89,7 @@ When facing an oscillation, spur, or noise problem, resist the urge to randomly 
 
 ## When to Suspect the Layout vs the Schematic
 
-If the circuit simulates correctly but oscillates on the board, the problem is almost certainly layout or construction, not the schematic. Simulation doesn't model:
+If the circuit simulates correctly but oscillates on the board, the problem is almost certainly layout or construction, not the schematic. Simulation does not model:
 
 - Parasitic inductance of traces and vias (typically 0.5-1 nH per mm of trace, 0.1-0.5 nH per via)
 - Coupling between adjacent traces (depends on spacing, parallel length, and dielectric)
@@ -97,12 +97,26 @@ If the circuit simulates correctly but oscillates on the board, the problem is a
 - Component lead inductance and parasitic capacitance
 - Connector and cable effects
 
-When the schematic is proven (by simulation or previous builds) but the board doesn't work, the investigation must focus on the physical implementation.
+When the schematic is proven (by simulation or previous builds) but the board does not work, the investigation must focus on the physical implementation.
 
-## Gotchas
+## Tips
 
-- **Oscillation that disappears when probing** — This is real — the probe capacitance suppresses the oscillation. Try near-field probing instead, or observe the spectrum analyzer while not touching the board.
-- **Temperature-dependent oscillation** — An amplifier that's stable at room temperature may oscillate when warm because transistor gain increases at higher temperatures (for BJTs) or device parasitics shift. Test across the expected temperature range.
-- **Spur hunting at the wrong frequency** — If your spectrum analyzer span is too narrow, you'll miss spurs outside the visible range. Start with a wide span (full range of the analyzer) before zooming in.
-- **Confusing the fix with the problem** — Adding a ferrite bead that shifts an oscillation from 800 MHz to 1.2 GHz hasn't fixed anything — it's moved the problem. Verify that the oscillation is gone, not just moved.
-- **Intermittent oscillation from mechanical stress** — Board flex, connector pressure, or thermal cycling can change parasitic capacitance enough to trigger or suppress an oscillation. If a problem comes and goes with handling, suspect a mechanical interaction.
+- Before changing any components, take a full spectrum analyzer sweep from DC to the analyzer's upper limit and save it — this baseline captures the complete picture, including spurs that might be outside the initial frequency of interest
+- Measure DC bias points at every active device as the first debugging step; a collector or drain current that differs from the design value by more than 10-20% is a strong indicator that the stage is oscillating
+- When adding bypass capacitors during debugging, tack them directly to the component pads with minimal lead length — a bypass cap on long wires adds inductance that can make the problem worse
+- Use a near-field probe instead of a direct-contact probe when hunting oscillations, since a contact probe can suppress the very oscillation being investigated
+
+## Caveats
+
+- **Oscillation that disappears when probing** — This is real — the probe capacitance suppresses the oscillation. Try near-field probing instead, or observe the spectrum analyzer while not touching the board
+- **Temperature-dependent oscillation** — An amplifier that is stable at room temperature may oscillate when warm because transistor gain increases at higher temperatures (for BJTs) or device parasitics shift. Test across the expected temperature range
+- **Spur hunting at the wrong frequency** — If the spectrum analyzer span is too narrow, spurs outside the visible range will be missed. Start with a wide span (full range of the analyzer) before zooming in
+- **Confusing the fix with the problem** — Adding a ferrite bead that shifts an oscillation from 800 MHz to 1.2 GHz has not fixed anything — it has moved the problem. Verify that the oscillation is gone, not just moved
+- **Intermittent oscillation from mechanical stress** — Board flex, connector pressure, or thermal cycling can change parasitic capacitance enough to trigger or suppress an oscillation. If a problem comes and goes with handling, suspect a mechanical interaction
+
+## Bench Relevance
+
+- A transistor amplifier stage drawing 30 mA when the design calls for 15 mA — with no obvious schematic error — is a classic sign of oscillation; the excess current comes from power dissipated at the oscillation frequency
+- Touching the board enclosure or moving a hand near the circuit causes a spur to appear or shift on the spectrum analyzer, indicating that body capacitance is part of the feedback path — a shielding or grounding deficiency
+- A noise floor that drops 3-5 dB when a ferrite bead is added to the power supply rail of a specific stage confirms that stage as the source of supply-coupled noise
+- A spur at exactly 2x the LO frequency that tracks when the LO is retuned confirms it is a second harmonic of the LO, not an independent oscillation — filtering or improved LO isolation is the appropriate fix

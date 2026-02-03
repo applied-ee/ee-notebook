@@ -40,33 +40,47 @@ The vertical axis is power in dBm (decibels relative to 1 milliwatt). The refere
 
 Key display elements to understand:
 
-- **Noise floor**: The baseline level across the bottom of the display. Signals below this cannot be seen. The noise floor drops as you narrow the RBW.
-- **Markers**: Movable indicators that read out exact frequency and power at a point. Use delta markers to measure the difference between two points.
+- **Noise floor**: The baseline level across the bottom of the display. Signals below this cannot be seen. The noise floor drops as the RBW is narrowed.
+- **Markers**: Movable indicators that read out exact frequency and power at a point. Delta markers measure the difference between two points.
 - **Reference level**: The power level at the top of the screen. Setting it too high wastes dynamic range; setting it too low risks compressing or clipping strong signals.
 
-A common learning exercise: connect a signal generator outputting -20 dBm at 100 MHz, and observe the fundamental, second harmonic (200 MHz), and third harmonic (300 MHz). The harmonic levels tell you about the generator's distortion and the analyzer's own spurious responses.
+A common learning exercise: connect a signal generator outputting -20 dBm at 100 MHz, and observe the fundamental, second harmonic (200 MHz), and third harmonic (300 MHz). The harmonic levels reveal the generator's distortion and the analyzer's own spurious responses.
 
 ## Low-Cost Spectrum Analysis
 
 The SDR (software-defined radio) approach uses a wideband receiver (like an RTL-SDR at $25) connected to software that computes and displays the spectrum. This works surprisingly well for relative measurements — comparing antenna performance, identifying interfering signals, or observing modulation. The limitations are significant: dynamic range is typically 50-60 dB, amplitude accuracy is poor without calibration, and frequency accuracy depends on the oscillator quality.
 
-The tinySA is a dedicated low-cost spectrum analyzer (under $100 for the Ultra version) covering up to 5.3 GHz. It is genuinely useful for learning and for situations where ±3 dB accuracy and 70 dB dynamic range are sufficient. It will show you harmonics, verify that a filter is working, and help identify gross problems. It will not replace a proper analyzer for compliance testing, precise noise measurements, or characterizing high-performance circuits.
+The tinySA is a dedicated low-cost spectrum analyzer (under $100 for the Ultra version) covering up to 5.3 GHz. It is genuinely useful for learning and for situations where ±3 dB accuracy and 70 dB dynamic range are sufficient. It will show harmonics, verify that a filter is working, and help identify gross problems. It will not replace a proper analyzer for compliance testing, precise noise measurements, or characterizing high-performance circuits.
 
 ## What to Look For
 
-When you connect a signal to a spectrum analyzer, the common things to check include:
+When connecting a signal to a spectrum analyzer, the common things to check include:
 
 - **Harmonics**: Integer multiples of the fundamental frequency. A transmitter at 145 MHz will have harmonics at 290, 435, 580 MHz, etc. Regulations typically require harmonics to be suppressed 40-60 dB below the fundamental.
 - **Spurs (spurious emissions)**: Signals at unexpected frequencies, often caused by mixing products, oscillator leakage, or intermodulation. They appear as discrete spectral lines.
 - **Occupied bandwidth**: How wide the signal actually is. A nominally 200 kHz FM signal might occupy 250 kHz with deviation and modulation.
-- **Noise floor elevation**: If the noise floor rises when you turn the device on (vs. off), the device is contributing broadband noise.
+- **Noise floor elevation**: If the noise floor rises when the device is turned on (vs. off), the device is contributing broadband noise.
 - **Phase noise skirts**: Close-in noise spreading out from a carrier, visible as a "skirt" around the main signal. Indicates oscillator quality.
 
-## Gotchas
+## Tips
 
-- **Overloading the input** — Spectrum analyzers have maximum input levels (typically +30 dBm for benchtop, +10 dBm for low-cost). Exceeding this damages the input mixer. Always use an attenuator when measuring transmitters.
-- **RBW hiding signals** — If the RBW is wider than the spacing between two signals, they merge into one blob. Narrow the RBW before concluding that a signal is "clean."
-- **Sweep speed artifacts** — Setting the sweep too fast with a narrow RBW produces amplitude errors and false readings. Most analyzers warn about uncalibrated sweeps, but low-cost tools may not.
-- **Input impedance assumptions** — Spectrum analyzers are 50-ohm instruments. Connecting them to a 75-ohm cable or a high-impedance circuit introduces a mismatch error of about 0.2 dB (50/75 ohm) or much worse for arbitrary impedances.
-- **Cable loss is real** — A 3-foot RG-174 cable at 1 GHz loses about 1.5 dB. That loss makes your signal look weaker than it actually is. Characterize your cables or use short, low-loss connections.
-- **Confusing analyzer artifacts with real signals** — Every analyzer generates its own internal spurious responses. If a signal disappears when you change the center frequency but keep the same input, it might be an analyzer artifact, not a real signal.
+- Start every measurement session by setting the reference level 10 dB above the expected strongest signal to maximize dynamic range without clipping
+- Use delta markers to measure harmonic suppression — place the reference marker on the fundamental and the delta marker on each harmonic for a direct dB reading
+- When hunting for weak spurs, narrow the RBW to drop the noise floor and increase dwell time; a 10x reduction in RBW lowers the noise floor by 10 dB
+- Connect a known signal source (e.g., -20 dBm at 100 MHz) before each session to verify that the analyzer reads within expected tolerance
+
+## Caveats
+
+- **Overloading the input** — Spectrum analyzers have maximum input levels (typically +30 dBm for benchtop, +10 dBm for low-cost). Exceeding this damages the input mixer. Always use an attenuator when measuring transmitters
+- **RBW hiding signals** — If the RBW is wider than the spacing between two signals, they merge into one blob. Narrow the RBW before concluding that a signal is "clean"
+- **Sweep speed artifacts** — Setting the sweep too fast with a narrow RBW produces amplitude errors and false readings. Most analyzers warn about uncalibrated sweeps, but low-cost tools may not
+- **Input impedance assumptions** — Spectrum analyzers are 50-ohm instruments. Connecting them to a 75-ohm cable or a high-impedance circuit introduces a mismatch error of about 0.2 dB (50/75 ohm) or much worse for arbitrary impedances
+- **Cable loss is real** — A 3-foot RG-174 cable at 1 GHz loses about 1.5 dB. That loss makes the signal look weaker than it actually is. Characterize cables or use short, low-loss connections
+- **Confusing analyzer artifacts with real signals** — Every analyzer generates its own internal spurious responses. If a signal disappears when the center frequency is changed but the same input is maintained, it might be an analyzer artifact, not a real signal
+
+## Bench Relevance
+
+- A transmitter that appears clean on an oscilloscope may reveal significant harmonic content 30-40 dB below the fundamental on a spectrum analyzer — harmonics strong enough to violate emission regulations
+- A noise floor that rises 3-6 dB when a switching regulator is powered up (compared to a linear supply) indicates broadband noise coupling from the supply into the RF signal path
+- A spectral line that drifts slowly in frequency (visible on the waterfall display) is likely a free-running oscillator rather than a synthesized source — pointing to an unlocked PLL or a parasitic oscillation
+- Phase noise "skirts" extending more than 10 kHz from a carrier indicate poor oscillator performance, often traceable to noisy supply rails feeding the oscillator stage
