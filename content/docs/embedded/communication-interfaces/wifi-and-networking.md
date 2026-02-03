@@ -63,12 +63,29 @@ Whether using Ethernet or WiFi, the software layers above the link are the same:
 - **mDNS/DNS-SD** — Zero-configuration networking. Lets the MCU advertise a hostname (e.g., "mydevice.local") without DNS infrastructure. Useful for local access.
 - **CoAP** — Like HTTP but over UDP, designed for constrained devices. Less common than MQTT in practice.
 
-## Gotchas
+## Tips
 
-- **Ethernet PHY reset and initialization timing matters** — The PHY chip needs a proper reset sequence (hardware reset pin held low for a specified duration, then released) before MDIO communication works. If firmware tries to configure the PHY before it is ready, the MDIO reads return garbage. Many Ethernet bring-up problems are PHY initialization timing issues.
-- **lwIP is not thread-safe by default** — If you call lwIP functions from multiple threads or interrupt contexts without proper locking, you get memory corruption and crashes that are extremely difficult to trace. The lwIP documentation describes the required locking model, but it is easy to get wrong, especially when integrating with an RTOS.
-- **WiFi reconnection is an application responsibility** — The WiFi stack tells you the connection dropped. Getting back on the network (reassociation, DHCP, re-establishing application connections) is firmware's job. Robust reconnection with backoff is essential for any product but rarely in example code.
-- **ESP32 AT firmware version mismatches** — AT command sets change between ESP-AT firmware versions. A command that works on one firmware version may not exist or have different parameters on another. Pin down the firmware version and document it.
-- **DNS can fail silently** — If DHCP provides a DNS server that's unreachable, hostname resolution fails and TCP connections to cloud services time out. Firmware should handle DNS failure explicitly, not just wait for a TCP timeout.
-- **Ethernet cable detection is not instant** — After power-on, auto-negotiation takes 1-3 seconds. Firmware that starts sending immediately after initialization will fail. Wait for the PHY link-up status before proceeding.
-- **WiFi throughput depends on conditions** — Headline WiFi speeds are theoretical maximums. Real throughput in an embedded system depends on signal strength, interference, the MCU's processing speed, and buffer sizes. 1-5 Mbps is typical for an ESP32 doing TCP, not the 54+ Mbps the radio supports.
+- Add proper delays and check PHY status after reset before attempting MDIO communication
+- Implement robust WiFi reconnection with exponential backoff — example code rarely includes this
+- Pin and document the ESP-AT firmware version when using AT command-based WiFi modules
+- Wait for PHY link-up status after Ethernet initialization before sending any traffic
+- Handle DNS failure explicitly rather than relying on TCP timeout
+- Follow lwIP thread-safety requirements carefully when integrating with an RTOS
+
+## Caveats
+
+- **Ethernet PHY reset and initialization timing matters** — The PHY needs a proper reset sequence before MDIO communication works. Attempting configuration too early returns garbage from MDIO reads
+- **lwIP is not thread-safe by default** — Calling lwIP functions from multiple threads or interrupt contexts without proper locking causes memory corruption and crashes
+- **WiFi reconnection is an application responsibility** — The WiFi stack reports disconnection, but reassociation, DHCP, and re-establishing application connections are firmware's job
+- **ESP32 AT firmware version mismatches** — AT command sets change between versions. A command may not exist or have different parameters on different firmware
+- **DNS can fail silently** — If DHCP provides an unreachable DNS server, hostname resolution fails and TCP connections time out
+- **Ethernet cable detection is not instant** — Auto-negotiation takes 1-3 seconds after power-on. Sending immediately after initialization fails
+- **WiFi throughput depends on conditions** — Real throughput (1-5 Mbps typical for ESP32) is far below theoretical maximums due to signal strength, interference, and processing overhead
+
+## Bench Relevance
+
+- Ethernet that fails after reset but works after a delay has PHY initialization timing issues
+- Random crashes or memory corruption in networked RTOS applications often trace to lwIP thread-safety violations
+- WiFi devices that work initially but fail to reconnect after AP restart lack proper reconnection handling
+- TCP connections to cloud services that time out while UDP works suggest DNS resolution failure
+- WiFi throughput that is much lower than expected may be limited by signal strength, interference, or MCU processing — not the radio

@@ -73,8 +73,23 @@ Common failure patterns visible on a logic analyzer:
 
 See [Probing & Measurement Technique]({{< relref "/docs/measurement/probing-technique" >}}) for connection details.
 
-## Gotchas
+## Tips
 
-- **UART overrun errors are silent unless you look** — If the receive FIFO overflows because firmware was too slow, the UART peripheral sets an overrun flag, but most code never checks it. Data is quietly lost. If you see intermittent missing bytes, read the error flags.
-- **Baud rate error accumulates across the frame** — A UART with 1.5% baud rate error might work at 8N1 (10 bits per frame) but fail at 8N2 (11 bits) or with 9-bit data. The sampling error compounds with each bit, so longer frames are less tolerant of clock mismatch.
-- **TX/RX crossover is the most common wiring mistake** — TX on one side connects to RX on the other. Some boards and modules label pins from their own perspective, others from the perspective of what they expect to be connected. When UART does not work at all, swap TX and RX before changing anything else.
+- Use DMA with a ring buffer for UART receive to avoid losing bytes during CPU-busy periods
+- Check the UART error flags (overrun, framing, noise) when debugging intermittent data loss
+- Calculate the actual baud rate error from the peripheral clock divider and verify it is within 2% of the target
+- Use a logic analyzer with protocol decoding to diagnose UART problems — it shows whether issues are baud rate, wiring, or configuration
+- When UART does not work at all, swap TX and RX wires before changing anything else
+
+## Caveats
+
+- **UART overrun errors are silent unless checked** — If the receive FIFO overflows because firmware was too slow, the UART peripheral sets an overrun flag, but most code never checks it. Data is quietly lost
+- **Baud rate error accumulates across the frame** — A UART with 1.5% baud rate error might work at 8N1 (10 bits per frame) but fail at 8N2 (11 bits) or with 9-bit data. The sampling error compounds with each bit
+- **TX/RX crossover is the most common wiring mistake** — TX on one side connects to RX on the other. Some boards label pins from their own perspective, others from the perspective of what they connect to
+
+## Bench Relevance
+
+- Garbled received data at specific intervals suggests baud rate mismatch — verify the clock divider produces acceptable error
+- Missing bytes in bursts indicates FIFO overflow — check the overrun flag and consider DMA or larger buffers
+- UART that works in one direction but not the other often has TX/RX swapped — try swapping wires before debugging configuration
+- Framing errors visible on a logic analyzer indicate wrong stop bit count or parity setting

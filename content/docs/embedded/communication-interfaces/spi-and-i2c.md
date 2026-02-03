@@ -90,9 +90,24 @@ A logic analyzer with protocol decoding is the single most useful tool for SPI a
 
 For I2C specifically, an oscilloscope is also valuable because rise time and signal shape matter. A logic analyzer shows you the decoded bits; an oscilloscope shows you whether the pull-ups are adequate. Both views are useful. See [Probing & Measurement Technique]({{< relref "/docs/measurement/probing-technique" >}}) for connection details.
 
-## Gotchas
+## Tips
 
-- **Wrong SPI clock mode looks almost right** — A CPOL or CPHA mismatch often produces data that is bit-shifted or byte-shifted rather than completely garbled. This makes it tempting to "fix" the issue in software rather than checking the mode setting against the datasheet. Always check the mode first.
-- **I2C pull-up resistor value is not a suggestion** — Too high and the rising edges are too slow for the bus speed. Too low and weak devices cannot pull the bus down. The result in both cases is intermittent NACK or corrupted data, and it only shows up under specific conditions (temperature, bus load, specific device combinations).
-- **Hardware CS on SPI often misbehaves for multi-byte transfers** — Many MCU SPI peripherals deassert CS between each byte when using hardware chip select. Most SPI devices expect CS held low for the entire transaction. Use GPIO-controlled CS unless you have verified the hardware CS behavior matches the device requirement.
-- **I2C bus lockup is a real failure mode** — If a slave gets confused mid-transfer (due to noise, reset, or a firmware bug), it can hold SDA low indefinitely, locking up the entire bus. Recovery requires clocking SCL manually until the slave releases SDA — something the MCU's I2C peripheral usually cannot do automatically.
+- Verify SPI clock mode (CPOL/CPHA) against the device datasheet before debugging shifted data issues
+- Use GPIO-controlled chip select for SPI rather than hardware CS to ensure CS stays low for multi-byte transfers
+- Size I2C pull-up resistors based on bus capacitance and speed — 4.7k for 100 kHz, 2.2k or lower for 400 kHz
+- Check I2C rise times with an oscilloscope to verify pull-ups are adequate — slow edges cause intermittent failures
+- Implement I2C bus recovery (manual SCL clocking) to handle slave lockup conditions
+
+## Caveats
+
+- **Wrong SPI clock mode looks almost right** — A CPOL or CPHA mismatch often produces data that is bit-shifted or byte-shifted rather than completely garbled
+- **I2C pull-up resistor value is not a suggestion** — Too high and rising edges are too slow for the bus speed. Too low and weak devices cannot pull the bus down. Both cause intermittent NACK or corrupted data
+- **Hardware CS on SPI often misbehaves for multi-byte transfers** — Many MCU SPI peripherals deassert CS between each byte when using hardware chip select. Most SPI devices expect CS held low for the entire transaction
+- **I2C bus lockup is a real failure mode** — If a slave gets confused mid-transfer, it can hold SDA low indefinitely, locking up the entire bus. Recovery requires clocking SCL manually until the slave releases SDA
+
+## Bench Relevance
+
+- SPI data that is shifted by one bit suggests wrong clock mode — check CPOL/CPHA against the device datasheet
+- I2C communication that works sometimes and fails at other times often has marginal pull-up resistors — check rise times with a scope
+- An I2C bus that stops responding entirely (no ACK from any device) may have a locked-up slave holding SDA low — implement bus recovery
+- SPI data corruption only on long transfers suggests CS is being toggled between bytes — switch to GPIO-controlled CS

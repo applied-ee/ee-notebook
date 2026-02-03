@@ -65,9 +65,23 @@ Unlike [UART]({{< relref "uart" >}}) or low-speed [I2C]({{< relref "spi-and-i2c"
 
 DMA with double-buffering (ping-pong) is the standard approach: while DMA fills one buffer, firmware processes the other. The DMA half-transfer and transfer-complete interrupts signal buffer swaps. This decouples audio processing from the sample clock entirely — firmware runs at buffer-rate (every few milliseconds), not sample-rate. See [DMA]({{< relref "dma" >}}) for the mechanics.
 
-## Gotchas
+## Tips
 
-- **I2S format mismatch produces shifted or swapped audio** — Standard I2S delays data by one BCLK after the WS edge; left-justified does not. If the MCU sends standard I2S and the codec expects left-justified, audio arrives one bit late — channels swap or the signal sounds distorted. Both sides must use exactly the same format.
-- **Missing MCLK causes silent failure** — Many codecs need a master clock to run their internal PLLs. If MCLK is absent or the wrong frequency, the codec may power up and respond on its control interface (often I2C) but produce no audio output. The codec appears configured correctly, but nothing comes out.
-- **I2S clock accuracy matters audibly** — A PLL that cannot produce an exact audio bit clock (e.g., trying to derive 3.072 MHz from an incompatible system clock) introduces periodic phase errors. These manifest as subtle clicks, pops, or pitch drift that worsen with playback time. Check the MCU's I2S PLL capabilities before committing to a sample rate and bit depth.
-- **I2S DMA underrun causes audible glitches** — If DMA does not deliver the next buffer before the current one finishes, the I2S peripheral either repeats the last sample or outputs zeros, producing a click or dropout. This happens when higher-priority interrupts stall DMA, or when the audio processing callback takes too long.
+- Verify the codec datasheet for MCLK requirements before selecting an MCU — some codecs cannot function without a master clock
+- Use DMA with double-buffering for I2S — the continuous data rate makes polling and even per-sample interrupts impractical
+- Check that the MCU's I2S PLL can produce exact audio frequencies for the desired sample rate before committing to a design
+- Match the I2S format (standard, left-justified, right-justified) exactly between MCU and codec
+
+## Caveats
+
+- **I2S format mismatch produces shifted or swapped audio** — Standard I2S delays data by one BCLK after the WS edge; left-justified does not. Both sides must use exactly the same format
+- **Missing MCLK causes silent failure** — Many codecs need a master clock to run their internal PLLs. If MCLK is absent or the wrong frequency, the codec may respond on its control interface but produce no audio output
+- **I2S clock accuracy matters audibly** — A PLL that cannot produce an exact audio bit clock introduces periodic phase errors that manifest as clicks, pops, or pitch drift
+- **I2S DMA underrun causes audible glitches** — If DMA does not deliver the next buffer in time, the I2S peripheral repeats the last sample or outputs zeros, producing clicks or dropouts
+
+## Bench Relevance
+
+- Audio in the wrong channel or shifted by one sample indicates I2S format mismatch — verify standard vs. left-justified vs. right-justified setting
+- A codec that configures correctly (I2C responds, registers read back as expected) but produces no audio likely lacks MCLK or has the wrong frequency
+- Clicks or pops that occur at regular intervals suggest I2S clock inaccuracy — verify the bit clock frequency with a scope
+- Dropouts during playback that correlate with other system activity indicate DMA underrun from interrupt latency — reduce other interrupt priorities or increase buffer size

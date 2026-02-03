@@ -75,10 +75,25 @@ If a device datasheet says "SMBus compatible," your I2C peripheral will almost c
 
 The clock low timeout is worth implementing in firmware regardless of SMBus — it protects against [I2C bus lockup]({{< relref "spi-and-i2c" >}}), which is a real failure mode on any I2C bus.
 
-## Gotchas
+## Tips
 
-- **1-Wire timing breaks with interrupts enabled** — If an interrupt fires in the middle of a 1-Wire bit operation, the timing violation can corrupt the transaction. Disabling interrupts during bit-level operations is the standard workaround, but this increases interrupt latency elsewhere. On an RTOS, this is a tradeoff worth thinking about.
-- **1-Wire reads 85.0 degrees C from DS18B20** — This is the power-on reset value. If you read it, the device either has not completed its conversion (you did not wait long enough or parasitic power was insufficient) or has been reset mid-operation. It is *not* a valid temperature reading, though it is a plausible one, which makes it easy to miss.
-- **1-Wire bus length affects reliability** — The protocol's tight timing means long wires (more than a few meters) add capacitance that slows the rising edge. The pull-up resistor may need to be decreased (2.2k or lower) to compensate, and parasitic power becomes less reliable over distance.
-- **SMBus PEC failures are silent if you don't check** — The device sends the PEC byte at the end of a read, but if your I2C driver does not compute and compare it, corrupted data passes through undetected. This is the whole point of PEC — but you have to actually use it.
-- **SMBus timeout recovery is not free** — When the 35ms clock-low timeout fires, the bus needs to be reset. Some I2C peripherals handle this automatically; others require firmware to toggle the clock manually to release a stuck slave, similar to the [I2C bus lockup recovery]({{< relref "spi-and-i2c" >}}) described on the SPI & I2C page.
+- Use a proven 1-Wire library rather than bit-banging timing by hand — getting timing right across MCU speeds and optimization levels is tedious
+- Provide external VCC to 1-Wire devices when wiring allows to avoid strong pull-up complications
+- Enable SMBus PEC on devices that support it and actually verify the CRC in firmware
+- Implement bus timeout recovery for SMBus to handle the 35ms clock-low timeout requirement
+- Decrease the 1-Wire pull-up resistor to 2.2k or lower for long wire runs to compensate for added capacitance
+
+## Caveats
+
+- **1-Wire timing breaks with interrupts enabled** — An interrupt during a bit operation corrupts the transaction. Disabling interrupts during bit-level operations is standard but increases latency elsewhere
+- **1-Wire reads 85.0 degrees C from DS18B20** — This is the power-on reset value, not a valid reading. It indicates incomplete conversion (insufficient wait or weak parasitic power) or mid-operation reset
+- **1-Wire bus length affects reliability** — Long wires add capacitance that slows rising edges. The pull-up resistor may need to decrease, and parasitic power becomes unreliable over distance
+- **SMBus PEC failures are silent without checking** — The device sends the PEC byte, but corrupted data passes through undetected if firmware does not compute and compare it
+- **SMBus timeout recovery is not free** — When the 35ms timeout fires, the bus needs reset. Some peripherals handle this automatically; others require manual clock toggling
+
+## Bench Relevance
+
+- DS18B20 readings of exactly 85.0 degrees C indicate the conversion did not complete — check timing and parasitic power supply strength
+- 1-Wire communication that works on short wires but fails on long runs has timing issues from added capacitance — try a lower pull-up resistor value
+- SMBus devices that occasionally return corrupted data may need PEC enabled and verified in firmware
+- I2C transactions that hang when talking to SMBus devices may lack proper timeout handling — implement the 35ms clock-low timeout

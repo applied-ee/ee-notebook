@@ -142,20 +142,29 @@ Most products use an adaptive strategy: advertise at a fast interval (20-100 ms)
 
 The radio is by far the largest power consumer on a BLE SoC. Minimizing radio-on time is the core of BLE power optimization. Everything else — CPU sleep modes, peripheral clock gating, voltage scaling — matters, but the radio dominates.
 
-## Gotchas
+## Tips
 
-- **BLE is not Bluetooth serial** — People coming from Classic Bluetooth (or from using HC-05 modules with AT commands) expect BLE to work like a serial port. It does not. Data is structured in services and characteristics, connections are managed by the central, and throughput is much lower than the headline data rate suggests. The Nordic UART Service creates a serial-like abstraction, but the underlying model is fundamentally different, and that difference leaks through in latency, throughput, and connection management.
+- Start with the Nordic UART Service (or equivalent) example to verify the entire BLE chain before building custom services
+- Negotiate a larger MTU immediately after connection to improve throughput for bulk data transfers
+- Test on actual phones (both Android and iOS), not just development tools like nRF Connect — phone OS quirks matter
+- Plan advertising data structure carefully — 31 bytes fills quickly after flags and device name
+- Design firmware to work across a range of connection intervals since central devices may override requested parameters
+- Handle bonding state synchronization gracefully — allow users to clear and re-pair when connections fail
 
-- **Phone OS Bluetooth stacks have quirks** — Android and iOS handle BLE differently, and these differences matter for product firmware. iOS aggressively caches GATT services — if you change your service structure during development, the phone keeps using the cached version, and nothing works until the user goes into Settings and "forgets" the device. Android has connection parameter negotiation bugs on older versions, and both platforms impose background BLE limitations that affect reliability for apps that need to maintain connections when not in the foreground. Testing on actual phones, not just nRF Connect on a development machine, is essential before shipping.
+## Caveats
 
-- **Advertising data size is limited** — 31 bytes for legacy advertising. After the mandatory flags field (3 bytes) and a reasonable device name, there is very little room for custom data. If you need to broadcast sensor readings without a connection (beacon-style), plan the advertising data structure carefully and consider whether you really need a human-readable name in the advertisement, or whether you can put it in the scan response instead.
+- **BLE is not Bluetooth serial** — Data is structured in services and characteristics, connections are managed by the central, and throughput is much lower than headline rates suggest. The underlying model differs fundamentally from Classic Bluetooth
+- **Phone OS Bluetooth stacks have quirks** — iOS aggressively caches GATT services; changing service structure requires users to "forget" the device. Android has connection parameter bugs on older versions. Both platforms limit background BLE
+- **Advertising data size is limited** — 31 bytes for legacy advertising. After flags and device name, little room remains for custom data
+- **Connection parameter negotiation can fail** — The peripheral can request parameters, but the central ultimately decides. iOS may override requested values
+- **Pairing and bonding are different things** — Pairing is temporary; bonding stores keys persistently. Stale bonding information on one side but not the other prevents connections
+- **BLE stacks consume significant RAM** — Nordic's SoftDevice uses 8-20 KB depending on configuration. On 32 KB RAM MCUs, this is a substantial fraction
+- **Interference in the 2.4 GHz band** — BLE shares the band with WiFi, microwave ovens, and Zigbee. Connection quality can degrade in noisy environments
 
-- **Connection parameter negotiation can fail** — The peripheral can request specific connection parameters, but the central (phone) ultimately decides. iOS in particular may override your requested parameters with values it considers more appropriate. Design firmware to work acceptably across a range of connection intervals, not just the one you requested in your parameter update.
+## Bench Relevance
 
-- **Pairing and bonding are different things** — Pairing establishes a temporary security context (encryption keys for the current session). Bonding stores those keys persistently so that future connections can be encrypted without re-pairing. Getting bonding wrong means users have to re-pair every time they reconnect, or worse, the device refuses to connect because of stale bonding information on one side but not the other. When bonding state gets out of sync, the fix is usually to delete the bond on both sides and start over — but your firmware needs to handle this gracefully.
-
-- **SoftDevice and stack memory requirements** — BLE stacks consume significant RAM. Nordic's SoftDevice uses 8-20 KB of RAM depending on the configuration (number of connections, MTU size, number of services). On a 32 KB RAM MCU like the nRF52810, the Bluetooth stack takes a substantial fraction of available memory. ESP-IDF's Bluetooth stack is similarly hungry. Plan memory allocation and choose your MCU before committing to a feature set — running out of RAM after building half the firmware is not a pleasant discovery.
-
-- **Interference in the 2.4 GHz band** — BLE shares the 2.4 GHz ISM band with WiFi, microwave ovens, Zigbee, and countless other devices. BLE uses frequency hopping across 40 channels (37 data channels, 3 advertising channels) to mitigate interference, but in a noisy environment (trade show floor, apartment building with dozens of WiFi networks), connection quality can degrade. Advertising on all three advertising channels provides redundancy, but data connections on a single channel are more vulnerable. This is mostly invisible during bench testing and shows up in the field.
-
-- **[DMA]({{< relref "dma" >}}) interaction with BLE stacks** — On SoCs with integrated BLE, the radio peripheral often uses DMA internally to move packets between radio memory and the packet buffer. The BLE stack manages this, and application firmware generally does not interact with radio DMA directly. But if you are also using DMA for other peripherals ([UART]({{< relref "uart" >}}), SPI, ADC), be aware that DMA channels are a shared resource and the BLE stack's DMA usage may constrain what is available for your application.
+- A device that connects but transfers data very slowly likely has not negotiated a larger MTU — check MTU after connection
+- iOS devices that fail to see updated GATT services have cached the old structure — "forget" the device in Settings and reconnect
+- Connection failures after firmware changes often trace to stale bonding information — clear bonds on both sides
+- BLE that works in the lab but fails at trade shows or in apartment buildings is experiencing 2.4 GHz interference
+- Memory allocation failures or stack overflows on BLE projects suggest the Bluetooth stack RAM was not properly accounted for — check stack memory requirements

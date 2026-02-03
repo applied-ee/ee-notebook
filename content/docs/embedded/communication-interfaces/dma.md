@@ -80,11 +80,27 @@ Getting any one of these wrong produces behavior that ranges from "nothing happe
 
 The most reliable debugging approach is to start with the simplest possible configuration (memory-to-memory, known data pattern, check the destination after transfer completes), verify that works, and then add complexity one parameter at a time. Using a debugger to inspect the DMA controller registers after setup — before triggering the transfer — catches many configuration errors.
 
-## Gotchas
+## Tips
 
-- **DMA does not know about caches** — On Cortex-M7 and other MCUs with data caches, DMA writes to memory bypass the cache. The CPU may read stale data from cache instead of the fresh DMA data. You must either place DMA buffers in non-cacheable memory, or explicitly invalidate the cache before reading DMA results. This is one of the most common Cortex-M7 bugs.
-- **Transfer count units depend on transfer width** — If you configure a DMA for half-word (16-bit) transfers and set the count to 100, the DMA moves 200 bytes. If you meant 100 bytes, you need a count of 50. Mixing up "number of bytes" and "number of transfers" is a constant source of buffer overruns.
-- **DMA to peripheral registers requires fixed address** — If you accidentally enable source or destination increment when pointing at a peripheral data register, the DMA will read or write sequential addresses in the peripheral memory map, hitting adjacent registers with unpredictable results.
-- **Circular mode overwrites without warning** — If firmware does not process data before the DMA wraps around, data is silently overwritten. There is no overflow flag or error interrupt for this condition. You find out when your audio glitches or your samples have gaps.
-- **Channel mapping conflicts are a system design problem** — Two peripherals mapped to the same DMA channel cannot both use DMA simultaneously. This constraint is fixed in hardware on many MCUs and can force architectural decisions early in the design. Check the DMA request mapping table in the reference manual before committing to a peripheral assignment.
-- **DMA errors are easy to ignore** — Most DMA controllers have error flags (transfer error, FIFO error, direct mode error) that are cleared by writing to a flag register. If firmware never checks these flags, DMA failures go unnoticed until the application misbehaves in ways that seem unrelated to data transfer.
+- Start with the simplest DMA configuration (memory-to-memory with known pattern) and add complexity one parameter at a time
+- Check the DMA request mapping table in the reference manual early — channel conflicts are fixed in hardware on most MCUs
+- On Cortex-M7, place DMA buffers in non-cacheable memory or invalidate cache before reading DMA results
+- Use the half-transfer interrupt with double buffering to process data while DMA fills the other half
+- Verify DMA error flags after transfers — silent failures cause symptoms that appear unrelated to data movement
+
+## Caveats
+
+- **DMA does not know about caches** — On Cortex-M7 and other MCUs with data caches, DMA writes to memory bypass the cache. The CPU may read stale data from cache instead of fresh DMA data
+- **Transfer count units depend on transfer width** — Configuring DMA for half-word (16-bit) transfers with count 100 moves 200 bytes. Mixing up "number of bytes" and "number of transfers" causes buffer overruns
+- **DMA to peripheral registers requires fixed address** — Accidentally enabling address increment when pointing at a peripheral data register causes the DMA to hit adjacent registers
+- **Circular mode overwrites without warning** — If firmware does not process data before the DMA wraps around, data is silently overwritten. There is no overflow flag for this condition
+- **Channel mapping conflicts are a system design problem** — Two peripherals mapped to the same DMA channel cannot both use DMA simultaneously. This constraint is fixed in hardware on many MCUs
+- **DMA errors are easy to ignore** — Most DMA controllers have error flags that go unchecked. DMA failures produce symptoms that seem unrelated to data transfer
+
+## Bench Relevance
+
+- DMA that appears to complete but produces stale or corrupted data on Cortex-M7 likely has cache coherency issues — check buffer placement and cache invalidation
+- Buffer overruns or short transfers often trace to confusion between byte count and transfer count — verify the width setting matches the count
+- A DMA that never triggers despite correct peripheral configuration may have the wrong channel assignment — check the request mapping table
+- Audio glitches or ADC sample gaps in circular mode indicate processing is too slow — measure processing time against the buffer fill rate
+- Corrupted peripheral registers after DMA suggest increment mode is enabled on the peripheral address — verify fixed address mode

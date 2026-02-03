@@ -181,13 +181,29 @@ In a vehicle, the choice is usually straightforward: anything safety-related or 
 
 Outside of automotive, CAN is widely used but LIN is rare. Industrial and robotics applications that need a cheap, slow bus are more likely to use RS-485, Modbus, or a simple UART network than LIN, because those ecosystems are not built around LIN tooling and transceiver availability. CAN, on the other hand, has fully crossed over from automotive into general-purpose embedded networking.
 
-## Gotchas
+## Tips
 
-- **CAN requires external transceivers and termination** — The MCU's CAN peripheral outputs CMOS-level digital signals. Without a CAN transceiver, there is no differential signaling and no bus connection. Without 120-ohm termination resistors at both ends of the bus, reflections cause intermittent errors that look like firmware bugs. Measure the resistance across CAN_H and CAN_L before debugging anything else — you should see around 60 ohms with two terminators in parallel.
-- **CAN bus-off recovery is not automatic on all MCUs** — When a CAN node reaches the bus-off state due to accumulated errors, some MCU peripherals require firmware to explicitly initiate recovery. If the error handling code does not account for bus-off, the node goes silent permanently until reset. Test your bus-off recovery path deliberately during development — do not wait for it to happen in the field.
-- **CAN ID allocation is a system-level design decision** — Message IDs determine arbitration priority. Poorly planned IDs waste bus bandwidth: if a high-frequency, low-priority message has a lower ID number than an infrequent, high-priority message, the priority inversion wastes arbitration cycles and can delay critical messages. In established protocols like J1939 or CANopen, the ID allocation scheme is defined by the standard. In custom CAN networks, planning the ID space is a design task that needs to happen early.
-- **Loopback mode on CAN peripherals is essential for initial bring-up** — Most CAN peripherals have an internal loopback mode that routes CAN_TX back to CAN_RX inside the chip, without going to the external transceiver or bus. This lets you verify firmware configuration (bit timing, filters, mailbox handling, interrupt service routines) before you have a physical bus connected. Use it. Debugging CAN firmware and CAN hardware simultaneously is much harder than debugging them separately.
-- **LIN break detection can confuse regular UART receive** — The LIN sync break (13+ dominant bits) does not look like a valid UART byte. If the UART peripheral is not configured for LIN mode or break detection, it will interpret the break as a framing error and may generate spurious error interrupts or corrupt the receive buffer. On MCUs with LIN-capable UARTs, enable the break detection feature. On others, firmware must recognize and handle framing errors during break reception.
-- **LIN checksum versions (classic vs. enhanced) must match between master and slave** — LIN 1.x uses a classic checksum that covers only the data bytes. LIN 2.x uses an enhanced checksum that includes the PID as well. If the master sends a frame with an enhanced checksum and the slave expects classic (or vice versa), the checksum will fail and the frame will be rejected. This is a common integration problem when mixing LIN devices from different manufacturers or different specification versions. The LDF (LIN Description File) for the network should specify which checksum type each frame uses.
-- **CAN FD mixed-mode buses need careful planning** — Classic CAN nodes will interpret CAN FD frames as errors, incrementing their error counters toward bus-off. If you are adding CAN FD nodes to an existing classic CAN bus, you cannot simply enable CAN FD on the new nodes and expect the old ones to be unaffected. Either upgrade the entire bus to CAN FD, or keep the new nodes in classic CAN mode.
-- **LIN slave auto-baud depends on receiving the sync field** — If a LIN slave misses the 0x55 sync byte (due to bus noise, a late power-up, or a firmware restart), it cannot calibrate its baud rate and will misinterpret subsequent data. The slave should re-synchronize on every frame's sync field, but verify that your implementation actually does this rather than calibrating once at startup.
+- Measure CAN bus termination resistance before debugging — two 120-ohm terminators in parallel should read around 60 ohms across CAN_H and CAN_L
+- Use loopback mode for initial CAN firmware bring-up before connecting transceivers and the physical bus
+- Plan CAN message ID allocation early — IDs determine arbitration priority and poorly planned IDs can delay critical messages
+- Monitor CAN error counters in firmware as an early warning system for bus health issues
+- Enable LIN break detection mode if the UART peripheral supports it to avoid framing error confusion
+- Verify LIN checksum version (classic vs. enhanced) matches between master and slave when integrating devices
+
+## Caveats
+
+- **CAN requires external transceivers and termination** — Without a transceiver, there is no differential signaling. Without 120-ohm termination at both ends, reflections cause intermittent errors
+- **CAN bus-off recovery is not automatic on all MCUs** — Some peripherals require firmware to explicitly initiate recovery from bus-off state. Without this, the node goes silent until reset
+- **CAN ID allocation is a system-level design decision** — Message IDs determine arbitration priority. Poorly planned IDs can delay critical messages and waste bus bandwidth
+- **LIN break detection can confuse regular UART receive** — The sync break does not look like a valid UART byte and may generate spurious framing errors
+- **LIN checksum versions must match between master and slave** — Classic (LIN 1.x) and enhanced (LIN 2.x) checksums are incompatible
+- **CAN FD mixed-mode buses need careful planning** — Classic CAN nodes interpret CAN FD frames as errors, incrementing error counters toward bus-off
+- **LIN slave auto-baud depends on receiving the sync field** — If a slave misses the 0x55 sync byte, it cannot calibrate baud rate and misinterprets subsequent data
+
+## Bench Relevance
+
+- Intermittent CAN errors that look like firmware bugs often trace to missing or incorrect bus termination — check resistance first
+- A CAN node that goes silent after a burst of errors has likely reached bus-off — verify firmware handles bus-off recovery
+- CAN error counters that climb slowly during normal operation suggest marginal timing or electrical problems before they cause bus-off
+- LIN slaves that occasionally misinterpret frames may have checksum version mismatches — check LDF specifications
+- LIN communication that works after master restart but fails after slave restart suggests the slave relies on initial sync rather than per-frame re-synchronization

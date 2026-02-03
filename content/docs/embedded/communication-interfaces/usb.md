@@ -126,18 +126,29 @@ Some MCU USB peripherals support [DMA]({{< relref "dma" >}}) for moving data bet
 
 The details are MCU-specific. On some STM32 parts, the USB peripheral has its own dedicated SRAM for endpoint buffers, and DMA is not directly applicable — the CPU must copy data between this USB SRAM and main RAM. On others (particularly those with the "OTG" USB peripheral), DMA is integrated into the USB data path. Check the reference manual for your specific part.
 
-## Gotchas
+## Tips
 
-- **USB enumeration failures are hard to diagnose from the device side** — The host controls the enumeration sequence. If the device fails to respond correctly, the host gives up and may only report "unknown device." The device firmware has no indication of what went wrong. A USB protocol analyzer (hardware sniffer) is the proper debug tool, but most people end up iterating blindly on descriptor tables. On Linux, `dmesg` sometimes gives more detail than Windows Device Manager about why enumeration failed.
+- Start from a working USB stack example and modify it — configuring USB from scratch based on API documentation is much harder
+- Verify the wTotalLength field in the configuration descriptor matches the actual sum of all nested descriptors
+- Use a crystal oscillator for the 48 MHz USB clock — internal RC oscillators typically drift beyond the required plus or minus 0.25% tolerance
+- For USB-C connectors with USB 2.0, add 5.1k pull-down resistors on each CC pin to identify as a device
+- Handle suspend and resume interrupts even if the application does not need low power mode — hosts may disconnect devices that ignore suspend
+- Check `dmesg` on Linux for more detailed enumeration failure information than Windows provides
 
-- **USB clock accuracy is a hard requirement** — The plus or minus 0.25% tolerance for the 48 MHz USB clock is not negotiable. An internal RC oscillator drifting outside this range causes intermittent failures that vary with temperature. If USB works on the bench but fails in the field, check the clock source.
+## Caveats
 
-- **Suspend and resume handling is not optional** — The USB specification requires devices to enter a low-power suspend state when the host stops sending Start-of-Frame packets (which happens when the host goes to sleep, or just because the USB scheduler decides to). If the device firmware ignores suspend, some hosts will eventually disconnect the device. At minimum, firmware should handle the suspend interrupt and reduce power consumption. Resume detection (the host signaling the device to wake up) must also be handled. Many USB stack examples omit or stub out suspend handling, which works fine on the bench but causes problems in the field when laptops go to sleep.
+- **USB enumeration failures are hard to diagnose from the device side** — The host controls enumeration. If the device responds incorrectly, the host gives up with only "unknown device" feedback. A USB protocol analyzer is the proper debug tool
+- **USB clock accuracy is a hard requirement** — The plus or minus 0.25% tolerance for the 48 MHz USB clock is not negotiable. Internal RC oscillators drifting outside this range cause intermittent failures
+- **Suspend and resume handling is not optional** — If device firmware ignores suspend, some hosts will eventually disconnect the device. Many USB stack examples stub out suspend handling
+- **Windows CDC requires driver installation on older versions** — On Windows 7 and 8, a `.inf` file is needed for CDC devices. Windows 10 and later recognize them automatically
+- **Endpoint buffer management is trickier than it looks** — USB endpoint buffers are small (often 64 bytes). If firmware takes too long to drain buffers, throughput drops dramatically
+- **USB-C connectors need CC resistors for USB 2.0** — Without 5.1k pull-down resistors on each CC pin, a USB-C host may not provide VBUS
+- **Descriptor total lengths must be exact** — If the wTotalLength field is wrong, enumeration fails or the device behaves erratically
 
-- **Windows CDC requires driver installation on older versions** — On Windows 10 and later, CDC devices using standard descriptors are recognized automatically as virtual COM ports. On Windows 7 and 8, a `.inf` file (driver information file) is needed to tell Windows which driver to use. If your product must support older Windows, you need to provide this file and deal with the driver installation process. Alternatively, using the Microsoft-specific WCID (Windows Compatible ID) descriptors can enable automatic driver binding on some older Windows versions.
+## Bench Relevance
 
-- **Endpoint buffer management is trickier than it looks** — The USB peripheral's endpoint buffers are small (often 64 bytes for full speed). If the host sends data faster than firmware processes it, the peripheral NAKs incoming packets until a buffer is free. This is fine for flow control, but if firmware takes too long to drain the buffer, throughput drops dramatically. For receive-heavy applications, double-buffered endpoints (where the hardware alternates between two buffers) help keep throughput up.
-
-- **USB connector pin-out matters for USB-C** — If your board uses a USB-C connector but only supports USB 2.0 (which is common for MCU projects), you need the correct CC pull-down resistors (5.1k to ground on each CC pin) to identify as a device. Without these, a USB-C host may not provide VBUS at all. This catches people who just wire up D+ and D- and expect it to work like a Type-B connector.
-
-- **Descriptor total lengths must be exact** — The configuration descriptor contains a `wTotalLength` field that must equal the total byte count of the configuration descriptor plus all subordinate interface, endpoint, and class-specific descriptors. If this number is wrong, the host reads too many or too few bytes, and enumeration fails or the device behaves erratically. This is one of the first things to check when debugging enumeration problems.
+- A device that shows as "unknown" in the host OS likely has descriptor errors — check wTotalLength and descriptor structure
+- USB that works on one machine but not another, or fails intermittently with temperature, suggests clock accuracy issues — verify the 48 MHz source
+- A device that works on the bench but disconnects when laptops sleep has missing suspend handling
+- A USB-C device that does not power up at all is likely missing CC pull-down resistors
+- Low USB throughput on receive-heavy transfers indicates endpoint buffers are not being drained fast enough — consider double-buffered endpoints
