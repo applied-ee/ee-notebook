@@ -6,7 +6,7 @@ bookCollapseSection: true
 
 # Legacy Signaling and Interfaces
 
-Many "legacy" interface standards are still in daily use — they just aren't the ones you'd pick for a new design. RS-232 serial links run industrial equipment and test instruments. RS-485 multi-drop buses connect sensors across factory floors. 4–20 mA current loops carry analog measurements in process control. Relay logic still runs HVAC systems and older machine tools. These interfaces have electrical characteristics that differ from modern standards in ways that matter at the bench.
+Many "legacy" interface standards are still in daily use -- they just are not the ones a designer would pick for a new design. RS-232 serial links run industrial equipment and test instruments. RS-485 multi-drop buses connect sensors across factory floors. 4–20 mA current loops carry analog measurements in process control. Relay logic still runs HVAC systems and older machine tools. These interfaces have electrical characteristics that differ from modern standards in ways that matter at the bench.
 
 ## RS-232
 
@@ -18,7 +18,7 @@ The granddaddy of serial interfaces, standardized in 1962 and still on every pie
 - Common baud rates: 9600, 19200, 38400, 115200
 - Typical driver ICs: MAX232 (generates ±10 V from +5 V using charge pumps), SP232, ICL232
 
-**What you'll encounter:** DB-9 and DB-25 connectors. DTE vs. DCE pin assignments — a constant source of confusion. Null modem cables that swap TX and RX for connecting two DTE devices. Hardware flow control (RTS/CTS) that is sometimes wired, sometimes not, and sometimes wired incorrectly. Many legacy devices use only TX, RX, and ground — three wires.
+**Common encounters:** DB-9 and DB-25 connectors. DTE vs. DCE pin assignments — a constant source of confusion. Null modem cables that swap TX and RX for connecting two DTE devices. Hardware flow control (RTS/CTS) that is sometimes wired, sometimes not, and sometimes wired incorrectly. Many legacy devices use only TX, RX, and ground — three wires.
 
 **Interfacing to modern systems:** USB-to-serial adapters (FTDI FT232, CP2102, CH340) handle the voltage translation and protocol conversion. The adapter presents a virtual COM port to the PC. This works well, with one caveat: USB serial adapters add latency that wasn't present with native serial ports, which can cause timing-sensitive protocols to fail.
 
@@ -72,11 +72,25 @@ The PC parallel port (DB-25, LPT) was repurposed as a general-purpose digital I/
 - No isolation — the port is directly connected to the PC's I/O bus. A wiring mistake can damage the parallel port controller or the motherboard
 - Directly addressable via I/O port instructions (legacy PC architecture). Modern USB-to-parallel adapters often don't support the bit-banging mode that lab equipment relies on
 
-**Where you'll encounter it:** CNC machine controllers (Mach3, LinuxCNC), custom test fixtures, printer-port logic analyzers, EPROM programmers, and any bespoke lab equipment from the 1990s and early 2000s. Replacing the parallel port interface often means replacing the control software, which may be the harder problem.
+**Where it appears:** CNC machine controllers (Mach3, LinuxCNC), custom test fixtures, printer-port logic analyzers, EPROM programmers, and any bespoke lab equipment from the 1990s and early 2000s. Replacing the parallel port interface often means replacing the control software, which may be the harder problem.
 
-## Gotchas
+## Tips
 
-- **RS-232 voltage levels will damage modern logic** — Never connect RS-232 signals directly to a 3.3 V or 5 V microcontroller. Use a level translator (MAX232 or equivalent) or a USB-serial adapter
-- **Current loop polarity matters** — A 4–20 mA loop must be wired with the correct polarity. Reversing the loop typically results in zero output (the transmitter can't push current backwards), which looks identical to a broken wire
-- **Relay logic is powered by mains voltage** — Ladder logic circuits typically operate at 120 V AC or 24 V DC. These are not bench-safe voltages. Use proper lockout/tagout procedures before probing relay logic circuits. For measurement technique and safety procedures, see [Measurement & Test]({{< relref "/docs/measurement" >}})
-- **Legacy interfaces have no protection** — Modern interfaces (USB, Ethernet) include ESD protection, termination, and defined failure modes. Legacy interfaces assume you know what you're doing. Miswiring RS-232, RS-485, or a current loop can damage equipment
+- When an RS-485 bus fails to communicate, swap the A and B lines before any other debugging -- the naming convention is not standardized and some manufacturers reverse them
+- Keep a USB-to-serial adapter (FTDI FT232 or CP2102) and a MAX3232 breakout on the bench for quick RS-232 interfacing -- these cover the vast majority of legacy serial connections
+- For 4-20 mA loops, always use a precision sense resistor (0.1% or better) at 250 ohms to convert to 1-5 V -- the resistor tolerance directly limits measurement accuracy
+- Before probing relay logic, verify the operating voltage (120 V AC or 24 V DC) and follow lockout/tagout procedures -- these are not bench-safe voltage levels
+
+## Caveats
+
+- **RS-232 voltage levels will damage modern logic** -- Never connect RS-232 signals directly to a 3.3 V or 5 V microcontroller. Use a level translator (MAX232 or equivalent) or a USB-serial adapter
+- **Current loop polarity matters** -- A 4-20 mA loop must be wired with the correct polarity. Reversing the loop typically results in zero output (the transmitter cannot push current backwards), which looks identical to a broken wire
+- **Relay logic is powered by mains voltage** -- Ladder logic circuits typically operate at 120 V AC or 24 V DC. These are not bench-safe voltages. Use proper lockout/tagout procedures before probing relay logic circuits. For measurement technique and safety procedures, see [Measurement & Test]({{< relref "/docs/measurement" >}})
+- **Legacy interfaces have no protection** -- Modern interfaces (USB, Ethernet) include ESD protection, termination, and defined failure modes. Legacy interfaces assume the operator understands the electrical requirements. Miswiring RS-232, RS-485, or a current loop can damage equipment
+
+## Bench Relevance
+
+- A 4-20 mA loop reading exactly 0 mA indicates a broken wire or dead transmitter, not a zero measurement -- the live-zero at 4 mA is specifically designed to distinguish faults from valid readings
+- An RS-485 bus that shows garbage characters during idle periods is likely missing bias resistors -- without pull-up and pull-down biasing, the bus floats when no driver is active
+- A half-duplex RS-485 device that blocks all other devices on the bus has a stuck driver-enable line -- this is one of the most common RS-485 failure modes
+- USB-to-serial adapters add latency that native serial ports do not have, which can cause timing-sensitive legacy protocols to fail even when the voltage levels and wiring are correct
