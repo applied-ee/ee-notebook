@@ -114,11 +114,25 @@ BAW/FBAR filters outperform SAW above about 2 GHz, where SAW insertion loss and 
 
 **Termination impedance:** Most RF filters are designed for 50-ohm source and load impedance. If the actual impedance differs from the design impedance, the filter response changes — the passband ripple increases, the center frequency shifts, and the rejection degrades. This is a common problem when connecting filters between stages that are not exactly 50 ohms.
 
-## Gotchas
+## Tips
 
-- **Termination impedance must match the filter's design impedance** — A SAW filter designed for 50 ohms that sees 75 ohms will have degraded passband flatness and rejection. Check the datasheet and match accordingly.
-- **Insertion loss before the LNA costs sensitivity, dB for dB** — A 2 dB filter loss before the LNA degrades the receiver noise figure by 2 dB. This is the most expensive loss in the system. Use the lowest-loss filter you can find for the antenna-to-LNA path.
-- **Filter passband ripple creates gain variation** — A filter with 1 dB of passband ripple means the signal at the passband edge is 1 dB weaker than at center. In a receiver, this appears as sensitivity variation across the channel.
-- **LC filter performance is limited by component Q** — A theoretically perfect 5-pole Chebyshev filter loses its steep skirts when built with Q=30 inductors. Simulate with realistic Q values, not ideal components.
-- **SAW and BAW filters are not interchangeable even at the same frequency** — Different parts have different impedances, bandwidths, and PCB layout requirements. Always follow the datasheet layout recommendations.
-- **Filter return loss affects the stages connected to it** — A filter with poor input return loss reflects energy back to the driving amplifier, potentially causing instability. Check S11 as well as S21.
+- Start filter prototyping with a simple 3-element LC bandpass and measure the response on a VNA before adding complexity — real component parasitics often dominate over topology differences
+- For receiver front-end filtering, prioritize insertion loss over selectivity; every dB lost before the LNA directly degrades noise figure
+- Use SAW or BAW filters at standard frequencies (915 MHz, 1575 MHz, 2.4 GHz) rather than designing custom LC filters — the off-the-shelf parts are smaller, better characterized, and often cheaper
+- Always verify that the source and load impedances presented to the filter match the design impedance specified in the datasheet; even a modest mismatch distorts the passband shape
+
+## Caveats
+
+- **Termination impedance must match the filter's design impedance** — A SAW filter designed for 50 ohms that sees 75 ohms will have degraded passband flatness and rejection. Check the datasheet and match accordingly
+- **Insertion loss before the LNA costs sensitivity, dB for dB** — A 2 dB filter loss before the LNA degrades the receiver noise figure by 2 dB. This is the most expensive loss in the system. Use the lowest-loss filter available for the antenna-to-LNA path
+- **Filter passband ripple creates gain variation** — A filter with 1 dB of passband ripple means the signal at the passband edge is 1 dB weaker than at center. In a receiver, this appears as sensitivity variation across the channel
+- **LC filter performance is limited by component Q** — A theoretically perfect 5-pole Chebyshev filter loses its steep skirts when built with Q=30 inductors. Simulate with realistic Q values, not ideal components
+- **SAW and BAW filters are not interchangeable even at the same frequency** — Different parts have different impedances, bandwidths, and PCB layout requirements. Always follow the datasheet layout recommendations
+- **Filter return loss affects the stages connected to it** — A filter with poor input return loss reflects energy back to the driving amplifier, potentially causing instability. Check S11 as well as S21
+
+## Bench Relevance
+
+- A filter whose measured passband is noticeably wider and shallower than the simulation predicts is typically limited by the Q of the inductors used — replacing them with higher-Q parts will sharpen the response
+- A shift in measured center frequency compared to the design target usually indicates that the source or load impedance is not the expected 50 ohms, or that component tolerances have accumulated
+- Ripple appearing in the passband of an LC filter that was not present in simulation often results from parasitic coupling between adjacent inductors on the PCB — increasing spacing or reorienting parts can reduce it
+- A SAW filter that shows degraded rejection on one side of the passband compared to the datasheet is likely seeing an impedance mismatch at that port, which can be confirmed by measuring S11 at the filter input

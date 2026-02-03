@@ -36,7 +36,7 @@ Using an MMIC gain block typically requires:
 3. Bias network: an inductor or resistor from the supply to the output pin (the MMIC draws current through its output)
 4. Bypass capacitor on the supply line
 
-The simplicity of MMIC gain blocks makes them ideal for learning and prototyping. If you need amplification between 50-ohm stages and can accept the fixed gain, an MMIC is usually the right first choice.
+The simplicity of MMIC gain blocks makes them ideal for learning and prototyping. If amplification between 50-ohm stages is needed and the fixed gain is acceptable, an MMIC is usually the right first choice.
 
 ## Low Noise Amplifiers (LNAs)
 
@@ -102,11 +102,25 @@ Prevention:
 - Ensure proper bypass and grounding — uncontrolled impedance at the supply pin can create feedback
 - Use S-parameter simulation to check the Rollett stability factor (K > 1 and |Delta| < 1 for unconditional stability)
 
-## Gotchas
+## Tips
 
-- **Noise figure is only critical for the first stage** — After 15-20 dB of gain, the noise contribution of later stages is negligible. Do not waste money on a low-NF amplifier for the second or third stage.
-- **P1dB and IP3 are output-referred unless stated otherwise** — A datasheet that says "P1dB = +15 dBm" usually means output P1dB. Input P1dB is approximately P1dB_out minus gain.
-- **MMIC bias current flows through the output pin** — Forgetting the DC bias network (inductor or resistor to VCC on the output) means the MMIC gets no power. No bias, no gain.
-- **Oscillation at a frequency you are not measuring is still oscillation** — An amplifier designed for 2.4 GHz might oscillate at 6 GHz. If your spectrum analyzer only goes to 3 GHz, you will not see it. Always check for out-of-band oscillation.
-- **Amplifier gain changes with temperature** — Most RF amplifiers lose about 0.01-0.02 dB/C of gain as temperature rises. Over a 50C operating range, that is 0.5-1.0 dB of variation.
-- **Never connect an RF amplifier output directly to another amplifier input without checking levels** — Cascading two high-gain blocks can easily exceed the P1dB of the second stage, causing severe distortion.
+- Start with MMIC gain blocks for prototyping — they are internally matched to 50 ohms and require only DC blocking caps and a bias network, eliminating the need for external matching
+- Use the Friis equation to budget noise figure across the receive chain; invest in a low-NF LNA for the first stage and use inexpensive gain blocks for subsequent stages
+- Verify stability across the full frequency range (not just the operating band) using S-parameter simulation and the Rollett K factor
+- Place a 3-6 dB attenuator pad between cascaded amplifier stages to improve inter-stage return loss and reduce the risk of oscillation
+
+## Caveats
+
+- **Noise figure is only critical for the first stage** — After 15-20 dB of gain, the noise contribution of later stages is negligible. There is no benefit to using a low-NF amplifier for the second or third stage
+- **P1dB and IP3 are output-referred unless stated otherwise** — A datasheet that says "P1dB = +15 dBm" usually means output P1dB. Input P1dB is approximately P1dB_out minus gain
+- **MMIC bias current flows through the output pin** — Forgetting the DC bias network (inductor or resistor to VCC on the output) means the MMIC gets no power. No bias, no gain
+- **Oscillation at a frequency not being measured is still oscillation** — An amplifier designed for 2.4 GHz might oscillate at 6 GHz. If the spectrum analyzer only goes to 3 GHz, the oscillation is invisible. Always check for out-of-band oscillation
+- **Amplifier gain changes with temperature** — Most RF amplifiers lose about 0.01-0.02 dB/C of gain as temperature rises. Over a 50C operating range, that is 0.5-1.0 dB of variation
+- **Never connect an RF amplifier output directly to another amplifier input without checking levels** — Cascading two high-gain blocks can easily exceed the P1dB of the second stage, causing severe distortion
+
+## Bench Relevance
+
+- An MMIC drawing no DC current despite having a supply voltage usually indicates a missing or open bias inductor/resistor on the output pin
+- Spurious tones on the spectrum analyzer that shift or disappear when a hand is placed near the circuit board suggest an oscillation caused by impedance sensitivity — a classic sign of conditional instability
+- A receiver chain that clips on strong signals but works fine on weak ones is likely compressing in a later gain stage whose P1dB is too low for the signal levels reaching it
+- Gain that measures 1-2 dB higher than the datasheet predicts may indicate the onset of regenerative feedback, which precedes full oscillation

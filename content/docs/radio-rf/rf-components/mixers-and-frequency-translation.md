@@ -16,7 +16,7 @@ When two sinusoidal signals are multiplied:
 The output contains two new frequencies: the difference (f_RF - f_LO) and the sum (f_RF + f_LO). In a receiver, the desired output is usually the difference frequency — the intermediate frequency (IF). In a transmitter (upconversion), the desired output is the sum frequency.
 
 Example: A receiver tunes to 915 MHz. The local oscillator (LO) is set to 904.3 MHz. The mixer output contains:
-- Difference: 915 - 904.3 = 10.7 MHz (the IF — this is what we want)
+- Difference: 915 - 904.3 = 10.7 MHz (the IF — this is the desired output)
 - Sum: 915 + 904.3 = 1819.3 MHz (filtered out)
 
 The mixer also produces harmonics and intermodulation products of the input signals, which must be filtered.
@@ -33,7 +33,7 @@ The classic double-balanced mixer uses four Schottky diodes arranged in a ring w
 - **LO drive level:** +7 dBm, +13 dBm, or +17 dBm (higher LO = better linearity)
 - **Bandwidth:** Extremely wide, often 1 MHz to 5+ GHz
 
-Passive diode mixers are robust, linear, and broadband. Their main disadvantage is conversion loss — you lose 6-7 dB of signal power through the mixer, which must be compensated with gain elsewhere. Level 7 (+7 dBm LO) mixers are the most common for general use. Level 17 (+17 dBm LO) mixers offer better linearity but require more LO power.
+Passive diode mixers are robust, linear, and broadband. Their main disadvantage is conversion loss — 6-7 dB of signal power is lost through the mixer, which must be compensated with gain elsewhere. Level 7 (+7 dBm LO) mixers are the most common for general use. Level 17 (+17 dBm LO) mixers offer better linearity but require more LO power.
 
 ### Active Mixer (Gilbert Cell)
 
@@ -55,7 +55,7 @@ Active mixers are common in integrated radio chips where conversion gain simplif
 
 **IP3 (Third-Order Intercept Point):** Linearity measure. For a passive mixer, IP3 is roughly equal to the LO drive level (a +7 dBm LO mixer has IIP3 around +7 dBm). Higher IP3 means less distortion from strong signals.
 
-**LO drive level:** The required LO power. Insufficient LO drive degrades conversion loss and linearity. Too much LO drive can damage the mixer. The datasheet specifies a nominal drive level — stick to it within +/- 1 dB.
+**LO drive level:** The required LO power. Insufficient LO drive degrades conversion loss and linearity. Too much LO drive can damage the mixer. The datasheet specifies a nominal drive level — it is best to stay within +/- 1 dB.
 
 **Spurious products:** Real mixers produce outputs at m * f_LO +/- n * f_RF for various integer values of m and n. These spurious responses ("spurs") must be filtered. Mixer manufacturers provide spur charts showing the relative levels of these products.
 
@@ -67,7 +67,7 @@ Example: If f_LO = 904.3 MHz and f_IF = 10.7 MHz:
 - Desired RF: 915 MHz (above LO)
 - Image frequency: 893.6 MHz (below LO)
 
-A signal at 893.6 MHz will also produce 10.7 MHz IF output and will be indistinguishable from the desired signal. If there is a strong transmitter at 893.6 MHz, it will appear as interference.
+A signal at 893.6 MHz will also produce 10.7 MHz IF output and will be indistinguishable from the desired signal. If there is a strong transmitter at 893.6 MHz, it appears as interference.
 
 Solutions:
 - **Image-reject filter:** A bandpass filter before the mixer that passes the desired RF band and rejects the image frequency. This works when the IF is high enough that the image is well-separated from the desired band.
@@ -93,11 +93,25 @@ Solutions:
 
 **DC blocking:** Passive diode mixers need DC blocking capacitors on RF and LO ports if the connected circuits have DC bias. The IF port may need DC blocking as well, depending on the circuit topology.
 
-## Gotchas
+## Tips
 
-- **Insufficient LO drive is the most common mixer problem** — If the LO signal is 3 dB below the specified drive level, conversion loss increases by 1-3 dB and linearity degrades. Use a dedicated LO amplifier if needed.
-- **Image frequency rejection is your responsibility** — The mixer does not reject the image. You must filter it out before the mixer or use an image-reject architecture.
-- **Port impedance matters at all frequencies, not just the operating band** — A mixer port that sees a reactive impedance at a spur frequency will re-reflect that spur back into the mixer, potentially creating higher-level products. Terminate ports broadband.
-- **Passive mixer conversion loss directly adds to receiver noise figure** — 7 dB of conversion loss is equivalent to 7 dB of noise figure from the mixer stage. This is why the LNA before the mixer needs enough gain to swamp the mixer's noise contribution.
-- **LO phase noise transfers directly to the IF output** — The mixer multiplies the RF signal by the LO, including the LO's phase noise. A noisy LO degrades the signal-to-noise ratio of the converted signal.
-- **Do not exceed the maximum RF input power** — Strong RF signals can forward-bias the mixer diodes, causing compression, intermodulation, and potentially damage. The maximum safe RF input is typically 5-10 dB below the LO drive level.
+- Start with a double-balanced Level 7 (+7 dBm LO) diode ring mixer for general-purpose frequency conversion — it offers good linearity, wide bandwidth, and broad availability
+- Always verify the LO drive level with a power meter; even 2-3 dB of deviation from the specified level measurably degrades conversion loss and linearity
+- Place a bandpass or low-pass IF filter immediately after the mixer to reject spurious products before they reach downstream stages
+- Terminate all mixer ports at 50 ohms across a broad frequency range, not just the operating band — unterminated spurs reflect back and generate additional unwanted products
+
+## Caveats
+
+- **Insufficient LO drive is the most common mixer problem** — If the LO signal is 3 dB below the specified drive level, conversion loss increases by 1-3 dB and linearity degrades. Use a dedicated LO amplifier if needed
+- **Image frequency rejection is the designer's responsibility** — The mixer does not reject the image. It must be filtered out before the mixer or handled with an image-reject architecture
+- **Port impedance matters at all frequencies, not just the operating band** — A mixer port that sees a reactive impedance at a spur frequency will re-reflect that spur back into the mixer, potentially creating higher-level products. Terminate ports broadband
+- **Passive mixer conversion loss directly adds to receiver noise figure** — 7 dB of conversion loss is equivalent to 7 dB of noise figure from the mixer stage. This is why the LNA before the mixer needs enough gain to swamp the mixer's noise contribution
+- **LO phase noise transfers directly to the IF output** — The mixer multiplies the RF signal by the LO, including the LO's phase noise. A noisy LO degrades the signal-to-noise ratio of the converted signal
+- **Do not exceed the maximum RF input power** — Strong RF signals can forward-bias the mixer diodes, causing compression, intermodulation, and potentially damage. The maximum safe RF input is typically 5-10 dB below the LO drive level
+
+## Bench Relevance
+
+- A strong tone at the LO frequency appearing on the spectrum analyzer at the RF port indicates LO-to-RF leakage — the isolation specification can be measured directly by comparing this level to the LO drive power
+- Conversion loss that measures 2-3 dB worse than the datasheet typically points to insufficient LO drive or a port impedance mismatch at the IF frequency
+- An unexpected signal at the IF output that tracks with tuning but does not correspond to any known transmitter is likely an image response — its frequency will be symmetric about the LO relative to the desired signal
+- Increased spurious products that appear when the IF filter is removed or bypassed confirm that the filter was suppressing mixer spurs that would otherwise propagate through the receive chain

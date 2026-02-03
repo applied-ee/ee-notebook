@@ -97,11 +97,25 @@ Within the PLL's loop bandwidth, the output phase noise tracks the reference osc
 
 Modern PLL synthesizer ICs (such as the TI LMX2594, Analog Devices ADF4351, or MAX2871) integrate the PFD, dividers, and sometimes the VCO into a single chip, requiring only an external reference, loop filter, and output matching.
 
-## Gotchas
+## Tips
 
-- **Phase noise specification must include the offset frequency** — "-100 dBc/Hz" means nothing without specifying the offset. At 1 kHz offset, -100 dBc/Hz is poor for a crystal oscillator. At 1 MHz offset, it might be excellent.
-- **PLL division ratio multiplies reference phase noise** — A PLL with N=1000 adds 60 dB to the reference phase noise (20*log10(1000)). A low-noise reference is essential for high-N synthesizers.
-- **VCO pulling from load variation causes frequency instability** — Always isolate the VCO from varying loads with a buffer amplifier. Even small impedance changes at the output can pull the frequency by kHz.
-- **Supply noise modulates the VCO frequency** — VCO pushing sensitivity of 1 MHz/V means 1 mV of supply noise creates 1 kHz of frequency modulation. Use a clean, well-regulated supply with excellent RF bypassing.
-- **OCXO warmup takes minutes** — An oven-controlled oscillator reaches stable frequency only after the oven stabilizes, typically 3-10 minutes. Plan for this in system startup.
-- **Free-running VCOs are not frequency-stable** — Without a PLL locking it to a reference, a VCO drifts with temperature, supply voltage, and mechanical vibration. Never use a free-running VCO where frequency accuracy matters.
+- Use a spectrum analyzer with a narrow resolution bandwidth (100 Hz or less) to observe close-in phase noise skirts around the carrier — this reveals whether a PLL is locked cleanly or has excessive noise within the loop bandwidth
+- Always buffer a VCO output with an isolating amplifier before connecting it to a load; even small impedance variations at the output can pull the frequency by kilohertz
+- Keep PLL loop filter components close to the PFD output and away from digital switching noise — supply noise coupling into the control voltage directly modulates the VCO frequency
+- When comparing oscillator options, evaluate phase noise at the offset frequency that matters for the application (e.g., 10 kHz offset for narrow-channel communications, 1 MHz offset for wideband systems)
+
+## Caveats
+
+- **Phase noise specification must include the offset frequency** — "-100 dBc/Hz" means nothing without specifying the offset. At 1 kHz offset, -100 dBc/Hz is poor for a crystal oscillator. At 1 MHz offset, it might be excellent
+- **PLL division ratio multiplies reference phase noise** — A PLL with N=1000 adds 60 dB to the reference phase noise (20*log10(1000)). A low-noise reference is essential for high-N synthesizers
+- **VCO pulling from load variation causes frequency instability** — Always isolate the VCO from varying loads with a buffer amplifier. Even small impedance changes at the output can pull the frequency by kHz
+- **Supply noise modulates the VCO frequency** — VCO pushing sensitivity of 1 MHz/V means 1 mV of supply noise creates 1 kHz of frequency modulation. Use a clean, well-regulated supply with excellent RF bypassing
+- **OCXO warmup takes minutes** — An oven-controlled oscillator reaches stable frequency only after the oven stabilizes, typically 3-10 minutes. Plan for this in system startup
+- **Free-running VCOs are not frequency-stable** — Without a PLL locking it to a reference, a VCO drifts with temperature, supply voltage, and mechanical vibration. Never use a free-running VCO where frequency accuracy matters
+
+## Bench Relevance
+
+- A PLL that shows elevated phase noise shoulders symmetric about the carrier at the loop bandwidth frequency indicates that the loop filter bandwidth is too wide, allowing VCO noise to dominate close-in
+- An oscillator whose frequency drifts slowly over minutes after power-on is exhibiting thermal settling — crystal oscillators and OCXOs require warmup time before reaching specified stability
+- Tapping or vibrating the bench near a VCO and observing a frequency shift on the spectrum analyzer confirms microphonic sensitivity, which is common in discrete LC oscillators with air-core inductors
+- Spurious tones at multiples of the PLL reference frequency appearing in the output spectrum indicate reference spur leakage through the loop filter, suggesting insufficient filtering or poor layout isolation

@@ -5,7 +5,7 @@ weight: 10
 
 # RF Capacitors & Inductors
 
-A capacitor is not always a capacitor, and an inductor is not always an inductor. Every real passive component has parasitic elements that become dominant at high frequencies. A 100 nF ceramic capacitor behaves as an inductor above its self-resonant frequency. A 100 nH inductor behaves as a capacitor above its own self-resonant frequency. Understanding where these transitions happen — and what they mean for your circuit — is fundamental to working at RF.
+A capacitor is not always a capacitor, and an inductor is not always an inductor. Every real passive component has parasitic elements that become dominant at high frequencies. A 100 nF ceramic capacitor behaves as an inductor above its self-resonant frequency. A 100 nH inductor behaves as a capacitor above its own self-resonant frequency. Understanding where these transitions happen — and what they mean for the circuit — is fundamental to working at RF.
 
 ## Q Factor: The Quality of Energy Storage
 
@@ -108,11 +108,25 @@ The right component depends on the operating frequency:
 
 Above approximately 5-10 GHz, discrete inductors become impractical (SRF too low, Q too poor). Instead, short transmission line sections — stubs, quarter-wave transformers, and coupled lines — serve as distributed inductors and capacitors. The PCB trace itself becomes the component.
 
-## Gotchas
+## Tips
 
-- **A "100 nF" capacitor is not 100 nF at RF** — The impedance vs. frequency curve, not the marked capacitance value, determines what the component does at your frequency. Use manufacturer impedance tools to verify behavior.
-- **Voltage coefficient makes X7R capacitors unpredictable for tuning** — A 10 nF X7R capacitor across a 3.3V rail might effectively be 6 nF. For anything that depends on precise capacitance (filters, matching), use C0G.
-- **Inductor Q varies dramatically with frequency** — A wirewound inductor might have Q of 50 at 100 MHz but Q of 10 at 900 MHz. Check Q at your actual operating frequency, not the peak Q.
-- **Package size limits SRF, which limits usable frequency** — An 0805 100 pF capacitor might self-resonate at 800 MHz. The same value in 0402 resonates at 2 GHz. Moving to a smaller package buys higher usable frequency.
-- **Component placement orientation affects parasitic coupling** — Two 0402 capacitors placed parallel and close together couple more than the same two placed perpendicular. Orient components to minimize coupling in sensitive circuits.
-- **Manufacturer simulation tools are more reliable than generic models** — Murata SimSurfing, TDK SEAT, and Coilcraft design tools use measured S-parameter data for each specific part number. Generic parasitic estimates are much less accurate.
+- Always verify component behavior at the actual operating frequency using manufacturer impedance simulation tools (Murata SimSurfing, TDK SEAT, Coilcraft design tools) rather than relying on nominal values
+- Select the smallest practical package size to maximize SRF headroom — an 0402 part generally doubles the usable frequency range compared to an 0805
+- Use C0G/NP0 dielectric for any capacitor in a tuning, matching, or filter application; reserve X7R and X5R for bypass and decoupling only
+- Check inductor Q at the actual operating frequency, not just the peak Q listed in the headline specifications
+
+## Caveats
+
+- **A "100 nF" capacitor is not 100 nF at RF** — The impedance vs. frequency curve, not the marked capacitance value, determines what the component does at the operating frequency. Use manufacturer impedance tools to verify behavior
+- **Voltage coefficient makes X7R capacitors unpredictable for tuning** — A 10 nF X7R capacitor across a 3.3V rail might effectively be 6 nF. For anything that depends on precise capacitance (filters, matching), use C0G
+- **Inductor Q varies dramatically with frequency** — A wirewound inductor might have Q of 50 at 100 MHz but Q of 10 at 900 MHz. Check Q at the actual operating frequency, not the peak Q
+- **Package size limits SRF, which limits usable frequency** — An 0805 100 pF capacitor might self-resonate at 800 MHz. The same value in 0402 resonates at 2 GHz. Moving to a smaller package buys higher usable frequency
+- **Component placement orientation affects parasitic coupling** — Two 0402 capacitors placed parallel and close together couple more than the same two placed perpendicular. Orient components to minimize coupling in sensitive circuits
+- **Manufacturer simulation tools are more reliable than generic models** — Murata SimSurfing, TDK SEAT, and Coilcraft design tools use measured S-parameter data for each specific part number. Generic parasitic estimates are much less accurate
+
+## Bench Relevance
+
+- A bypass capacitor that resonates below its intended frequency range may show unexpected high-impedance behavior on an impedance analyzer, appearing inductive rather than capacitive
+- Swapping an 0805 capacitor for an 0402 of the same value in a VHF matching network can produce a measurable improvement in return loss due to the higher SRF
+- An LC filter that measures wider bandwidth than simulated with ideal components is likely limited by the Q of the physical inductors — comparing measured vs. simulated S21 reveals the discrepancy
+- Touching or repositioning components near a sensitive RF trace during prototyping can shift the tuning noticeably, indicating parasitic coupling between adjacent parts

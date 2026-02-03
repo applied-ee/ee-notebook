@@ -32,7 +32,7 @@ An RF switch routes signals between two or more paths. Common applications inclu
 
 **Insertion loss:** The signal loss through the switch when it is on. Every dB of switch insertion loss in a receiver's signal path before the LNA degrades noise figure. In a transmitter, it wastes power.
 
-**Isolation:** The attenuation between the input and output when the switch is off. If you are switching between transmit and receive, isolation determines how much transmit power leaks into the receiver during transmit. For a +20 dBm transmitter and a -100 dBm receive sensitivity, you need at least 120 dB of isolation — more than any single switch provides. Multiple switches in series, combined with physical separation and filtering, are needed.
+**Isolation:** The attenuation between the input and output when the switch is off. If switching between transmit and receive, isolation determines how much transmit power leaks into the receiver during transmit. For a +20 dBm transmitter and a -100 dBm receive sensitivity, at least 120 dB of isolation is needed — more than any single switch provides. Multiple switches in series, combined with physical separation and filtering, are necessary.
 
 **Switching speed:** The time between the control signal transition and the RF path being settled. Matters for time-division systems (TDD) where transmit and receive alternate rapidly.
 
@@ -91,7 +91,7 @@ A directional coupler has four ports: input, output (through), coupled, and isol
 ### Applications
 
 - **Power monitoring:** A 20 dB coupler on the transmitter output samples 1% of the output power, feeding it to a power detector. This allows real-time power measurement without disconnecting the load.
-- **VSWR measurement:** Using both the coupled and isolated ports of a dual-directional coupler, you can measure forward and reflected power to calculate VSWR.
+- **VSWR measurement:** Using both the coupled and isolated ports of a dual-directional coupler, forward and reflected power can be measured to calculate VSWR.
 - **Feedback for power control:** The coupled sample drives a detector that feeds back to the transmitter gain control, maintaining constant output power.
 
 ## Power Dividers and Combiners
@@ -102,11 +102,25 @@ A directional coupler has four ports: input, output (through), coupled, and isol
 
 **Hybrid couplers (90-degree and 180-degree):** Split power with a specific phase relationship between outputs. Used in balanced amplifier configurations, image-reject mixers, and phased antenna arrays.
 
-## Gotchas
+## Tips
 
-- **Switch insertion loss before the LNA directly degrades receiver noise figure** — A 0.5 dB T/R switch in front of the LNA adds 0.5 dB to the system noise figure. Choose the lowest-loss switch for this position.
-- **Switch isolation is not infinite — plan for leakage** — A T/R switch with 30 dB isolation means transmit power leaks into the receive path at -30 dB below transmit level. For a +20 dBm transmitter, that is -10 dBm leaking into the receiver — enough to damage many LNAs.
-- **Attenuator power handling is often only 0.25 W or 0.5 W for SMD parts** — A 50-ohm SMD attenuator rated for 0.25 W will overheat at +24 dBm input. Check the power rating and derate for temperature.
-- **Coupler directivity limits measurement accuracy** — With 15 dB directivity, the isolated port is only 15 dB below the coupled port. This limits VSWR measurement accuracy, especially for loads near 50 ohms where the reflected power is small.
-- **Wilkinson dividers only work well at the design frequency** — The quarter-wave sections are frequency-specific. Off-frequency, the isolation between output ports degrades. For broadband splitting, use resistive dividers or multi-section Wilkinson designs.
-- **Attenuator resistors at RF are not ideal** — At GHz frequencies, even thin-film resistors in an attenuator have parasitic inductance and capacitance. Purpose-built RF attenuator components outperform ad-hoc resistor networks above about 1 GHz.
+- Use a 3-6 dB attenuator pad between a conditionally stable amplifier and a poorly matched load to improve effective return loss by twice the pad value — this is often the simplest fix for marginal stability
+- Keep a set of coaxial fixed attenuators (1, 3, 6, 10, 20 dB) on the bench for quick level adjustment and input protection when probing live RF signals
+- When selecting a T/R switch, prioritize insertion loss over isolation for receive-path performance — the switch loss directly adds to system noise figure
+- For broadband power splitting, use a resistive divider rather than a Wilkinson if flat response from DC matters more than minimizing loss
+
+## Caveats
+
+- **Switch insertion loss before the LNA directly degrades receiver noise figure** — A 0.5 dB T/R switch in front of the LNA adds 0.5 dB to the system noise figure. Choose the lowest-loss switch for this position
+- **Switch isolation is not infinite — plan for leakage** — A T/R switch with 30 dB isolation means transmit power leaks into the receive path at -30 dB below transmit level. For a +20 dBm transmitter, that is -10 dBm leaking into the receiver — enough to damage many LNAs
+- **Attenuator power handling is often only 0.25 W or 0.5 W for SMD parts** — A 50-ohm SMD attenuator rated for 0.25 W will overheat at +24 dBm input. Check the power rating and derate for temperature
+- **Coupler directivity limits measurement accuracy** — With 15 dB directivity, the isolated port is only 15 dB below the coupled port. This limits VSWR measurement accuracy, especially for loads near 50 ohms where the reflected power is small
+- **Wilkinson dividers only work well at the design frequency** — The quarter-wave sections are frequency-specific. Off-frequency, the isolation between output ports degrades. For broadband splitting, use resistive dividers or multi-section Wilkinson designs
+- **Attenuator resistors at RF are not ideal** — At GHz frequencies, even thin-film resistors in an attenuator have parasitic inductance and capacitance. Purpose-built RF attenuator components outperform ad-hoc resistor networks above about 1 GHz
+
+## Bench Relevance
+
+- An SMD attenuator that runs hot to the touch is being operated near or above its power rating — measure the actual input power and compare to the component's maximum dissipation
+- A T/R switch whose receive-path noise figure measures worse than the LNA alone is contributing its insertion loss directly to the system noise figure; the difference between the two measurements equals the switch loss
+- A directional coupler that shows poor forward/reverse discrimination when measuring a known 50-ohm load has limited directivity — the measurement floor is set by the coupler, not the load
+- A Wilkinson divider that shows good isolation at the design frequency but poor isolation 20% off-frequency is exhibiting its inherent narrowband behavior — a multi-section design or resistive splitter may be needed
