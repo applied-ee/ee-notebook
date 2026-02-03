@@ -206,6 +206,19 @@ Bench Relevance answers:
 
 ---
 
+## Section Exceptions by Domain
+
+Not every domain benefits equally from all standard sections. The following exceptions apply:
+
+| Domain | Tips | Caveats | Bench Relevance |
+|--------|------|---------|-----------------|
+| Most sections | ✓ | ✓ | ✓ |
+| **Design & Development** | ✓ | ✓ | — |
+
+Design & Development pages cover process, methodology, and decision-making rather than circuit behavior. Bench Relevance — which ties theory to observable measurements and symptoms — does not apply. Tips and Caveats remain required.
+
+---
+
 ## Section Boundary Rule (L2 Pages)
 
 Each L2 section has a single job:

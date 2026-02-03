@@ -13,15 +13,15 @@ The most basic versioning tool is physical marking on the board itself. This sta
 
 Silkscreen marking should include, at minimum:
 
-- **Project name or identifier.** Distinguishes this board from the dozen other boards on your bench.
-- **Revision.** Rev A, Rev B, 1.0, 2.0 — whatever convention you've established (see [Revision Discipline]({{< relref "/docs/design-development/iteration-and-revision-control/revision-discipline" >}})).
+- **Project name or identifier.** Distinguishes this board from the dozen other boards on a typical bench.
+- **Revision.** Rev A, Rev B, 1.0, 2.0 — whatever convention has been established (see [Revision Discipline]({{< relref "/docs/design-development/iteration-and-revision-control/revision-discipline" >}})).
 - **Date code.** The date the design files were finalized, identifying when this revision was created.
 
 Beyond the silkscreen, applied labels carry information that changes per unit:
 
-- **Serial number.** A unique identifier for each individual board. This can be as simple as a sequential number written with a permanent marker. Serial number "Rev B - 003" tells you the revision, the specific unit, and gives you a handle for referring to it in test logs and change records.
+- **Serial number.** A unique identifier for each individual board. This can be as simple as a sequential number written with a permanent marker. Serial number "Rev B - 003" conveys the revision, the specific unit, and provides a handle for referring to it in test logs and change records.
 - **Rework status.** If the board has been modified from the design BOM, a label noting "Modified per CHG-012" or "Reworked 2025-06-15" makes the modification visible without inspecting the board.
-- **Firmware version.** For boards with programmable devices, a label or sticker indicating the loaded firmware version prevents confusion. Update the label every time you reprogram.
+- **Firmware version.** For boards with programmable devices, a label or sticker indicating the loaded firmware version prevents confusion. Update the label every time the device is reprogrammed.
 
 The effort is minimal — a label maker costs $20 and a roll of labels lasts for years. The return is enormous: the ability to look at any board and immediately know what it is, what's on it, and what state it's in.
 
@@ -47,7 +47,7 @@ Incompatibility between firmware and hardware should be managed actively:
 
 ## Test Fixture Versioning
 
-Test fixtures — jig boards, programming adapters, cable harnesses, test scripts — are hardware too, and they have versions. A test fixture designed for Rev A might not work with Rev B if the connector pinout changed or a test point moved. If you don't track fixture versions, you risk testing with the wrong fixture and producing invalid results.
+Test fixtures — jig boards, programming adapters, cable harnesses, test scripts — are hardware too, and they have versions. A test fixture designed for Rev A might not work with Rev B if the connector pinout changed or a test point moved. Without tracking fixture versions, the risk of testing with the wrong fixture and producing invalid results is significant.
 
 Test fixture versioning follows the same principles as board versioning:
 
@@ -67,19 +67,19 @@ Practical storage guidelines:
 - **Anti-static storage.** All boards should be stored in anti-static bags or on anti-static mats. A board damaged by ESD during storage creates a debugging mystery that's nearly impossible to solve.
 - **Labeled bags or compartments.** Each board gets its own labeled bag or storage compartment. The label matches the board's serial number and includes the revision and rework status.
 - **Separate working from archived boards.** Boards actively in use should be accessible. Boards from previous revisions that are being kept as references should be stored separately and clearly marked as archived, not in active use.
-- **Don't rely on memory.** You will not remember which of the three identical-looking boards is the one with the modified power supply. Label everything.
+- **Don't rely on memory.** It is surprisingly easy to forget which of three identical-looking boards has the modified power supply. Label everything.
 
-The consequences of poor storage seem minor until you spend two hours debugging a "new" failure that turns out to be caused by grabbing the wrong board from the pile. Or until an unlabeled board is damaged by ESD because it wasn't in a bag. The prevention cost is trivial; the failure cost is not.
+The consequences of poor storage seem minor until two hours are spent debugging a "new" failure that turns out to be caused by grabbing the wrong board from the pile. Or until an unlabeled board is damaged by ESD because it wasn't in a bag. The prevention cost is trivial; the failure cost is not.
 
 ## The "Which Board Is This?" Problem
 
-The scenario: you're debugging an intermittent failure. You have three boards on the bench — two Rev B and one Rev C. One of the Rev B boards has rework from last month. The other Rev B board is unmodified. You've been swapping between them to isolate the problem, and now you've lost track of which is which.
+The scenario: an intermittent failure is under investigation. Three boards sit on the bench — two Rev B and one Rev C. One of the Rev B boards has rework from last month. The other Rev B board is unmodified. Swapping between them to isolate the problem has continued for a while, and now it's unclear which is which.
 
 This situation is preventable but common. The solutions are all forms of labeling and discipline:
 
-- **Assign serial numbers at assembly.** Every board gets a unique number the moment it's assembled. Write it on the board with a marker if you don't have labels.
-- **Log which board is on the bench.** When you start a test session, note the serial number in your test log. This takes seconds and prevents hours of confusion.
-- **Use physical differentiators.** If you don't have labels, a piece of colored tape, a sticker, or even the position on the bench can serve as a temporary identifier. Temporary is the key word — replace with proper labeling as soon as possible.
+- **Assign serial numbers at assembly.** Every board gets a unique number the moment it's assembled. Write it on the board with a marker if labels aren't available.
+- **Log which board is on the bench.** At the start of a test session, note the serial number in the test log. This takes seconds and prevents hours of confusion.
+- **Use physical differentiators.** Without labels, a piece of colored tape, a sticker, or even the position on the bench can serve as a temporary identifier. Temporary is the key word — replace with proper labeling as soon as possible.
 - **One board at a time.** When possible, keep only one board on the bench at a time. This eliminates the identification problem entirely, at the cost of swapping time.
 
 ## Configuration Management
@@ -102,11 +102,18 @@ This level of detail ensures that any test result can be fully contextualized an
 
 For personal projects, this might feel excessive. But even a stripped-down version — board ID, firmware version, date — is better than nothing. The goal is traceability: the ability to look at a test result and know exactly what produced it.
 
-## Gotchas
+## Tips
 
-- **Unlabeled boards multiply faster than you expect.** By the time you realize you need labels, you've already lost track. Label boards at assembly, not when confusion strikes.
-- **Firmware-hardware mismatches produce mysterious failures.** The symptoms look like hardware bugs but disappear when the correct firmware is loaded. Always verify the firmware version before debugging hardware.
-- **Test fixtures are invisible hardware.** They're easily overlooked in versioning schemes, but a wrong fixture produces wrong results just as surely as a wrong board does.
-- **Memory is not a version control system.** "I know which board that is" works for about a week. After that, every board on the bench looks the same.
-- **Archived boards get grabbed accidentally.** If old-revision boards are stored in the same place as current boards, someone will eventually pick up the wrong one. Physical separation prevents this.
-- **Configuration management feels like overhead until it saves you.** The first time you can answer "what changed?" by consulting your configuration records instead of re-running a week of tests, the practice pays for itself permanently.
+- Assign a serial number at the moment of assembly — before the board ever reaches the bench — even if it's just a marker on the silkscreen
+- Maintain a firmware-hardware compatibility matrix and update it whenever either side changes; a single row added at the right time prevents hours of mismatched debugging
+- Photograph reworked boards with the serial number visible, creating a visual record that supplements the written change log
+- Physically separate archived boards from active boards to prevent accidentally grabbing an old revision during a test session
+
+## Caveats
+
+- **Unlabeled boards multiply faster than expected** — by the time the need for labels becomes obvious, tracking is already lost; label boards at assembly, not when confusion strikes
+- **Firmware-hardware mismatches produce mysterious failures** — the symptoms look like hardware bugs but disappear when the correct firmware is loaded; always verify the firmware version before debugging hardware
+- **Test fixtures are invisible hardware** — they're easily overlooked in versioning schemes, but a wrong fixture produces wrong results just as surely as a wrong board does
+- **Memory is not a version control system** — "I know which board that is" works for about a week; after that, every board on the bench looks the same
+- **Archived boards get grabbed accidentally** — if old-revision boards are stored in the same place as current boards, someone will eventually pick up the wrong one; physical separation prevents this
+- **Configuration management feels like overhead until it saves time** — the first time "what changed?" can be answered by consulting configuration records instead of re-running a week of tests, the practice pays for itself permanently

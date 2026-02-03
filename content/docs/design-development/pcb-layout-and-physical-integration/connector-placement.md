@@ -5,7 +5,7 @@ weight: 40
 
 # Connector Placement & Panel Design
 
-Connectors are where the PCB meets the outside world — power comes in, signals go out, users plug in cables, and test equipment attaches. Their placement is one of the most constrained aspects of PCB layout because they must satisfy both electrical routing requirements and mechanical interface requirements simultaneously. Get connector placement wrong, and you'll be staring at a board that works on the bench but doesn't fit in its enclosure.
+Connectors are where the PCB meets the outside world — power comes in, signals go out, users plug in cables, and test equipment attaches. Their placement is one of the most constrained aspects of PCB layout because they must satisfy both electrical routing requirements and mechanical interface requirements simultaneously. Getting connector placement wrong means a board that works on the bench but doesn't fit in its enclosure.
 
 ## Edge vs Through-Board Connectors
 
@@ -21,7 +21,7 @@ Some connectors are both: a right-angle header might face the board edge like an
 
 Edge connectors are the most constrained components on the board, so they get placed first. The process:
 
-1. **Start with the mechanical drawing.** The enclosure panel cutouts define where the connectors must be. If you're designing the enclosure too, start by deciding which connectors go on which face and in what order.
+1. **Start with the mechanical drawing.** The enclosure panel cutouts define where the connectors must be. When the enclosure is also being designed in-house, start by deciding which connectors go on which face and in what order.
 2. **Place connectors on the board to match the panel.** Each connector's position is constrained in X (along the board edge), Y (distance from the board edge), and Z (height above the board surface). All three must match the panel cutout.
 3. **Check protrusion and setback.** The connector body must protrude through the panel enough for a cable to mate. Some connectors (like USB Type-A) have specific protrusion requirements defined by the standard. Too much setback and the cable can't reach; too much protrusion and the connector sticks out awkwardly.
 4. **Verify with a 3D model or mockup.** Before routing anything, confirm that the connector positions work with the enclosure. This is the cheapest point to catch mistakes.
@@ -93,10 +93,17 @@ Not all connectors face the outside world. Development and debug connectors serv
 
 For production boards, debug connectors can be depopulated (footprint present, no connector stuffed) or replaced with smaller form factors (Tag-Connect, pogo-pin pads). The footprint should always be present — the cost of the board space is negligible compared to the cost of not being able to debug a production issue.
 
-## Gotchas
+## Tips
 
-- **Connector datasheets define the mating face, not the board footprint.** The mechanical drawing for a connector often shows dimensions from the mating side. You need the PCB footprint drawing, which is a different page in the datasheet (and sometimes a different document entirely).
-- **Right-angle connectors extend further than you think.** A right-angle header's pins extend inboard from the board edge by several millimeters. This space is not available for other components.
-- **Hot-plug connectors need protection circuits.** USB, Ethernet, and other hot-pluggable connectors can experience voltage spikes during insertion. ESD protection and inrush current limiting are schematic concerns, but the protection components must be placed physically close to the connector — a layout concern.
-- **Mixed connector heights make panel design difficult.** If one connector sits 2 mm above the board and another sits 8 mm above, the panel cutouts will be at different vertical positions relative to the board. This is solvable but must be planned for.
-- **Cable bend radius consumes enclosure space.** A right-angle cable exit needs clearance inside the enclosure for the cable to bend. This is invisible in the PCB layout tool but very real in the enclosure.
+- Place edge-mounted connectors first during layout — their positions are the most mechanically constrained and anchor the rest of the floorplan
+- Verify connector protrusion, setback, and panel alignment against a 3D model or cardboard mockup before routing any traces
+- Use polarized or shrouded headers for any connection that could be inserted backwards, and assign unique pin counts where multiple headers of the same family exist on one board
+- Always include through-hole mounting legs or retention tabs on SMD connectors — cable forces fatigue solder joints over time
+
+## Caveats
+
+- **Connector datasheets define the mating face, not the board footprint.** The mechanical drawing for a connector often shows dimensions from the mating side. The PCB footprint drawing is on a different page in the datasheet (and sometimes a different document entirely)
+- **Right-angle connectors extend further than expected.** A right-angle header's pins extend inboard from the board edge by several millimeters, and this space is not available for other components
+- **Hot-plug connectors need protection circuits.** USB, Ethernet, and other hot-pluggable connectors can experience voltage spikes during insertion. ESD protection and inrush current limiting are schematic concerns, but the protection components must be placed physically close to the connector — a layout concern
+- **Mixed connector heights make panel design difficult.** If one connector sits 2 mm above the board and another sits 8 mm above, the panel cutouts will be at different vertical positions relative to the board. This is solvable but must be planned for
+- **Cable bend radius consumes enclosure space.** A right-angle cable exit needs clearance inside the enclosure for the cable to bend. This is invisible in the PCB layout tool but very real in the enclosure

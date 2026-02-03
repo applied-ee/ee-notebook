@@ -5,7 +5,7 @@ weight: 20
 
 # Environmental Testing
 
-The lab bench is a lie — a comfortable, temperature-controlled, vibration-free, ESD-safe lie. Every circuit eventually leaves the bench and enters a world of temperature swings, humidity, mechanical shock, and electromagnetic interference. Environmental testing is about finding out whether your design survives that transition before your users do.
+The lab bench is a lie — a comfortable, temperature-controlled, vibration-free, ESD-safe lie. Every circuit eventually leaves the bench and enters a world of temperature swings, humidity, mechanical shock, and electromagnetic interference. Environmental testing is about finding out whether a design survives that transition before end users do.
 
 ## Temperature Testing
 

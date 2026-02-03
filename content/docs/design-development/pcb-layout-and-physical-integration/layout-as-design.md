@@ -9,7 +9,7 @@ Layout is not the last step in a project — it's the step where the design beco
 
 ## The Schematic Doesn't Capture Everything
 
-A schematic tells you what connects to what. It doesn't tell you:
+A schematic tells what connects to what. It doesn't tell:
 
 - **Proximity matters.** A decoupling capacitor placed ten centimeters from its IC on the PCB is not really decoupling anything, regardless of what the schematic implies. The physical distance between the cap and the power pins determines its effectiveness, and the schematic gives no hint of this.
 - **Thermal paths are invisible on schematics.** A voltage regulator next to a temperature-sensitive ADC might work fine on paper, but on the board, radiated heat from the regulator shifts the ADC's readings. The schematic shows no thermal coupling.
@@ -29,14 +29,14 @@ Key floorplanning principles:
 - **Group related components.** The power supply section should be physically together, the analog front end should be together, the digital logic should be together. This minimizes trace lengths within each block and makes it easier to manage the boundaries between blocks.
 - **Separate noisy and sensitive circuits.** Keep switching regulators away from sensitive analog inputs. Keep high-speed digital signals away from low-level analog signals. Physical separation is the first and most effective defense against noise coupling.
 - **Plan the power distribution early.** Power planes, power traces, and decoupling capacitors all need physical space. If the floorplan doesn't account for power distribution, the routing phase becomes a constant battle for space.
-- **Think about the ground strategy.** Will you use a solid ground plane? Split ground planes? Star grounding? This decision shapes the entire layout and must be made during floorplanning, not discovered during routing.
+- **Plan the ground strategy.** Solid ground plane? Split ground planes? Star grounding? This decision shapes the entire layout and must be made during floorplanning, not discovered during routing.
 
 ## Iterating Between Schematic and Layout
 
 One of the clearest signs that layout is a design activity is how often it sends you back to the schematic. Common layout-driven schematic changes include:
 
-- **Adding test points.** During layout, you realize you can't probe a critical net without a dedicated test point. This requires adding a component to the schematic.
-- **Swapping pin assignments.** An MCU's GPIO pins are often interchangeable. During layout, you discover that swapping two pin assignments eliminates a pair of crossing traces and simplifies routing. The schematic must be updated to reflect the change.
+- **Adding test points.** During layout, it becomes clear that a critical net cannot be probed without a dedicated test point. This requires adding a component to the schematic.
+- **Swapping pin assignments.** An MCU's GPIO pins are often interchangeable. During layout, swapping two pin assignments may eliminate a pair of crossing traces and simplify routing. The schematic must be updated to reflect the change.
 - **Splitting or merging power rails.** Layout may reveal that a single power rail serving two blocks would benefit from separate filtering or separate copper pour areas. This is a schematic-level change driven by physical reality.
 - **Adding series resistors or ferrite beads.** A trace that runs near a sensitive area might need a series filter component that wasn't in the original design. The schematic grows during layout.
 - **Reconsidering component packages.** A QFP footprint might not fit in the available space, driving a change to a QFN or BGA — which affects the schematic symbol and possibly the pinout.
@@ -66,10 +66,17 @@ Some decisions that feel like "just layout" actually define the circuit's perfor
 
 Layout is where all the domains — electrical, thermal, mechanical, and manufacturing — converge. Treating it as a clerical step after the "real" design is done misses the point entirely. The layout is part of the design, and often the most consequential part.
 
-## Gotchas
+## Tips
 
-- **The schematic looks clean but the layout is impossible.** A schematic can be logically correct and still imply a layout that can't be routed in the available space or layer count. Schematic clarity and layout feasibility are separate concerns.
-- **Pin swaps save hours of routing.** Many ICs have functionally equivalent pins. Checking whether a pin swap simplifies routing should be standard practice, not an afterthought.
-- **Ground plane cuts are invisible killers.** A slot in the ground plane under a signal trace forces the return current to detour, creating a loop antenna. These slots often appear unintentionally when routing other signals on the same layer.
-- **"I'll fix it in layout" is the schematic designer's famous last words.** Some problems genuinely can be solved in layout, but many cannot. If the schematic topology is wrong, no amount of clever routing will fix it.
-- **Layout reviews catch different bugs than schematic reviews.** A schematic review checks logical correctness. A layout review checks physical correctness — spacing, thermal paths, manufacturing rules. Both are necessary, and they're not interchangeable.
+- Start every layout with a floorplan: place connectors, mounting holes, and fixed-position parts first, then group functional blocks before routing any traces
+- Check for functionally equivalent pins on ICs early — a single pin swap can eliminate crossing traces and save hours of routing effort
+- Keep the ground plane continuous under signal traces; any unintentional slot forces return current to detour and creates a loop antenna
+- Iterate freely between schematic and layout — adding test points, swapping pins, or splitting power rails during layout is normal and improves the design
+
+## Caveats
+
+- **The schematic looks clean but the layout is impossible.** A schematic can be logically correct and still imply a layout that can't be routed in the available space or layer count. Schematic clarity and layout feasibility are separate concerns
+- **Pin swaps save hours of routing.** Many ICs have functionally equivalent pins. Checking whether a pin swap simplifies routing should be standard practice, not an afterthought
+- **Ground plane cuts are invisible killers.** A slot in the ground plane under a signal trace forces the return current to detour, creating a loop antenna. These slots often appear unintentionally when routing other signals on the same layer
+- **"I'll fix it in layout" is the schematic designer's famous last words.** Some problems genuinely can be solved in layout, but many cannot. If the schematic topology is wrong, no amount of clever routing will fix it
+- **Layout reviews catch different bugs than schematic reviews.** A schematic review checks logical correctness. A layout review checks physical correctness — spacing, thermal paths, manufacturing rules. Both are necessary, and they're not interchangeable

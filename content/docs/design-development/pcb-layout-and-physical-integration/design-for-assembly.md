@@ -5,7 +5,7 @@ weight: 60
 
 # Design-for-Assembly Awareness
 
-A design that works perfectly in simulation and looks clean in the layout tool can still fail if it can't be built reliably. Design-for-assembly (DFA) is the practice of making layout decisions that simplify and improve the manufacturing process — whether that's hand soldering one prototype at your bench or running a thousand boards through a pick-and-place line. The board has to be buildable, and the decisions that make it buildable happen during layout.
+A design that works perfectly in simulation and looks clean in the layout tool can still fail if it can't be built reliably. Design-for-assembly (DFA) is the practice of making layout decisions that simplify and improve the manufacturing process — whether that means hand soldering one prototype at the bench or running a thousand boards through a pick-and-place line. The board has to be buildable, and the decisions that make it buildable happen during layout.
 
 ## Component Orientation
 
@@ -36,7 +36,7 @@ Most PCB assembly houses prefer to work with panels — multiple copies of a boa
 - **Tab placement:** Tabs should be placed on edges without close-to-edge components. A tab remnant (the rough edge left after separation) must not interfere with the enclosure fit or connector access.
 - **Tooling holes:** The panel needs tooling holes for the assembly machine's registration pins. These are in the rails, not on the board itself.
 
-If you're ordering from a turnkey assembly service (like JLCPCB or PCBWay), they typically handle panelization for you. But it's worth understanding the constraints so you don't design a board outline that's difficult to panelize — very small boards, irregular shapes, or boards with components too close to the edge all cause panelization headaches.
+Turnkey assembly services (like JLCPCB or PCBWay) typically handle panelization. But it's worth understanding the constraints to avoid designing a board outline that's difficult to panelize — very small boards, irregular shapes, or boards with components too close to the edge all cause panelization headaches.
 
 ## Tombstoning
 
@@ -62,7 +62,7 @@ The solder paste stencil is the interface between the layout and the assembly pr
 
 ## Hand Assembly vs Machine Assembly
 
-The design rules differ between hand and machine assembly, and it's worth knowing which you're targeting:
+The design rules differ between hand and machine assembly, and it's worth knowing which is the target:
 
 **Hand assembly** is more forgiving in some ways and less in others:
 
@@ -78,7 +78,7 @@ The design rules differ between hand and machine assembly, and it's worth knowin
 - Adequate spacing between components for the placement nozzle (typically 0.5 mm minimum between bodies for standard machines).
 - Components available on tape-and-reel or in trays (tubes and loose parts are harder to feed).
 
-If you're prototyping by hand but plan to move to machine assembly for production, design for machine assembly from the start. Hand-assembling a machine-optimized layout is straightforward. Retooling a hand-optimized layout for machine assembly often requires a board respin.
+When prototyping by hand with plans to move to machine assembly for production, design for machine assembly from the start. Hand-assembling a machine-optimized layout is straightforward. Retooling a hand-optimized layout for machine assembly often requires a board respin.
 
 ## Minimum Component Spacing
 
@@ -95,11 +95,18 @@ A practical minimum for machine assembly is 0.5 mm between component bodies for 
 
 DFA is one half of the manufacturability equation. The other half — design-for-manufacturing (DFM) — covers the PCB fabrication constraints: minimum trace widths, drill sizes, copper-to-edge clearances, and solder mask registration. See the [Design for Manufacturing]({{< relref "/docs/design-development/design-for-manufacturing" >}}) section for those topics. Both DFA and DFM must be satisfied for a board to be buildable at the intended volume and quality level.
 
-## Gotchas
+## Tips
 
-- **0402 and smaller components are not hand-solderable for most people.** If your prototype will be hand-assembled, think twice before using 0402 passives. 0603 is the practical minimum for hand soldering, and 0805 is far more comfortable.
-- **QFN packages need solder paste and reflow.** You can't reliably solder a QFN with just an iron because the thermal pad is hidden underneath. If your prototype process doesn't include reflow (oven, hot plate, or hot air), avoid QFN packages or accept a higher risk of poor connections.
-- **Fiducials forgotten on rev 1 are always needed on rev 2.** Adding fiducials to a finished layout is easy. Adding them to a finished and routed layout that's already out of board space is hard. Include them from the start.
-- **Silkscreen under components is useless.** Reference designators placed under component bodies are invisible after assembly. Place text next to the component, not under it.
-- **Panel break-away tabs leave rough edges.** The mouse-bite remnants along the board edge where it separated from the panel can interfere with enclosure fit. Account for this in mechanical tolerances, and specify which edges will have tabs in the panelization drawing.
-- **Mixed assembly (SMD + through-hole) adds process steps.** Every through-hole component on an otherwise SMD board adds a hand-soldering or wave-soldering step. Minimizing through-hole parts simplifies assembly significantly.
+- Align all polarized components in the same orientation and keep passive components parallel to the reflow travel direction to reduce tombstoning risk
+- Add at least three global fiducials in an asymmetric L-pattern on every board, even for hand-assembled prototypes — it costs nothing and avoids a respin later
+- Use thermal relief (spoke connections) on pads connected to copper pours so both pads of a passive reach reflow temperature simultaneously
+- Design for machine assembly from the start; hand-assembling a machine-optimized layout is straightforward, but the reverse often requires a board respin
+
+## Caveats
+
+- **0402 and smaller components are not hand-solderable for most people.** For hand-assembled prototypes, think twice before using 0402 passives. 0603 is the practical minimum for hand soldering, and 0805 is far more comfortable
+- **QFN packages need solder paste and reflow.** A QFN cannot be reliably soldered with just an iron because the thermal pad is hidden underneath. If the prototype process doesn't include reflow (oven, hot plate, or hot air), avoid QFN packages or accept a higher risk of poor connections
+- **Fiducials forgotten on rev 1 are always needed on rev 2.** Adding fiducials to a finished layout is easy. Adding them to a finished and routed layout that's already out of board space is hard. Include them from the start
+- **Silkscreen under components is useless.** Reference designators placed under component bodies are invisible after assembly. Place text next to the component, not under it
+- **Panel break-away tabs leave rough edges.** The mouse-bite remnants along the board edge where it separated from the panel can interfere with enclosure fit. Account for this in mechanical tolerances, and specify which edges will have tabs in the panelization drawing
+- **Mixed assembly (SMD + through-hole) adds process steps.** Every through-hole component on an otherwise SMD board adds a hand-soldering or wave-soldering step. Minimizing through-hole parts simplifies assembly significantly

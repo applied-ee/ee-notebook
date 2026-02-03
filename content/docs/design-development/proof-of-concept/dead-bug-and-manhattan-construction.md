@@ -5,7 +5,7 @@ weight: 20
 
 # Dead-Bug & Manhattan Construction
 
-When a [breadboard's parasitics]({{< relref "breadboarding-strategies" >}}) make results unreliable — switching regulators, RF circuits, sensitive analog front ends — but you need an answer faster than a PCB run allows, dead-bug and Manhattan construction fill the gap. These techniques provide a real ground plane, short signal paths, and controlled-impedance connections while still allowing same-day iteration.
+When a [breadboard's parasitics]({{< relref "breadboarding-strategies" >}}) make results unreliable — switching regulators, RF circuits, sensitive analog front ends — but an answer is needed faster than a PCB run allows, dead-bug and Manhattan construction fill the gap. These techniques provide a real ground plane, short signal paths, and controlled-impedance connections while still allowing same-day iteration.
 
 ## Dead-Bug Construction
 
@@ -57,7 +57,7 @@ Manhattan construction extends the dead-bug idea by adding small pads — typica
 
 ## Tools and Materials
 
-You don't need much:
+The materials list is short:
 
 - **Copper-clad board** — single-sided FR4, available from electronics suppliers or eBay in bulk. Double-sided works too (use the bottom as ground, the top for construction).
 - **Shears or saw** — for cutting board and pads. A bandsaw works but makes a mess. Metal shears are cleaner.
@@ -71,10 +71,10 @@ You don't need much:
 
 Both techniques have real constraints:
 
-- **Non-reproducible.** Each build is unique. You can't hand a dead-bug circuit to a manufacturer and say "build 100 of these." These are for answering questions, not for production.
+- **Non-reproducible.** Each build is unique. A dead-bug circuit cannot be handed to a manufacturer with instructions to "build 100 of these." These are for answering questions, not for production.
 - **Mechanical fragility.** Dead-bug circuits are delicate. A dropped circuit or a snagged wire can break connections. Manhattan is more robust but still not suitable for handling.
-- **Debugging by inspection is hard.** A rats-nest of wires is hard to trace visually. Take photos as you build, and label connections.
-- **Not practical for fine-pitch ICs.** Dead-bug works well with DIP and SOIC packages. QFN and BGA are not feasible — you need a PCB for those.
+- **Debugging by inspection is hard.** A rats-nest of wires is hard to trace visually. Taking photos during construction and labeling connections helps considerably.
+- **Not practical for fine-pitch ICs.** Dead-bug works well with DIP and SOIC packages. QFN and BGA are not feasible — a PCB is required for those.
 - **Thermal management is limited.** The copper ground plane conducts heat, which is an advantage for power circuits, but there's no controlled thermal path for hot components.
 
 ## Documenting the Build
@@ -82,14 +82,21 @@ Both techniques have real constraints:
 A dead-bug or Manhattan circuit is temporary, but the knowledge it produces isn't. Before disassembling:
 
 - **Photograph the circuit** from multiple angles. A clear overhead shot with labels is invaluable.
-- **Sketch the schematic** as built (not as designed — note any modifications you made during construction).
-- **Record measurements** — what you tested, what you measured, what the results mean.
-- **Note what you'd change** — this feeds directly into the [system architecture]({{< relref "../system-architecture" >}}) and [schematic design]({{< relref "../schematic-design" >}}) phases.
+- **Sketch the schematic** as built (not as designed — note any modifications made during construction).
+- **Record measurements** — what was tested, what was measured, what the results mean.
+- **Note what should change** — this feeds directly into the [system architecture]({{< relref "../system-architecture" >}}) and [schematic design]({{< relref "../schematic-design" >}}) phases.
 
-## Gotchas
+## Tips
 
-- **The ground plane is a heat sink.** Soldering to a large copper surface requires more heat than soldering to a PCB pad. If joints look cold or lumpy, turn up the temperature and use a larger tip.
-- **Superglue fumes fog nearby surfaces.** Glue Manhattan pads in a ventilated area, away from optics (microscopes, cameras). The fumes deposit a white film on cold surfaces.
-- **Enameled wire insulation must be removed at solder points.** Either burn it off with the soldering iron (works but produces fumes) or scrape it off with a blade. Some enameled wire is "solderable" — the insulation melts at soldering temperature — which is much more convenient.
-- **Component values may need adjusting for PCB.** A circuit tuned on a dead-bug build includes the parasitics of that specific construction. When moving to a PCB, expect to re-tune — the parasitics will be different, usually lower.
-- **RF circuits need SMA connectors.** For any RF measurement above a few megahertz, solder an SMA edge-launch connector to the copper ground plane for a clean connection to test equipment. Clip leads and scope probes are useless at RF.
+- Use a larger soldering tip (2-3 mm chisel) at 370-400 deg C when soldering to the copper ground plane -- the large copper mass sinks heat quickly and standard fine tips cannot keep up
+- Solder bypass capacitors directly from IC power pins to the ground plane with no intervening wire; even a short wire adds enough inductance to matter at higher frequencies
+- Photograph the circuit from multiple angles before disassembling, and sketch the as-built schematic including any changes made during construction
+- For Manhattan builds, pre-cut a batch of 3-5 mm copper pads in advance so construction flows without interruption
+
+## Caveats
+
+- **The ground plane is a heat sink** -- soldering to a large copper surface requires more heat than soldering to a PCB pad; if joints look cold or lumpy, increase the temperature and use a larger tip
+- **Superglue fumes fog nearby surfaces** -- glue Manhattan pads in a ventilated area, away from optics (microscopes, cameras); the fumes deposit a white film on cold surfaces
+- **Enameled wire insulation must be removed at solder points** -- either burn it off with the soldering iron (works but produces fumes) or scrape it off with a blade; some enameled wire is "solderable" (the insulation melts at soldering temperature) which is much more convenient
+- **Component values may need adjusting for PCB** -- a circuit tuned on a dead-bug build includes the parasitics of that specific construction; when moving to a PCB, expect to re-tune because the parasitics will be different, usually lower
+- **RF circuits need SMA connectors** -- for any RF measurement above a few megahertz, solder an SMA edge-launch connector to the copper ground plane for a clean connection to test equipment; clip leads and scope probes are useless at RF

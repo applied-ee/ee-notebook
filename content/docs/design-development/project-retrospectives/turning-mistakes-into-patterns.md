@@ -17,7 +17,7 @@ The conversion from mistake to prevention follows a consistent path:
 
 The rule is the artifact that survives the project. The incident fades from memory. The root cause analysis is interesting but project-specific. The rule is general — it applies to every future project where the same class of mistake could occur.
 
-Not every incident produces a useful rule. Some are truly one-off situations unlikely to recur. But most incidents belong to a category, and the rule addresses the category rather than the specific instance. "Verify the footprint" is a rule that prevents an entire class of problems, not just the one you happened to encounter.
+Not every incident produces a useful rule. Some are truly one-off situations unlikely to recur. But most incidents belong to a category, and the rule addresses the category rather than the specific instance. "Verify the footprint" is a rule that prevents an entire class of problems, not just a single instance.
 
 ## Design Checklists
 
@@ -27,7 +27,7 @@ An effective design checklist is:
 
 - **Specific.** "Check power supply stability" is too vague. "Verify that the selected output capacitor ESR falls within the regulator's stable range per the datasheet's stability curves" is actionable.
 - **Organized by design phase.** Schematic review checks, layout review checks, pre-fabrication checks, pre-assembly checks. Each phase has its own checklist, used at the appropriate time.
-- **Living.** The checklist grows with every project. Each retrospective may add one or two items. Items that prove irrelevant or redundant are removed. The checklist evolves to reflect your actual experience.
+- **Living.** The checklist grows with every project. Each retrospective may add one or two items. Items that prove irrelevant or redundant are removed. The checklist evolves to reflect actual experience.
 - **Short enough to actually use.** A 200-item checklist will be ignored. Keep each phase's checklist to 15-25 items — the ones that have actually caught problems or reflect high-consequence mistakes.
 
 A sample schematic review checklist entry might look like:
@@ -49,29 +49,29 @@ Beyond checklists, mistakes become prevention through template circuits — prov
 - **ESD protection template.** A standard ESD protection circuit for common interfaces (USB, Ethernet, GPIO) with TVS diode selection, placement guidelines, and routing rules.
 - **Connector template.** A standard connector circuit including protection components, pull-ups/pull-downs, and indicator LEDs, with notes on which elements are optional for different applications.
 
-Templates are more than reference designs from datasheets. They're reference designs annotated with your experience — the gotchas you've encountered, the component substitutions that don't work, the layout constraints that aren't obvious from the schematic.
+Templates are more than reference designs from datasheets. They're reference designs annotated with real experience — the gotchas encountered, the component substitutions that don't work, the layout constraints that aren't obvious from the schematic.
 
 ## Anti-Patterns
 
 Just as patterns describe things to do, anti-patterns describe things to avoid. An anti-pattern is a recurring mistake that's tempting, looks reasonable, but reliably leads to problems:
 
-- **"Never route high-speed signals over split planes."** The return current path discontinuity causes impedance mismatches and radiation. This is a well-known rule, but it becomes an anti-pattern in your personal list when you've actually seen it cause a problem.
+- **"Never route high-speed signals over split planes."** The return current path discontinuity causes impedance mismatches and radiation. This is a well-known rule, but it becomes a personal anti-pattern once it has actually caused a problem on a real board.
 - **"Never use Y5V dielectric capacitors in timing or filtering circuits."** The capacitance variation with temperature and DC bias is too large. Use X7R or X5R instead.
 - **"Never connect a decoupling capacitor with long traces."** The trace inductance negates the capacitor's effectiveness at high frequencies. Place decoupling caps as close to the IC power pins as physically possible.
-- **"Never trust a footprint you didn't verify."** Library footprints — even from manufacturers — contain errors. Always check against the datasheet.
+- **"Never trust an unverified footprint."** Library footprints — even from manufacturers — contain errors. Always check against the datasheet.
 
 Anti-patterns are the negative counterpart to the checklist. The checklist says "do this." The anti-pattern list says "don't do this." Both are built from experience.
 
 ## The Personal Design Guide
 
-Over time, checklists, templates, and anti-patterns accumulate into something that deserves a name: the personal design guide. This is a living document — or collection of documents — that captures your accumulated engineering wisdom. It's the distillation of every project, every mistake, every surprise, and every lesson into a reusable resource.
+Over time, checklists, templates, and anti-patterns accumulate into something that deserves a name: the personal design guide. This is a living document — or collection of documents — that captures accumulated engineering wisdom. It's the distillation of every project, every mistake, every surprise, and every lesson into a reusable resource.
 
 The personal design guide might include:
 
 - **Design checklists** for each project phase.
 - **Template circuits** for common functions.
 - **Anti-pattern list** of things to avoid.
-- **Preferred components** — parts you've used successfully and trust.
+- **Preferred components** — parts used successfully and trusted.
 - **Preferred tools and settings** — EDA tool configurations, manufacturer design rules, preferred fabrication houses.
 - **Process templates** — standard project directory structures, documentation templates, test procedure formats.
 
@@ -86,7 +86,7 @@ Individual patterns become more powerful when shared:
 - **Code and schematic reviews.** The process of reviewing someone else's work transfers patterns in both directions — the reviewer shares their experience, and the designer's approach may reveal new patterns.
 - **Tribal knowledge.** The informal, unwritten rules that experienced engineers know and newcomers don't. Documenting tribal knowledge makes it accessible and preserves it when people move on.
 
-Sharing patterns requires vulnerability — you're admitting that you made mistakes and learned from them. But the alternative is every engineer on the team independently discovering the same pitfalls, which is an enormous waste of collective effort.
+Sharing patterns requires vulnerability — it means admitting to mistakes and the lessons they produced. But the alternative is every engineer on the team independently discovering the same pitfalls, which is an enormous waste of collective effort.
 
 ## The Compound Effect
 
@@ -96,10 +96,17 @@ Early in a career, every project feels like starting from scratch. After a decad
 
 This infrastructure doesn't build itself. It requires the discipline to stop after each project, ask what went wrong, extract the lesson, and encode it in a form that survives until the next project. That discipline is the real subject of this entire retrospectives section — not just thinking about what happened, but converting what happened into what happens next.
 
-## Gotchas
+## Tips
 
-- **Not every mistake deserves a rule.** Some problems are genuinely one-off situations. Adding a checklist item for every incident bloats the checklist until it's unusable. Reserve rules for recurring or high-consequence mistakes.
-- **Templates become stale.** A power supply template based on a regulator that's now obsolete is worse than no template if it leads you to design around unavailable parts. Review and update templates periodically.
-- **Anti-patterns can become dogma.** "Never do X" rules need context. The conditions that made X a problem in one project might not apply in another. Understand the reason behind the rule, not just the rule itself.
-- **Sharing requires maintenance.** A shared design guide that isn't updated becomes a source of bad advice. Assign ownership and schedule periodic reviews.
-- **The compound effect requires consistency.** One retrospective per year doesn't build momentum. A brief reflection after every project — even a small one — keeps the accumulation steady.
+- Keep each phase-specific checklist to 15-25 items maximum — long enough to catch real problems, short enough to actually use every time
+- Annotate template circuits with the reasoning behind specific component choices, not just the schematic — the "why" is what prevents future substitution mistakes
+- Review and prune the personal design guide at least once a year; removing obsolete entries is as important as adding new ones
+- When documenting an anti-pattern, always include the conditions under which it applies — context prevents the rule from becoming rigid dogma
+
+## Caveats
+
+- **Not every mistake deserves a rule.** Some problems are genuinely one-off situations — adding a checklist item for every incident bloats the checklist until it's unusable; reserve rules for recurring or high-consequence mistakes
+- **Templates become stale.** A power supply template based on a regulator that's now obsolete is worse than no template if it leads to designing around unavailable parts — review and update templates periodically
+- **Anti-patterns can become dogma.** "Never do X" rules need context — the conditions that made X a problem in one project might not apply in another; understand the reason behind the rule, not just the rule itself
+- **Sharing requires maintenance.** A shared design guide that isn't updated becomes a source of bad advice — assign ownership and schedule periodic reviews
+- **The compound effect requires consistency.** One retrospective per year doesn't build momentum — a brief reflection after every project, even a small one, keeps the accumulation steady

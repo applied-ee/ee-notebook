@@ -33,7 +33,7 @@ For a small team, a shared issue tracker (GitHub Issues, for example) adds visib
 The threshold for formal change management depends on several factors:
 
 - **Number of people involved.** Solo projects can manage changes informally because there's only one person to coordinate. Once two or more people are making changes, a shared system becomes necessary to prevent conflicting modifications.
-- **Production status.** A prototype has low stakes — if a change breaks something, you rework the board. A production design has high stakes — a change that breaks something affects every unit built after that change. Production designs need formal control.
+- **Production status.** A prototype has low stakes — if a change breaks something, the board gets reworked. A production design has high stakes — a change that breaks something affects every unit built after that change. Production designs need formal control.
 - **Regulatory requirements.** Medical devices, automotive electronics, aerospace systems, and other regulated products require documented change control as a condition of certification. The regulatory framework often specifies the level of documentation required.
 - **Customer commitments.** If a customer has approved or qualified a specific design revision, changes to that design require the customer's agreement. Formal ECOs are the mechanism for this communication.
 
@@ -84,15 +84,22 @@ The right level of change documentation depends on the project's stage, scale, a
 
 A useful guideline: the documentation should take less time than the change itself. If changing a resistor takes five minutes, the documentation should take two minutes, not twenty. If redesigning the power supply takes two weeks, a detailed change document taking an hour is entirely reasonable.
 
-For a personal learning project, a one-line entry in a change log file is usually sufficient for small changes. For changes that involved significant analysis or debugging, a paragraph explaining the investigation and reasoning is appropriate. The test of adequacy is: "If I read this entry six months from now, will I understand what happened and why?"
+For a personal learning project, a one-line entry in a change log file is usually sufficient for small changes. For changes that involved significant analysis or debugging, a paragraph explaining the investigation and reasoning is appropriate. The test of adequacy is: "If this entry is read six months from now, will it convey what happened and why?"
 
 The answer to "how much documentation?" is never "none." Even the simplest change benefits from a record. But the answer is also never "as much as possible" — because that leads to a documentation practice that's so burdensome it gets abandoned, which is the same as "none."
 
-## Gotchas
+## Tips
 
-- **Informal doesn't mean undocumented.** Skipping formal ECOs is fine for small projects. Skipping documentation entirely is not. The change log is the minimum.
-- **"It's just one resistor" precedes many debugging sessions.** A single component change can affect voltage dividers, timing constants, filter responses, power dissipation, and thermal behavior. Review the impact before implementing.
-- **Emergency changes have the highest documentation debt.** They're made under pressure, and the documentation step is the first thing dropped. Build the habit of documenting emergency changes within 24 hours — before the reasoning fades.
-- **Batch changes obscure causality.** When fifteen changes are implemented simultaneously and something breaks, identifying the culprit is expensive. Consider the debugging cost when deciding how many changes to batch.
-- **The approval step is where design review happens.** Removing the approval step to save time removes the safeguard against bad changes. For team projects, keep the review even if you streamline everything else.
-- **Change fatigue is real.** On a fast-moving prototype, changes happen daily. The temptation to stop documenting "because it's all changing anyway" leads to total loss of traceability. Discipline during rapid iteration is when documentation matters most.
+- Document emergency changes within 24 hours — before the reasoning fades; the pressure that justified skipping the review step doesn't justify skipping the documentation step
+- Scale documentation effort to match the change: one line for a resistor swap, a full paragraph for a power supply redesign
+- Use a shared issue tracker for any project involving more than one person, so changes are visible and discussion is captured alongside the record
+- Always complete the impact review step, even for "simple" changes — a single resistor swap can affect divider ratios, timing constants, and thermal behavior
+
+## Caveats
+
+- **Informal doesn't mean undocumented** — skipping formal ECOs is fine for small projects; skipping documentation entirely is not; the change log is the minimum
+- **"It's just one resistor" precedes many debugging sessions** — a single component change can affect voltage dividers, timing constants, filter responses, power dissipation, and thermal behavior; review the impact before implementing
+- **Emergency changes have the highest documentation debt** — they're made under pressure, and the documentation step is the first thing dropped; build the habit of documenting emergency changes within 24 hours — before the reasoning fades
+- **Batch changes obscure causality** — when fifteen changes are implemented simultaneously and something breaks, identifying the culprit is expensive; consider the debugging cost when deciding how many changes to batch
+- **The approval step is where design review happens** — removing the approval step to save time removes the safeguard against bad changes; for team projects, keep the review even if everything else is streamlined
+- **Change fatigue is real** — on a fast-moving prototype, changes happen daily; the temptation to stop documenting "because it's all changing anyway" leads to total loss of traceability; discipline during rapid iteration is when documentation matters most

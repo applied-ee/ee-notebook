@@ -5,15 +5,15 @@ weight: 25
 
 # Component Dependencies & Datasheet-Driven Requirements
 
-Every component you consider brings its own requirements into your design.
+Every component under consideration brings its own requirements into the design.
 
-Once functional and non-functional requirements are defined, the natural next step is to look at candidate components that might meet them. But datasheets don't just tell you what a part *does* — they tell you what a part *needs*. Those needs become constraints on the rest of your design, often in ways that aren't obvious until you read the fine print.
+Once functional and non-functional requirements are defined, the natural next step is to look at candidate components that might meet them. But datasheets don't just tell what a part *does* — they tell what a part *needs*. Those needs become constraints on the rest of the design, often in ways that aren't obvious until the fine print is read.
 
-A sensor that meets your accuracy requirement might demand a 1.8 V supply rail your design doesn't have yet. An ADC with the right resolution might require an external voltage reference, a specific clock source, and decoupling capacitors that eat board space. A switching regulator that handles your current budget might need an inductor with tight tolerance and a specific layout geometry. These dependencies cascade — each candidate component shapes the design around it.
+A sensor that meets the accuracy requirement might demand a 1.8 V supply rail the design doesn't have yet. An ADC with the right resolution might require an external voltage reference, a specific clock source, and decoupling capacitors that eat board space. A switching regulator that handles the current budget might need an inductor with tight tolerance and a specific layout geometry. These dependencies cascade — each candidate component shapes the design around it.
 
 ## Why This Comes Before Constraints
 
-It's tempting to define constraints first and then pick parts that fit within them. In practice, the relationship runs both directions. You may start with a rough power budget, but the specific components you're considering will refine — or blow up — that budget. Reading datasheets early surfaces the real constraints your design will face, rather than the ones you assumed.
+It's tempting to define constraints first and then pick parts that fit within them. In practice, the relationship runs both directions. A project may start with a rough power budget, but the specific components under consideration will refine — or blow up — that budget. Reading datasheets early surfaces the real constraints the design will face, rather than the ones that were assumed.
 
 ## Reading Datasheets for Dependencies
 
@@ -21,7 +21,7 @@ A datasheet is both a specification and a requirements document. The key section
 
 ### Power Supply Requirements
 
-- **Supply voltage range** — Determines what rails you need. A part requiring 1.8 V ± 5% means you need a regulated 1.8 V rail, not just "something under 3.3 V."
+- **Supply voltage range** — Determines what rails are needed. A part requiring 1.8 V ± 5% means a regulated 1.8 V rail is necessary, not just "something under 3.3 V."
 - **Supply current** — Quiescent, active, and peak current all matter for power budget and regulator sizing.
 - **Power sequencing** — Some ICs require specific power-on ordering (core before I/O, analog before digital). Violating sequencing can cause latch-up or damage.
 - **Decoupling requirements** — The recommended decoupling network (bulk and local caps, specific values and placement) is a board space and layout constraint.

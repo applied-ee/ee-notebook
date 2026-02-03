@@ -36,7 +36,7 @@ Consolidation reduces BOM line count, placement count, and board area. But it ca
 
 The component package affects both material cost and assembly cost:
 
-- **Smaller isn't always cheaper to buy, but it can be cheaper to place.** SMT assembly cost is partially driven by reel changes. If you can use fewer unique packages (all 0402, for instance), the machine needs fewer feeder setups.
+- **Smaller isn't always cheaper to buy, but it can be cheaper to place.** SMT assembly cost is partially driven by reel changes. Using fewer unique packages (all 0402, for instance) means the machine needs fewer feeder setups.
 - **Standard packages cost less.** A 0603 resistor in a standard E96 value costs fractions of a cent. The same value in an 01005 package may cost several times more due to lower volume and more demanding handling.
 - **Footprint compatibility.** When selecting between alternative components, preferring ones that share footprints with existing parts on the BOM means fewer unique pads on the board and potentially fewer stencil aperture variations.
 
@@ -48,9 +48,9 @@ The electronic component supply chain is built around preferred number series (E
 
 Practical implications:
 
-- **Design around standard values where possible.** If a voltage divider can use 10K and 4.7K instead of 9.76K and 4.53K, the circuit costs less and the parts are easier to source. The slight accuracy difference rarely matters — if it does, you probably need 0.1% tolerance resistors regardless.
+- **Design around standard values where possible.** If a voltage divider can use 10K and 4.7K instead of 9.76K and 4.53K, the circuit costs less and the parts are easier to source. The slight accuracy difference rarely matters — if it does, 0.1% tolerance resistors are probably needed regardless.
 - **Check value availability before finalizing.** It's easy to specify a value in a schematic that doesn't exist as a real component. Run the BOM against distributor stock early in the design process.
-- **Fewer unique values reduce procurement complexity.** If you can use 10K resistors everywhere instead of 10K, 10.2K, and 9.76K, you stock one reel instead of three.
+- **Fewer unique values reduce procurement complexity.** Using 10K resistors everywhere instead of 10K, 10.2K, and 9.76K means stocking one reel instead of three.
 
 ## BOM Reduction
 
@@ -58,8 +58,8 @@ The number of unique part numbers on the BOM — the line item count — drives 
 
 Strategies for BOM reduction:
 
-- **Rationalize passives.** Do you really need both 22K and 22.1K resistors? Can all decoupling caps be 100nF instead of a mix of 100nF and 47nF?
-- **Use the same connector family throughout.** Instead of three different connector series, standardize on one that covers all your interconnect needs.
+- **Rationalize passives.** Does the design really need both 22K and 22.1K resistors? Often all decoupling caps can be 100nF instead of a mix of 100nF and 47nF.
+- **Use the same connector family throughout.** Instead of three different connector series, standardizing on one family that covers all interconnect needs reduces part count and procurement overhead.
 - **Reduce the number of voltage rails.** Each additional voltage rail requires a regulator, decoupling, and potentially a sequencing circuit. Can two 3.3V rails become one? Can a 2.5V rail be eliminated by choosing components that work at 3.3V?
 - **Second-source everything.** Parts with multiple manufacturers are inherently cheaper and more available. A single-source component may cost more and creates supply chain risk.
 
@@ -67,7 +67,7 @@ Strategies for BOM reduction:
 
 Cost reduction has diminishing returns, and beyond a certain point, it creates more problems than it solves:
 
-- **Removing test points.** Eliminating test access to save pennies per board can cost hours per unit in field diagnostics. Test points are cheap insurance. Consider what you'll need when a unit comes back from the field with an intermittent fault — see also [serviceability]({{< relref "/docs/design-development/design-for-manufacturing/serviceability" >}}).
+- **Removing test points.** Eliminating test access to save pennies per board can cost hours per unit in field diagnostics. Test points are cheap insurance. Consider what a technician will need when a unit comes back from the field with an intermittent fault — see also [serviceability]({{< relref "/docs/design-development/design-for-manufacturing/serviceability" >}}).
 - **Eliminating protection components.** TVS diodes, ferrite beads, and reverse-polarity protection cost a few cents each. The warranty claim when a unit fails from an ESD event costs far more.
 - **Reducing design margins.** Using a regulator at 95% of its current rating to avoid stepping up to a larger (more expensive) part saves money until the first thermal shutdown in the field.
 - **Combining functions that shouldn't be combined.** Putting a noisy digital function on the same IC as a sensitive analog function to save a part may compromise performance in ways that are hard to debug.
@@ -84,10 +84,17 @@ BOM cost is the most visible cost, but it's not the only one — and it's often 
 
 Real cost optimization considers all of these together. The lowest-BOM-cost design is not always the lowest-total-cost design.
 
-## Gotchas
+## Tips
 
-- **Cost reduction is addictive.** Once you start removing components, it's tempting to keep going until you've stripped the design of necessary margin and protection. Know when to stop.
-- **Don't cost-reduce during the first prototype.** The first revision exists to validate the design, not to be cheap. Add the test points, include the debugging LEDs, use the larger packages. Cost-reduce on the second revision, after you know the design works.
-- **BOM cost per unit depends on quantity.** A component that costs $2 in quantity 10 may cost $0.20 in quantity 10,000. Cost-reduction decisions made at prototype quantities may not apply at production quantities, and vice versa.
-- **The assembly house's setup cost is fixed.** Reducing the BOM from 120 parts to 115 parts saves five placements per board, but the setup cost for the run is unchanged. The per-unit savings may be negligible at low volumes.
-- **Removing a part is forever; adding one back requires a respin.** Be conservative about removing components. If there's any doubt about whether a part is needed, leave it in and add a "do not place" (DNP) option instead.
+- Run BOM line-count analysis before and after each cost-reduction pass to quantify the improvement and catch diminishing returns
+- Mark components as DNP (do not place) rather than deleting them outright during early cost-reduction passes -- this preserves the option to restore them without a board respin
+- Verify that every consolidation or removal still meets the design's total-cost picture (BOM + assembly + test + yield + warranty), not just the part cost
+- Check standard-value availability at target production quantities before committing to a value change
+
+## Caveats
+
+- **Cost reduction is addictive.** Once component removal starts, it is tempting to keep going until the design is stripped of necessary margin and protection -- knowing when to stop is critical
+- **Avoid cost-reducing during the first prototype.** The first revision exists to validate the design, not to be cheap; include the test points, debugging LEDs, and larger packages, then cost-reduce on the second revision after the design is proven
+- **BOM cost per unit depends on quantity.** A component that costs $2 in quantity 10 may cost $0.20 in quantity 10,000 -- cost-reduction decisions made at prototype quantities may not apply at production quantities, and vice versa
+- **The assembly house's setup cost is fixed.** Reducing the BOM from 120 parts to 115 parts saves five placements per board, but the setup cost for the run is unchanged; the per-unit savings may be negligible at low volumes
+- **Removing a part is forever; adding one back requires a respin.** A conservative approach to removing components is safer -- if there is any doubt about whether a part is needed, leave it in and add a DNP option instead

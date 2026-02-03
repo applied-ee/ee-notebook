@@ -5,13 +5,13 @@ weight: 30
 
 # What Assumptions Broke
 
-Every design is built on a foundation of assumptions — beliefs about how the world works that are taken as given rather than verified. Some are explicit: "the input voltage will be between 9V and 15V." Many are implicit: "this part will be available when I need it," "the datasheet is accurate," "my simulation model matches reality." When an assumption turns out to be wrong, the design built on top of it becomes wrong in ways that can be subtle, expensive, and maddening to diagnose.
+Every design is built on a foundation of assumptions — beliefs about how the world works that are taken as given rather than verified. Some are explicit: "the input voltage will be between 9V and 15V." Many are implicit: "this part will be available when needed," "the datasheet is accurate," "the simulation model matches reality." When an assumption turns out to be wrong, the design built on top of it becomes wrong in ways that can be subtle, expensive, and maddening to diagnose.
 
 ## Categories of Broken Assumptions
 
-Broken assumptions tend to fall into recognizable patterns. Understanding the categories helps you know where to look:
+Broken assumptions tend to fall into recognizable patterns. Understanding the categories helps identify where to look:
 
-**Technical assumptions.** These are beliefs about how the hardware will behave. "The sensor output is 0-3.3V" — but it's actually 0-2.5V with a common-mode offset that saturates the ADC. "The op-amp bandwidth is sufficient at unity gain" — but the capacitive load destabilizes the output stage. "The thermal pad is optional" — but without it, the regulator shuts down at 70% load. Technical assumptions break when the designer's model of the component or circuit is incomplete, which usually means the datasheet was skimmed rather than studied, or a parameter was trusted at its typical value rather than its worst-case.
+**Technical assumptions.** These are beliefs about how the hardware will behave. "The sensor output is 0-3.3V" — but it's actually 0-2.5V with a common-mode offset that saturates the ADC. "The op-amp bandwidth is sufficient at unity gain" — but the capacitive load destabilizes the output stage. "The thermal pad is optional" — but without it, the regulator shuts down at 70% load. Technical assumptions break when the designer's model of the component or circuit is incomplete, which usually means the datasheet was skimmed rather than studied, or a parameter was trusted at its typical value rather than its worst case.
 
 **Environmental assumptions.** These are beliefs about the conditions the product will operate in. "It will operate indoors at room temperature" — but the enclosure sits in a south-facing window in direct sunlight, reaching 65C internally. "The power source is a regulated bench supply" — but the actual power source is a car battery with 300mV of alternator ripple. "The environment is electrically quiet" — but there's a motor driver on the same power bus generating switching transients every millisecond. Environmental assumptions break when the designer imagines a benign operating context that doesn't match reality.
 

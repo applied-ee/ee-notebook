@@ -5,11 +5,11 @@ weight: 20
 
 # Assembly Yield
 
-Yield is the percentage of assembled units that pass testing — and it's never 100%. Even on a well-designed board with a competent assembler, some fraction of units will have defects. The goal isn't perfection; it's understanding what drives yield down and making design choices that push it up. For a personal project, yield might seem irrelevant — you're building one or two. But a single defective joint on a single board can consume hours of debugging, and the same design choices that improve yield at scale improve reliability at any quantity.
+Yield is the percentage of assembled units that pass testing — and it's never 100%. Even on a well-designed board with a competent assembler, some fraction of units will have defects. The goal isn't perfection; it's understanding what drives yield down and making design choices that push it up. For a personal project, yield might seem irrelevant — the run is one or two boards. But a single defective joint on a single board can consume hours of debugging, and the same design choices that improve yield at scale improve reliability at any quantity.
 
 ## Common Yield Killers
 
-Most assembly defects fall into a few well-known categories. Understanding them helps you design around them:
+Most assembly defects fall into a few well-known categories. Understanding them helps inform design decisions:
 
 - **Solder bridges.** Excess solder shorting adjacent pads. Most common on fine-pitch components (0.5 mm pitch QFP, 0.4 mm pitch BGA) and on pads with insufficient solder mask dams between them. Bridges can be caused by too much solder paste, pads that are too large, or mask registration errors that expose adjacent copper.
 - **Tombstoned components.** A small passive component (0402, 0603) stands up on one end during reflow because one pad wets before the other. The surface tension of the molten solder pulls the component vertical. This is overwhelmingly a pad design issue — asymmetric copper connections to the pads (one pad connects to a large pour, the other doesn't) create uneven thermal profiles.
@@ -21,7 +21,7 @@ Most assembly defects fall into a few well-known categories. Understanding them 
 
 Many yield problems can be designed out before the first board is ever assembled:
 
-- **Use larger pads than the minimum.** IPC-7351 defines three density levels: most (largest pads), nominal, and least (smallest pads). Designing at the "most" level gives the assembly process more margin for placement accuracy and solder volume. Unless board space forces your hand, prefer larger pads.
+- **Use larger pads than the minimum.** IPC-7351 defines three density levels: most (largest pads), nominal, and least (smallest pads). Designing at the "most" level gives the assembly process more margin for placement accuracy and solder volume. Unless board space is constrained, prefer larger pads.
 - **Minimize fine-pitch components.** Every 0.5 mm pitch QFP or 0.4 mm pitch BGA on the board is a potential yield problem. If a 0.8 mm pitch QFP is available with the same functionality, it's almost always worth the extra board space for the improved assembly margin.
 - **Balanced pad connections.** For small passive components, ensure both pads connect to copper features of similar thermal mass. If one pad connects to a ground plane and the other connects to a thin trace, add thermal relief to the ground pad or increase the trace width on the other side. Balanced thermal paths prevent tombstoning.
 - **Clear polarity markings.** Every polarized component should have unambiguous silkscreen markings — and those markings should be visible after assembly, not hidden under the component. A cathode bar on a diode footprint, a pin-1 dot on an IC, a "+" mark on a capacitor. These help both automated and manual inspection.
@@ -34,7 +34,7 @@ The solder paste stencil determines how much solder is deposited on each pad, an
 - **Aperture reduction.** For most pads, the stencil aperture is the same size as the pad or slightly reduced (5-10%). This prevents excess solder that could cause bridging.
 - **QFN thermal pads.** The exposed pad on the bottom of QFN packages needs significant aperture reduction — typically a grid of smaller openings that deposit about 50-70% of the pad area in solder paste. Too much paste under a QFN causes the part to float during reflow, tilting it and creating open joints on the perimeter pads. Too little paste creates voids that increase thermal resistance.
 - **Fine-pitch components.** Pads for 0.5 mm pitch parts may need aperture reduction to prevent bridging, or they may need a thinner stencil in that area (stepped stencil), which adds cost.
-- **Stencil thickness.** Standard stencils are 4-5 mil (0.1-0.125 mm) thick. Thinner stencils deposit less paste, reducing bridging but risking insufficient solder on larger pads. If your board has both large thermal pads and fine-pitch ICs, a compromise thickness or a stepped stencil may be necessary.
+- **Stencil thickness.** Standard stencils are 4-5 mil (0.1-0.125 mm) thick. Thinner stencils deposit less paste, reducing bridging but risking insufficient solder on larger pads. If a board has both large thermal pads and fine-pitch ICs, a compromise thickness or a stepped stencil may be necessary.
 
 ## Reflow Profile
 
@@ -46,7 +46,7 @@ Large boards with varying thermal mass require careful profiling. A thermocouple
 
 ## Inspection Methods
 
-After assembly, boards must be inspected to catch defects before they ship or, in the case of a personal project, before you spend hours debugging a hardware fault that's actually just a bad solder joint.
+After assembly, boards must be inspected to catch defects before they ship or, in the case of a personal project, before spending hours debugging a hardware fault that's actually just a bad solder joint.
 
 - **Visual inspection.** The first line of defense. A magnifying lamp or stereo microscope reveals solder bridges, tombstones, and missing components. Effective for large components but insufficient for fine-pitch or hidden joints.
 - **AOI (Automated Optical Inspection).** A machine that photographs each board from multiple angles and compares the images to a known-good reference. Catches placement errors, bridges, tombstones, and polarity reversals with high throughput. Standard in production assembly but not typically available for prototypes.
@@ -68,10 +68,17 @@ The first assembled unit should be inspected more thoroughly than any subsequent
 
 For a prototype, this means carefully checking the first board before powering it up. Verify every IC orientation. Check polarized components. Look for bridges under a microscope. Measure resistance between power and ground (it should not be a short). This disciplined first check catches setup errors that would otherwise propagate through every unit in the batch.
 
-## Gotchas
+## Tips
 
-- **Tombstoning is a design problem, not an assembly problem.** If passives are tombstoning, look at your pad geometry and copper balance, not at the assembler's process. Asymmetric thermal connections to pads are the root cause in most cases.
-- **Yield improves with quantity — to a point.** The first few boards of a run have higher defect rates as the process stabilizes. Don't judge yield by the first unit off the line.
-- **QFN packages are deceptively difficult.** They look simple — a flat package with pads on the bottom. But the hidden thermal pad, the invisible solder joints, and the precise paste volume requirements make them one of the highest-defect-rate package types. Design the stencil apertures carefully.
-- **Inspection can't find every defect.** A visually perfect solder joint can still be electrically marginal. Functional testing after inspection catches defects that visual and optical methods miss.
-- **Rework degrades the board.** Every rework cycle exposes the board to additional thermal stress, potentially damaging pads, traces, and adjacent components. Design to minimize the need for rework, not to make rework easy as a primary strategy.
+- Balance thermal connections on both pads of small passives (0402, 0603) to prevent tombstoning -- if one pad ties to a ground plane, add thermal relief or widen the trace on the opposite pad
+- Use IPC-7351 "most" density level pad sizes as the default starting point, stepping down to "nominal" only where board space demands it
+- Always perform a first-article inspection under magnification before powering up the initial board from a new assembly run
+- Include at least one global fiducial pair and local fiducials near any fine-pitch components to improve pick-and-place alignment accuracy
+
+## Caveats
+
+- **Tombstoning is a design problem, not an assembly problem.** If passives are tombstoning, the pad geometry and copper balance are the first place to look, not the assembler's process -- asymmetric thermal connections to pads are the root cause in most cases
+- **Yield improves with quantity -- to a point.** The first few boards of a run have higher defect rates as the process stabilizes; judging yield by the first unit off the line is misleading
+- **QFN packages are deceptively difficult.** They look simple -- a flat package with pads on the bottom -- but the hidden thermal pad, the invisible solder joints, and the precise paste volume requirements make them one of the highest-defect-rate package types
+- **Inspection cannot find every defect.** A visually perfect solder joint can still be electrically marginal; functional testing after inspection catches defects that visual and optical methods miss
+- **Rework degrades the board.** Every rework cycle exposes the board to additional thermal stress, potentially damaging pads, traces, and adjacent components -- design to minimize the need for rework, not to make rework easy as a primary strategy

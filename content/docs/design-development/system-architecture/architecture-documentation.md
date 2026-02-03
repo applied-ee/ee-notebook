@@ -5,13 +5,13 @@ weight: 50
 
 # Architecture Documentation
 
-If the architecture isn't written down, it exists only in one person's head — and even there, it degrades over time. Memory is unreliable, especially for design decisions. Six months after a project, you won't remember why you chose a particular signal conditioning topology, why the power supply uses two stages instead of one, or why the digital section runs at 3.3V instead of 1.8V. Documentation captures these decisions while they're still fresh.
+If the architecture isn't written down, it exists only in one person's head — and even there, it degrades over time. Memory is unreliable, especially for design decisions. Six months after a project, the reasoning behind a particular signal conditioning topology, a two-stage power supply, or the choice of 3.3V over 1.8V for the digital section will be lost. Documentation captures these decisions while they're still fresh.
 
 ## Why Document Architecture?
 
 The schematic captures what the circuit is. Architecture documentation captures why it is that way. The distinction matters because:
 
-- **Schematics don't explain alternatives.** The schematic shows a buck converter. It doesn't show that you considered a boost converter, evaluated an LDO, and chose the buck because the dropout was too high for the LDO and the voltage direction was wrong for the boost.
+- **Schematics don't explain alternatives.** The schematic shows a buck converter. It doesn't show that a boost converter was considered, an LDO evaluated, and the buck chosen because the dropout was too high for the LDO and the voltage direction was wrong for the boost.
 - **Schematics don't explain constraints.** The schematic shows a four-layer board. It doesn't explain that four layers were needed because the ADC required a continuous ground plane under its analog inputs, which couldn't be achieved on two layers.
 - **Schematics don't explain tradeoffs.** The schematic shows a 100 kHz switching frequency. It doesn't explain that 500 kHz would have been smaller but violated the EMC budget, while 50 kHz would have required a larger inductor.
 
@@ -21,7 +21,7 @@ Architecture documentation fills these gaps. It's the narrative that makes the s
 
 Documentation doesn't have to be formal or exhaustive to be useful. A project with no documentation at all is a project that can't be understood, maintained, or improved by anyone — including the person who designed it. But a project with excessive documentation that nobody reads is also a failure.
 
-The minimum set that I've found consistently valuable:
+The minimum set that has proven consistently valuable:
 
 ### Block Diagram
 
@@ -64,7 +64,7 @@ A design decision record doesn't need a formal template. A simple entry works:
 
 **Rationale:** The 1.7V dropout at 30 mA dissipates 51 mW, which is thermally insignificant. The LDO provides inherently low output noise (< 1 mV) without additional filtering. The efficiency penalty is acceptable given the USB power source.
 
-This takes five minutes to write and saves hours of "why did I do this?" questioning later. It also prevents the next revision from "improving" the power supply by replacing the LDO with a switching regulator, not realizing the LDO was chosen specifically for its noise performance.
+This takes five minutes to write and saves hours of "why was this done?" questioning later. It also prevents the next revision from "improving" the power supply by replacing the LDO with a switching regulator, not realizing the LDO was chosen specifically for its noise performance.
 
 ## Living Documents vs Snapshots
 
@@ -74,11 +74,11 @@ There are two approaches to documentation maintenance, and they serve different 
 
 **Snapshots** capture the state of the design at a specific point in time — typically at each PCB revision. "Rev 1 architecture" is a frozen document that records what was designed and why. When rev 2 is started, a new snapshot captures the updated architecture.
 
-For personal projects, a practical approach is: maintain a living block diagram and keep a running list of design decisions. When you fabricate a board, take a snapshot by saving a copy of all documentation with the revision label. This gives you both a current view and a historical record.
+For personal projects, a practical approach is: maintain a living block diagram and keep a running list of design decisions. At each board fabrication, save a snapshot — a copy of all documentation with the revision label. This provides both a current view and a historical record.
 
 ## Documentation Tools
 
-The best documentation tool is the one you'll actually use. Some options:
+The best documentation tool is the one that actually gets used. Some options:
 
 **Plain text and markdown.** Simple, version-controllable, searchable, and tool-independent. A `design-notes.md` file in the project repository captures decisions in a format that survives any tool change. This is what I use most.
 
@@ -94,19 +94,26 @@ The best documentation tool is the one you'll actually use. Some options:
 
 Documentation is communication, and effective communication requires knowing the audience:
 
-**Future you.** The most common audience. Six months from now, you'll pick up this project and need to understand what you did and why. Future you has forgotten the context, the alternatives you considered, and the rationale for your decisions. Write for someone with your skills but none of your current context.
+**Future self.** The most common audience. Six months later, the project gets picked up again and needs to be understood — what was done and why. The context, the alternatives considered, and the rationale for decisions will be forgotten. Write for someone with the same skills but none of the current context.
 
-**Collaborators.** If anyone else will work on the project, they need to understand the architecture without a verbal walkthrough from you. The block diagram, interface definitions, and design decisions give them enough context to contribute without breaking things.
+**Collaborators.** Anyone else working on the project needs to understand the architecture without a verbal walkthrough. The block diagram, interface definitions, and design decisions provide enough context to contribute without breaking things.
 
-**Reviewers.** If you're asking someone for design feedback, the architecture documentation gives them the context they need to provide useful input. A reviewer who only sees the schematic can comment on circuit details but can't evaluate whether the architecture is sound.
+**Reviewers.** Architecture documentation provides the context needed for useful design feedback. A reviewer who only sees the schematic can comment on circuit details but can't evaluate whether the architecture is sound.
 
 **Repair and maintenance.** Someone debugging a failed unit needs to understand the system architecture to isolate the fault. Which block does what? Where are the interfaces? What are the expected signal levels? Architecture documentation turns a debugging nightmare into a systematic investigation.
 
-## Gotchas
+## Tips
 
-- **Documentation written after the fact is worse than documentation written during design.** The rationale for decisions fades quickly. Write decision records when you make the decision, not after the board is fabricated.
-- **Too much documentation is as bad as too little.** A 50-page design document that nobody reads provides no value. Keep documentation focused on what's useful: block diagram, interfaces, and decisions. Skip the boilerplate.
-- **Diagrams without labels are decoration.** A block diagram with boxes and arrows but no signal names, voltage levels, or data rates is a picture, not a design tool. The labels carry the information.
-- **Don't document what the schematic already shows.** There's no need to write "R1 is connected between pin 3 and pin 7" — that's what the schematic is for. Documentation should capture what the schematic can't: why, alternatives, and constraints.
-- **Undocumented decisions will be re-litigated.** If you don't record why a decision was made, the next person (or future you) will question it, possibly reverse it, and potentially reintroduce the problem the decision was meant to solve.
-- **Version-control your documentation alongside your design files.** Documentation that lives in a different location from the schematic and layout will eventually drift out of sync. Keep them together in the same repository or project folder.
+- Write a one-paragraph design decision record at the moment a non-obvious choice is made — the five-minute investment prevents hours of re-investigation later
+- Start every project with a minimum viable documentation set: block diagram, interface table, and decision log — even if each is just a few lines
+- Keep documentation co-located with design files in the same repository or project folder so both evolve together
+- Use a living block diagram as the single canonical view of the system architecture, and snapshot it at each board revision
+
+## Caveats
+
+- **Documentation written after the fact is worse than documentation written during design.** The rationale for decisions fades quickly — write decision records at the time the decision is made, not after the board is fabricated
+- **Too much documentation is as bad as too little.** A 50-page design document that nobody reads provides no value — keep documentation focused on what's useful: block diagram, interfaces, and decisions
+- **Diagrams without labels are decoration.** A block diagram with boxes and arrows but no signal names, voltage levels, or data rates is a picture, not a design tool — the labels carry the information
+- **Avoid documenting what the schematic already shows.** There's no need to write "R1 is connected between pin 3 and pin 7" — documentation should capture what the schematic can't: why, alternatives, and constraints
+- **Undocumented decisions will be re-litigated.** Without a record of why a decision was made, the next person (or a future revisit) will question it, possibly reverse it, and potentially reintroduce the problem the decision was meant to solve
+- **Version-control documentation alongside design files.** Documentation that lives in a different location from the schematic and layout will eventually drift out of sync

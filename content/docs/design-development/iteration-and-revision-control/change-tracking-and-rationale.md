@@ -5,7 +5,7 @@ weight: 20
 
 # Change Tracking & Rationale
 
-Every change to a design has a reason. Maybe it was a test failure, a component going obsolete, a layout optimization, or a cost reduction. Whatever the reason, if it isn't recorded, it vanishes — and the next person to look at the design (including future you) will wonder why a resistor value is different from the reference design, or why a particular trace was routed in an apparently suboptimal way. Change tracking records the what; rationale recording captures the why. Both are essential.
+Every change to a design has a reason. Maybe it was a test failure, a component going obsolete, a layout optimization, or a cost reduction. Whatever the reason, if it isn't recorded, it vanishes — and the next person to look at the design (including a future version of the same engineer) will wonder why a resistor value is different from the reference design, or why a particular trace was routed in an apparently suboptimal way. Change tracking records the what; rationale recording captures the why. Both are essential.
 
 ## The Change Log
 
@@ -38,13 +38,13 @@ For projects without formal ECO processes, informal change tracking can be just 
 - **A spreadsheet.** Columns for date, change description, rationale, affected files, and revision. Easy to filter, sort, and search.
 - **Issue tracker entries.** GitHub Issues, GitLab Issues, or similar tools work well for tracking changes that start as problems or feature requests and are resolved by design modifications.
 
-The best system is the one you'll actually use. A sophisticated tracking tool that's empty is less useful than a text file that's consistently maintained.
+The best system is the one that actually gets used. A sophisticated tracking tool that's empty is less useful than a text file that's consistently maintained.
 
 ## The "Why" Is More Important Than the "What"
 
 The what is usually visible in the design files themselves — a diff between Rev A and Rev B schematics shows every changed component, value, and connection. The why is invisible in the files and exists only in the heads of the people who made the changes.
 
-"Changed C15 from 100 nF to 1 uF" is a fact you can extract from a schematic diff. But it doesn't tell you whether the change was made to fix an oscillation problem, to meet a new decoupling requirement, to compensate for a different component's parasitic, or because someone misread the original value. The rationale determines whether the change can be safely reversed, modified, or applied to a similar circuit in another project.
+"Changed C15 from 100 nF to 1 uF" is a fact extractable from a schematic diff. But it doesn't indicate whether the change was made to fix an oscillation problem, to meet a new decoupling requirement, to compensate for a different component's parasitic, or because someone misread the original value. The rationale determines whether the change can be safely reversed, modified, or applied to a similar circuit in another project.
 
 Without the why, future design decisions are made in a vacuum. If a cost reduction exercise proposes changing C15 back to 100 nF (saving $0.02), the absence of recorded rationale means nobody knows whether that's safe. With the rationale on record — "Changed C15 from 100 nF to 1 uF to eliminate 2 MHz oscillation on the 3.3V rail observed during Rev A testing" — the risk of the reversal is immediately clear.
 
@@ -56,10 +56,10 @@ Version control systems (git, SVN, Mercurial) are standard practice for software
 
 A basic git workflow for hardware design:
 
-- **One commit per logical change.** "Changed voltage divider R7/R8 to correct ADC input scaling" is a good commit. "Updated schematic" is not — it tells you nothing about what changed or why.
+- **One commit per logical change.** "Changed voltage divider R7/R8 to correct ADC input scaling" is a good commit. "Updated schematic" is not — it conveys nothing about what changed or why.
 - **Meaningful commit messages.** The commit message is a change log entry. Include the what, the why, and any relevant measurement data or references.
-- **Tag each released revision.** When you generate gerbers for fabrication, tag the commit with the revision identifier (e.g., `rev-b`). This allows you to check out the exact files that were used for any past fabrication.
-- **Branch for experiments.** If you're trying a speculative change (different power supply topology, alternative component), do it on a branch. If it works, merge it. If it doesn't, the main branch is unaffected.
+- **Tag each released revision.** When generating gerbers for fabrication, tag the commit with the revision identifier (e.g., `rev-b`). This makes it possible to check out the exact files used for any past fabrication.
+- **Branch for experiments.** Speculative changes (different power supply topology, alternative component) belong on a branch. If the experiment works, merge it. If it doesn't, the main branch is unaffected.
 
 The investment in learning git for hardware projects pays off immediately. The ability to see exactly what changed between any two revisions, to roll back a bad change, and to maintain parallel experimental branches is as valuable for hardware as it is for software.
 
@@ -75,11 +75,18 @@ Seeing what changed between revisions is essential for change tracking. Several 
 
 The best practice is to generate a diff summary as part of the revision process. Before releasing a new revision, compare it to the previous one and verify that every difference is intentional and documented. Unexpected differences — changes that are present in the files but not in the change log — indicate either incomplete tracking or accidental modifications.
 
-## Gotchas
+## Tips
 
-- **"Changed R7" is not a useful change record.** Without the old value, the new value, and the reason, a change entry tells you almost nothing. Be specific: "Changed R7 from 10k to 4.7k to increase LED current to 2.1 mA."
-- **Commit messages are change log entries.** Treat them as such. "Updated files" and "fixed stuff" are useless. "Fixed 3.3V rail oscillation by increasing C15 to 1 uF per Rev A test report #7" is a permanent record of engineering reasoning.
-- **The why decays fastest.** You'll remember what you changed for a few weeks. The why fades within days. Record it immediately, while the reasoning is fresh.
-- **Undocumented changes accumulate silently.** Each one is small. Together, they create a design that nobody fully understands. Consistent tracking prevents this drift.
-- **Schematic diffs catch what humans miss.** Reviewing a diff is faster and more reliable than trying to remember every change you made. Always diff before releasing.
-- **Change tracking is not overhead — it's context.** It feels like extra work when you're doing it. It feels like essential information when you need it.
+- Write the rationale for a change immediately — within minutes, not hours; the reasoning fades faster than the memory of what was changed
+- Use the commit message as the primary change log entry so that the rationale is intrinsically linked to the file diff
+- Before releasing any new revision, run a schematic diff against the previous revision and verify every difference is documented
+- Keep a consistent format for change log entries (what, why, old value, new value, verification) so entries are scannable months later
+
+## Caveats
+
+- **"Changed R7" is not a useful change record** — without the old value, the new value, and the reason, a change entry tells almost nothing; be specific: "Changed R7 from 10k to 4.7k to increase LED current to 2.1 mA"
+- **Commit messages are change log entries** — treat them as such; "Updated files" and "fixed stuff" are useless; "Fixed 3.3V rail oscillation by increasing C15 to 1 uF per Rev A test report #7" is a permanent record of engineering reasoning
+- **The why decays fastest** — the memory of what changed persists for a few weeks, but the reasoning fades within days; record it immediately, while the reasoning is fresh
+- **Undocumented changes accumulate silently** — each one is small; together, they create a design that nobody fully understands; consistent tracking prevents this drift
+- **Schematic diffs catch what humans miss** — reviewing a diff is faster and more reliable than trying to recall every change made; always diff before releasing
+- **Change tracking is not overhead — it's context** — it feels like extra work when doing it; it feels like essential information when needed

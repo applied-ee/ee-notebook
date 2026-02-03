@@ -5,7 +5,7 @@ weight: 20
 
 # Functional vs Non-Functional Requirements
 
-Every electronics project has two kinds of requirements, and the ones most people skip are the ones that cause the most failures. Functional requirements describe what the system must do. Non-functional requirements describe how well it must do it. A circuit that "works" on the bench but can't survive a hot car or draws too much current for its battery has met its functional requirements and failed its non-functional ones.
+Every electronics project has two kinds of requirements, and the ones most often skipped are the ones that cause the most failures. Functional requirements describe what the system must do. Non-functional requirements describe how well it must do it. A circuit that "works" on the bench but can't survive a hot car or draws too much current for its battery has met its functional requirements and failed its non-functional ones.
 
 ## Functional Requirements: What the System Must Do
 
@@ -57,7 +57,7 @@ These failures are invisible if you only test functional requirements.
 
 Requirements don't have to be formal documents. For personal projects, a simple table or bulleted list is enough — the point is to make implicit assumptions explicit.
 
-A useful format for each requirement:
+A useful format for each requirement is:
 
 | Field | Purpose |
 |---|---|
@@ -67,7 +67,7 @@ A useful format for each requirement:
 | Verification | How you'll test whether this requirement is met |
 | Source | Why this requirement exists (use case, standard, physical constraint) |
 
-The verification column is especially valuable. If you can't describe how you'd test a requirement, it's probably too vague to be useful. "The system must be reliable" is not testable. "The system must operate continuously for 30 days without reset in a 40 C environment" is testable.
+The verification column is especially valuable. If there's no way to describe how a requirement would be tested, it's probably too vague to be useful. "The system must be reliable" is not testable. "The system must operate continuously for 30 days without reset in a 40 C environment" is testable.
 
 ## Must Have vs Nice to Have
 
@@ -77,24 +77,31 @@ Not all requirements are equal, and treating them as equal leads to over-design 
 - **Should have.** Important and expected, but the system is still useful without it. These are included if they don't compromise must-have requirements.
 - **Nice to have.** Would be good, but not worth significant cost, complexity, or schedule impact.
 
-This prioritization is especially important when requirements conflict — and they will. "Low power" and "fast response" often pull in opposite directions. "Small size" and "low cost" compete when you need expensive tiny packages. Knowing which requirement wins the conflict requires knowing which is "must have" and which is "nice to have."
+This prioritization is especially important when requirements conflict — and they will. "Low power" and "fast response" often pull in opposite directions. "Small size" and "low cost" compete when expensive tiny packages are needed. Knowing which requirement wins the conflict requires knowing which is "must have" and which is "nice to have."
 
 ## Requirements That Look Non-Functional but Are Actually Functional
 
 Some requirements appear to be quality attributes but are actually hard functional requirements in disguise:
 
 - **Safety.** "The system must not present a shock hazard" isn't a quality attribute — it's a binary pass/fail requirement that drives specific design features (isolation, fusing, creepage distances).
-- **EMC compliance.** Meeting radiated emission limits isn't optional if you plan to sell or deploy the device. It's a functional requirement with specific, measurable criteria.
+- **EMC compliance.** Meeting radiated emission limits isn't optional for any device intended for sale or deployment. It's a functional requirement with specific, measurable criteria.
 - **Regulatory compliance.** UL listing, CE marking, RoHS compliance — these are not soft preferences. They determine whether the product can legally be used.
 - **Data integrity.** "The system must not lose stored measurements during power loss" is a functional requirement that demands specific implementation (non-volatile storage, write completion detection, journaling).
 
 Misclassifying these as "nice to have" non-functional attributes leads to late-stage surprises when the design can't meet them without fundamental changes.
 
-## Gotchas
+## Tips
 
-- **Unstated requirements are still requirements.** If the project will live outdoors, temperature and humidity tolerance are requirements whether you wrote them down or not. The environment doesn't care about your documentation habits.
-- **"It works" is not a requirement.** Without defined acceptance criteria, you'll never know when to stop tweaking. Define what "works" means quantitatively before starting.
-- **Non-functional requirements dominate cost.** A temperature sensor that works at room temperature costs $0.50. One that works from -40 C to +125 C with 0.1 degree accuracy costs $5.00. The functional requirement is identical; the non-functional requirements drive a 10x cost difference.
-- **Requirements change — track the changes.** As you learn more, requirements will evolve. That's healthy. What's not healthy is changing requirements without re-evaluating their impact on the design. Keep a record of what changed and why.
-- **Don't copy requirements from similar projects blindly.** Every project has different constraints. A requirement that was critical for a previous project (like -40 C operation) might be irrelevant for this one but still drive unnecessary cost and complexity if copied without examination.
-- **Test your requirements, not just your circuit.** A requirement that can't be verified is just a wish. For each requirement, define how you'll measure compliance — ideally before you start designing.
+- For each requirement, write a verification method before starting the design — if a requirement can't be tested, it's too vague to guide decisions
+- Assign every requirement a priority (must have, should have, nice to have) so that when requirements conflict, the tradeoff resolution is already documented
+- Capture non-functional requirements in measurable thresholds (e.g., "below 50 uA average") rather than subjective terms like "low power" or "efficient"
+- Revisit non-functional requirements after selecting key components — datasheets often reveal constraints (thermal limits, noise floors) that refine or invalidate earlier assumptions
+
+## Caveats
+
+- **Unstated requirements are still requirements.** If the project will live outdoors, temperature and humidity tolerance are requirements whether documented or not — the environment doesn't care about documentation habits
+- **"It works" is not a requirement.** Without defined acceptance criteria, there's no way to know when to stop tweaking — define what "works" means quantitatively before starting
+- **Non-functional requirements dominate cost.** A temperature sensor that works at room temperature costs $0.50; one that works from -40 C to +125 C with 0.1 degree accuracy costs $5.00 — the functional requirement is identical, but non-functional requirements drive a 10x cost difference
+- **Requirements change — track the changes.** As understanding deepens, requirements will evolve, and that's healthy — what's not healthy is changing requirements without re-evaluating their impact on the design
+- **Copying requirements from similar projects blindly is risky.** Every project has different constraints, and a requirement critical for a previous project (like -40 C operation) might be irrelevant here but still drive unnecessary cost and complexity if copied without examination
+- **Test the requirements, not just the circuit.** A requirement that can't be verified is just a wish — for each requirement, define how compliance will be measured, ideally before design begins

@@ -25,9 +25,9 @@ BOM drift has several common causes, and understanding them is the first step to
 
 A phantom BOM is a document that describes something that doesn't match any physical board. It typically arises when the schematic has been updated but the board hasn't been reworked to match, or when the board has been reworked but the schematic hasn't been updated. The BOM, generated from the schematic, inherits whatever disconnect exists between the schematic and the hardware.
 
-Phantom BOMs are dangerous because they create false confidence. You think you know what's on the board because you have a document that says so. But the document is wrong, and decisions based on it — ordering components, debugging a failure, comparing to a simulation — are based on incorrect information.
+Phantom BOMs are dangerous because they create false confidence. The assumption is that the document reflects reality — but it doesn't, and decisions based on it — ordering components, debugging a failure, comparing to a simulation — rest on incorrect information.
 
-The cure is simple but requires discipline: after any change to the board or the schematic, verify that the BOM matches both. This takes a few minutes and prevents hours of confusion. For prototype boards with extensive rework, maintain a "board-specific BOM" that documents exactly what's on each individual board, separate from the "design BOM" that describes the intended next revision.
+The cure is simple but requires discipline: after any change to the board or the schematic, verify that the BOM matches both. This takes a few minutes and prevents hours of confusion. For prototype boards with extensive rework, maintaining a "board-specific BOM" that documents exactly what's on each individual board, separate from the "design BOM" that describes the intended next revision, is a practical approach.
 
 ## BOM Management Tools
 
@@ -39,7 +39,7 @@ For larger projects or ongoing work, dedicated BOM management tools provide more
 - **Spreadsheets with structure.** A well-organized spreadsheet with columns for reference designator, value, footprint, manufacturer, MPN, distributor, and price is sufficient for most prototype work. The key is maintaining it consistently.
 - **Inventory tools.** Tools like InvenTree or PartsBox track both the BOM and the physical inventory, linking what's specified to what's on the shelf. This is useful when managing multiple projects and shared component stocks.
 
-The tool matters less than the practice. A consistently maintained spreadsheet beats an abandoned database. Choose whatever you'll actually use.
+The tool matters less than the practice. A consistently maintained spreadsheet beats an abandoned database. The best tool is whichever one actually gets used.
 
 ## BOM Review as Part of Revision Process
 
@@ -81,13 +81,20 @@ The practical solution is physical labeling. Each board should carry:
 
 For small numbers of prototypes, a simple log works: "Board #3: Rev A, modified per ECO-002 (R7 changed to 4.7k, C15 changed to 1 uF), running firmware v1.3." This log lives in the project repository alongside the design files and test results.
 
-The effort invested in tracking individual boards is small but prevents the all-too-common scenario of spending an hour debugging a problem that turns out to be caused by a modification you forgot you made on that particular board.
+The effort invested in tracking individual boards is small but prevents the all-too-common scenario of spending an hour debugging a problem that turns out to be caused by a forgotten modification on that particular board.
 
-## Gotchas
+## Tips
 
-- **The BOM you exported last month is already wrong.** If you've made any schematic changes since the export, the BOM is out of date. Re-export before ordering or assembling.
-- **"Compatible" substitutions aren't always compatible.** A ceramic capacitor substituted for another ceramic of the same value might have different voltage derating, different temperature coefficient, or different ESR. Check the datasheet, not just the value.
-- **DNP is not the same as "not in BOM."** Do Not Populate components should remain in the BOM with a DNP flag. Removing them entirely makes it unclear whether the component was deliberately omitted or accidentally forgotten.
-- **Hand modifications are invisible to the BOM.** Every bodge wire, every swapped resistor, every added capacitor creates a gap between the BOM and reality. Document rework immediately, not "later."
-- **Prototype BOM cost is not production BOM cost.** Single-piece pricing from distributors is 5-20x the volume price. Don't use prototype costs to estimate production economics.
-- **BOM drift is cumulative and silent.** Each small undocumented change is forgettable. Fifty of them create a board that nobody fully understands. The antidote is consistent, immediate documentation of every deviation.
+- Re-export the BOM from the schematic before every ordering or assembly cycle — treat previous exports as stale by default
+- Maintain a per-board deviation log alongside the design BOM, even for just two or three prototype units
+- Include a DNP column in every BOM and keep deliberately unpopulated parts in the list rather than deleting them
+- Diff the freshly exported BOM against the previous version as a standard step in the revision release process
+
+## Caveats
+
+- **A BOM exported last month is already wrong** — if any schematic changes have occurred since the export, the BOM is out of date; re-export before ordering or assembling
+- **"Compatible" substitutions aren't always compatible** — a ceramic capacitor substituted for another ceramic of the same value might have different voltage derating, different temperature coefficient, or different ESR; check the datasheet, not just the value
+- **DNP is not the same as "not in BOM"** — Do Not Populate components should remain in the BOM with a DNP flag; removing them entirely makes it unclear whether the component was deliberately omitted or accidentally forgotten
+- **Hand modifications are invisible to the BOM** — every bodge wire, every swapped resistor, every added capacitor creates a gap between the BOM and reality; document rework immediately, not "later"
+- **Prototype BOM cost is not production BOM cost** — single-piece pricing from distributors is 5-20x the volume price; don't use prototype costs to estimate production economics
+- **BOM drift is cumulative and silent** — each small undocumented change is forgettable; fifty of them create a board that nobody fully understands; the antidote is consistent, immediate documentation of every deviation
