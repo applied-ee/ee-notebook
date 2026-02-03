@@ -136,11 +136,25 @@ The most common configuration: 8N1 (8 data bits, no parity, 1 stop bit) = 10 bit
 | Overhead | None (raw bits) | Address + ACK per transfer | Start/stop bits per byte |
 | Complexity | Low | Medium | Low |
 
-## Gotchas
+## Tips
 
-- **SPI has no standard** — Unlike I2C (which has a detailed specification from NXP), SPI was never formally standardized. Different manufacturers implement variations: different word sizes, different CS behavior, different byte ordering. Always check the specific device's datasheet, not just "SPI" in general
+- Always verify SPI clock mode (CPOL/CPHA) against the specific device datasheet — there is no universal default
+- Size I2C pull-up resistors based on bus capacitance and speed mode — calculate or use NXP's guidelines
+- Verify UART baud rates on both ends before debugging protocol issues — rate mismatch is the most common problem
+- Plan for I2C address conflicts during system integration — check all device addresses before committing to a bus topology
+
+## Caveats
+
+- **SPI has no standard** — Unlike I2C (which has a detailed specification from NXP), SPI was never formally standardized. Different manufacturers implement variations: different word sizes, different CS behavior, different byte ordering. Always check the specific device's datasheet
 - **I2C pull-up resistors are not optional** — Without pull-ups, the bus stays at whatever voltage the parasitic capacitance holds. The signals will be sluggish, unreliable, or completely nonfunctional. Size the pull-ups for the bus capacitance and speed mode
-- **UART baud rate mismatch produces garbage** — If the transmitter and receiver are at different baud rates, the received data is corrupted. There is no handshake or negotiation — both sides must be configured correctly before communication begins. Auto-baud detection exists in some UARTs but requires a known pattern
+- **UART baud rate mismatch produces garbage** — If the transmitter and receiver are at different baud rates, the received data is corrupted. There is no handshake or negotiation — both sides must be configured correctly before communication begins
 - **I2C address conflicts are a system integration problem** — Two devices with the same address on the same bus cannot coexist. Solutions include I2C multiplexers (TCA9548A), alternate addresses (some devices have address pins), or separate buses
-- **Long SPI traces at high speed need signal integrity attention** — At 50 MHz, a 10 cm SPI trace is a significant fraction of a wavelength. Impedance matching and termination may be needed. See [Signal Integrity Basics]({{< relref "signal-integrity-basics" >}})
+- **Long SPI traces at high speed need signal integrity attention** — At 50 MHz, a 10 cm SPI trace is a significant fraction of a wavelength. Impedance matching and termination may be needed
 - **RS-232 voltage levels will damage CMOS inputs** — Connecting an RS-232 signal (±12 V) directly to a 3.3 V CMOS UART input will destroy the chip. Always use a level translator (MAX3232 or equivalent)
+
+## Bench Relevance
+
+- I2C signals with slow rise times and rounded edges indicate pull-up resistors are too large for the bus capacitance
+- SPI data that appears shifted or inverted suggests clock polarity or phase mismatch — verify CPOL/CPHA settings
+- UART output that displays as gibberish on a terminal almost always indicates baud rate mismatch
+- I2C transactions that NAK unexpectedly may be caused by address conflicts or missing pull-ups

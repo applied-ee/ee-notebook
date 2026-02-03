@@ -72,10 +72,24 @@ Modern high-speed interfaces are often parallel-at-the-lane-level, serial-per-la
 
 Similarly, DDR uses a parallel data bus but with source-synchronous clocking (each byte group has its own strobe), which is a hybrid approach that manages skew within each small group.
 
-## Gotchas
+## Tips
+
+- Choose serial for board-level interconnects where pin count and routing complexity matter
+- Use parallel only where latency is critical and traces can be tightly controlled (memory interfaces, on-chip buses)
+- Consider hybrid approaches (multiple serial lanes) for high throughput with manageable routing
+- Design parallel buses with termination when clock speeds approach 100 MHz
+
+## Caveats
 
 - **"Parallel is faster" is outdated** — At board level, serial interfaces achieve higher aggregate data rates than practical parallel interfaces because they avoid the skew, crosstalk, and pin count walls. The crossover happened in the early 2000s for most applications
 - **Serial adds latency** — Serialization and deserialization take time. For a 10-byte transfer, a parallel bus delivers the data in 10 clock cycles. A serial link needs 80 bit-times plus framing overhead plus SerDes pipeline latency. For latency-critical applications (like memory), this overhead is significant
 - **Not all serial protocols are equal** — SPI at 10 MHz and PCIe at 32 GT/s are both "serial" but have completely different design challenges. SPI is a simple shift register; PCIe requires equalization, clock recovery, error correction, and protocol negotiation
 - **Parallel buses need termination at speed** — A 50 MHz parallel bus with unterminated traces works fine. At 200 MHz, those same traces need proper termination to prevent reflections. The transition from "just wires" to "transmission lines" sneaks up as clock speeds increase
 - **Mixed parallel/serial systems need buffering** — When a fast serial port feeds a slow parallel bus (or vice versa), FIFOs or elastic buffers are needed to absorb the rate difference and crossing latency
+
+## Bench Relevance
+
+- Parallel bus errors that appear only at higher clock speeds indicate timing skew between signals — check length matching
+- Serial communication that corrupts data intermittently may have signal integrity issues — examine the eye diagram
+- A parallel bus that works at 50 MHz but fails at 100 MHz likely needs termination
+- Data corruption at the boundary between serial and parallel domains suggests buffer underflow or overflow — verify FIFO sizing

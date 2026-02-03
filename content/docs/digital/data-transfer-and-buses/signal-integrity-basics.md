@@ -130,11 +130,25 @@ For designs requiring SI discipline:
 4. **Length-match differential pairs** — The two traces of a differential pair must be matched in length and symmetrically routed. Skew between them converts differential signal to common mode
 5. **Minimize vias, stubs, and discontinuities** — Each via adds ~0.5-1 nH of inductance and ~0.3-0.5 pF of capacitance, creating a localized impedance bump. Back-drilling (removing unused via stubs) is standard at multi-gigabit speeds
 
-## Gotchas
+## Tips
+
+- Use series termination at the source for point-to-point connections — low power and simple
+- Use parallel termination at the receiver for multi-drop buses where all receivers need full-amplitude signals
+- Route high-speed signals over continuous reference planes — never cross plane splits
+- Choose the slowest logic family adequate for the application to minimize SI challenges
+
+## Caveats
 
 - **"It works on my bench" is not SI validation** — A signal that looks clean at room temperature, nominal voltage, and one board sample may fail at temperature extremes, voltage corners, or on a different PCB batch with different dielectric thickness. Margin analysis across corners is the only way to guarantee reliability
-- **Probe loading affects the measurement** — A 10x passive oscilloscope probe adds ~10 pF to the node. On a high-impedance, high-speed signal, this changes the signal. Active probes (< 1 pF) are needed for accurate SI measurement
+- **Probe loading affects the measurement** — A 10× passive oscilloscope probe adds ~10 pF to the node. On a high-impedance, high-speed signal, this changes the signal. Active probes (< 1 pF) are needed for accurate SI measurement
 - **Vias are impedance discontinuities** — Every signal via introduces a brief impedance change. For signals below 1 GHz, this is usually negligible. Above 1 GHz, via design (diameter, pad size, antipad, back-drill) becomes a significant SI concern
 - **Return path matters as much as signal path** — Every signal current has a return current flowing in the reference plane directly beneath the trace. If the reference plane has a gap, slot, or break, the return current detours around it, increasing loop area and radiation. Never route high-speed signals across plane splits
-- **Differential pairs are not just "two wires"** — Differential impedance depends on the coupling between the two traces (spacing), not just individual trace impedance. Loosely coupled pairs have differential impedance close to 2x single-ended. Tightly coupled pairs have lower differential impedance. The PCB stackup must specify both single-ended and differential impedance
-- **Edge rate is set by the driver, not the clock frequency** — A 74AUC buffer produces ~0.5 ns edges regardless of whether the signal is toggling at 1 MHz or 100 MHz. The SI challenges are the same. Don't use faster logic families than necessary
+- **Differential pairs are not just "two wires"** — Differential impedance depends on the coupling between the two traces (spacing), not just individual trace impedance. The PCB stackup must specify both single-ended and differential impedance
+- **Edge rate is set by the driver, not the clock frequency** — A 74AUC buffer produces ~0.5 ns edges regardless of whether the signal is toggling at 1 MHz or 100 MHz. Don't use faster logic families than necessary
+
+## Bench Relevance
+
+- Ringing on signal edges (damped oscillation) indicates unterminated transmission line reflections — add appropriate termination
+- Overshoot that triggers double-clocking or data corruption suggests reflections crossing the input threshold
+- Signal quality that changes when probing indicates probe loading is affecting the circuit — use lower-capacitance probes
+- Signals that work on one PCB but fail on another from the same batch suggest the design is at the edge of SI margins
