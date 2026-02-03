@@ -50,10 +50,10 @@ When something doesn't add up:
 
 ## Tips
 
-- **Thermal troubleshooting** — If a component is hotter than expected, it's dissipating more power than the model predicts. Find the extra current or voltage drop
-- **Efficiency calculations** — Output power / input power. The difference is losses, and each watt of loss should be identifiable
-- **Battery life estimation** — Total energy consumed determines runtime. Every milliwatt that can't be accounted for is eating into battery life
-- **Debugging overcurrent** — If a supply is delivering more current than expected, that power is going somewhere. Follow the energy to find the fault
+- **Thermal cross-check** — temperature rise on a component is proportional to its power dissipation. Measuring the case temperature and comparing against the thermal model validates whether the power budget accounts for all dissipation in that element
+- **Efficiency calculations** — output power / input power. The difference is losses, and each watt of loss should be identifiable
+- **Battery life estimation** — total energy consumed determines runtime. Every milliwatt that can't be accounted for reduces battery life by a quantifiable amount
+- **Supply current audit** — measuring total supply current and comparing it against the sum of expected branch currents exposes unaccounted paths. The gap between measured and expected current, multiplied by the supply voltage, gives the missing power directly
 
 ## Caveats
 
@@ -63,4 +63,8 @@ When something doesn't add up:
 
 ## Bench Relevance
 
-Conservation of energy is the logic behind every thermal surprise and every power budget that doesn't close. A component running hotter than expected means the power model is missing something — a current path, a voltage drop, or a loss mechanism that isn't in the schematic. A supply delivering more current than the load should need points to the same gap. The discipline is always the same: find where each watt goes, and the ones that seem to be missing will point directly to the part of the circuit that isn't understood yet.
+**A component running hotter than expected** indicates higher dissipation than the power model predicts. The excess heat points to a current path, a voltage drop, or a loss mechanism not captured in the schematic — the thermal behavior is the circuit revealing where the model is incomplete.
+
+**A supply delivering more current than the load should draw** means power is going to an unaccounted path. The extra current times the supply voltage gives the magnitude of the missing dissipation, which narrows the search.
+
+**A power budget that doesn't close** — where the sum of individually measured dissipations falls short of total input power — quantifies the gap directly. The difference is the power going to elements or paths not yet included in the accounting.

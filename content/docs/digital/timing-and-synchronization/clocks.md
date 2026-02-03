@@ -112,10 +112,23 @@ A clock signal has a frequency, duty cycle, rise time, overshoot, ringing, and a
 - **Overshoot and ringing** can cause double-clocking — the flip-flop triggers on the overshoot as a second edge. Proper termination and controlled impedance traces prevent this
 - **Amplitude** must stay within the input threshold range. A clock attenuated by a long trace or poor termination may not reach valid logic levels at the receiver
 
-## Gotchas
+## Tips
 
-- **Clock signals need controlled impedance traces** — Treat clock traces like transmission lines even at moderate frequencies. Impedance mismatch causes reflections that distort the clock waveform. See [Signal Integrity Basics]({{< relref "/docs/digital/data-transfer-and-buses/signal-integrity-basics" >}})
-- **Don't route clocks through logic gates** — Passing a clock through an AND gate (for gating) or a mux (for selection) adds uncontrolled delay and jitter. Use dedicated clock gating cells (in ASICs) or clock mux primitives (in FPGAs)
-- **Clock crosstalk is insidious** — A noisy signal coupling into a clock trace adds jitter that affects the entire system. Keep clock traces away from high-speed data signals, switching regulators, and I/O traces. Use guard traces or ground planes to shield clock routes
-- **PLL lock time matters at power-up** — If logic starts running before the PLL locks, the clock is unstable and behavior is undefined. Use the PLL's lock indicator to hold the system in reset until the clock is stable
-- **Multiple clock domains create synchronization challenges** — Using more than one clock requires explicit synchronization at every boundary. See [Clock Domain Crossing]({{< relref "/docs/digital/timing-and-synchronization/clock-domain-crossing" >}})
+- **Treat clock traces as controlled-impedance transmission lines, even at moderate frequencies** — impedance mismatch causes reflections that distort the clock waveform, adding jitter and potentially causing double-clocking at the receiver. See [Signal Integrity Basics]({{< relref "/docs/digital/data-transfer-and-buses/signal-integrity-basics" >}})
+- **Use the PLL lock indicator to hold the system in reset until the clock is stable** — logic running on an unlocked PLL sees an undefined clock with unpredictable frequency and jitter, producing undefined behavior during the lock-up period
+- **Use differential clocking (LVDS, LVPECL, HCSL) for PCB clock frequencies above ~100 MHz** — differential signaling rejects common-mode noise that would add jitter to a single-ended clock trace
+
+## Caveats
+
+- **Routing a clock through logic gates adds uncontrolled delay and jitter** — passing a clock through an AND gate (for gating) or a mux (for selection) degrades the clock signal. Dedicated clock gating cells (in ASICs) or clock mux primitives (in FPGAs) avoid this
+- **Clock crosstalk is insidious** — a noisy signal coupling into a clock trace adds jitter that affects the entire system. Clock traces running near high-speed data signals, switching regulators, or I/O traces are especially vulnerable
+- **PLL lock time is non-negligible** — if logic starts running before the PLL locks, the clock frequency and phase are undefined and system behavior is unpredictable. Lock time ranges from microseconds to milliseconds depending on the PLL configuration and loop bandwidth
+- **Multiple clock domains create synchronization challenges** — using more than one clock requires explicit synchronization at every boundary. See [Clock Domain Crossing]({{< relref "/docs/digital/timing-and-synchronization/clock-domain-crossing" >}})
+
+## Bench Relevance
+
+**Jitter visible on an oscilloscope as a thickened or blurred edge in persistence mode** — the clock edge position wanders from cycle to cycle. The width of the blur at the threshold-crossing point directly measures peak-to-peak jitter, and the distribution shape indicates whether the source is random (Gaussian spread) or deterministic (discrete clusters).
+
+**Ringing or overshoot on clock edges** indicates impedance mismatch on the clock trace. Severe overshoot that crosses the input threshold a second time causes double-clocking — the downstream flip-flop sees two edges where there should be one, advancing the state machine or counter by two instead of one.
+
+**A clock frequency that measures slightly off from the expected value** suggests a crystal loading mismatch (discrete oscillator circuit with incorrect load capacitors), normal RC oscillator tolerance, or a PLL that has not yet locked to the reference.

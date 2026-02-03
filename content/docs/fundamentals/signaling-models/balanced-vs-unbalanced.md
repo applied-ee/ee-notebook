@@ -5,7 +5,7 @@ weight: 40
 
 # Balanced vs Unbalanced
 
-Every signal needs a go path and a return path. How you arrange those two paths — one conductor referenced to ground, or two conductors carrying equal and opposite voltages — determines how much noise the link picks up, how far the signal can travel, and what it costs. This is one of the most fundamental structural decisions in any signal chain.
+Every signal needs a go path and a return path. How those two paths are arranged — one conductor referenced to ground, or two conductors carrying equal and opposite voltages — determines how much noise the link picks up, how far the signal can travel, and what it costs. This is one of the most fundamental structural decisions in any signal chain.
 
 ## Unbalanced (Single-Ended)
 
@@ -249,4 +249,8 @@ The choice is almost always a noise-vs-cost tradeoff. Unbalanced is simpler, che
 
 ## Bench Relevance
 
-Balanced vs unbalanced is one of the first things to identify when connecting any audio, instrumentation, or communications signal path. Ground loop symptoms — hum, buzz, or a DC offset that disappears with a DI box or isolation transformer — often point directly to a balanced/unbalanced topology mismatch. Measuring a balanced signal with single-ended equipment (a typical oscilloscope input) breaks the balance and injects the very noise the balanced topology was designed to reject; a differential probe preserves the rejection. In many practical setups, the choice of balanced vs unbalanced cables and connectors determines the noise floor of the entire signal chain before any other design decision matters.
+**Hum, buzz, or a DC offset that disappears when a DI box or isolation transformer is inserted** points to a balanced/unbalanced topology mismatch. The DI box or transformer converts between the two topologies, and the symptom's disappearance confirms that the noise was entering through the ground path that the balanced topology eliminates.
+
+**Noise that appears when measuring a balanced signal with single-ended equipment** results from the measurement itself breaking the balance. A standard oscilloscope input ties one conductor to earth through the scope's ground, destroying the symmetry that provides common-mode rejection. A differential probe preserves the balance and shows the actual signal.
+
+**A noise floor that changes when cables or connectors are swapped between balanced and unbalanced types** indicates that the signaling topology is the dominant factor. In many signal chains, the balanced-vs-unbalanced choice sets the noise floor before any other parameter matters.

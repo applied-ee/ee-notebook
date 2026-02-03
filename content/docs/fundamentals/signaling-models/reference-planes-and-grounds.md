@@ -145,4 +145,8 @@ In an unfamiliar schematic, ground symbols may not all refer to the same net. It
 
 ## Bench Relevance
 
-Many grounding issues surface as unexplained DC offsets between instruments, mains hum that appears only when two devices are connected, or a noise floor that shifts when a cable is plugged in. The earth-referenced oscilloscope ground clip is a frequent source of accidental shorts — connecting it to any point that is not at earth potential creates a current path through the building wiring. Checking whether each instrument on the bench is floating or earth-referenced is often the fastest diagnostic step when something behaves differently than expected. Most grounding mysteries reduce to a voltage difference between two points that were assumed to be at the same potential.
+**An unexplained DC offset between two instruments connected by a signal cable** usually indicates a ground potential difference. The two instruments reference different ground points at different potentials, and the cable's ground conductor carries the resulting current, developing an offset voltage.
+
+**Mains hum that appears only when two devices are connected** points to a ground loop — the cable's ground path completes a loop through building wiring that picks up 50/60 Hz magnetic fields. The hum is absent when either device operates alone because the loop does not exist.
+
+**A noise floor that shifts when a cable is plugged in or removed** indicates that the cable is creating or breaking a ground path that changes current flow in the reference network. The noise floor depends on which ground paths exist, not just on the signal path.

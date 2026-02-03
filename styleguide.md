@@ -10,7 +10,7 @@ This document defines the structure, terminology, and intent of pages in the Eng
 The goal is that after reading a handful of pages, a reader subconsciously knows:
 - where to find practical guidance
 - where to look for traps
-- how theory connects to real measurements
+- how theory connects to real measurements and observed behavior
 
 ---
 
@@ -90,6 +90,8 @@ Practical, grounded, experience-informed.
 
 Not every L2 page must contain every section, but **when a section exists, its name and intent are fixed**.
 
+---
+
 ### 1. Core Explanation  
 (Title varies: *The Relationship*, *How It Works*, *What’s Happening Physically*, etc.)
 
@@ -113,22 +115,32 @@ Not every L2 page must contain every section, but **when a section exists, its n
 ### 3. Tips
 
 **Purpose:**  
-Enable correct use.
+Enable *correct use* of the concept.
+
+**Tips answer:**  
+> “What should I do or check to stay on the happy path?”
 
 **What goes here:**
 - Rules of thumb
+- Safe defaults
 - Sanity checks
 - Bench techniques
-- Safe defaults
+- Numeric guidance that teaches *scale*
 
 **Guidelines:**
-- May include **specific numbers** if they teach scale
-- Should help the reader succeed
+- Actionable but not step-by-step
 - Forward-looking
-- Technique-oriented, not interpretive
+- May include specific values or ranges
+- Assumes the concept is being applied correctly
+
+**What does NOT go here:**
+- Failure symptoms
+- Root-cause analysis
+- Interpretive diagnosis
+- Explanations of why something went wrong
 
 **Example:**
-- “500 mA through 100 mΩ drops 50 mV — that matters in low-voltage rails”
+- “500 mA through 100 mΩ drops 50 mV — that matters in low-voltage rails.”
 
 ---
 
@@ -137,11 +149,15 @@ Enable correct use.
 **Purpose:**  
 Prevent mistakes and false confidence.
 
+**Caveats answer:**  
+> “Where does this break, mislead, or quietly fail?”
+
 **What goes here:**
 - Common failure modes
 - Measurement traps
+- Assumption violations
 - Situations where intuition breaks
-- “This is where people get burned”
+- “This works… until it doesn’t”
 
 **Guidelines:**
 - Warning-oriented
@@ -149,31 +165,65 @@ Prevent mistakes and false confidence.
 - Numbers only if they explain the trap
 - No happy-path examples
 
+**What does NOT go here:**
+- How failures appear at the bench
+- Diagnostic interpretation
+- What to do differently next time
+
+**Example:**
+- “A DMM measuring RMS often assumes a sinusoid — non-sinusoidal waveforms can produce misleading readings.”
+
 ---
 
 ### 5. Bench Relevance
 
 **Purpose:**  
-Tie everything together.
+Tie theory to **what is observed at the bench**.
 
-This answers:
-> “How does this show up when I’m holding probes?”
+Bench Relevance answers:
+> “How does this concept explain the measurements or symptoms I’m seeing right now?”
+
+**What goes here:**
+- Observable symptoms (resets, distortion, lockups, thermal behavior)
+- Measurements that don’t match expectations
+- How correct theory explains confusing or misleading observations
+- Interpretation that links multiple observations together
 
 **Guidelines:**
 - Interpretive, not procedural
 - No new techniques (those belong in Tips)
-- Avoid universal claims about what *every* engineer does
-- Phrase authority in terms of **usefulness**, not habit or order
+- No new warnings (those belong in Caveats)
+- May reference later topics only as explanatory anchors
+- Organize by **observable behavior**, not by component or subsystem
 
 **Preferred framing:**
-- “often useful”
-- “a fast way to sanity-check”
-- “commonly shows up as”
-- “one of the quickest ways to reason about”
+- “often shows up as…”
+- “commonly appears when…”
+- “a frequent cause of this symptom is…”
+- “this measurement usually indicates…”
 
-Bench Relevance is not a summary — it is a bridge.
+**Bench Relevance is not a summary — it is a bridge between laws and observations.**
 
 ---
+
+## Section Boundary Rule (L2 Pages)
+
+Each L2 section has a single job:
+
+- **Tips** — how to succeed  
+- **Caveats** — how things fail  
+- **Bench Relevance** — how behavior and failures *appear in measurements or symptoms*. Make sure to add distinction to unrelated items and add bold for the main symptom
+
+If a paragraph contains:
+- advice **and** diagnosis → split it  
+- warnings **and** interpretation → split it  
+- techniques **and** symptoms → move techniques to Tips  
+
+**If it explains *why something looks wrong*, it belongs in Bench Relevance.**  
+**If it explains *how to avoid it*, it belongs in Tips or Caveats.**
+
+---
+
 ## Narrative Voice
 
 Use a neutral, tool-centric voice.
@@ -193,6 +243,9 @@ The goal is to describe how laws, models, and measurements behave — not to tel
 - “The first thing you reach for…”
 - “If you do this…”
 - “We can tell that…”
+
+Also avoid:
+- Long multi-symptom paragraphs — prefer one observable behavior per paragraph
 
 This keeps the text readable without projecting habits, authority, or assumptions onto the reader.
 
@@ -253,6 +306,6 @@ This notebook is not about memorizing laws.
 It’s about building **applied reasoning**:
 - knowing when a law applies
 - knowing when it doesn’t
-- understanding what real measurements are telling you when the numbers don’t match
+- understanding what real measurements and symptoms are telling you when the numbers don’t match
 
 That skill is what turns theory into working hardware.

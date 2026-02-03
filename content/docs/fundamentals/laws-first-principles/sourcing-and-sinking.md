@@ -61,9 +61,13 @@ The weaker direction often determines how the load gets connected. If a device s
 ## Caveats
 
 - **"Source" in source/sink is unrelated to "source" as a MOSFET terminal** — context determines meaning. A MOSFET's source terminal can be either sourcing or sinking current depending on the circuit. The naming overlap is unfortunate but universal.
-- **Exceeding source/sink limits doesn't always cause immediate failure** — sourcing too much current causes the output HIGH voltage to sag; sinking too much causes the output LOW voltage to rise. The device may still function, but noise margins (explored in Digital Electronics) degrade silently, leading to intermittent errors that are difficult to diagnose.
+- **Exceeding source/sink limits doesn't always cause immediate failure** — the device may still function, but noise margins (explored in Digital Electronics) degrade silently, leading to intermittent errors that are difficult to diagnose.
 - **Some datasheets specify "output current" without clarifying direction** — check the test circuit diagram or the sign convention used. A positive value for I_OL typically means current flowing into the pin (sinking), but conventions vary between manufacturers.
 
 ## Bench Relevance
 
-An output that cannot hold a valid HIGH voltage under load is hitting its source current limit — the voltage sag is visible on a multimeter or oscilloscope as a HIGH level that drops below the expected value. Sinking problems appear as the output LOW voltage rising above the expected level, potentially crossing into the undefined region between valid LOW and valid HIGH. Asymmetric rise and fall times on a digital output directly reflect source vs sink drive strength differences: the faster edge corresponds to the stronger driver. Open-drain bus protocols (such as I2C, covered in Digital Electronics) make this especially visible — the falling edge is fast (active transistor sinking current) while the rising edge is slow (passive pull-up resistor sourcing current through the bus capacitance).
+**An output HIGH voltage that sags below the expected level under load** indicates the source current limit has been reached. The voltage drop is visible on a multimeter or oscilloscope as a HIGH level that falls short of the rail voltage, proportional to the excess current demand.
+
+**An output LOW voltage that rises above the expected level** indicates the sink current limit has been reached. If the voltage rises far enough, it enters the undefined region between valid LOW and valid HIGH, where downstream logic may interpret the level unpredictably.
+
+**Asymmetric rise and fall times on a digital output** directly reflect source vs sink drive strength differences — the faster edge corresponds to the stronger driver. Open-drain bus protocols (such as I2C, covered in Digital Electronics) make this especially visible: the falling edge is fast (active transistor sinking current) while the rising edge is slow (passive pull-up resistor sourcing current through the bus capacitance).

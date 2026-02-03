@@ -105,11 +105,24 @@ Not all paths need to complete in one clock cycle.
 
 **Danger:** Incorrectly declaring a false path or multi-cycle path hides a real timing violation. These exceptions must be carefully reviewed.
 
-## Gotchas
+## Tips
 
-- **Hold violations cannot be fixed by slowing the clock** — This is the most important asymmetry in timing analysis. Setup violations disappear if the clock is slow enough. Hold violations are frequency-independent and must be fixed in the design
-- **Datasheet timing is worst-case** — A flip-flop with 5 ns setup time on the datasheet might work with 3 ns in typical conditions. Designing to typical values is gambling — the design will fail in production when conditions hit the worst case
-- **Temperature and voltage affect timing in opposite directions** — Slow corner (high temp, low voltage) is worst for setup. Fast corner (low temp, high voltage) is worst for hold. A design that works at room temperature on the bench may fail in a hot enclosure
-- **IO timing is separate from internal timing** — Signals entering or leaving the chip have additional delays from IO buffers, board traces, and connector pins. These must be included in the timing analysis for interface logic
-- **Timing constraints must be specified correctly** — In FPGA design, the constraints file (SDC or XDC format) tells the tools what clock frequencies, IO timing, and exceptions to check. Incorrect or incomplete constraints can make the tools produce a design that meets its constraints but fails in hardware
-- **Metastability from timing violations is probabilistic** — A marginal setup violation doesn't always fail. It fails with some probability that increases as the margin decreases. This makes timing violations difficult to reproduce and debug — the design may work "most of the time" but fail under specific conditions
+- **When setup timing fails, start from the critical path report** — the STA tool identifies the exact register-to-register path with the worst negative slack; reducing delay on any other path has no effect on the maximum clock frequency
+- **Always verify timing at both fast and slow PVT corners** — setup analysis uses the slow corner (high temperature, low voltage, slow process); hold analysis uses the fast corner (low temperature, high voltage, fast process). Passing only one corner leaves the other unchecked
+- **Include IO buffer, board trace, and connector delays in interface timing analysis** — internal timing tools do not account for off-chip delays; signals entering or leaving the chip see additional propagation that must be added to the timing budget manually or through IO timing constraints
+
+## Caveats
+
+- **Hold violations cannot be fixed by slowing the clock** — this is the most important asymmetry in timing analysis. Setup violations disappear if the clock is slow enough. Hold violations are frequency-independent and must be fixed by adding delay to the data path or reducing clock skew
+- **Datasheet timing is worst-case** — a flip-flop with 5 ns setup time on the datasheet might work with 3 ns in typical conditions. Designing to typical values is gambling — the design will fail in production when conditions hit the worst case
+- **Temperature and voltage affect timing in opposite directions** — slow corner (high temp, low voltage) is worst for setup; fast corner (low temp, high voltage) is worst for hold. A design that passes timing at room temperature may violate constraints at operating extremes
+- **Timing constraints must be specified correctly** — in FPGA design, the constraints file (SDC or XDC format) tells the tools what clock frequencies, IO timing, and exceptions to check. Incorrect or incomplete constraints can produce a design that meets its constraints but fails in hardware
+- **Metastability from timing violations is probabilistic** — a marginal setup violation doesn't always fail. It fails with some probability that increases as the margin decreases, making timing violations difficult to reproduce — the design may work "most of the time" but fail under specific conditions
+
+## Bench Relevance
+
+**Intermittent bit errors that shift with temperature or supply voltage** point to marginal setup or hold timing. Small environmental changes move the data transition into the forbidden window around the clock edge, causing the flip-flop to occasionally capture the wrong value.
+
+**A design that works at room temperature on the bench but fails in a hot enclosure or at low supply voltage** indicates timing was verified under typical conditions but violates worst-case corner specifications. The slow corner (high temperature, low voltage) exposes setup violations; the fast corner (low temperature, high voltage) exposes hold violations.
+
+**A design that fails at the target clock frequency but works perfectly at a slightly lower frequency** confirms a setup violation on the critical path — the combinational logic delay exceeds what the clock period allows, and reducing the frequency adds the missing margin.

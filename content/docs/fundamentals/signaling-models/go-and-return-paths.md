@@ -175,4 +175,10 @@ The right approach for mixed analog/digital designs is usually a continuous grou
 
 ## Bench Relevance
 
-Go and return paths show up in nearly every measurement situation. Unexpected noise or ringing on an otherwise clean signal is often a loop area problem — the return current is taking a longer path than expected, and the resulting antenna picks up interference. Probe ground leads are a common example: a long ground clip forms a large loop with the signal path, adding ringing and noise that aren't present in the actual circuit. Crosstalk between adjacent signals often traces back to shared return path impedance, where the return current from one signal develops a voltage that the other signal sees as interference. At system scale, [ground loops]({{< relref "/docs/measurement/noise-interference-grounding/ground-loop" >}}) are the same phenomenon — return current flowing through building wiring forms a large loop that picks up mains-frequency magnetic fields. In each case, the diagnostic question is the same: where is the return current actually flowing, and how big is the loop?
+**Unexpected noise or ringing on an otherwise clean signal** often points to a loop area problem — the return current is taking a longer path than expected, and the enlarged loop acts as an antenna that picks up interference. The noise amplitude scales with loop area and frequency.
+
+**Ringing or overshoot that appears during probing but isn't present in the actual circuit** commonly results from the probe ground lead forming a large loop with the signal path. The loop's inductance rings at high frequencies, and the ringing frequency decreases as ground lead length increases — confirming the artifact is from the measurement setup, not the circuit.
+
+**Crosstalk between adjacent signals that share a return path** traces to shared return-path impedance. Return current from one signal develops a voltage drop across the shared impedance, and the adjacent signal sees that drop as interference.
+
+**Mains-frequency hum that appears when two devices are connected by a cable** is the system-scale version of the same phenomenon — return current through building wiring forms a large loop that picks up 50/60 Hz magnetic fields (see [ground loops]({{< relref "/docs/measurement/noise-interference-grounding/ground-loop" >}})).

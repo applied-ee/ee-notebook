@@ -121,4 +121,8 @@ If the state machine should complete a sequence within a bounded time, a timer t
 
 ## Bench Relevance
 
-A state machine that occasionally sticks in an unexpected state — requiring a reset to recover — often points to a missing default transition for an illegal or unreachable state encoding. In protocol state machines (SPI, I2C, UART), a transaction that stalls partway through usually means the state machine is waiting for an input condition that never arrives, either because timeout logic is missing or because an external signal was not properly synchronized into the clock domain. On an FPGA, reading the state register through a debug probe (ILA or SignalTap) while the failure occurs reveals exactly which state the machine is stuck in, turning an opaque timeout into a specific transition to investigate.
+**A state machine that sticks in an unexpected state and requires a reset to recover** often points to a missing default transition for an illegal or unreachable state encoding. A single bit-flip (from noise or SEU) can land the state register in an encoding that has no defined exit, leaving the machine permanently stuck.
+
+**A protocol transaction (SPI, I2C, UART) that stalls partway through** usually means the state machine is waiting for an input condition that never arrives. Common causes are missing timeout logic or an external signal that was not properly synchronized into the clock domain, so the state machine never sees the expected edge or level.
+
+**A design that silently stops responding with no error output** often indicates a state machine that entered a state with no valid exit transition. The surrounding logic sees no further output changes, and the design appears frozen rather than producing an explicit error — making the symptom look like a total lockup rather than a single stuck state machine.

@@ -50,14 +50,14 @@ The laws aren't wrong. The model or the measurement is.
 
 - **Current budget check** — KCL says supply current must equal the sum of branch currents. If the total doesn't add up, there's an unaccounted path (leakage, a shorted component, a floating pin drawing current)
 - **Voltage accounting** — KVL says drops in a series path must sum to the supply. If measured drops don't add up, there's a missing drop somewhere (trace resistance, connector drop, wire resistance)
-- **Ground path debugging** — "Ground" is a node like any other. KCL applies to the ground node too. Current returning through the ground plane must equal current sourced into the circuit. Ground bounce and voltage differences between "ground" points are KVL showing resistive and inductive drops in the return path
+- **Ground path debugging** — "Ground" is a node like any other. KCL applies to the ground node too. Current returning through the ground plane must equal current sourced into the circuit
+- **Generalized KCL for current budgets** — KCL applies to any closed boundary, not just a single node. Drawing a boundary around a whole subcircuit means total current in = total current out — a useful sanity check for power supply current budgets
 
 ## Caveats
 
 **KCL:**
 
 - **Reference directions matter** — Pick directions consistently and let the algebra handle the signs. Flipping a direction mid-analysis creates errors
-- **Applies to any closed boundary, not just a single node** — A boundary can be drawn around a whole subcircuit — total current in = total current out. This is sometimes called the generalized KCL and it's useful for sanity-checking power supply current budgets
 - **Stray capacitance** — At high frequencies, current can "leak" through parasitic capacitances that aren't on the schematic. KCL still holds; the model is just incomplete
 
 **KVL:**
@@ -68,4 +68,8 @@ The laws aren't wrong. The model or the measurement is.
 
 ## Bench Relevance
 
-Kirchhoff's laws are the background logic of every measurement. When a voltage drop doesn't match the schematic, KVL is pointing to a drop that hasn't been found — trace resistance, a connector, or wire that isn't in the model. When a supply sources more current than expected, KCL is pointing to a path that hasn't been accounted for. These aren't equations that get written out at the bench — they're the underlying reasoning every time a measurement doesn't add up.
+**A voltage drop in a series path that doesn't add up to the source voltage** means KVL is pointing to a drop missing from the model — trace resistance, a connector, or wire not on the schematic. The gap between the expected sum and the measured sum equals the unaccounted drop.
+
+**A supply sourcing more current than the load should draw** means KCL is pointing to an unaccounted path. The excess current is leaving through a route not in the model — leakage, a shorted component, or a floating pin drawing current.
+
+**Voltage differences between ground points on a board** are KVL applied to the return path. Current flowing through the finite impedance of the ground plane or trace drops voltage across it, and the difference between two "ground" probing points quantifies that drop.

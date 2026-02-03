@@ -171,6 +171,7 @@ That said, shielding and differential signaling are even more effective in combi
 - **Use a true differential probe for differential measurements.** Scope math (Ch1 − Ch2) has poor CMRR because both channels share a ground through the scope chassis. A differential probe takes the difference at the tip, before the ground path matters
 - **Twisted pair without shielding provides effective noise rejection through symmetry alone.** Adding a shield helps in demanding environments, but the primary rejection mechanism is the differential cancellation, not the shielding
 - **Check that the common-mode voltage stays within the receiver's input range.** Differential receivers reject common-mode noise only up to a specified limit — beyond that, the output saturates or distorts regardless of the differential signal quality
+- **Check pair symmetry by comparing amplitude and timing on the two lines.** Unequal amplitude or skewed timing between the + and − conductors indicates asymmetry that degrades common-mode rejection — often the fastest diagnostic for differential signal integrity problems
 
 ## Caveats
 
@@ -180,4 +181,8 @@ That said, shielding and differential signaling are even more effective in combi
 
 ## Bench Relevance
 
-Most modern interfaces are differential — USB, Ethernet, HDMI, PCIe, LVDS — so recognizing differential signaling determines probe choice and measurement interpretation on the bench. Noise appearing equally on both lines of a pair is common-mode and gets rejected by the receiver; noise on one line only degrades the signal, making it important to identify which case is present. Checking pair symmetry (equal amplitude, equal timing) is often the fastest diagnostic for differential signal problems. Converting between single-ended test equipment and a differential device under test is a recurring bench challenge that requires understanding both the signal topology and the limitations of the conversion method.
+**Noise appearing equally on both lines of a differential pair** is common-mode — the receiver rejects it, and it does not degrade the signal unless it exceeds the receiver's common-mode input range or converts to differential-mode through path asymmetry.
+
+**Noise present on one line of a differential pair but not the other** is differential-mode noise. The receiver cannot distinguish it from the intended signal, so it passes through and degrades signal quality directly.
+
+**Amplitude or timing mismatch between the two lines of a differential pair** indicates asymmetry that degrades common-mode rejection. Mismatched trace lengths, unequal termination, or a damaged conductor shifts the balance point and converts common-mode noise into differential-mode noise that the receiver cannot reject.

@@ -228,4 +228,8 @@ Each step introduces practical considerations: propagation delay through each ga
 
 ## Bench Relevance
 
-Boolean logic most visibly shows up on the bench when verifying combinational circuits — driving inputs through all relevant combinations and checking outputs against the expected truth table. De Morgan's equivalences are immediately useful when reading schematics that mix NAND, NOR, AND, and OR symbols; recognizing that a NAND with inverted inputs acts as an OR gate (and similar transformations) prevents misreading the logic. Simplification has direct resource implications in FPGA and CPLD work, where fewer product terms mean fewer look-up tables consumed and shorter propagation paths. When a digital output does not match expectations, re-deriving the Boolean expression from the schematic and checking it against the truth table is often the fastest path to finding the error.
+**A digital output that doesn't match the expected truth table for specific input combinations** — re-deriving the Boolean expression from the schematic identifies whether the error is in the logical function itself or in the physical implementation. If the re-derived expression matches the intended truth table, the fault is physical (wiring, stuck pin), not logical.
+
+**Measured behavior that seems to contradict a schematic using mixed NAND, NOR, and OR gate symbols** — often a De Morgan misread rather than a circuit fault. A NAND gate with inverted inputs is electrically identical to an OR gate; missing one of these equivalences when reading the schematic produces a predicted output that differs from the actual (correct) output.
+
+**An FPGA design consuming more LUTs or product terms than the function requires** — unsimplified Boolean expressions map to more logic resources. Fewer product terms after simplification means fewer lookup tables consumed and shorter propagation paths through the fabric.

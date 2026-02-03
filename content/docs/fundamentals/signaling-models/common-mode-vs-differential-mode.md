@@ -194,6 +194,7 @@ Similarly: adding shielding to a cable might reduce noise pickup, but if the shi
 - **Separating conducted emissions into common-mode and differential-mode components identifies which filter topology is needed.** A LISN measures total conducted emissions; separating them into CM and DM prevents wasting effort with the wrong filter type — CM chokes for common-mode, X-capacitors and series inductors for differential-mode
 - **A current probe clamped around both conductors of a pair reads only common-mode current.** Differential currents flow in opposite directions and cancel in the probe. Any current the probe registers is common-mode — a fast way to quantify CM noise without breaking into the circuit
 - **When selecting a common-mode choke, check its impedance at the noise frequency, not just its DC or low-frequency rating.** A choke rated at 1 kΩ at 100 MHz may present only 10 Ω at 1 MHz. The impedance-vs-frequency curve determines whether the choke actually attenuates the noise that matters
+- **A two-channel oscilloscope can approximate the CM/DM decomposition using math mode.** (Ch1 + Ch2)/2 displays the common-mode component; Ch1 − Ch2 displays the differential-mode component — separating noise into its two modes without specialized equipment
 
 ## Caveats
 
@@ -204,4 +205,8 @@ Similarly: adding shielding to a cable might reduce noise pickup, but if the shi
 
 ## Bench Relevance
 
-The CM/DM decomposition is the first analytical step when diagnosing noise on any differential signal path. The symptom often indicates the mode: noise that disappears when switching from single-ended to differential measurement is common-mode; noise that persists is differential-mode. A two-channel oscilloscope can approximate the decomposition using math mode — (Ch1 + Ch2)/2 for the common-mode component, Ch1 − Ch2 for the differential-mode component. Most "mysterious" noise on balanced cables traces to CM-to-DM conversion from asymmetry rather than from the noise amplitude itself; once the mode is identified, the correct filter topology and the location of the imbalance both become clear.
+**Noise that disappears when switching from a single-ended to a differential measurement** is common-mode — present on both conductors equally but rejected by the differential measurement. The single-ended measurement was showing the common-mode noise as if it were signal; the differential measurement reveals the actual signal underneath.
+
+**Noise that persists regardless of measurement method** is differential-mode — it appears as a voltage difference between the two conductors and looks identical to the intended signal. Differential-mode noise cannot be rejected by the receiver and requires filtering or reduction at the source.
+
+**Noise on a balanced cable that exceeds what the common-mode level alone would predict** often traces to CM-to-DM conversion from asymmetry in the cable or connectors. The common-mode noise itself may be modest, but even small imbalances in conductor impedance, length, or termination convert a fraction of it into differential-mode noise that the receiver passes through.

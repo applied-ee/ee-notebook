@@ -120,11 +120,23 @@ Clock domain crossings are notoriously difficult to verify by simulation alone, 
 
 **Best practice:** Run CDC analysis early and often during design. CDC bugs are extremely difficult to find in lab testing because they manifest as rare, intermittent failures that depend on the exact phase relationship between clocks.
 
-## Gotchas
+## Tips
 
-- **Multi-bit signals cannot be synchronized with parallel two-flip-flop synchronizers** — Each bit may resolve independently, producing a value that was never present in the source domain. Always use Gray code, handshake, or FIFO for multi-bit crossings
-- **Synchronizers work on level changes, not edges** — A pulse that is shorter than the destination clock period may be missed entirely. Use toggle-based pulse synchronizers for single-cycle pulses
-- **"Same frequency" does not mean "same clock"** — Two 100 MHz clocks from different sources are asynchronous, even though they have the same nominal frequency. They require CDC synchronization
-- **Related clocks have deterministic phase relationships** — Two clocks derived from the same PLL output (e.g., 100 MHz and 50 MHz from the same reference) are synchronous. Their phase relationship is known, and synchronizers may be unnecessary — but only if the tools can verify the timing path. When in doubt, synchronize
-- **CDC failures are intermittent and environment-dependent** — A CDC bug might produce failures once per hour, once per day, or once per month. The failure rate depends on clock frequency, temperature (which affects metastability resolution time), and the exact phase relationship at the moment of crossing. Board-level testing may not find the bug; only analysis tools can guarantee correctness
-- **Over-synchronizing wastes latency** — Adding synchronizers where they aren't needed (e.g., between flip-flops in the same clock domain) adds unnecessary pipeline delay. CDC analysis should identify exactly which crossings need synchronization
+- **Run CDC analysis early in the design cycle** — CDC bugs are extremely difficult to find in lab testing because they manifest as rare, intermittent failures. Static analysis catches unsynchronized crossings, multi-bit crossings without proper encoding, and other structural errors before hardware
+- **Related clocks derived from the same PLL have a known phase relationship and may not require synchronization** — two clocks from the same PLL output (e.g., 100 MHz and 50 MHz from the same reference) are synchronous, and the timing tools can verify the path directly. When the relationship is uncertain, synchronize
+- **Use CDC analysis tools to identify exactly which crossings need synchronization** — adding synchronizers to paths within the same clock domain wastes latency; CDC analysis separates the crossings that need protection from those that do not
+
+## Caveats
+
+- **Multi-bit signals cannot be synchronized with parallel two-flip-flop synchronizers** — each bit may resolve independently, producing a value that was never present in the source domain. Gray code, handshake, or FIFO techniques are required for multi-bit crossings
+- **Synchronizers work on level changes, not edges** — a pulse that is shorter than the destination clock period may be missed entirely. Toggle-based pulse synchronizers are needed for single-cycle pulses
+- **"Same frequency" does not mean "same clock"** — two 100 MHz clocks from different sources are asynchronous, even though they have the same nominal frequency. They require CDC synchronization
+- **CDC failures are intermittent and environment-dependent** — a CDC bug might produce failures once per hour, once per day, or once per month. The failure rate depends on clock frequency, temperature (which affects metastability resolution time), and the exact phase relationship at the moment of crossing. Board-level testing may not find the bug; only analysis tools can guarantee correctness
+
+## Bench Relevance
+
+**Rare, intermittent data corruption that cannot be reproduced reliably** is the classic CDC failure. The error rate depends on the exact phase relationship between the two clocks, which drifts continuously. The failure may appear once per hour or once per month, making it invisible to short test runs and nearly impossible to trigger on demand.
+
+**Corrupted multi-bit values that were never present in the source domain** indicate a multi-bit bus crossing without proper synchronization. Each bit resolves through its synchronizer independently, and the destination captures a combination of old and new bits — a value that never existed on the source side.
+
+**A pulse or event that is occasionally missed by the destination** results from a single-cycle source pulse that is shorter than the destination clock period. The synchronizer never sees a stable level, and the event passes undetected. The miss rate increases as the destination clock frequency decreases relative to the source.

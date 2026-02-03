@@ -124,6 +124,7 @@ Some outputs have only a pull-down transistor (NMOS for open-drain, NPN for open
 - **Check datasheet specifications at the actual operating voltage, not just the nominal maximum.** A 74HC gate at 2 V is much slower, has less drive strength, and offers narrower noise margins than the same gate at 5 V. Performance tables in the datasheet are indexed by supply voltage for this reason.
 - **Add a series termination resistor (22–47 Ω) at the output when using fast-edge CMOS families like 74AC or 74AUC.** The resistor damps reflections at the source before they propagate down the trace. Slower families like 74HC rarely need this.
 - **Keep fan-out to 4–6 loads per output in CMOS designs; add a buffer beyond that.** Each additional input adds capacitance that slows edges and degrades timing. DC fan-out is rarely the limit in CMOS — it is the accumulated capacitance that matters.
+- **Measure actual output HIGH and LOW voltages at the interface between different logic families or voltage domains.** Comparing measured levels against both the driving device's output specifications and the receiving device's input thresholds confirms whether noise margins are met under real operating conditions.
 
 ## Caveats
 
@@ -133,4 +134,10 @@ Some outputs have only a pull-down transistor (NMOS for open-drain, NPN for open
 
 ## Bench Relevance
 
-Logic family compatibility shows up most directly when interfacing ICs from different families or voltage domains — measuring actual output HIGH and input LOW thresholds with a multimeter or scope confirms whether the receiving device's specifications are met. An oscilloscope reveals the dynamic side: ringing from fast-edge CMOS, slow rise times from excessive fan-out or weak pull-ups, and voltage levels that sag under load. Open-drain buses like I2C show the pull-up tradeoff directly — rising-edge shape reveals whether the resistor value suits the bus capacitance. Level-shifting problems often present as intermittent behavior; the signal crosses the threshold but with insufficient margin, and noise or temperature shifts push it into the undefined region.
+**Ringing or oscillation following signal edges** is characteristic of fast-edge CMOS families (74AC, 74AUC) driving traces without termination. The ringing amplitude and frequency depend on trace length and impedance mismatch.
+
+**Slow rise times that degrade timing or signal quality** result from excessive capacitive loading — too many inputs on one output, or a weak pull-up on an open-drain bus. On I2C, the rising-edge shape directly reveals whether the pull-up resistor value suits the bus capacitance.
+
+**Output voltage levels that sag away from the rail under load** indicate the drive strength limit has been reached. A HIGH level dropping below the expected value or a LOW level rising above it reduces noise margin and can push the receiving input into the undefined region.
+
+**Intermittent logic errors in a mixed-voltage system** often trace to insufficient level-shifting margin. The signal crosses the receiver's threshold under nominal conditions, but noise or temperature variation pushes it into the undefined region between valid HIGH and valid LOW.

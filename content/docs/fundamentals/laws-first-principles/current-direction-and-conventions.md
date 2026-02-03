@@ -52,4 +52,6 @@ This removes all ambiguity from power calculations. Without the convention, the 
 
 ## Bench Relevance
 
-Ammeter polarity and current probe orientation assume conventional current. Inserting an ammeter with leads reversed or clamping a current probe backward gives a negative reading — the magnitude is still correct, only the sign is flipped. Datasheet current specifications for IC pins define direction relative to the pin using conventional current: a positive value for I_CC means current flowing into the VCC pin. Recognizing the convention in use — on instruments, in datasheets, and in simulation output — prevents sign errors when comparing measurements to calculated expectations.
+**A negative reading on an ammeter or current probe** means the instrument is oriented opposite to the conventional current direction. The magnitude is correct; only the sign is flipped. Reversing the leads or rotating the clamp restores a positive reading without changing the measurement.
+
+**A measured current that seems to disagree with a datasheet specification** is often a sign convention mismatch, not an actual discrepancy. Datasheets define current direction using conventional current relative to the pin — a positive value for I_CC means current flowing into the VCC pin. Comparing a measurement against a spec requires matching the reference direction used in the datasheet.

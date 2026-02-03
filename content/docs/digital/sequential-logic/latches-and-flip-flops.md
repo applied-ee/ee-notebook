@@ -109,4 +109,8 @@ In practice, FPGA designers use D flip-flops almost exclusively. ASIC designers 
 
 ## Bench Relevance
 
-A synchronous circuit that behaves unpredictably after power-up but works correctly after a manual reset usually traces to uninitialized flip-flops — the hardware started in a random state that the design did not account for. On an oscilloscope, metastability appears as an output that hesitates at an intermediate voltage before resolving, sometimes visible as a widened or smeared transition on a persistence display. Setup and hold violations often present as intermittent bit errors that change with temperature or supply voltage, because the timing margin is so thin that small environmental shifts push the data transition into the forbidden window around the clock edge.
+**Unpredictable behavior after power-up that clears after a manual reset** often traces to uninitialized flip-flops — the hardware started in a random state that the design did not account for. Once the reset forces every flip-flop to a known value, the circuit operates normally because the logic itself is correct.
+
+**A widened or smeared transition edge on a persistence display** is the characteristic oscilloscope signature of metastability. The output hesitates at an intermediate voltage before resolving to 0 or 1, and because the hesitation duration varies from event to event, persistence mode shows a fan-shaped spread at the transition rather than a clean edge.
+
+**Intermittent bit errors that shift with temperature or supply voltage** point to a setup or hold time violation. The timing margin is thin enough that small environmental changes push the data transition into the forbidden window around the clock edge, causing the flip-flop to occasionally capture the wrong value.

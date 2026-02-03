@@ -107,6 +107,7 @@ In purely synchronous designs, hazards are usually harmless — the output is on
 - **In synchronous designs, ignore combinational glitches unless they feed asynchronous inputs** — flip-flops sample after the combinational logic settles, so transient glitches between clock edges have no effect on registered outputs
 - **A multiplexer can implement any truth table directly** — connect the function's output values to the mux data inputs and the input variables to the select lines; this avoids gate-level design entirely for small functions
 - **Check the propagation delay through the entire critical path, not just individual gates** — a chain of fast gates can still violate timing if there are enough levels; the sum of delays determines the maximum clock frequency
+- **Verify combinational circuits by stepping through every relevant input combination at DC and comparing outputs against the truth table** — this catches wiring errors and stuck outputs that high-speed functional testing at operating frequency would mask
 
 ## Caveats
 
@@ -118,4 +119,10 @@ In purely synchronous designs, hazards are usually harmless — the output is on
 
 ## Bench Relevance
 
-A combinational circuit that gives the right output most of the time but occasionally produces wrong results points to a timing problem — either a hazard causing a glitch that propagates through an asynchronous path, or a critical path that barely meets timing and fails under temperature or voltage variation. On an oscilloscope, these show up as narrow spikes (glitches) or as output transitions that arrive too close to the clock edge (setup violations). When verifying a decoder or mux on the bench, systematically stepping through every input combination against the truth table catches wiring errors and stuck outputs that functional testing at speed would mask. If an FPGA design fails timing closure, the synthesis report's critical path traces back to the longest combinational chain between registers — the same concept as the ripple-carry delay, expressed in the tool's timing analysis.
+**A combinational circuit that produces correct outputs most of the time but occasionally gives wrong results** points to a timing issue — either a hazard generating a glitch that propagates through an asynchronous path, or a critical path that barely meets timing and fails intermittently.
+
+**Narrow spikes visible on an oscilloscope at the output of a combinational circuit** are glitches from static or dynamic hazards — different propagation delays through parallel gate paths cause momentary incorrect outputs during input transitions, even when the steady-state logic is correct.
+
+**A circuit that works at room temperature but fails at temperature extremes or with a lower supply voltage** suggests a marginal critical path. Worst-case propagation delays (slow process corner, high temperature, low voltage) exceed what typical conditions allowed, pushing output transitions past the clock edge.
+
+**A stuck or incorrect output on one specific input combination during DC verification** typically indicates a wiring error, stuck connection, or unconnected pin rather than a logic design error — the Boolean function is correct but the physical implementation has a fault on that particular path.

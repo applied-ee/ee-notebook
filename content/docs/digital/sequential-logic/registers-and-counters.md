@@ -109,4 +109,8 @@ A counter used purely to divide a clock frequency. An n-bit counter divides the 
 
 ## Bench Relevance
 
-A counter that occasionally displays a wrong value for one clock cycle — visible as a brief flicker in decoded output — typically indicates a ripple counter being read by synchronous logic before all bits have settled. FIFO overflow or underflow symptoms (corrupted data appearing in bursts) often trace to read/write pointer counters that use binary encoding across clock domains; switching to Gray code pointers is the standard fix. When a shift-register-based serial interface (SPI, UART) drops or corrupts the first byte after reset but works correctly afterward, the shift register likely powered up in an unknown state and the first transaction shifted out garbage before valid data was loaded.
+**A counter output that briefly shows a wrong value for one clock cycle** — visible as a flicker in decoded output — typically indicates a ripple counter being read by synchronous logic before all bits have settled. The propagation delay through the ripple chain means intermediate bits are still changing when the synchronous logic samples them.
+
+**Corrupted data appearing in bursts from a FIFO** often traces to read/write pointer counters that use binary encoding across clock domains. Multiple pointer bits changing simultaneously creates a transiently invalid pointer value, causing the FIFO to read from or write to the wrong address for one or more cycles.
+
+**A serial interface that drops or corrupts the first byte after reset** — but works correctly afterward — points to a shift register that powered up in an unknown state. The first transaction shifted out whatever happened to be in the register before valid data was loaded.

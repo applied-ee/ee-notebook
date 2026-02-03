@@ -57,4 +57,7 @@ Ohm’s law isn’t wrong in these cases — it’s just incomplete or only vali
 - **Temperature dependence** — Resistance changes with temperature. A wire-wound resistor's value at room temperature isn't the same as its value at 150 C under load
 
 ## Bench Relevance
-Ohm's law is often the fastest way to sanity-check a measurement that doesn't line up with expectations. Unexpected voltage drop? V = IR points to resistance not accounted for. Current lower than expected? Something in the path is adding resistance. It's less a formula to compute and more a reflex for reasoning about what the circuit is doing.
+
+**An unexpected voltage drop across a wire, trace, or connector** often points to resistance that isn't in the schematic. V = IR applied to the measured drop and known current gives the parasitic resistance directly — trace resistance, contact resistance, or a degraded solder joint.
+
+**Current through a load measuring lower than calculated** suggests additional series resistance dropping voltage before the load. The "missing" voltage appears across the unaccounted resistance, and V = IR on that drop quantifies it.
