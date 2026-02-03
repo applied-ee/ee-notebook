@@ -92,10 +92,21 @@ Most practical flip-flops have asynchronous preset (set) and clear (reset) input
 
 In practice, FPGA designers use D flip-flops almost exclusively. ASIC designers sometimes use latches for performance optimization, but this is an advanced technique with significant verification complexity.
 
-## Gotchas
+## Tips
+
+- **Default to D flip-flops in synchronous designs** — they are the simplest, fastest, and best supported by synthesis tools; JK and T types add complexity without modern benefit
+- **Always provide a reset for every flip-flop** — without it, power-up state is indeterminate, and simulation will not match hardware behavior
+- **Synchronize asynchronous reset deassertion** — assert reset asynchronously for immediate effect, but release it synchronously (through a two-flip-flop synchronizer) to prevent inconsistent state across the design
+- **If a synthesis tool warns about inferred latches, treat it as an error** — an inferred latch almost always means an incomplete if/else or case statement in the HDL; fix the source rather than accepting the latch
+
+## Caveats
 
 - **Metastability is real** — Violating setup or hold time doesn't just give a wrong answer — it can put the flip-flop into a metastable state where the output hovers between 0 and 1 for an indeterminate time. See [Metastability]({{< relref "/docs/digital/when-digital-breaks-down/metastability" >}})
 - **Clock skew between flip-flops causes hold violations** — If the clock arrives at a downstream flip-flop before an upstream one, the downstream flip-flop might capture the old data before the upstream one has had time to change. This is a hold time violation, and it's the timing constraint that cannot be fixed by slowing the clock
 - **Power-up state is not guaranteed** — Flip-flops power up in a random state unless explicitly reset. Designs that assume a specific initial state without a reset mechanism will fail intermittently
 - **Asynchronous inputs are not debounced** — Mechanical switches connected to set/reset inputs will bounce, producing multiple triggers. Always debounce mechanical inputs before connecting to flip-flop control inputs
 - **Latch inference in HDL** — In hardware description languages, an incomplete if/else statement (one that doesn't cover all cases) infers a latch rather than a flip-flop. This is almost always a bug, not intentional. Synthesis tools usually warn about inferred latches
+
+## Bench Relevance
+
+A synchronous circuit that behaves unpredictably after power-up but works correctly after a manual reset usually traces to uninitialized flip-flops — the hardware started in a random state that the design did not account for. On an oscilloscope, metastability appears as an output that hesitates at an intermediate voltage before resolving, sometimes visible as a widened or smeared transition on a persistence display. Setup and hold violations often present as intermittent bit errors that change with temperature or supply voltage, because the timing margin is so thin that small environmental shifts push the data transition into the forbidden window around the clock edge.

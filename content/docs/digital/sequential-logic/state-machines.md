@@ -104,10 +104,21 @@ If the state machine should complete a sequence within a bounded time, a timer t
 
 **Debouncer:** A state machine that waits for a button input to be stable for a minimum number of clock cycles before asserting the debounced output. States: IDLE, PRESSED_WAIT, PRESSED, RELEASED_WAIT. A counter (or separate state for each wait cycle) provides the timing.
 
-## Gotchas
+## Tips
+
+- **Draw the state diagram before writing any HDL** — a complete state diagram forces every state and every transition to be defined explicitly, catching design errors before they become synthesis bugs
+- **Always include a default case that transitions to the reset state** — if the state register enters an undefined encoding (from noise, SEU, or a bug), the default case provides recovery instead of lockup
+- **Prefer Moore machines unless the Mealy encoding is significantly simpler** — Moore outputs are synchronous and glitch-free by construction, which simplifies timing and debugging
+- **Use a clock enable to slow a state machine, not a gated clock** — running the state machine at the system clock and advancing only when the enable is active keeps the state register in the main clock domain, where timing analysis tools can verify it
+
+## Caveats
 
 - **Unreachable states waste resources and hide bugs** — If a state exists in the encoding but is never reached through normal transitions, it should either be removed or assigned a safe default transition. In one-hot encoding, illegal states (where zero or more than one flip-flop is set) are especially dangerous
 - **Missing transitions cause undefined behavior** — If a state-input combination is not explicitly defined, the synthesis tool may assign arbitrary behavior. Always cover every case, including impossible ones (defensive design)
 - **Large state machines are hard to verify** — A state machine with n states and m input bits has n x 2^m possible transitions. For a 16-state machine with 4 inputs, that's 256 transitions to verify. State diagram review is essential, and formal verification tools can check for unreachable states, deadlocks, and safety properties
 - **One-hot encoding needs illegal-state detection** — In a one-hot state machine, any state where more than one flip-flop is set (or none is set) is illegal. A single bit-flip (from noise or SEU) creates an illegal state. Adding a parity check or using a Hamming-encoded state can detect and recover from single-bit errors
 - **Clock enable vs. state machine clock** — Slowing down a state machine by gating its clock creates timing analysis problems. The preferred approach is to run the state machine at the full system clock and use a clock enable (derived from a counter) to advance the state only at the desired rate
+
+## Bench Relevance
+
+A state machine that occasionally sticks in an unexpected state — requiring a reset to recover — often points to a missing default transition for an illegal or unreachable state encoding. In protocol state machines (SPI, I2C, UART), a transaction that stalls partway through usually means the state machine is waiting for an input condition that never arrives, either because timeout logic is missing or because an external signal was not properly synchronized into the clock domain. On an FPGA, reading the state register through a debug probe (ILA or SignalTap) while the failure occurs reveals exactly which state the machine is stuck in, turning an opaque timeout into a specific transition to investigate.

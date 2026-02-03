@@ -92,10 +92,21 @@ A counter used purely to divide a clock frequency. An n-bit counter divides the 
 
 **Johnson counter (twisted ring):** The inverted output feeds back to the input. An n-bit Johnson counter has 2n states. Decoding requires 2-input AND gates (one per state), which is simpler than decoding a binary counter. Used in timing generators and decade counters.
 
-## Gotchas
+## Tips
+
+- **Use a synchronous counter whenever its value is read by other logic** — ripple counters produce transient invalid states during the propagation delay; only use ripple counters as frequency dividers where intermediate values are not observed
+- **Use Gray code encoding for counters that cross clock domains** — only one bit changes per count, eliminating the multi-bit transition problem that makes binary counters unsafe across domain boundaries
+- **For non-power-of-2 clock division with a 50% duty cycle, toggle a flip-flop at the half-count** — a mod-N counter's MSB does not inherently produce a symmetric waveform; an explicit toggle at N/2 guarantees it
+- **Initialize shift registers and ring counters explicitly with reset logic** — without a defined starting state, a ring counter may power up with zero or multiple bits set, producing an invalid sequence
+
+## Caveats
 
 - **Ripple counters produce invalid intermediate states** — Never use a ripple counter's output as input to combinational logic in a synchronous system without first registering (re-clocking) it. The intermediate states can trigger incorrect behavior
 - **Synchronous counter carry chains limit speed** — For a 32-bit synchronous counter at high clock frequencies, the carry chain propagation delay may exceed the clock period. Carry-lookahead techniques (similar to adder design) or pipelining the counter solve this
 - **Overflow and underflow** — A counter that wraps from its maximum to 0 (or 0 to maximum for down-counting) must be handled correctly in the surrounding logic. If the counter value is compared against a threshold, the comparison must account for wraparound
 - **Gray code counters avoid multi-bit transitions** — A binary counter can change multiple bits simultaneously (e.g., 0111 to 1000 changes all 4 bits). In a Gray code counter, only one bit changes per count. This is essential for counters whose outputs cross clock domains (FIFO read/write pointers). See [Clock Domain Crossing]({{< relref "/docs/digital/timing-and-synchronization/clock-domain-crossing" >}})
 - **Shift register initial state** — Like flip-flops, shift registers power up in an indeterminate state. A ring counter with no guaranteed initial state may have zero bits set (stuck at all-0) or multiple bits set (invalid one-hot). Always include reset logic to initialize the correct starting pattern
+
+## Bench Relevance
+
+A counter that occasionally displays a wrong value for one clock cycle — visible as a brief flicker in decoded output — typically indicates a ripple counter being read by synchronous logic before all bits have settled. FIFO overflow or underflow symptoms (corrupted data appearing in bursts) often trace to read/write pointer counters that use binary encoding across clock domains; switching to Gray code pointers is the standard fix. When a shift-register-based serial interface (SPI, UART) drops or corrupts the first byte after reset but works correctly afterward, the shift register likely powered up in an unknown state and the first transaction shifted out garbage before valid data was loaded.
