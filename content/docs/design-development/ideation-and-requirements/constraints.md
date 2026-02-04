@@ -5,7 +5,7 @@ weight: 30
 
 # Constraints: Size, Power, Cost & Environment
 
-Every design lives inside a box of constraints — some obvious, some hidden, and some that only reveal themselves when you violate them. Constraints are not the same as requirements. Requirements describe what the system must do. Constraints describe the boundaries within which the design must exist. You can negotiate requirements; constraints are usually imposed by physics, economics, or regulations.
+Every design lives inside a box of constraints — some obvious, some hidden, and some that only reveal themselves when they are violated. Constraints are not the same as requirements. Requirements describe what the system must do. Constraints describe the boundaries within which the design must exist. Requirements are negotiable; constraints are usually imposed by physics, economics, or regulations.
 
 ## Recognizing Constraints Early
 
@@ -63,12 +63,12 @@ Cost constraints come in several flavors, and they don't all scale the same way:
 | PCB fabrication | Per panel, decreasing with quantity | $5 for 5 boards from JLCPCB, $0.50/board at 1000 |
 | Assembly | Per unit, decreasing with automation | $20 hand-built, $2 machine-assembled |
 | Tooling (NRE) | One-time | $500 for a custom enclosure mold |
-| Design time | One-time (but often underestimated) | 40 hours at your billing rate or opportunity cost |
+| Design time | One-time (but often underestimated) | 40 hours at the relevant billing rate or opportunity cost |
 | Test and validation | Per design, partially per unit | Test fixture, calibration, compliance testing |
 
 For one-off learning projects, BOM cost and design time dominate. For anything approaching production, assembly cost and tooling become significant. The BOM optimization that saves $0.10 per unit is irrelevant at 10 units but critical at 100,000.
 
-A common trap is optimizing the wrong cost. Spending 20 hours of design time to save $2 on a BOM only makes sense if you're building more than a handful of units.
+A common trap is optimizing the wrong cost. Spending 20 hours of design time to save $2 on a BOM only makes sense at more than a handful of units.
 
 ## Environmental Constraints
 
@@ -104,11 +104,18 @@ The design space is the region where all constraints are simultaneously satisfie
 | Mechanical | Vibration, shock, mounting method | Component selection, PCB mounting, enclosure design |
 | Schedule | Design deadline, lead times, prototype turnaround | Design reuse, component availability, fab house selection |
 
-## Gotchas
+## Tips
 
-- **Hidden constraints appear late.** The enclosure designer mentions a height limit after the PCB is laid out with tall electrolytic capacitors. Always ask about physical constraints before component selection.
-- **Constraints propagate through the supply chain.** A component that meets your technical constraints but has a 16-week lead time violates your schedule constraint. Availability is a constraint, not just a logistics inconvenience.
-- **Temperature derating is not optional.** A capacitor rated for 85 C at full voltage is only rated for a fraction of that voltage at higher temperatures. Datasheet maximum ratings assume ideal conditions that your design may not provide.
-- **"Low cost" and "reliable" are in tension.** Cheap components have wider tolerances, fewer screening steps, and less consistent supply chains. Understand what you're trading away.
-- **The constraint you don't write down is the one that bites you.** If the device must survive being dropped, that's a constraint. If it must be assembled by someone with no soldering experience, that's a constraint. Make them explicit.
-- **Environmental constraints compound over time.** A device that survives thermal cycling for a week may fail after a year of daily cycling due to solder fatigue and material degradation. Short-term testing may not reveal long-term environmental failures.
+- Ask about physical constraints (enclosure dimensions, height limits, connector placement) before selecting components — discovering a height limit after layout is expensive
+- List every supply rail and its current budget early; power constraints cascade into regulator topology, thermal design, and board area decisions
+- Map constraint interactions (size vs. thermal, cost vs. robustness) on paper before committing to a design direction — the intersections reveal the real design space
+- Treat lead time and component availability as first-class constraints alongside electrical and mechanical parameters
+
+## Caveats
+
+- **Hidden constraints appear late.** The enclosure designer mentions a height limit after the PCB is laid out with tall electrolytic capacitors — always ask about physical constraints before component selection
+- **Constraints propagate through the supply chain.** A component that meets the technical constraints but has a 16-week lead time violates the schedule constraint — availability is a constraint, not just a logistics inconvenience
+- **Temperature derating is not optional.** A capacitor rated for 85 C at full voltage is only rated for a fraction of that voltage at higher temperatures — datasheet maximum ratings assume ideal conditions that the actual design may not provide
+- **"Low cost" and "reliable" are in tension.** Cheap components have wider tolerances, fewer screening steps, and less consistent supply chains — understand what is being traded away
+- **The constraint not written down is the one that bites.** If the device must survive being dropped, that's a constraint; if it must be assembled by someone with no soldering experience, that's a constraint — make them explicit
+- **Environmental constraints compound over time.** A device that survives thermal cycling for a week may fail after a year of daily cycling due to solder fatigue and material degradation — short-term testing may not reveal long-term environmental failures

@@ -5,7 +5,7 @@ weight: 20
 
 # Lifecycle Status: Active, NRND & EOL
 
-Every electronic component has a lifecycle that follows a predictable arc: introduction, active production, maturity, decline, and eventually obsolescence. Understanding where a component sits on this arc is essential for making design decisions that won't leave you scrambling for replacements in two years. The lifecycle status of a part is as important as its electrical specifications — a perfect part that's about to be discontinued is a ticking time bomb in your design.
+Every electronic component has a lifecycle that follows a predictable arc: introduction, active production, maturity, decline, and eventually obsolescence. Understanding where a component sits on this arc is essential for making design decisions that avoid scrambling for replacements in two years. The lifecycle status of a part is as important as its electrical specifications — a perfect part that is about to be discontinued is a ticking time bomb in any design.
 
 ## The Component Lifecycle
 
@@ -29,7 +29,7 @@ Lifecycle information isn't always easy to find, and it's scattered across multi
 
 **Distributor product pages** often flag lifecycle status with icons or labels. Digi-Key marks parts as "Active," "Not For New Designs," "Obsolete," or "Last Time Buy." Mouser uses similar flags. These are derived from manufacturer data but may lag behind official announcements.
 
-**Product Change Notifications (PCNs)** are formal documents from manufacturers announcing changes to a product — including discontinuation. If you're a registered customer or have an account with the manufacturer's notification system, PCNs arrive by email. Many distributors also forward PCNs to customers who have purchased affected parts.
+**Product Change Notifications (PCNs)** are formal documents from manufacturers announcing changes to a product — including discontinuation. For registered customers or those with an account on the manufacturer's notification system, PCNs arrive by email. Many distributors also forward PCNs to customers who have purchased affected parts.
 
 **Component databases and lifecycle trackers** (like SiliconExpert, IHS, or Octopart's lifecycle data) aggregate lifecycle information from multiple manufacturers. These services are aimed at professional design teams and often require paid subscriptions, but they provide comprehensive, searchable lifecycle data.
 
@@ -37,31 +37,31 @@ Lifecycle information isn't always easy to find, and it's scattered across multi
 
 ## The NRND Dilemma
 
-NRND is the trickiest lifecycle status because it requires a judgment call. The part still works, it's still available, and it may continue to be available for years. But the manufacturer has signaled that it's winding down. What do you do?
+NRND is the trickiest lifecycle status because it requires a judgment call. The part still works, it is still available, and it may continue to be available for years. But the manufacturer has signaled that it is winding down.
 
-**For new designs:** avoid NRND parts. The manufacturer is explicitly telling you not to use them. Design in the recommended replacement, even if it requires changes to your circuit. The short-term inconvenience of adapting to a new part is far less than the long-term cost of redesigning when the NRND part reaches EOL.
+**For new designs:** avoid NRND parts. The manufacturer is explicitly advising against using them. Design in the recommended replacement, even if it requires circuit changes. The short-term inconvenience of adapting to a new part is far less than the long-term cost of redesigning when the NRND part reaches EOL.
 
-**For existing products already in production:** evaluate the risk. How long will your product be manufactured? What's your production volume? Can you stockpile enough inventory to cover the remaining product lifetime? Is a redesign to a new part economically justified?
+**For existing products already in production:** evaluate the risk. How long will the product be manufactured? What is the production volume? Can enough inventory be stockpiled to cover the remaining product lifetime? Is a redesign to a new part economically justified?
 
-**For prototypes and one-offs:** NRND parts are usually fine. If you're building five boards for a lab experiment, the part's lifecycle doesn't matter. But if the prototype might evolve into a product, consider the lifecycle implications early.
+**For prototypes and one-offs:** NRND parts are usually fine. When building five boards for a lab experiment, the part's lifecycle does not matter. But if the prototype might evolve into a product, consider the lifecycle implications early.
 
-The trap: using an NRND part because "it'll be fine for our timeline" and then having the timeline extend. Projects that were supposed to ship in six months ship in eighteen. Products that were supposed to be short-run become long-run. The NRND part you thought you'd be done with is now a dependency you can't escape.
+The trap: using an NRND part because "it will be fine for our timeline" and then having the timeline extend. Projects that were supposed to ship in six months ship in eighteen. Products that were supposed to be short-run become long-run. The NRND part that seemed temporary becomes a dependency that cannot be escaped.
 
 ## Planning for Obsolescence
 
-Obsolescence is not an exception — it's a certainty. Every component will eventually be discontinued. The question isn't whether your parts will go obsolete, but whether you'll be prepared when they do.
+Obsolescence is not an exception — it is a certainty. Every component will eventually be discontinued. The question is not whether parts will go obsolete, but whether the design team will be prepared when they do.
 
 **Design for substitution.** Use standard packages, standard interfaces, and circuit topologies that work with multiple components. This is covered in detail in [Designing for Substitution]({{< relref "/docs/design-development/part-selection-and-sourcing/designing-for-substitution" >}}), but the key principle is: don't paint yourself into a corner with a unique part that has no alternatives.
 
-**Maintain an alternate BOM.** For every critical component, document at least one alternate part number with notes on any design changes required. When the primary part reaches EOL, you have a ready-made plan for substitution.
+**Maintain an alternate BOM.** For every critical component, document at least one alternate part number with notes on any design changes required. When the primary part reaches EOL, a ready-made plan for substitution is already in place.
 
-**Monitor lifecycle status actively.** Don't wait for the EOL announcement to discover that your key parts are being phased out. Set up notifications with manufacturers and distributors. Review your BOM's lifecycle status at least annually.
+**Monitor lifecycle status actively.** Do not wait for the EOL announcement to discover that key parts are being phased out. Set up notifications with manufacturers and distributors. Review the BOM's lifecycle status at least annually.
 
-**Consider last-time buys carefully.** When an EOL is announced, you have the option to buy enough inventory to cover your remaining production needs. This requires estimating future demand, accounting for storage degradation (especially for electrolytic capacitors and moisture-sensitive devices), and tying up capital in inventory. It's a business decision, not just an engineering decision.
+**Consider last-time buys carefully.** When an EOL is announced, there is the option to buy enough inventory to cover remaining production needs. This requires estimating future demand, accounting for storage degradation (especially for electrolytic capacitors and moisture-sensitive devices), and tying up capital in inventory. It is a business decision, not just an engineering decision.
 
 ## The Lifespan Mismatch
 
-One of the most fundamental tensions in electronics design: your product's lifespan may be much longer than your components' lifecycles.
+One of the most fundamental tensions in electronics design: a product's lifespan may be much longer than its components' lifecycles.
 
 A medical device might need to be serviceable for 15-20 years. An industrial control system might be in production for a decade. An automotive ECU must be available as a replacement part for the life of the vehicle platform, which can be 10-15 years. But the semiconductor components inside these products may have lifecycles of 5-7 years.
 
@@ -69,11 +69,18 @@ This mismatch forces either: periodic redesigns to replace obsolete components (
 
 The automotive and military/aerospace industries have developed formal frameworks for managing this — long-lifecycle component programs, qualified component lists, and formalized obsolescence management processes. For smaller companies and individual designers, the same principles apply at a smaller scale: be aware of the mismatch, plan for it, and build in flexibility.
 
-## Gotchas
+## Tips
 
-- **NRND status is not always prominently displayed.** Some manufacturer websites bury lifecycle status deep in product pages or only show it in the ordering system. Check explicitly — don't assume a part is active just because the product page exists.
-- **"Active" doesn't mean "available."** A part can be in active production but allocated, with lead times of 30+ weeks. Active status guarantees ongoing manufacturing but doesn't guarantee you can buy it when you need it.
-- **EOL announcements can be sudden.** While most manufacturers provide 6-12 months of notice, some give less. Small manufacturers or niche products may announce EOL with minimal warning. Monitor proactively.
-- **Obsolete parts attract counterfeits.** When a popular part goes obsolete and demand persists, counterfeit parts appear in the gray market. If you must source obsolete parts, use only authorized channels and consider testing incoming parts for authenticity.
-- **Last-time buy quantities are hard to estimate.** Buy too few and you run out before the product ends production. Buy too many and you've wasted capital on parts that sit on a shelf. Err on the side of buying more, but account for storage conditions (temperature, humidity) that affect component reliability.
-- **The "recommended replacement" isn't always a drop-in.** When a manufacturer discontinues a part and suggests a replacement, the replacement may have different pinouts, different electrical characteristics, or different package options. Verify compatibility before assuming you can simply swap part numbers.
+- Check lifecycle status on the manufacturer's product page before committing any new component to a design — distributor labels can lag behind official announcements
+- Register for Product Change Notifications (PCNs) with manufacturers and key distributors to receive early warning of NRND and EOL transitions
+- Maintain an alternate BOM for every critical component so a ready-made substitution plan exists before a last-time-buy deadline arrives
+- Review the full BOM's lifecycle status at least annually to catch parts quietly drifting toward NRND or EOL
+
+## Caveats
+
+- **NRND status is not always prominently displayed.** Some manufacturer websites bury lifecycle status deep in product pages or only show it in the ordering system — never assume a part is active just because the product page exists
+- **"Active" does not mean "available."** A part can be in active production but allocated, with lead times of 30+ weeks; active status guarantees ongoing manufacturing but not immediate availability
+- **EOL announcements can be sudden.** While most manufacturers provide 6-12 months of notice, some give less, and small manufacturers or niche products may announce EOL with minimal warning
+- **Obsolete parts attract counterfeits.** When a popular part goes obsolete and demand persists, counterfeit parts appear in the gray market; use only authorized channels and consider testing incoming parts for authenticity
+- **Last-time buy quantities are hard to estimate.** Buy too few and the supply runs out before the product ends production; buy too many and capital is wasted on parts that sit on a shelf
+- **The "recommended replacement" is not always a drop-in.** When a manufacturer discontinues a part and suggests a replacement, the replacement may have different pinouts, different electrical characteristics, or different package options

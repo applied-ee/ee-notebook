@@ -23,7 +23,7 @@ Broken assumptions tend to fall into recognizable patterns. Understanding the ca
 
 Assumptions break for a few fundamental reasons:
 
-- **Incomplete information.** You didn't know what you didn't know. The datasheet didn't specify the parameter you needed. The operating environment wasn't fully characterized. The supplier didn't disclose the upcoming end-of-life notice.
+- **Incomplete information.** The unknowns were invisible. The datasheet didn't specify the needed parameter. The operating environment wasn't fully characterized. The supplier didn't disclose the upcoming end-of-life notice.
 - **Overconfidence in models.** Simulation is a model of reality, not reality itself. Every model omits details, and those omitted details sometimes matter. A SPICE simulation that excludes parasitic capacitance may predict stable behavior in a circuit that oscillates on the bench.
 - **Extrapolation from past experience.** "It worked last time" is a powerful but unreliable heuristic. Conditions change, and a design that worked in one context may fail in a slightly different one.
 - **Wishful thinking.** Sometimes the assumption is less "I believe this is true" and more "I hope this is true." The designer knows the margin is thin but presses forward because the alternative is a more complex (and time-consuming) design. Hope is not an engineering strategy, but it masquerades as one more often than anyone likes to admit.
@@ -50,12 +50,19 @@ The highest-value output of an assumption audit is a checklist of things to veri
 
 Over time, these checks accumulate into a design review checklist that catches the most common failure modes before they become problems. Each broken assumption that's converted into a check prevents the same mistake from recurring — see [turning mistakes into patterns]({{< relref "/docs/design-development/project-retrospectives/turning-mistakes-into-patterns" >}}).
 
-The checklist doesn't need to be exhaustive. It just needs to cover the assumptions that have actually broken in your experience. That makes it personal, relevant, and likely to grow with every project.
+The checklist doesn't need to be exhaustive. It just needs to cover the assumptions that have actually broken in practice. That makes it personal, relevant, and likely to grow with every project.
 
-## Gotchas
+## Tips
 
-- **The most dangerous assumptions are the ones you don't know you're making.** Explicit assumptions can be verified. Implicit assumptions — the ones so deeply embedded that you don't even recognize them as assumptions — are the ones that blindside you.
-- **Datasheet typical values are not design values.** A parameter listed as "typical 10mA" might be "maximum 25mA" under worst-case conditions. Design to the worst case, not the typical.
-- **"It worked on the bench" is the weakest form of validation.** The bench is a controlled environment with ideal power, stable temperature, and short cables. The field is none of these things.
-- **Broken assumptions are not personal failures.** Every designer makes assumptions — it's impossible to verify everything. The failure is not in making assumptions but in not examining them when things go wrong.
-- **The same assumption can break in different ways on different projects.** "Sufficient margin" is an assumption that breaks repeatedly, but the specific parameter that's marginal changes each time. The meta-lesson is: always check margin, on everything.
+- Maintain a running checklist of assumptions that have broken on past projects and verify each one explicitly at the start of every new design
+- Design to worst-case datasheet values rather than typical values, especially for thermal, current, and timing parameters
+- Before committing to a design, list every implicit assumption (component availability, environmental conditions, timeline dependencies) and assign each one a verification step
+- Perform an assumption audit at each design milestone: ask what is being taken as given that has not been measured or confirmed
+
+## Caveats
+
+- **The most dangerous assumptions are the ones not consciously recognized.** Explicit assumptions can be verified. Implicit assumptions — the ones so deeply embedded that they aren't even recognized as assumptions — are the ones that blindside a project
+- **Datasheet typical values are not design values.** A parameter listed as "typical 10mA" might be "maximum 25mA" under worst-case conditions. Design to the worst case, not the typical
+- **"It worked on the bench" is the weakest form of validation.** The bench is a controlled environment with ideal power, stable temperature, and short cables. The field is none of these things
+- **Broken assumptions are not personal failures.** Every designer makes assumptions — it's impossible to verify everything. The failure is not in making assumptions but in not examining them when things go wrong
+- **The same assumption can break in different ways on different projects.** "Sufficient margin" is an assumption that breaks repeatedly, but the specific parameter that's marginal changes each time. The meta-lesson is: always check margin, on everything

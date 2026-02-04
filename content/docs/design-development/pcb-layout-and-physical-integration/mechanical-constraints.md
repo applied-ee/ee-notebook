@@ -77,14 +77,21 @@ In a one-person project, this "drawing" might be a sketch on graph paper. In a t
 
 The answer is: at the beginning. Not after the schematic is done. Not after layout starts. At the beginning.
 
-Mechanical constraints shape the board outline, which constrains component placement, which affects routing, which influences the stackup. If the mechanical design isn't defined before layout begins, you're guessing — and those guesses tend to be wrong in ways that require expensive respins.
+Mechanical constraints shape the board outline, which constrains component placement, which affects routing, which influences the stackup. If the mechanical design isn't defined before layout begins, the designer is guessing — and those guesses tend to be wrong in ways that require expensive respins.
 
-Even on personal projects where you're the only designer, sketching the enclosure and board relationship before starting layout saves rework. A 3D model, a cardboard mockup, or even a scale drawing on paper is enough to catch the most common mechanical mismatches: "the board doesn't fit," "the connector is in the wrong place," and "the capacitor hits the lid."
+Even on personal projects with a single designer, sketching the enclosure and board relationship before starting layout saves rework. A 3D model, a cardboard mockup, or even a scale drawing on paper is enough to catch the most common mechanical mismatches: "the board doesn't fit," "the connector is in the wrong place," and "the capacitor hits the lid."
 
-## Gotchas
+## Tips
 
-- **3D models catch what 2D drawings miss.** Most EDA tools support 3D component models and board visualization. Use this feature — it's the fastest way to spot height conflicts and connector alignment issues before fabrication.
-- **Mounting hardware has its own clearance.** A screw, washer, and nut take up space on both sides of the board. Don't place components inside the mounting hardware footprint.
-- **Tolerance stackups add up fast.** If the board position tolerance is +/-0.5 mm and the connector position tolerance is +/-0.25 mm and the panel cutout tolerance is +/-0.5 mm, the worst-case misalignment is 1.25 mm. Design for the worst case.
-- **Thermal expansion moves connectors.** A board that's 100 mm long expands about 0.14 mm over a 10C temperature rise (FR4 CTE ~14 ppm/C). For boards in environments with wide temperature swings, this movement can stress edge-mounted connectors.
-- **"It fit in the CAD model" doesn't mean it fits in real life.** CAD models don't capture wire bend radii, cable harness stiffness, or the size of human fingers trying to plug in a connector. Always prototype the mechanical integration, not just the electronics.
+- Sketch the enclosure-to-board relationship before starting layout — even a cardboard mockup catches the most common mechanical mismatches early
+- Maintain a height map showing which board zones have vertical clearance limits, and cross-check it against the enclosure model before finalizing placement
+- Request or create a formal mechanical drawing (board outline, mounting holes, connector positions, keep-out zones) as the first step of any layout project
+- Place connectors and mounting holes first during floorplanning, since these are mechanically fixed and constrain everything else
+
+## Caveats
+
+- **3D models catch what 2D drawings miss.** Most EDA tools support 3D component models and board visualization — it's the fastest way to spot height conflicts and connector alignment issues before fabrication
+- **Mounting hardware has its own clearance.** A screw, washer, and nut take up space on both sides of the board; components should not be placed inside the mounting hardware footprint
+- **Tolerance stackups add up fast.** If the board position tolerance is +/-0.5 mm and the connector position tolerance is +/-0.25 mm and the panel cutout tolerance is +/-0.5 mm, the worst-case misalignment is 1.25 mm — design for the worst case
+- **Thermal expansion moves connectors.** A board that's 100 mm long expands about 0.14 mm over a 10C temperature rise (FR4 CTE ~14 ppm/C); for boards in environments with wide temperature swings, this movement can stress edge-mounted connectors
+- **"It fit in the CAD model" doesn't mean it fits in real life.** CAD models don't capture wire bend radii, cable harness stiffness, or the size of human fingers trying to plug in a connector — always prototype the mechanical integration, not just the electronics

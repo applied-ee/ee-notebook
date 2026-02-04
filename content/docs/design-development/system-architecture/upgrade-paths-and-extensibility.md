@@ -5,7 +5,7 @@ weight: 40
 
 # Upgrade Paths & Extensibility
 
-Every design exists in time. Today's requirements will evolve, features will be added, and limitations will be discovered. Designing for the next version while building the current one is a balancing act — too little extensibility and you're redesigning from scratch, too much and you've wasted board space, budget, and complexity on capabilities that may never be used.
+Every design exists in time. Today's requirements will evolve, features will be added, and limitations will be discovered. Designing for the next version while building the current one is a balancing act — too little extensibility means redesigning from scratch, too much means wasted board space, budget, and complexity on capabilities that may never be used.
 
 ## Thinking One Step Ahead
 
@@ -47,7 +47,7 @@ Common optional footprints:
 - **Bypass and decoupling.** Extra capacitor footprints on power rails near sensitive components. More decoupling can be added without a board change.
 - **Alternate component footprints.** A pad layout that accommodates two different component packages. If the preferred part becomes unavailable, the alternate can be used without layout changes.
 
-The trick is restraint. Every optional footprint adds board area and visual complexity. Place them where you have reason to believe they might be needed, not everywhere "just in case."
+The trick is restraint. Every optional footprint adds board area and visual complexity. Place them where there is reason to believe they might be needed, not everywhere "just in case."
 
 ## Software-Configurable Behavior
 
@@ -68,7 +68,7 @@ Modularity — breaking the system into physically separate modules connected by
 
 **Mezzanine connectors.** Board-to-board connectors (high-density pin headers, card-edge connectors) allow compact stacking of functional modules. The physical interface (connector type, pinout) becomes the contract between modules.
 
-**Plug-in modules.** Commercially available modules (Adafruit Feather, Arduino shields, Raspberry Pi HATs) follow standard form factors and pinouts. Designing your main board to accept a standard module provides access to a large ecosystem of pre-built functions.
+**Plug-in modules.** Commercially available modules (Adafruit Feather, Arduino shields, Raspberry Pi HATs) follow standard form factors and pinouts. Designing the main board to accept a standard module provides access to a large ecosystem of pre-built functions.
 
 The interface between modules is critical — it must be well-defined, well-documented, and stable. Changing the interface between modules defeats the purpose of modularity, because all modules must change when the interface changes.
 
@@ -89,17 +89,24 @@ The cost is worth paying when the extensibility addresses a known or likely futu
 Not every project benefits from extensibility planning:
 
 - **One-off projects.** If the board will be built once and never revised, extensibility features add complexity for zero benefit. Use the board area for better routing or test access instead.
-- **Learning prototypes.** When the purpose is to learn how a circuit works, extensibility is a distraction. Build the simplest version that demonstrates the concept. What you learn will inform the next design — which will probably be a fresh start anyway.
+- **Learning prototypes.** When the purpose is to learn how a circuit works, extensibility is a distraction. Build the simplest version that demonstrates the concept. The lessons learned will inform the next design — which will probably be a fresh start anyway.
 - **Tight board constraints.** When every square millimeter of board space matters (very small form factors, dense designs), the area consumed by optional footprints and expansion headers may be unacceptable. In this case, extensibility must give way to the size constraint.
-- **Time-critical designs.** Adding extensibility features takes design time. If the schedule is tight, spending time on features for a hypothetical next version is a poor allocation of the scarce resource (your time).
+- **Time-critical designs.** Adding extensibility features takes design time. If the schedule is tight, spending time on features for a hypothetical next version is a poor allocation of the scarce resource (available engineering time).
 
 The decision framework is: does the cost of including this extensibility feature now exceed the cost of adding it in a future revision? If so, defer it.
 
-## Gotchas
+## Tips
 
-- **Unpopulated footprints need documentation.** If the board has 10 optional footprints and no documentation about what they're for, the next person (or future you) will have no idea which ones to populate or why. Label them in the silkscreen or the schematic.
-- **Expansion headers can create EMC problems.** Long header pins act as antennas. If expansion headers carry high-speed signals and are left unconnected (floating), they can radiate interference or pick up noise. Consider pullup/pulldown resistors on critical signals.
-- **Software configurability requires testing each configuration.** A system that can be configured in 10 different ways hasn't been validated unless each configuration has been tested. Untested configurations are features in name only.
-- **Modularity adds connector resistance and inductance.** Every board-to-board connection adds contact resistance and inductance. For high-current power paths and high-speed signals, this matters. A modular design may perform differently than a monolithic one.
-- **Don't design for flexibility you'll never use.** It's satisfying to build in expansion capability, but if the project has a well-defined scope that won't change, the expansion features are wasted effort. Design for what you need, not what you might hypothetically want.
-- **Spare GPIOs are only useful if they're routed out.** An MCU with 8 unused pins is only extensible if those pins are accessible. If they're not connected to any pad or header, they might as well not exist. Route them out or accept that they're not available for future use.
+- Focus extensibility efforts on decisions that are cheap to include now but would require a board respin to add later — spare headers, unpopulated filter footprints, extra I2C addresses
+- Move design decisions from hardware to software wherever possible (programmable gain, mux channels, feature flags) to shift the cost of change from board revisions to firmware updates
+- Document every unpopulated footprint and expansion header with silkscreen labels or schematic notes so their purpose is clear for future revisions
+- Apply the asymmetry test: if the cost of including a feature now is much less than adding it later, include it; if not, defer it
+
+## Caveats
+
+- **Unpopulated footprints need documentation.** If the board has 10 optional footprints and no documentation about what they are for, the next person (or a future debugging session) will offer no clue about which ones to populate or why — label them in the silkscreen or the schematic
+- **Expansion headers can create EMC problems.** Long header pins act as antennas. If expansion headers carry high-speed signals and are left unconnected (floating), they can radiate interference or pick up noise. Consider pullup/pulldown resistors on critical signals
+- **Software configurability requires testing each configuration.** A system that can be configured in 10 different ways has not been validated unless each configuration has been tested. Untested configurations are features in name only
+- **Modularity adds connector resistance and inductance.** Every board-to-board connection adds contact resistance and inductance. For high-current power paths and high-speed signals, this matters. A modular design may perform differently than a monolithic one
+- **Do not design for flexibility that will never be used.** It is satisfying to build in expansion capability, but if the project has a well-defined scope that will not change, the expansion features are wasted effort. Design for what is needed, not what might hypothetically be wanted
+- **Spare GPIOs are only useful if they are routed out.** An MCU with 8 unused pins is only extensible if those pins are accessible. If they are not connected to any pad or header, they might as well not exist. Route them out or accept that they are not available for future use

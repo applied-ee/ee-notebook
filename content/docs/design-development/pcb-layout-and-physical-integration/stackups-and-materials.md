@@ -11,7 +11,7 @@ The PCB stackup — the arrangement of copper layers, dielectric materials, and 
 
 A stackup specifies the number of copper layers, the dielectric material between them, the thickness of each dielectric layer, and the copper weight (thickness) on each layer. From these parameters, everything else follows:
 
-- **Impedance.** The characteristic impedance of a trace depends on its width, the dielectric thickness to the nearest reference plane, and the dielectric constant of the material. You can't calculate or control impedance without knowing the stackup.
+- **Impedance.** The characteristic impedance of a trace depends on its width, the dielectric thickness to the nearest reference plane, and the dielectric constant of the material. Impedance cannot be calculated or controlled without knowing the stackup.
 - **Coupling between layers.** Tightly coupled layers (thin dielectric between them) have stronger capacitive coupling, which is good for power-ground plane pairs and bad for signal isolation between layers.
 - **Board thickness.** The total stackup determines the finished board thickness, which matters for connectors, enclosures, and flex requirements. Standard thickness is 1.6 mm (63 mils), but non-standard thicknesses are common.
 - **Manufacturing cost.** More layers, tighter tolerances, and specialty materials all increase cost. A 2-layer FR4 board is cheap. A 10-layer board with controlled impedance on Rogers material is expensive.
@@ -39,9 +39,9 @@ The 4-layer stackup is the sweet spot for most designs. The classic arrangement 
 | Inner 2 | Power plane |
 | Bottom | Signal + components |
 
-This gives you a continuous ground plane directly below the top signal layer, which means controlled impedance for top-layer traces, good return current paths, and effective decoupling between the ground and power planes. The cost premium over 2-layer boards has dropped significantly — many fabricators charge only 30-50% more for 4 layers — and the improvement in signal integrity and ease of routing is substantial.
+This provides a continuous ground plane directly below the top signal layer, which means controlled impedance for top-layer traces, good return current paths, and effective decoupling between the ground and power planes. The cost premium over 2-layer boards has dropped significantly — many fabricators charge only 30-50% more for 4 layers — and the improvement in signal integrity and ease of routing is substantial.
 
-Variations on the 4-layer stackup include using one inner layer for routing instead of a complete plane, but this sacrifices the ground plane continuity that makes 4-layer boards valuable. If you need more routing space than two signal layers provide, it's often better to move to 6 layers than to compromise the ground plane.
+Variations on the 4-layer stackup include using one inner layer for routing instead of a complete plane, but this sacrifices the ground plane continuity that makes 4-layer boards valuable. If the design needs more routing space than two signal layers provide, it's often better to move to 6 layers than to compromise the ground plane.
 
 ## 6+ Layer Boards
 
@@ -82,20 +82,27 @@ Copper weight is specified in ounces per square foot, which translates to thickn
 
 Heavier copper carries more current for a given trace width and spreads heat more effectively, but it limits minimum trace width and spacing (the etching process is less precise with thicker copper). Inner layers often use lighter copper than outer layers because the inner copper is better thermally coupled to the board and doesn't need as much cross-section for equivalent current handling.
 
-## Working with Your Fabricator
+## Working with the Fabricator
 
 The stackup is not just a design document — it's a contract with the PCB fabricator. Key practices:
 
 - **Request the fabricator's standard stackups early.** Most fabricators publish their standard stackup options. Designing to a standard stackup avoids custom processing charges and reduces lead time.
-- **Specify controlled impedance if needed.** If your design requires specific trace impedances, call this out explicitly. The fabricator will adjust dielectric thicknesses to hit your target and provide an impedance test coupon on the panel.
-- **Run DFM checks.** Most fabricators offer free design-for-manufacturing checks. Use them. They'll catch minimum spacing violations, drill-to-copper clearances, and other issues before you pay for fabrication.
-- **Ask questions.** If you're unsure whether a stackup will work, call the fabricator. Their engineers deal with these decisions daily and can save you from expensive mistakes.
+- **Specify controlled impedance if needed.** If the design requires specific trace impedances, call this out explicitly. The fabricator will adjust dielectric thicknesses to hit the target and provide an impedance test coupon on the panel.
+- **Run DFM checks.** Most fabricators offer free design-for-manufacturing checks. They catch minimum spacing violations, drill-to-copper clearances, and other issues before fabrication.
+- **Ask questions.** When uncertain whether a stackup will work, call the fabricator. Their engineers deal with these decisions daily and can prevent expensive mistakes.
 
-## Gotchas
+## Tips
 
-- **Dielectric constant varies with frequency.** FR4's Dk of ~4.3 is measured at 1 MHz. At 1 GHz, it's lower. If you're calculating impedance for high-speed signals using the low-frequency Dk value, your traces will be the wrong width.
-- **Standard stackup thicknesses vary by fabricator.** Don't assume a "4-layer 1.6mm" stackup has the same dielectric thicknesses at every fabricator. Get the specific stackup data and calculate impedance against it.
-- **More layers doesn't automatically mean better.** A poorly planned 6-layer board can perform worse than a well-planned 4-layer board. Layer count is a tool, not a score.
-- **Copper weight affects etching limits.** With 2 oz copper, minimum trace width and spacing are wider than with 1 oz copper. Check your fabricator's design rules for the copper weight you're specifying.
-- **Hybrid stackups need careful registration.** Mixing materials (e.g., Rogers + FR4) introduces different thermal expansion coefficients, which can cause registration issues during lamination. Discuss this with your fabricator before committing to the design.
-- **Via aspect ratio limits depth.** A standard drill can't create a via much deeper than about 10:1 aspect ratio (depth to diameter). Thick boards with small vias may need laser drilling or back-drilling, which adds cost.
+- Start with the fabricator's standard stackup offerings rather than designing a custom stackup — standard processes cost less and ship faster
+- Default to a 4-layer board for anything involving high-speed signals, switching regulators, or sensitive analog circuits; the cost premium over 2 layers is small and the signal integrity benefit is large
+- Calculate controlled impedance against the actual stackup data from the chosen fabricator, not generic values from a textbook
+- Run the fabricator's free DFM check before committing to production — it catches spacing and drill violations that design-rule checks may miss
+
+## Caveats
+
+- **Dielectric constant varies with frequency.** FR4's Dk of ~4.3 is measured at 1 MHz; at 1 GHz it's lower, so calculating impedance for high-speed signals using the low-frequency Dk value produces incorrect trace widths
+- **Standard stackup thicknesses vary by fabricator.** A "4-layer 1.6mm" stackup does not have the same dielectric thicknesses at every fabricator — get the specific stackup data and calculate impedance against it
+- **More layers doesn't automatically mean better.** A poorly planned 6-layer board can perform worse than a well-planned 4-layer board; layer count is a tool, not a score
+- **Copper weight affects etching limits.** With 2 oz copper, minimum trace width and spacing are wider than with 1 oz copper — check the fabricator's design rules for the copper weight being specified
+- **Hybrid stackups need careful registration.** Mixing materials (e.g., Rogers + FR4) introduces different thermal expansion coefficients, which can cause registration issues during lamination — discuss with the fabricator before committing to the design
+- **Via aspect ratio limits depth.** A standard drill can't create a via much deeper than about 10:1 aspect ratio (depth to diameter); thick boards with small vias may need laser drilling or back-drilling, which adds cost

@@ -5,13 +5,13 @@ weight: 50
 
 # When to Spin vs Patch
 
-Every hardware problem presents the same fork in the road: do you spin a new board revision, or do you patch the one you have? Spinning costs money and time — new gerbers, new fabrication, new assembly, new testing. Patching is cheaper and faster, but it accumulates technical debt in the form of bodge wires, cut traces, and hand-soldered modifications that make the board increasingly fragile and difficult to debug. Neither option is always right. The skill is knowing when each one is appropriate.
+Every hardware problem presents the same fork in the road: spin a new board revision, or patch the one in hand? Spinning costs money and time — new gerbers, new fabrication, new assembly, new testing. Patching is cheaper and faster, but it accumulates technical debt in the form of bodge wires, cut traces, and hand-soldered modifications that make the board increasingly fragile and difficult to debug. Neither option is always right. The skill is knowing when each one is appropriate.
 
 ## When to Spin
 
 A new board spin is justified when the changes are significant enough that patching would create more problems than it solves. Specific situations that favor spinning:
 
-- **Layout-critical changes.** Any change that affects controlled impedance traces, power plane integrity, or critical component placement can't be reliably implemented as a bodge. If the fix requires moving a component or rerouting a differential pair, you need a new board.
+- **Layout-critical changes.** Any change that affects controlled impedance traces, power plane integrity, or critical component placement cannot be reliably implemented as a bodge. If the fix requires moving a component or rerouting a differential pair, a new board is needed.
 - **Many accumulated patches.** When the current board has five or ten bodge wires, the board itself has become an unreliable test platform. Noise from long bodge wires, parasitic effects from dangling cut traces, and the sheer fragility of hand-rework all compromise the validity of any measurements. A clean board restores confidence.
 - **Moving to production.** A prototype with rework is fine for development. A production board must be clean — no bodge wires, no manual modifications, no deviation between the design files and the physical board. Spinning a clean production-intent board is a necessary step.
 - **Footprint or package errors.** If a component's footprint doesn't match the actual part — wrong pad size, wrong pin spacing, wrong pin numbering — no amount of rework makes it right. The board needs to be respun with the correct footprint.
@@ -38,13 +38,13 @@ Bodge wires are an accepted part of prototype development. But undisciplined bod
 - **Keep wires short.** Long bodge wires add inductance and act as antennas. For signal-integrity-sensitive connections, keep wires as short as physically possible.
 - **Secure wires mechanically.** A wire that's only held by its solder joints will eventually break. Use adhesive, kapton tape, or hot glue to strain-relieve bodge wires, especially on boards that will be handled frequently.
 - **Use appropriate wire.** Solid wire (30 AWG wire-wrap wire) for short, static connections. Stranded wire for connections that might flex. Coaxial cable for RF or high-speed signals. The wire type should match the signal's requirements.
-- **Mark reworked areas.** A dot of nail polish, a label, or a marking pen near the reworked area makes it visible during inspection and reminds you (or someone else) that this area has been modified.
+- **Mark reworked areas.** A dot of nail polish, a label, or a marking pen near the reworked area makes it visible during inspection and reminds anyone handling the board that this area has been modified.
 
 ## The "One More Fix" Trap
 
-There's a seductive pattern where the current board is almost right — just one more fix and it'll be perfect. So you make the fix. Then you find something else. One more fix. And another. Eventually, the board is a patchwork of modifications, each individually reasonable, collectively creating something fragile and untraceable.
+There is a seductive pattern where the current board is almost right — just one more fix and it will be perfect. The fix gets made. Then something else appears. One more fix. And another. Eventually, the board is a patchwork of modifications, each individually reasonable, collectively creating something fragile and untraceable.
 
-The "one more fix" trap wastes time in two ways. First, each bodge takes time to implement, document, and verify. Second, the accumulating modifications reduce confidence in the board as a test platform — you're no longer sure whether a test result reflects the design or the rework.
+The "one more fix" trap wastes time in two ways. First, each bodge takes time to implement, document, and verify. Second, the accumulating modifications reduce confidence in the board as a test platform — it becomes unclear whether a test result reflects the design or the rework.
 
 A useful rule of thumb: when the number of bodge wires on a board exceeds five, or when the rework has modified a critical signal path (power, clock, or high-speed data), it's time to spin. The cost of a new board is typically $50-500 for a prototype quantity; the cost of engineering time spent nursing a heavily reworked board is usually much higher.
 
@@ -56,7 +56,7 @@ Some organizations use color conventions for bodge wires to communicate the stat
 - **Blue wire**: A temporary modification for debugging or experimentation. This may or may not be incorporated in the next revision.
 - **Red wire**: A safety-critical modification that must be preserved.
 
-These conventions aren't universal, and the specific colors vary. The principle — distinguishing between permanent fixes and temporary experiments — is useful at any scale. On a personal project, you might use two colors of wire-wrap wire and your own conventions. The point is that looking at the board tells you something about the intent of each modification.
+These conventions are not universal, and the specific colors vary. The principle — distinguishing between permanent fixes and temporary experiments — is useful at any scale. On a personal project, two colors of wire-wrap wire and a consistent convention serve the same purpose. The point is that looking at the board communicates something about the intent of each modification.
 
 ## Cost Analysis
 
@@ -75,11 +75,18 @@ Compare this to the engineering time cost of working around a flawed layout:
 
 For a board with a $30 fab cost, spending more than a few hours nursing bodge wires instead of spinning is economically irrational. For a $500 board, the threshold is proportionally higher. The calculation is straightforward: estimate the remaining engineering time on the current board versus the cost and time of a clean spin.
 
-## Gotchas
+## Tips
 
-- **Untested fixes don't belong in a board spin.** Always validate a fix on the existing board before incorporating it into the next revision. A board spin based on an untested change is a gamble with money and time.
-- **Bodge wires are antennas.** A 3 cm bodge wire has significant inductance at frequencies above a few MHz. For high-frequency signals, bodge wires can introduce problems that don't exist in a properly routed board. Test results from bodged high-speed circuits should be interpreted with caution.
-- **The rework that looks fine today breaks tomorrow.** Bodge wires fatigue, cold solder joints develop, and components shift when the board is handled. Prototype rework is temporary by nature — don't treat it as permanent.
-- **Sunk cost thinking delays necessary respins.** "We've already put so much work into this board" is not a reason to keep patching. The question is always forward-looking: is the next hour better spent patching or spinning?
-- **Respinning without reviewing all accumulated changes misses fixes.** Before spinning, review every bodge, every change log entry, and every known issue. A new board that incorporates nine of ten fixes but misses the tenth is a preventable failure.
-- **Someone else's bodge wire is invisible.** If you didn't do the rework yourself, you might not even notice it during debugging. Thorough documentation and visible marking prevent this.
+- Always validate a proposed fix on the current board before incorporating it into a new revision — spinning based on an untested change is a gamble with money and time
+- Set a bodge-wire threshold (five is a reasonable limit) and spin a clean board once that threshold is crossed, rather than nursing an increasingly fragile prototype
+- Before sending a new revision to fab, review every bodge, every change log entry, and every known issue on the current board to ensure nothing is missed
+- Use color-coded wire (green for permanent fixes, blue for experiments) so looking at the board immediately communicates which modifications are validated
+
+## Caveats
+
+- **Untested fixes do not belong in a board spin.** Always validate a fix on the existing board before incorporating it into the next revision — a board spin based on an untested change is a gamble with money and time
+- **Bodge wires are antennas.** A 3 cm bodge wire has significant inductance at frequencies above a few MHz, and for high-frequency signals, bodge wires can introduce problems that do not exist in a properly routed board — test results from bodged high-speed circuits should be interpreted with caution
+- **The rework that looks fine today breaks tomorrow.** Bodge wires fatigue, cold solder joints develop, and components shift when the board is handled — prototype rework is temporary by nature and should not be treated as permanent
+- **Sunk cost thinking delays necessary respins.** "So much work has already gone into this board" is not a reason to keep patching — the question is always forward-looking: is the next hour better spent patching or spinning?
+- **Respinning without reviewing all accumulated changes misses fixes.** Before spinning, review every bodge, every change log entry, and every known issue — a new board that incorporates nine of ten fixes but misses the tenth is a preventable failure
+- **Someone else's bodge wire is invisible.** Without having done the rework personally, the modification might not even be noticed during debugging — thorough documentation and visible marking prevent this

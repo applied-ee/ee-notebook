@@ -21,7 +21,7 @@ Examples of useful acceptance criteria:
 - Total BOM cost under $10 for a single unit
 - PCB fits within 40 mm x 60 mm, two layers
 
-Each of these is measurable. When the prototype meets all of them, the design is done — even if you can see ways to make it better.
+Each of these is measurable. When the prototype meets all of them, the design is done — even if there are visible ways to make it better.
 
 ## Pass/Fail Thresholds vs Optimization Targets
 
@@ -32,7 +32,7 @@ There's an important distinction between a threshold and a target:
 | **Threshold (pass/fail)** | Noise floor below 100 uV RMS | Must be met. If not, the design has failed its requirement. |
 | **Target (optimization)** | Noise floor as low as practical | No defined stopping point. Invites infinite tweaking. |
 
-Thresholds give you a clear stopping point. Targets don't. Wherever possible, convert targets into thresholds. Instead of "low noise," specify "below X uV." Instead of "long battery life," specify "at least Y months." The number doesn't have to be perfect — a somewhat arbitrary threshold is still more useful than no threshold at all.
+Thresholds provide a clear stopping point. Targets don't. Wherever possible, convert targets into thresholds. Instead of "low noise," specify "below X uV." Instead of "long battery life," specify "at least Y months." The number doesn't have to be perfect — a somewhat arbitrary threshold is still more useful than no threshold at all.
 
 ## Prototype Quality vs Production Quality
 
@@ -59,7 +59,7 @@ What counts as "good enough" depends entirely on the purpose of the design. A pr
 - Full documentation: assembly instructions, test procedures, acceptance criteria
 - Designed for repair: accessible test points, labeled connectors, documented fault modes
 
-Applying production quality criteria to a proof of concept wastes time. Applying proof-of-concept quality to a production design ships unreliable product. Knowing which stage you're at — and designing to that stage's quality bar — is one of the more useful skills to develop.
+Applying production quality criteria to a proof of concept wastes time. Applying proof-of-concept quality to a production design ships unreliable product. Knowing the current stage — and designing to that stage's quality bar — is one of the more useful skills to develop.
 
 ## Over-Engineering: Adding Cost Without Value
 
@@ -89,7 +89,7 @@ Under-engineering often comes from testing only the happy path. The circuit work
 
 ## How "Good Enough" Changes With Project Stage
 
-The same design might need different levels of refinement at different stages. Recognizing where you are in the project lifecycle prevents both over- and under-engineering:
+The same design might need different levels of refinement at different stages. Recognizing the current position in the project lifecycle prevents both over- and under-engineering:
 
 | Stage | Good enough means | Acceptable shortcuts |
 |---|---|---|
@@ -109,10 +109,17 @@ But in practice, shipping a good-enough design teaches more than endlessly polis
 
 The discipline of "good enough" is also the discipline of iteration. Rather than perfecting one design, build it, test it, learn from it, and improve it in the next revision. The second prototype is almost always better than a first prototype that took twice as long.
 
-## Gotchas
+## Tips
 
-- **"Good enough" is not "sloppy."** Good enough means meeting defined criteria, not ignoring quality. It's disciplined, not lazy. The criteria must exist for the concept to work.
-- **Moving the goalposts.** If you keep raising the acceptance criteria after meeting them, you'll never finish. Write the criteria down before starting and hold yourself to them. New requirements go in the next revision.
-- **Confusing "done" with "perfect."** A design that meets all its acceptance criteria is done. It's not perfect — no design ever is. Accepting this is part of the engineering mindset.
-- **Scope creep disguised as quality.** Adding features is not the same as improving quality. "While I'm at it, I'll also add Bluetooth" is scope creep, not engineering rigor.
-- **Ignoring the learning value of imperfect designs.** A prototype with known limitations teaches you what matters. You learn more from testing an imperfect design than from designing a perfect one you never build.
+- Write measurable acceptance criteria (specific thresholds, not vague targets) before starting the design — they define what "done" actually means
+- Convert optimization targets into pass/fail thresholds wherever possible; "below 100 uV RMS" is actionable, "as low as practical" is not
+- Match the quality bar to the project stage — proof-of-concept tolerances are different from production tolerances, and applying the wrong standard wastes time in both directions
+- When tempted to add one more feature, check whether it appears in the original acceptance criteria; if not, it belongs in the next revision
+
+## Caveats
+
+- **"Good enough" is not "sloppy."** Good enough means meeting defined criteria, not ignoring quality — it's disciplined, not lazy, and the criteria must exist for the concept to work
+- **Moving the goalposts.** Continually raising acceptance criteria after meeting them guarantees the project never finishes — write the criteria down before starting and hold to them; new requirements go in the next revision
+- **Confusing "done" with "perfect."** A design that meets all its acceptance criteria is done — it's not perfect, no design ever is, and accepting this is part of the engineering mindset
+- **Scope creep disguised as quality.** Adding features is not the same as improving quality — "while I'm at it, I'll also add Bluetooth" is scope creep, not engineering rigor
+- **Ignoring the learning value of imperfect designs.** A prototype with known limitations reveals what matters — more is learned from testing an imperfect design than from designing a perfect one that never gets built

@@ -9,29 +9,29 @@ The most supply-chain-resilient design is one where parts can be changed without
 
 ## The Principle of Deliberate Flexibility
 
-Designing for substitution is a mindset that runs through every design decision. It asks: "Is there a way to accomplish this function that doesn't lock me into a single source?" Sometimes the answer is no — a specific FPGA or a specialized sensor has no alternative, and you accept that dependency. But surprisingly often, a small amount of design flexibility eliminates single-source dependencies without compromising performance.
+Designing for substitution is a mindset that runs through every design decision. It asks: "Is there a way to accomplish this function that doesn't lock me into a single source?" Sometimes the answer is no — a specific FPGA or a specialized sensor has no alternative, and the dependency is accepted. But surprisingly often, a small amount of design flexibility eliminates single-source dependencies without compromising performance.
 
 The cost of flexibility is usually small: a few extra pads on the PCB, an adjustable regulator instead of a fixed one, or a standard interface instead of a proprietary one. The cost of inflexibility becomes apparent only when the supply chain breaks — and then it's enormous.
 
-This connects directly to the [second-source strategies]({{< relref "/docs/design-development/part-selection-and-sourcing/second-source-strategies" >}}) discussed earlier, but goes deeper: instead of just identifying alternates, you're designing the circuit and layout to accommodate them.
+This connects directly to the [second-source strategies]({{< relref "/docs/design-development/part-selection-and-sourcing/second-source-strategies" >}}) discussed earlier, but goes deeper: instead of just identifying alternates, the circuit and layout are designed to accommodate them.
 
 ## Generic Footprints
 
-Many functional categories of components share standard packages. By selecting parts that fit common footprints, you maximize the number of potential substitutes.
+Many functional categories of components share standard packages. Selecting parts that fit common footprints maximizes the number of potential substitutes.
 
-**SOT-23 family.** The SOT-23-3, SOT-23-5, and SOT-23-6 packages are used for an enormous range of small-signal transistors, MOSFETs, voltage references, LDOs, op-amps, and supervisors. If your regulator fits in a SOT-23-5, dozens of alternates from different manufacturers likely share the footprint.
+**SOT-23 family.** The SOT-23-3, SOT-23-5, and SOT-23-6 packages are used for an enormous range of small-signal transistors, MOSFETs, voltage references, LDOs, op-amps, and supervisors. If a regulator fits in a SOT-23-5, dozens of alternates from different manufacturers likely share the footprint.
 
-**SOIC-8.** The classic 8-pin SOIC is home to op-amps, voltage regulators, EEPROM, serial flash, gate drivers, and many other IC types. Designing around SOIC-8 parts gives you a wide substitution pool.
+**SOIC-8.** The classic 8-pin SOIC is home to op-amps, voltage regulators, EEPROM, serial flash, gate drivers, and many other IC types. Designing around SOIC-8 parts provides a wide substitution pool.
 
-**Standard passive sizes (0402, 0603, 0805, 1206).** Passives in these standard imperial sizes are manufactured by dozens of companies. The packages are identical across manufacturers, so substitution is trivial — you're changing a BOM line, not a footprint.
+**Standard passive sizes (0402, 0603, 0805, 1206).** Passives in these standard imperial sizes are manufactured by dozens of companies. The packages are identical across manufacturers, so substitution is trivial — it is a BOM line change, not a footprint change.
 
-The tradeoff: generic packages sometimes mean accepting larger size, higher cost, or fewer features compared to a vendor-specific optimized package. A QFN-20 part might offer better thermal performance and smaller size than an SOIC-8 equivalent, but the SOIC-8 has more substitution options. Choose based on what matters more for your application.
+The tradeoff: generic packages sometimes mean accepting larger size, higher cost, or fewer features compared to a vendor-specific optimized package. A QFN-20 part might offer better thermal performance and smaller size than an SOIC-8 equivalent, but the SOIC-8 has more substitution options. The choice depends on what matters more for the application.
 
 ## Flexible Power Regulation
 
 Power supply design is one of the most impactful areas for substitution-friendly design, because voltage regulators are among the most commonly affected by supply shortages.
 
-**Adjustable regulators with external feedback resistors** are inherently more flexible than fixed-output regulators. A fixed 3.3V regulator is a specific part number. An adjustable regulator set to 3.3V by external resistors can be substituted with any adjustable regulator in the same package and topology — the output voltage is set by your components, not the IC's internal reference divider.
+**Adjustable regulators with external feedback resistors** are inherently more flexible than fixed-output regulators. A fixed 3.3V regulator is a specific part number. An adjustable regulator set to 3.3V by external resistors can be substituted with any adjustable regulator in the same package and topology — the output voltage is set by external components, not the IC's internal reference divider.
 
 This doesn't mean adjustable regulators are always better. Fixed regulators are simpler (fewer external components, no resistor tolerance to worry about), and for common voltages (1.8V, 2.5V, 3.3V, 5V) fixed parts are widely available from many manufacturers. But for less common voltages or when supply resilience is critical, the adjustable approach provides flexibility.
 
@@ -47,7 +47,7 @@ Choosing standard communication interfaces over proprietary ones maximizes the n
 
 **UART/serial interfaces** are the most universal of all. Any device with a standard serial port (UART TX/RX at common baud rates) can communicate with any other.
 
-The firmware implication: if your software is structured with a hardware abstraction layer (HAL) that separates the communication protocol from the sensor-specific commands, swapping a sensor becomes a firmware update rather than a hardware redesign. This is a software architecture decision that directly supports hardware flexibility.
+The firmware implication: if the software is structured with a hardware abstraction layer (HAL) that separates the communication protocol from the sensor-specific commands, swapping a sensor becomes a firmware update rather than a hardware redesign. This is a software architecture decision that directly supports hardware flexibility.
 
 ## Pad-Out Footprints
 
@@ -86,11 +86,18 @@ The substitution documentation should include:
 
 This documentation lives alongside the BOM and design files. It should be reviewed and updated whenever a new alternate is qualified or an existing alternate's availability changes.
 
-## Gotchas
+## Tips
 
-- **Over-designing for flexibility adds cost and complexity.** Not every component needs substitution flexibility. Focus on the components most likely to be disrupted: high-value semiconductors, specialized parts, and anything with a history of supply problems. Standard passives in standard packages are already inherently substitutable.
-- **Dual footprints can cause assembly confusion.** If the PCB has pads for two different packages, the assembly documentation must clearly indicate which option to populate. A board with unexplained extra pads invites questions and potential errors on the assembly line.
-- **Adjustable regulators require tighter resistor tolerances.** The output voltage accuracy of an adjustable regulator depends on the tolerance of the feedback resistors. A fixed regulator might guarantee 1% output accuracy; an adjustable regulator with 1% resistors might achieve only 2-3% accuracy. Account for this in your design margin.
-- **Software abstraction layers have performance costs.** Adding indirection for hardware flexibility (HAL layers, configurable drivers) adds code size and execution time. For most applications this is negligible, but for real-time or resource-constrained systems, verify that the abstraction doesn't violate timing or memory constraints.
-- **Substitution testing must cover the full operating range.** A substitute part that works at room temperature on the bench may fail at temperature extremes or under load conditions that stress it differently than the primary part. Test substitutes under worst-case conditions, not just typical conditions.
-- **The best time to design for substitution is during initial design.** Adding flexibility after the board is laid out is expensive (board respin). Adding it during schematic design costs almost nothing. Consider substitution as a design requirement from the start, not a retrofit.
+- Use adjustable regulators with external feedback resistors for critical rails to maximize the pool of drop-in substitutes
+- Design firmware with a hardware abstraction layer so swapping a sensor or peripheral becomes a driver update rather than a code rewrite
+- Include pad-out footprints for the two or three most critical ICs on every board, even if only one variant is populated at launch
+- Document every approved alternate alongside the primary BOM entry so the information is ready before a supply disruption hits
+
+## Caveats
+
+- **Over-designing for flexibility adds cost and complexity.** Not every component needs substitution flexibility — focus on the components most likely to be disrupted: high-value semiconductors, specialized parts, and anything with a history of supply problems
+- **Dual footprints can cause assembly confusion.** If the PCB has pads for two different packages, the assembly documentation must clearly indicate which option to populate
+- **Adjustable regulators require tighter resistor tolerances.** The output voltage accuracy of an adjustable regulator depends on the tolerance of the feedback resistors; a fixed regulator might guarantee 1% output accuracy while an adjustable regulator with 1% resistors might achieve only 2-3% accuracy
+- **Software abstraction layers have performance costs.** Adding indirection for hardware flexibility (HAL layers, configurable drivers) adds code size and execution time; for real-time or resource-constrained systems, verify that the abstraction does not violate timing or memory constraints
+- **Substitution testing must cover the full operating range.** A substitute part that works at room temperature on the bench may fail at temperature extremes or under load conditions that stress it differently than the primary part
+- **The best time to design for substitution is during initial design.** Adding flexibility after the board is laid out is expensive (board respin), while adding it during schematic design costs almost nothing

@@ -9,7 +9,7 @@ Before designing a custom circuit around a component, it is almost always worth 
 
 ## Types of Pre-Built Boards
 
-**MCU development boards** — Arduino Uno, STM32 Nucleo, ESP32 DevKit, Raspberry Pi Pico, Teensy, and dozens more. These provide a working microcontroller with power regulation, a programming interface, and broken-out GPIO. They're the fastest way to test firmware, peripheral interfaces, and I/O behavior.
+**MCU development boards** — Arduino Uno, STM32 Nucleo, ESP32 DevKit, Raspberry Pi Pico, Teensy, and dozens more. These provide a working microcontroller with power regulation, a programming interface, and broken-out GPIO. These are the fastest way to test firmware, peripheral interfaces, and I/O behavior.
 
 What a dev board reveals:
 - Whether the MCU's peripherals (ADC, SPI, I2C, timers, DMA) meet the application requirements
@@ -47,51 +47,58 @@ For proof-of-concept work, RF modules are almost always the right choice. The cu
 
 ## Evaluating Results Honestly
 
-The point of a POC is to get honest answers, which means understanding the gap between the eval board environment and your eventual custom design:
+The point of a POC is to get honest answers, which means understanding the gap between the eval board environment and the eventual custom design:
 
-| What the eval board provides | What your custom design must provide |
+| What the eval board provides | What the custom design must provide |
 |------------------------------|--------------------------------------|
-| Clean, well-regulated power | Your power supply (which may be noisier) |
-| Optimized PCB layout | Your layout (which has other constraints) |
-| Known-good support components | Your component choices (which may differ) |
-| Controlled test environment | Your actual operating environment |
-| Reference firmware | Your application firmware |
+| Clean, well-regulated power | The custom power supply (which may be noisier) |
+| Optimized PCB layout | The custom layout (which has other constraints) |
+| Known-good support components | The chosen components (which may differ) |
+| Controlled test environment | The actual operating environment |
+| Reference firmware | The application firmware |
 
-When a sensor or IC works on the eval board, it means the component is *capable* of meeting the requirement. It doesn't guarantee your implementation will achieve the same performance. The eval board sets an upper bound.
+When a sensor or IC works on the eval board, it means the component is *capable* of meeting the requirement. It does not guarantee that the final implementation will achieve the same performance. The eval board sets an upper bound.
 
-When a sensor or IC *doesn't* work on the eval board, the answer is much clearer — if it can't meet the requirement under ideal conditions, it won't meet it under your conditions either. Failed eval board tests are more conclusive than successful ones.
+When a sensor or IC *doesn't* work on the eval board, the answer is much clearer — if it cannot meet the requirement under ideal conditions, it will not meet it under real-world conditions either. Failed eval board tests are more conclusive than successful ones.
 
 ## Module vs Custom: The Production Decision
 
-Using modules in a POC doesn't commit you to using them in production. But it's worth noting that many successful products ship with modules rather than custom RF, power, or sensor circuits:
+Using modules in a POC does not commit the project to using them in production. But it is worth noting that many successful products ship with modules rather than custom RF, power, or sensor circuits:
 
 **Favor modules when:**
 - Production volume is low (under 1,000 units)
 - Time-to-market matters more than per-unit cost
 - The module provides certification (FCC, CE) that custom design would require
-- The design team doesn't have domain expertise (RF design, power supply design)
+- The design team lacks domain expertise (RF design, power supply design)
 
 **Favor custom design when:**
 - Volume justifies the engineering investment
-- The module's size, power consumption, or performance doesn't meet requirements
+- The module's size, power consumption, or performance does not meet requirements
 - Cost reduction per unit exceeds the design cost amortized over volume
 - Full control over the design is necessary for regulatory or reliability reasons
 
-This decision doesn't need to be made at the POC stage. The POC answers "can this work?" — the module-vs-custom question is for [system architecture]({{< relref "../system-architecture" >}}) and [part selection]({{< relref "../part-selection-and-sourcing" >}}).
+This decision does not need to be made at the POC stage. The POC answers "can this work?" — the module-vs-custom question is for [system architecture]({{< relref "../system-architecture" >}}) and [part selection]({{< relref "../part-selection-and-sourcing" >}}).
 
 ## Building Effective POC Setups
 
 A dev board plugged into a breadboard with a sensor breakout wired to it is a legitimate proof-of-concept. To get the most from it:
 
-- **Power it properly.** Use a bench supply with current limiting, not just USB power. Monitor the current draw — it tells you something about the power budget.
-- **Instrument it.** Connect a scope probe to critical signals. Log data over serial or to an SD card. The more data you capture, the more useful the POC.
-- **Test at the edges.** Don't just verify that the circuit works at nominal conditions. What happens at minimum supply voltage? Maximum temperature? Maximum input signal? Edge cases reveal margins.
-- **Document the setup.** A photo, a wiring list, and a summary of results. When you revisit this in two weeks to inform the architecture, you'll need to remember what you tested and what you found.
+- **Power it properly.** Use a bench supply with current limiting, not just USB power. Monitor the current draw — it reveals something about the power budget.
+- **Instrument it.** Connect a scope probe to critical signals. Log data over serial or to an SD card. The more data captured, the more useful the POC.
+- **Test at the edges.** Do not just verify that the circuit works at nominal conditions. What happens at minimum supply voltage? Maximum temperature? Maximum input signal? Edge cases reveal margins.
+- **Document the setup.** A photo, a wiring list, and a summary of results. When revisiting this in two weeks to inform the architecture, it helps to remember what was tested and what was found.
 
-## Gotchas
+## Tips
 
-- **Eval board schematics may not match the latest silicon.** IC manufacturers update eval boards less frequently than silicon revisions. Check the errata and compare the eval board design to the current datasheet recommendations.
-- **Breakout boards sometimes have design errors.** Open-source hardware boards are community-reviewed but not infallible. If results seem wrong, check the schematic against the datasheet.
-- **Dev board pin mappings are confusing.** Arduino pin numbers don't match the MCU's actual pin numbers. STM32 Nucleo boards have multiple naming schemes (Arduino headers, Morpho headers, MCU pins). Always verify which physical pin you're actually using.
-- **Module datasheets overstate performance.** Range claims for RF modules are often best-case (line of sight, optimal antenna, no interference). Test in your actual environment to get realistic numbers.
-- **Library code hides important details.** Arduino libraries and vendor HALs abstract away peripheral configuration. When moving to a custom design, you may need to understand what the library was doing — clock configuration, DMA setup, interrupt priorities — and replicate it explicitly.
+- Always read the eval board or breakout board schematic before drawing conclusions — the support circuitry (LDOs, decoupling, ground planes) may be doing more work than the component itself
+- Instrument the POC setup with scope probes and data logging from the start; captured data is far more useful than remembered impressions
+- Test at boundary conditions (minimum voltage, maximum load, temperature extremes) rather than just nominal — edge cases reveal design margins
+- Treat failed eval board tests as conclusive negative results; if a component cannot meet the spec under ideal conditions, it will not meet it on a custom board
+
+## Caveats
+
+- **Eval board schematics may not match the latest silicon.** IC manufacturers update eval boards less frequently than silicon revisions — check the errata and compare the eval board design to the current datasheet recommendations
+- **Breakout boards sometimes have design errors.** Open-source hardware boards are community-reviewed but not infallible — if results seem wrong, check the schematic against the datasheet
+- **Dev board pin mappings are confusing.** Arduino pin numbers do not match the MCU's actual pin numbers; STM32 Nucleo boards have multiple naming schemes (Arduino headers, Morpho headers, MCU pins) — always verify which physical pin is actually in use
+- **Module datasheets overstate performance.** Range claims for RF modules are often best-case (line of sight, optimal antenna, no interference) — test in the actual target environment to get realistic numbers
+- **Library code hides important details.** Arduino libraries and vendor HALs abstract away peripheral configuration; when moving to a custom design, it may be necessary to understand what the library was doing — clock configuration, DMA setup, interrupt priorities — and replicate it explicitly

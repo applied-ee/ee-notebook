@@ -9,15 +9,15 @@ Finding a problem on a schematic printout costs nothing — a few minutes of dis
 
 ## Why Reviews Work
 
-Design reviews work because of a simple psychological reality: the designer who created a circuit has become blind to certain classes of errors. After staring at a schematic for days or weeks, your brain fills in what it expects to see rather than what's actually there. A missing connection, a wrong pin assignment, an incorrect resistor value — these become invisible to the person who drew them because the mental model says "it's right" and the brain obligingly sees it that way.
+Design reviews work because of a simple psychological reality: the designer who created a circuit has become blind to certain classes of errors. After staring at a schematic for days or weeks, the brain fills in what it expects to see rather than what's actually there. A missing connection, a wrong pin assignment, an incorrect resistor value — these become invisible to the person who drew them because the mental model says "it's right" and the brain obligingly sees it that way.
 
 A fresh pair of eyes doesn't have that mental model. A reviewer sees what's actually on the page, not what was intended. This is why even a brief review by someone less experienced than the designer catches real bugs. The reviewer doesn't need to be a better engineer — they just need to be a different engineer.
 
-Even self-review is valuable if you approach it systematically, with a checklist, after stepping away from the design for at least a day. The goal is to break the familiarity that makes errors invisible.
+Even self-review is valuable when approached systematically, with a checklist, after stepping away from the design for at least a day. The goal is to break the familiarity that makes errors invisible.
 
 ## The Self-Review Checklist
 
-Before showing the design to anyone else, walk through it yourself with a structured checklist. This catches the most common classes of errors and ensures you're not wasting a reviewer's time on obvious mistakes.
+Before showing the design to anyone else, walk through it with a structured checklist. This catches the most common classes of errors and avoids wasting a reviewer's time on obvious mistakes.
 
 **Power supply and distribution:**
 - Is every IC's power pin connected to the correct supply rail?
@@ -102,10 +102,17 @@ Practical principles that support good review culture:
 - **Document findings, don't just discuss them.** Every issue identified in a review should be recorded (even informally — a shared document or issue list). Verbal-only reviews produce a pleasant conversation but unreliable follow-through.
 - **Close the loop.** After the review, the designer resolves each finding and the reviewer confirms resolution. Findings that are acknowledged but never resolved are the hallmark of ineffective reviews.
 
-## Gotchas
+## Tips
 
-- **Self-review after a break is surprisingly effective.** Reviewing your own schematic after two or three days away from it, using a printed copy, catches a remarkable number of errors. Print it, use a red pen, and check systematically.
-- **Review scope creep wastes everyone's time.** A schematic review should focus on the schematic, not redesign the system architecture. If the reviewer questions the architecture, that's a separate discussion.
-- **Checklists prevent the "I'll remember to check that" failure.** Under time pressure, reviewers skip steps they intend to return to but don't. A written checklist, physically checked off, is the countermeasure.
-- **Reviewing too early wastes effort; reviewing too late wastes money.** The sweet spot is when the schematic is substantially complete but before layout has started. Reviewing a half-finished schematic produces findings that the designer was already planning to address.
-- **The most expensive review finding is the one nobody raises.** If something looks suspicious but you don't mention it because you assume the designer considered it, that's a review failure. Always ask — the worst case is a brief explanation; the best case is catching a real bug.
+- Print the schematic on paper and review it with a red pen after stepping away for at least a day -- the change in medium and context breaks the familiarity that hides errors
+- Run the self-review checklist before inviting peer reviewers, so their time is spent on deeper issues rather than obvious omissions
+- Follow signal paths from input to output during review rather than reviewing component by component -- this catches interface and level-translation errors
+- Document every review finding in a shared list and close the loop on each one before moving to layout
+
+## Caveats
+
+- **Self-review after a break is surprisingly effective.** Reviewing a schematic after two or three days away from it, using a printed copy, catches a remarkable number of errors. Print it, use a red pen, and check systematically
+- **Review scope creep wastes everyone's time.** A schematic review should focus on the schematic, not redesign the system architecture. If the reviewer questions the architecture, that's a separate discussion
+- **Checklists prevent the "I'll remember to check that" failure.** Under time pressure, reviewers skip steps they intend to return to but don't. A written checklist, physically checked off, is the countermeasure
+- **Reviewing too early wastes effort; reviewing too late wastes money.** The sweet spot is when the schematic is substantially complete but before layout has started. Reviewing a half-finished schematic produces findings that the designer was already planning to address
+- **The most expensive review finding is the one nobody raises.** If something looks suspicious but nobody mentions it because the assumption is that the designer considered it, that's a review failure. Always ask -- the worst case is a brief explanation; the best case is catching a real bug

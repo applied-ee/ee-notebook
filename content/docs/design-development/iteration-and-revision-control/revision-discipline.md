@@ -5,11 +5,11 @@ weight: 10
 
 # Revision Discipline
 
-A revision is not just another version of the board — it's a specific, documented snapshot of the design at a point in time. Without revision discipline, you end up with a pile of boards that look similar but behave differently, schematics that might or might not match the hardware in your hand, and BOMs that describe something that no longer exists. Revision discipline is the habit of making each snapshot deliberate, labeled, and traceable.
+A revision is not just another version of the board — it's a specific, documented snapshot of the design at a point in time. Without revision discipline, the result is a pile of boards that look similar but behave differently, schematics that might or might not match the hardware in hand, and BOMs that describe something that no longer exists. Revision discipline is the habit of making each snapshot deliberate, labeled, and traceable.
 
 ## Naming Conventions
 
-Pick a naming convention and stick with it. The two most common schemes are letter-based (Rev A, Rev B, Rev C) and number-based (1.0, 1.1, 2.0). Both work. Mixing them doesn't.
+Pick a naming convention and stick with it. The two most common schemes are letter-based (Rev A, Rev B, Rev C) and number-based (1.0, 1.1, 2.0). Both work. Mixing them does not.
 
 Letter-based naming is simple and common in hardware. Rev A is the first prototype, Rev B incorporates the first round of fixes, and so on. The letters are unambiguous and easy to stamp on a silkscreen. The downside is that they don't inherently distinguish between minor and major changes — Rev B might be a single resistor value change or a complete layout redesign.
 
@@ -38,8 +38,8 @@ Every physical board should carry its revision on the silkscreen — visible wit
 
 A complete board marking includes:
 
-- **Project name or identifier.** Something that distinguishes this project from others on your bench.
-- **Revision.** Rev A, Rev B, or whatever convention you've chosen.
+- **Project name or identifier.** Something that distinguishes this project from others on the bench.
+- **Revision.** Rev A, Rev B, or whatever convention has been chosen.
 - **Date code.** The date the design files were released for fabrication — not the fab date or assembly date. Format: YYYY-MM-DD or YYYYMMDD.
 - **Serial number area.** A blank space or a sequential number for distinguishing individual boards within the same revision. A blank space with a label like "S/N:" can be filled in by hand with a marker.
 
@@ -69,7 +69,7 @@ Planning for iteration means:
 
 - **Leave room in the layout.** Don't fill every square millimeter of the first board. Leave space for additional components, test points, and routing changes that the first round of testing will inevitably require.
 - **Add test points.** Bring key signals — power rails, clock lines, communication buses, analog nodes — to accessible test points. These are essential for bring-up and validation, and they cost almost nothing in board area.
-- **Include unpopulated component positions.** If you suspect you might need a filter, a pull-up, or a protection device but aren't sure, add the footprint and leave it unpopulated. It's far cheaper to solder one component onto an existing pad than to bodge-wire it to a board that doesn't have the footprint.
+- **Include unpopulated component positions.** When a filter, pull-up, or protection device might be needed but the requirement is uncertain, add the footprint and leave it unpopulated. It is far cheaper to solder one component onto an existing pad than to bodge-wire it to a board that lacks the footprint.
 - **Document assumptions.** Every design decision rests on assumptions — about the load, the environment, the component behavior. Write them down. When the first prototype doesn't behave as expected, the assumptions are the first things to check.
 
 Iteration is not failure. It's the expected, healthy progression of a design from initial concept to working product. Revision discipline ensures that each iteration builds on the last rather than starting from confusion.
@@ -89,13 +89,20 @@ A minimal release checklist:
 7. Update the revision history in the schematic.
 8. Archive the complete file set (schematic, layout, BOM, gerbers, assembly drawings) as a single, immutable package.
 
-After release, changes require a new revision. The released files are not modified — they represent the historical record of what was fabricated. This discipline prevents the confusion of having gerbers that don't match the schematic, or a BOM that describes a different board than the one in your hand.
+After release, changes require a new revision. The released files are not modified — they represent the historical record of what was fabricated. This discipline prevents the confusion of having gerbers that don't match the schematic, or a BOM that describes a different board than the one in hand.
 
-## Gotchas
+## Tips
 
-- **Unlabeled boards are untraceable.** If the silkscreen doesn't carry the revision, you'll spend time with a multimeter trying to figure out which board you're holding. Always mark the revision, always.
-- **Revision history gaps cause confusion.** If you skip from Rev A to Rev C, someone will wonder what happened to Rev B. Either include every revision or note explicitly that Rev B was never fabricated.
-- **"I'll remember what changed" is always wrong.** You won't. Write it down. The five minutes spent documenting changes saves hours of forensic investigation later.
-- **Firmware versions and hardware versions are independent.** A hardware Rev B might run firmware v1.0, v1.1, or v2.0. Track them separately and document compatibility: "Firmware v2.0 requires hardware Rev C or later."
-- **Releasing too early wastes money.** If you send gerbers to the fab before finishing the design review, you'll find the error the next morning and have to spin again. Take the time to review before releasing.
-- **Never-releasing wastes time.** If you keep refining indefinitely because "one more change" will make it perfect, you never get the feedback that only comes from building and testing real hardware. Ship Rev A, learn from it, and build Rev B.
+- Stamp the revision letter and date code on every board silkscreen before sending gerbers to fabrication — this takes seconds in the layout tool and prevents hours of confusion later
+- Add unpopulated footprints for likely-needed components (filters, pull-ups, protection devices) during initial layout, since adding a pad is free but bodge-wiring later is not
+- Run the full release checklist (DRC, ERC, BOM match, gerber review) every time, even for "minor" revisions — skipping steps is how mismatches between files and boards accumulate
+- Keep the revision history table in the schematic updated with a brief, specific description of each change so the schematic itself tells the story of the design's evolution
+
+## Caveats
+
+- **Unlabeled boards are untraceable.** If the silkscreen does not carry the revision, expect to spend time with a multimeter trying to figure out which board is which — always mark the revision
+- **Revision history gaps cause confusion.** Skipping from Rev A to Rev C will leave someone wondering what happened to Rev B — either include every revision or note explicitly that Rev B was never fabricated
+- **"I'll remember what changed" is always wrong.** No one does — write it down, because the five minutes spent documenting changes saves hours of forensic investigation later
+- **Firmware versions and hardware versions are independent.** A hardware Rev B might run firmware v1.0, v1.1, or v2.0 — track them separately and document compatibility: "Firmware v2.0 requires hardware Rev C or later"
+- **Releasing too early wastes money.** Sending gerbers to the fab before finishing the design review means finding the error the next morning and having to spin again — take the time to review before releasing
+- **Never-releasing wastes time.** Refining indefinitely because "one more change" will make it perfect means never getting the feedback that only comes from building and testing real hardware — ship Rev A, learn from it, and build Rev B

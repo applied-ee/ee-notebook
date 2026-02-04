@@ -38,7 +38,7 @@ Non-functional requirements specify the quality attributes of the system's behav
 | Size | PCB fits within 50 mm x 30 mm | Constrains component packages, routing density, and layer count |
 | Cost | BOM under $15 at 1000 units | Limits component choices and drives integration decisions |
 
-Non-functional requirements are where the real design tradeoffs live. A temperature sensor project is straightforward if you just need to "read temperature." It becomes a design challenge when you need to read temperature to 0.1 degree accuracy, in an environment from -40 C to +85 C, running from a coin cell for two years, fitting in a 20 mm diameter enclosure.
+Non-functional requirements are where the real design tradeoffs live. A temperature sensor project is straightforward if the only goal is to "read temperature." It becomes a design challenge when the requirement is to read temperature to 0.1 degree accuracy, in an environment from -40 C to +85 C, running from a coin cell for two years, fitting in a 20 mm diameter enclosure.
 
 ## Where Most Designs Fail
 
@@ -51,7 +51,7 @@ Common non-functional failures:
 - **Temperature drift.** The voltage reference is stable at 25 C but drifts 50 ppm/C, which at 60 C puts the measurement outside its accuracy spec.
 - **Startup behavior.** The system works after a clean power-on, but brown-outs in the field cause the MCU to hang in an undefined state.
 
-These failures are invisible if you only test functional requirements.
+These failures are invisible if only functional requirements are tested.
 
 ## Capturing Requirements
 
@@ -64,7 +64,7 @@ A useful format for each requirement is:
 | ID | Short identifier (FR-01, NFR-03) for reference |
 | Description | What the system must do or how it must behave |
 | Priority | Must have, should have, or nice to have |
-| Verification | How you'll test whether this requirement is met |
+| Verification | How compliance with this requirement will be tested |
 | Source | Why this requirement exists (use case, standard, physical constraint) |
 
 The verification column is especially valuable. If there's no way to describe how a requirement would be tested, it's probably too vague to be useful. "The system must be reliable" is not testable. "The system must operate continuously for 30 days without reset in a 40 C environment" is testable.

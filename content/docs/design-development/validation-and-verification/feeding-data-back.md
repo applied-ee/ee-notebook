@@ -37,7 +37,7 @@ Documenting these correlations — where simulation matched, where it diverged, 
 
 When simulation doesn't match measurement, the model needs attention. This might mean updating component models with more accurate parameters, adding parasitic elements that were omitted, or adjusting environmental conditions in the simulation to match the actual test conditions.
 
-For component models, the best source of truth is the manufacturer's model, validated against your measurements. If the manufacturer's model doesn't match, you may need to extract parameters from your own measurements — a process that's tedious but produces models that are accurate for your specific application.
+For component models, the best source of truth is the manufacturer's model, validated against bench measurements. If the manufacturer's model doesn't match, it may be necessary to extract parameters from direct measurements — a process that's tedious but produces models that are accurate for the specific application.
 
 For parasitic models, PCB layout extraction tools can generate parasitic networks from the physical layout. Even rough estimates are better than nothing — adding 1 nH per via and 10 pF per cm of trace to critical nets often explains discrepancies that disappear when parasitics are included.
 
@@ -55,7 +55,7 @@ Collecting these guidelines in a central location — a design checklist, a wiki
 
 ## Sharing Lessons Across Projects
 
-Knowledge gained from testing one project applies to others. If you learn that a particular component is sensitive to moisture, that lesson applies to every future design using that component or similar ones. If you discover that a particular layout pattern causes EMC problems, that lesson applies to every future layout.
+Knowledge gained from testing one project applies to others. If testing reveals that a particular component is sensitive to moisture, that lesson applies to every future design using that component or similar ones. If a particular layout pattern causes EMC problems, that lesson applies to every future layout.
 
 The challenge is making lessons findable. Project-specific test reports are useful for that project; cross-project design guidelines are useful for the organization (or the individual engineer's body of knowledge). The transfer mechanism can be as simple as a "lessons learned" section in the project close-out documentation that gets reviewed at the start of each new project.
 
@@ -71,11 +71,18 @@ Continuous improvement also applies to the testing process itself. If a test mis
 
 The feedback loop is never closed permanently. New components, new applications, new environments, and new failure modes continuously generate new lessons. The goal is not a static set of perfect guidelines but a living process that steadily reduces the gap between design intent and real-world performance.
 
-## Gotchas
+## Tips
 
-- **Root cause vs symptom.** Treating the symptom (adding a bigger capacitor) without understanding the root cause (inadequate loop stability margin) means the problem will reappear in a different form on the next project.
-- **Simulation-measurement disagreement is informative.** Dismissing the disagreement as "SPICE is just an approximation" wastes the most valuable data you have. Investigate the discrepancy — it always teaches something.
-- **Design guidelines without evidence decay into folklore.** "We always do it this way" is only useful if you know why. When guidelines are backed by measurement data, they can be evaluated, updated, and applied correctly to new situations.
-- **Lessons not recorded are lessons lost.** You will forget. Write it down. The act of recording a lesson also forces you to articulate it clearly, which often deepens your understanding.
-- **Sharing requires effort.** Lessons from one project don't automatically transfer to the next. Explicit mechanisms — checklists, design reviews, project retrospectives — are needed to make the transfer happen.
-- **Perfection is the enemy of progress.** You don't need a perfect model or a complete set of guidelines before they're useful. An approximate model that captures the dominant behavior is far more valuable than no model at all. Start with what you know and refine over time.
+- Always trace test failures to root causes before implementing fixes — treating symptoms leads to recurring problems across future projects
+- Document simulation-measurement correlations (where they agree, where they diverge, and why) as reference material for future designs using similar circuits
+- Back every design guideline with the supporting measurement data, conditions, and reasoning so it can be evaluated and updated rather than decaying into folklore
+- Record lessons learned from each project in a central, searchable location so they remain accessible to future work
+
+## Caveats
+
+- **Root cause vs symptom.** Treating the symptom (adding a bigger capacitor) without understanding the root cause (inadequate loop stability margin) means the problem will reappear in a different form on the next project
+- **Simulation-measurement disagreement is informative.** Dismissing the disagreement as "SPICE is just an approximation" wastes the most valuable available data. Investigate the discrepancy — it always teaches something
+- **Design guidelines without evidence decay into folklore.** "We always do it this way" is only useful when the reasoning is known. When guidelines are backed by measurement data, they can be evaluated, updated, and applied correctly to new situations
+- **Lessons not recorded are lessons lost.** Memory fades. Write it down. The act of recording a lesson also forces clear articulation, which often deepens understanding
+- **Sharing requires effort.** Lessons from one project don't automatically transfer to the next. Explicit mechanisms — checklists, design reviews, project retrospectives — are needed to make the transfer happen
+- **Perfection is the enemy of progress.** A perfect model or a complete set of guidelines is not required before they become useful. An approximate model that captures the dominant behavior is far more valuable than no model at all. Start with what is known and refine over time

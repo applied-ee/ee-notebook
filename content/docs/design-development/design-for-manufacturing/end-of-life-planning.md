@@ -5,11 +5,11 @@ weight: 60
 
 # End-of-Life Planning
 
-Every product eventually reaches end-of-life — the point where it's no longer manufactured, supported, or viable. Planning for this isn't pessimism; it's engineering discipline. A product designed without end-of-life awareness will eventually surprise its creators with an urgent crisis: a critical component goes obsolete with no replacement, a supplier exits the market, or the installed base needs support long after anyone remembers how the product works. Thinking about end-of-life during the design phase — when you still have options — prevents these crises from becoming emergencies.
+Every product eventually reaches end-of-life — the point where it's no longer manufactured, supported, or viable. Planning for this isn't pessimism; it's engineering discipline. A product designed without end-of-life awareness will eventually surprise its creators with an urgent crisis: a critical component goes obsolete with no replacement, a supplier exits the market, or the installed base needs support long after anyone remembers how the product works. Thinking about end-of-life during the design phase — when options are still open — prevents these crises from becoming emergencies.
 
 ## Component End-of-Life
 
-Components have lifecycles. A chip that's in full production today will eventually move to "not recommended for new designs" (NRND), then to "last-time buy" (LTB), then to obsolete. The timeline varies wildly: a popular 555 timer may be in production for fifty years, while a specialized RF transceiver might last five. Understanding where your key components sit in their lifecycle affects the longevity of your entire product.
+Components have lifecycles. A chip that's in full production today will eventually move to "not recommended for new designs" (NRND), then to "last-time buy" (LTB), then to obsolete. The timeline varies wildly: a popular 555 timer may be in production for fifty years, while a specialized RF transceiver might last five. Understanding where key components sit in their lifecycle affects the longevity of the entire product.
 
 Signs a component is approaching EOL:
 
@@ -22,9 +22,9 @@ Signs a component is approaching EOL:
 Mitigation strategies during design:
 
 - **Choose components with long expected lifetimes.** Automotive-qualified parts and industrial-grade components tend to have longer production runs than consumer-grade parts.
-- **Design for second sources.** If two manufacturers make functionally equivalent parts with compatible pinouts and specifications, your design survives the loss of either one.
+- **Design for second sources.** If two manufacturers make functionally equivalent parts with compatible pinouts and specifications, the design survives the loss of either one.
 - **Identify critical single-source components.** Any component where no substitute exists is a risk. Document the risk and the contingency plan during design, not after the last-time-buy notice arrives.
-- **Use industry-standard interfaces.** SPI, I2C, UART, and standard power regulator topologies have broad component ecosystems. Proprietary interfaces lock you into a single vendor's roadmap.
+- **Use industry-standard interfaces.** SPI, I2C, UART, and standard power regulator topologies have broad component ecosystems. Proprietary interfaces lock a design into a single vendor's roadmap.
 
 ## Last-Time Buys
 
@@ -36,7 +36,7 @@ When a manufacturer announces end-of-life for a component, they typically offer 
 - **Financial commitment.** Buying a large stock of components ties up capital and creates inventory management overhead. If the product is subsequently redesigned to eliminate the part, the stock becomes waste.
 - **Broker market.** After a component goes obsolete, it often remains available through brokers and aftermarket distributors — at significantly higher prices and with counterfeit risk. Relying on the broker market is a gamble, not a strategy.
 
-The LTB calculation is fundamentally a bet on the future: how many units will you build, how many will fail in the field, and how long until a redesign makes the component unnecessary? Conservative estimates are safer than optimistic ones. Running out of a critical component with no alternative halts production entirely.
+The LTB calculation is fundamentally a bet on the future: how many units will be built, how many will fail in the field, and how long until a redesign makes the component unnecessary? Conservative estimates are safer than optimistic ones. Running out of a critical component with no alternative halts production entirely.
 
 ## Redesign Triggers
 
@@ -46,7 +46,7 @@ At some point, maintaining the current design becomes more expensive than redesi
 - **Cost escalation.** As components become scarce, prices rise. When the BOM cost of the existing design exceeds the amortized cost of a redesign, it's time to redesign.
 - **Regulatory changes.** New environmental regulations (RoHS updates, REACH additions), safety standards, or wireless certification requirements may force design changes regardless of component availability.
 - **Performance obsolescence.** The market has moved on — a 10-year-old product's performance no longer meets customer expectations, even if the hardware still functions correctly.
-- **Tooling and process changes.** If your assembly house upgrades their equipment and no longer supports the component packages or board technology used in your design, you may be forced to find a new assembler or redesign.
+- **Tooling and process changes.** If the assembly house upgrades their equipment and no longer supports the component packages or board technology used in the design, it may be necessary to find a new assembler or redesign.
 
 The redesign decision should consider total lifecycle cost: the cost of redesigning, requalifying, and transitioning production versus the cost of continuing to maintain the current design with diminishing component availability and rising part costs.
 
@@ -63,7 +63,7 @@ Alignment strategies:
 
 ## Sustainability and Environmental Considerations
 
-End-of-life isn't just about when you stop making the product — it's about what happens to the product after its useful life is over.
+End-of-life isn't just about when production stops — it's about what happens to the product after its useful life is over.
 
 - **RoHS compliance.** The Restriction of Hazardous Substances directive limits the use of lead, mercury, cadmium, and other hazardous materials in electronic equipment. Designing for RoHS compliance from the start avoids costly transitions later. Lead-free solder, compliant components, and proper documentation of exemptions where they apply.
 - **WEEE (Waste Electrical and Electronic Equipment).** Regulations requiring manufacturers to take responsibility for the collection and recycling of electronic waste. Product design affects recyclability — how easily can materials be separated? Are hazardous materials contained and labeled?
@@ -76,8 +76,8 @@ Sustainability isn't just regulatory compliance — it's also a design constrain
 
 Design files must be retrievable years — sometimes decades — after the product was designed. This is a surprisingly difficult problem:
 
-- **File format longevity.** Will your EDA tool's native format be readable in 20 years? Proprietary formats become inaccessible when tools are discontinued. Exporting to open or widely-supported formats (PDF for schematics, Gerber/ODB++ for fabrication, CSV for BOMs) creates insurance against tool obsolescence. See also [documentation handoff]({{< relref "/docs/design-development/design-for-manufacturing/documentation-handoff" >}}) for assembling the complete package.
-- **Storage media.** The CD-ROM you burned in 2005 may be unreadable today. USB drives fail. Hard drives crash. Cloud services shut down. Critical design archives need redundant storage on current media, with periodic verification that the files are still readable.
+- **File format longevity.** Will the EDA tool's native format be readable in 20 years? Proprietary formats become inaccessible when tools are discontinued. Exporting to open or widely-supported formats (PDF for schematics, Gerber/ODB++ for fabrication, CSV for BOMs) creates insurance against tool obsolescence. See also [documentation handoff]({{< relref "/docs/design-development/design-for-manufacturing/documentation-handoff" >}}) for assembling the complete package.
+- **Storage media.** The CD-ROM burned in 2005 may be unreadable today. USB drives fail. Hard drives crash. Cloud services shut down. Critical design archives need redundant storage on current media, with periodic verification that the files are still readable.
 - **Institutional knowledge.** Design rationale, component selection reasoning, and manufacturing lessons live in people's heads and in informal communications (emails, chat messages) that may not be archived. Capturing this knowledge in formal design documentation before it's lost is essential for long-term maintainability.
 - **Tool versions.** The design file may be readable but not editable if the tool version that created it is no longer available. Archiving the tool installation (or at minimum, noting the tool version and build number) ensures that files can be reopened if needed.
 - **Regulatory documentation.** Certification test reports, compliance declarations, and regulatory submissions must be retained for the life of the product and often beyond. These documents have legal significance and must be retrievable on demand.
@@ -92,11 +92,18 @@ When a product is replaced by a successor, the transition affects more than just
 - **Knowledge transfer.** The engineering team supporting the old product may not be the team designing the new one. Design documentation, test procedures, and field failure data must transfer from the old team to the new one.
 - **Customer communication.** End-of-life notices, transition timelines, and migration guides help customers plan their own transitions. Surprising customers with abrupt discontinuations damages trust and creates support crises.
 
-## Gotchas
+## Tips
 
-- **"This part will always be available" is never true.** Every component has a finite production life. The question is whether the product's life will exceed the component's life, and the answer is more often "yes" than most designers expect.
-- **Last-time buy quantities are hard to estimate.** Overestimate and you waste money on inventory you'll never use. Underestimate and you run out before the redesign is ready. Build in margin and revisit the estimate as conditions change.
-- **Broker-sourced components carry counterfeit risk.** After a component goes obsolete, the aftermarket fills with counterfeits — parts that test correctly at incoming inspection but fail in the field. Independent testing of broker-sourced parts is essential but adds cost and time.
-- **File formats are more fragile than you think.** A design file that can't be opened is a design that doesn't exist. Export to multiple formats and verify the exports periodically.
-- **End-of-life planning feels premature during design.** It's not. The design choices that enable graceful end-of-life — second sources, standard interfaces, modular architecture — are easiest to implement at the beginning and hardest to retrofit later.
-- **Sustainability regulations are tightening.** Designing for current regulations is the minimum. Designing with an eye toward anticipated future regulations avoids forced redesigns when rules change.
+- Design with second sources and standard interfaces from the start — these choices are easiest to make early and hardest to retrofit later
+- Monitor component lifecycle status (NRND notices, declining distributor stock) regularly rather than waiting for a last-time-buy surprise
+- Export design files to open formats (PDF, Gerber, CSV) alongside native EDA formats to protect against long-term tool obsolescence
+- Document the contingency plan for every critical single-source component during the design phase, not after the EOL notice arrives
+
+## Caveats
+
+- **"This part will always be available" is never true.** Every component has a finite production life. The question is whether the product's life will exceed the component's life, and the answer is more often "yes" than most designers expect
+- **Last-time buy quantities are hard to estimate.** Overestimate and money is wasted on inventory that will never be used. Underestimate and the supply runs out before the redesign is ready. Build in margin and revisit the estimate as conditions change
+- **Broker-sourced components carry counterfeit risk.** After a component goes obsolete, the aftermarket fills with counterfeits — parts that test correctly at incoming inspection but fail in the field. Independent testing of broker-sourced parts is essential but adds cost and time
+- **File formats are more fragile than expected.** A design file that can't be opened is a design that doesn't exist. Export to multiple formats and verify the exports periodically
+- **End-of-life planning feels premature during design.** It's not. The design choices that enable graceful end-of-life — second sources, standard interfaces, modular architecture — are easiest to implement at the beginning and hardest to retrofit later
+- **Sustainability regulations are tightening.** Designing for current regulations is the minimum. Designing with an eye toward anticipated future regulations avoids forced redesigns when rules change

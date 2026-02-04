@@ -33,7 +33,7 @@ Key floorplanning principles:
 
 ## Iterating Between Schematic and Layout
 
-One of the clearest signs that layout is a design activity is how often it sends you back to the schematic. Common layout-driven schematic changes include:
+One of the clearest signs that layout is a design activity is how often it sends the designer back to the schematic. Common layout-driven schematic changes include:
 
 - **Adding test points.** During layout, it becomes clear that a critical net cannot be probed without a dedicated test point. This requires adding a component to the schematic.
 - **Swapping pin assignments.** An MCU's GPIO pins are often interchangeable. During layout, swapping two pin assignments may eliminate a pair of crossing traces and simplify routing. The schematic must be updated to reflect the change.

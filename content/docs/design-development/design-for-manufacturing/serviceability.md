@@ -5,7 +5,7 @@ weight: 40
 
 # Serviceability
 
-Can the product be repaired when something fails, or must it be thrown away? This question rarely comes up during design — the focus is on making the thing work, not on what happens when it stops working. But the answer is determined by design choices made months before the first failure occurs. Serviceability is the discipline of designing for the product's second life: the diagnosis, the repair, the field upgrade. Whether the design serves one bench project or a thousand deployed units, thinking about service access early prevents the frustrating discovery that you can't reach the part that needs replacing.
+Can the product be repaired when something fails, or must it be thrown away? This question rarely comes up during design — the focus is on making the thing work, not on what happens when it stops working. But the answer is determined by design choices made months before the first failure occurs. Serviceability is the discipline of designing for the product's second life: the diagnosis, the repair, the field upgrade. Whether the design serves one bench project or a thousand deployed units, thinking about service access early prevents the frustrating discovery that the part needing replacement can't be reached.
 
 ## Modular Design
 
@@ -24,7 +24,7 @@ Modularity has costs — connectors, cables, additional PCB area, and mechanical
 
 Board-to-board and board-to-wire connectors are the joints of a modular design. Their placement determines whether sub-assemblies can actually be separated for diagnosis:
 
-- **Connector access in the enclosure.** A connector that can only be reached by fully disassembling the enclosure isn't truly accessible. Think about the service sequence: what needs to come apart, and in what order?
+- **Connector access in the enclosure.** A connector that can only be reached by fully disassembling the enclosure isn't truly accessible. Consider the service sequence: what needs to come apart, and in what order?
 - **Latching connectors.** Connectors that lock in place prevent accidental disconnection during service. But they also need to be unlatched, and if the latch is inaccessible or fragile, it becomes a service problem itself.
 - **Keyed connectors.** Connectors that can only be inserted one way prevent reversed connections during reassembly. This matters most when service is performed by someone who didn't design the system.
 - **Cable length and routing.** Cables long enough to allow one board to be moved aside while still connected to the system are valuable for diagnosis. If every cable is exactly the minimum length, nothing can be opened for inspection without disconnecting everything.
@@ -51,18 +51,18 @@ Essential field test points:
 - **Key signals.** Any signal whose presence or absence confirms the operation of a major subsystem — a clock output, an enable signal, a sensor output.
 - **Ground reference.** A dedicated, easily accessible ground point for probe attachment. This seems trivial but saves time when every ground connection requires clip gymnastics.
 
-Test point placement matters as much as existence. Points that are accessible through an inspection port or when a cover is removed are useful. Points buried under a wiring harness or behind a heat sink are not. Consider the service scenario: what's the enclosure state when someone is diagnosing a fault? Can they reach the test points with a probe?
+Test point placement matters as much as existence. Points that are accessible through an inspection port or when a cover is removed are useful. Points buried under a wiring harness or behind a heat sink are not. Consider the service scenario: what's the enclosure state when someone is diagnosing a fault? Can the test points be reached with a probe?
 
 ## Documentation for Service
 
-A product without service documentation is a product that can only be serviced by the original designer — and even then, only while the design is still fresh in their mind. Service documentation bridges the gap between the designer's knowledge and the technician's need:
+A product without service documentation is a product that can only be serviced by the original designer — and even then, only while the design is still fresh in memory. Service documentation bridges the gap between the designer's knowledge and the technician's need:
 
 - **Schematic.** The complete schematic, current to the revision being serviced, is the foundation of any diagnostic effort. Without it, the technician is working blind.
-- **Expected voltages and signals.** A table of "what you should measure at each test point" under normal operating conditions. This is the quickest path to identifying a fault — compare actual measurements to expected values.
+- **Expected voltages and signals.** A table of "what should be measured at each test point" under normal operating conditions. This is the quickest path to identifying a fault — compare actual measurements to expected values.
 - **Block diagram.** A simplified view of the system that helps the technician understand the architecture without reading every schematic sheet.
 - **Troubleshooting guide.** A decision tree or flowchart: "If the power LED is off, check X. If it's on but there's no output, check Y." This encodes the designer's diagnostic reasoning and makes it available to anyone.
 
-Writing service documentation is one of the least enjoyable tasks in engineering, which is why it's so often skipped. But the time invested pays back every time someone — including future you — needs to fix a broken unit.
+Writing service documentation is one of the least enjoyable tasks in engineering, which is why it's so often skipped. But the time invested pays back every time someone — including a future version of the original designer — needs to fix a broken unit.
 
 ## Repairability vs Disposability
 
@@ -92,10 +92,17 @@ Practical steps:
 - **Make spare parts available.** Especially for wear items like batteries, screens, and connectors.
 - **Don't use software locks to prevent repair.** Firmware that bricks the device after a component replacement is hostile to the user and increasingly illegal.
 
-## Gotchas
+## Tips
 
-- **The enclosure determines serviceability more than the PCB does.** A beautifully modular PCB design inside a glued-shut, snap-fit enclosure with no service access is effectively unrepairable. Design the enclosure and the electronics together.
-- **Service documentation goes stale.** If the documentation isn't updated with each hardware revision, technicians will be working from the wrong schematic. Include the revision number on every document and every board.
-- **Modularity adds failure modes.** Every connector is a potential open circuit, every cable a potential fault. Modular designs must be tested at the interconnection points, not just within each module.
-- **Test points cost almost nothing but save enormous time.** A $0.02 test pad that takes no board space can save an hour of probing at $100/hour labor rates. The ROI is absurd.
-- **"Nobody will ever need to fix this" is always wrong.** If the device works, someone will eventually need to fix it. The only products that are never repaired are the ones that are never used.
+- Design the enclosure and electronics together so that service access paths are considered from the start, not discovered as limitations after the fact
+- Add test points on every major power rail and key signal line early in layout — they cost almost nothing in board space and save significant diagnostic time
+- Write a brief troubleshooting decision tree while the design rationale is still fresh; this captures diagnostic reasoning that would otherwise be lost
+- Use keyed, latching connectors at modular boundaries to prevent reversed connections and accidental disconnections during field service
+
+## Caveats
+
+- **The enclosure determines serviceability more than the PCB does.** A beautifully modular PCB design inside a glued-shut, snap-fit enclosure with no service access is effectively unrepairable. Design the enclosure and the electronics together
+- **Service documentation goes stale.** If the documentation isn't updated with each hardware revision, technicians will be working from the wrong schematic. Include the revision number on every document and every board
+- **Modularity adds failure modes.** Every connector is a potential open circuit, every cable a potential fault. Modular designs must be tested at the interconnection points, not just within each module
+- **Test points cost almost nothing but save enormous time.** A $0.02 test pad that takes no board space can save an hour of probing at $100/hour labor rates. The ROI is absurd
+- **"Nobody will ever need to fix this" is always wrong.** If the device works, someone will eventually need to fix it. The only products that are never repaired are the ones that are never used

@@ -42,7 +42,7 @@ Formal vibration testing requires a shaker table, which is expensive equipment. 
 
 ## ESD Testing
 
-Electrostatic discharge is a real-world threat that's easy to ignore on the bench, where you're wearing a wrist strap and working on a grounded mat. Users don't have ESD protection. They touch buttons, plug in cables, and walk across carpets in dry winter air.
+Electrostatic discharge is a real-world threat that's easy to ignore on the bench, where the operator wears a wrist strap and works on a grounded mat. Users don't have ESD protection. They touch buttons, plug in cables, and walk across carpets in dry winter air.
 
 The IEC 61000-4-2 standard defines ESD test levels: contact discharge at 2, 4, 6, and 8 kV, and air discharge at 2, 4, 8, and 15 kV. For consumer products, surviving level 2 (4 kV contact, 8 kV air) is a common target. Every external connector, button, switch, and exposed metal surface is a potential ESD entry point.
 
@@ -58,7 +58,7 @@ Common EMC failures include excessive emissions from switching power supplies, c
 
 ## When to Test
 
-Environmental testing is most useful when it happens early enough to influence the design — but the design must be representative enough that the results are meaningful. Testing a breadboard prototype for vibration resistance tells you nothing useful. Testing the final production unit is too late to make changes cheaply.
+Environmental testing is most useful when it happens early enough to influence the design — but the design must be representative enough that the results are meaningful. Testing a breadboard prototype for vibration resistance tells nothing useful. Testing the final production unit is too late to make changes cheaply.
 
 The sweet spot is a prototype that's physically representative of the final design: same PCB, same components, same enclosure (or a reasonable approximation). This is typically the second or third hardware revision, after the basic electrical functionality has been validated.
 
@@ -73,11 +73,18 @@ Professional environmental test chambers cost thousands to tens of thousands of 
 
 These are screening tests, not qualification tests. They find gross problems cheaply. They don't replace formal environmental testing when the application demands it — but for learning and prototyping, they're far better than testing only at room temperature on a clean bench.
 
-## Gotchas
+## Tips
 
-- **Room temperature is not representative.** The bench is 25C with stable power and no vibration. The real world is none of these things. If you've only tested at room temp, you haven't really tested.
-- **Component temperature ratings are not margins.** A component rated to 85C will work at 85C — but its performance at that limit may be significantly degraded compared to 25C. Derating is not optional.
-- **Condensation is sneaky.** It doesn't take tropical humidity. Moving a cold device into a warm room can cause condensation even in moderate climates. This is a real failure mode, not a theoretical one.
-- **ESD damage can be latent.** A device that survives an ESD event may have weakened components that fail hours or weeks later. The absence of immediate failure doesn't mean the device is undamaged.
-- **EMC problems are layout problems.** Adding filters and shields after the layout is done is expensive and often ineffective. EMC should be considered during layout, not discovered during testing.
-- **Screening is not qualification.** A freezer test is useful for finding obvious cold-start problems. It does not qualify a design for -40C operation. Know the difference between "we checked" and "we proved."
+- Start with supply voltage and temperature as the first two environmental stresses to test — they are the most accessible and reveal the most common marginal design problems
+- Use budget-friendly screening methods (freezer, heat gun, sealed humidity container) early in prototyping to catch gross problems before investing in formal environmental testing
+- Check every component in the BOM against the intended temperature range — a single commercial-rated part in an industrial design creates the weak link
+- Test ESD susceptibility at every external connector, button, and exposed metal surface, not just the "obvious" entry points
+
+## Caveats
+
+- **Room temperature is not representative.** The bench is 25C with stable power and no vibration. The real world is none of these things. Testing only at room temp is not really testing
+- **Component temperature ratings are not margins.** A component rated to 85C will work at 85C — but its performance at that limit may be significantly degraded compared to 25C. Derating is not optional
+- **Condensation is sneaky.** It doesn't take tropical humidity. Moving a cold device into a warm room can cause condensation even in moderate climates. This is a real failure mode, not a theoretical one
+- **ESD damage can be latent.** A device that survives an ESD event may have weakened components that fail hours or weeks later. The absence of immediate failure doesn't mean the device is undamaged
+- **EMC problems are layout problems.** Adding filters and shields after the layout is done is expensive and often ineffective. EMC should be considered during layout, not discovered during testing
+- **Screening is not qualification.** A freezer test is useful for finding obvious cold-start problems. It does not qualify a design for -40C operation. Know the difference between "we checked" and "we proved"

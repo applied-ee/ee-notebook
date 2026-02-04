@@ -9,11 +9,11 @@ A well-named signal is a tiny piece of documentation that travels with every ins
 
 ## Why Naming Conventions Matter
 
-Signal names are the primary language of schematic communication. When you look at a schematic and see a net called `SPI1_MOSI`, you immediately know what it carries (SPI data), which bus it belongs to (bus 1), and its direction (master out). When you see a net called `NET47`, you know nothing. You have to trace it, find both endpoints, figure out its function, and remember that context every time you encounter it again.
+Signal names are the primary language of schematic communication. Looking at a schematic and seeing a net called `SPI1_MOSI` immediately communicates what it carries (SPI data), which bus it belongs to (bus 1), and its direction (master out). A net called `NET47` communicates nothing. It has to be traced, both endpoints found, its function figured out, and that context remembered every time it appears again.
 
-This matters most when you're not the one who named the signals. During a design review, a peer reviewer needs to understand the design quickly. During layout, the PCB designer needs to know which signals are critical. During debug, the engineer probing the board needs to identify signals without constantly referencing the schematic. Clear names make all of these interactions faster and less error-prone.
+This matters most when the reader is not the one who named the signals. During a design review, a peer reviewer needs to understand the design quickly. During layout, the PCB designer needs to know which signals are critical. During debug, the engineer probing the board needs to identify signals without constantly referencing the schematic. Clear names make all of these interactions faster and less error-prone.
 
-Even for solo projects, naming discipline matters because future-you is effectively a different person. I've opened schematics I designed six months earlier and been unable to determine what certain signals were for, because I used vague names like `CTRL` or `SIG_IN` that made sense in the moment but carried no lasting meaning.
+Even for solo projects, naming discipline matters because the future reader of the schematic is effectively a different person. I've opened schematics I designed six months earlier and been unable to determine what certain signals were for, because I used vague names like `CTRL` or `SIG_IN` that made sense in the moment but carried no lasting meaning.
 
 ## Naming Convention Patterns
 
@@ -27,7 +27,7 @@ A consistent convention eliminates ambiguity and makes names predictable. Here a
 
 **Direction indicators from the source's perspective:** `MCU_TX` means the MCU is transmitting on this line. `SENSOR_OUT` means the signal originates from the sensor. This avoids the most common naming ambiguity in electronics: whose TX and whose RX?
 
-**Functional descriptors for analog signals:** `VREF_2V5` (a 2.5V reference), `ISENSE_MOTOR` (motor current sense voltage), `TEMP_NTC` (temperature from an NTC thermistor). These tell you what the signal represents, not just where it comes from.
+**Functional descriptors for analog signals:** `VREF_2V5` (a 2.5V reference), `ISENSE_MOTOR` (motor current sense voltage), `TEMP_NTC` (temperature from an NTC thermistor). These communicate what the signal represents, not just where it comes from.
 
 ## The TX/RX Ambiguity
 
@@ -35,7 +35,7 @@ This deserves special attention because it causes real wiring errors on real boa
 
 The clearest approach: name signals from one device's perspective and document that choice. I use the MCU's perspective since it's typically the "center" of the design: `MCU_UART1_TX` is the line carrying data FROM the MCU, which connects to the peripheral's RX pin. Alternatively, name by function: `GPS_DATA_TO_MCU` and `MCU_CMD_TO_GPS`.
 
-Whatever convention you choose, document it once and apply it uniformly. The worst outcome is inconsistency — some signals named from the MCU's perspective and others from the peripheral's perspective, with no way to tell which is which without tracing every connection.
+Whatever convention is chosen, document it once and apply it uniformly. The worst outcome is inconsistency — some signals named from the MCU's perspective and others from the peripheral's perspective, with no way to tell which is which without tracing every connection.
 
 ## Schematic Annotations
 
@@ -69,9 +69,9 @@ Schematics are design files, and they benefit from the same version control disc
 
 Most modern EDA tools (KiCad, Altium, Eagle) store schematics in text-based formats that work with git, though the diffs are hard to read. Some tools (KiCad in particular) generate relatively clean text diffs. For binary-format tools, at minimum export PDF snapshots with each committed revision so that visual diffs are possible.
 
-**Meaningful commit messages** describe what changed and why: "Increased R7 from 4.7k to 10k to reduce quiescent current on VBAT rail" is useful. "Updated schematic" is not. The commit message is your design journal, recording the stream of decisions that shaped the final design.
+**Meaningful commit messages** describe what changed and why: "Increased R7 from 4.7k to 10k to reduce quiescent current on VBAT rail" is useful. "Updated schematic" is not. The commit message serves as a design journal, recording the stream of decisions that shaped the final design.
 
-**Tagged releases** mark significant milestones: "schematic-review-v1", "sent-to-fab-rev-A", "post-bring-up-fixes". These let you return to any point in the design history and understand what was fabricated.
+**Tagged releases** mark significant milestones: "schematic-review-v1", "sent-to-fab-rev-A", "post-bring-up-fixes". These make it possible to return to any point in the design history and understand what was fabricated.
 
 ## The Design Log
 
@@ -79,13 +79,20 @@ Beyond version control, a design log (or design journal) captures the reasoning 
 
 The design log answers questions like: "Why did we choose the TPS54302 instead of the LM3671?" or "Why is the ADC reference voltage 2.048V instead of the full 3.3V supply?" These decisions involve tradeoffs that are difficult to reconstruct months later without a written record.
 
-The format matters less than the habit. A simple text file with dated entries works. The critical practice is writing down the decision and its rationale at the time you make it, not trying to reconstruct the reasoning later.
+The format matters less than the habit. A simple text file with dated entries works. The critical practice is writing down the decision and its rationale at the time it is made, not trying to reconstruct the reasoning later.
 
-## Gotchas
+## Tips
 
-- **Inconsistent naming creates false connections.** If one sheet calls a net `SPI_CLK` and another calls it `SPI1_CLK`, they're not connected — but a reader might assume they are. Decide on names early and enforce them through the entire design.
-- **Unnamed nets are invisible bugs.** A net with no name that happens to connect two things through a coincidental tool-assigned identifier will break silently if the schematic is reorganized. Name every net that crosses a sheet boundary.
-- **Signal names that describe the implementation instead of the function become wrong when the implementation changes.** Calling a net `I2C_SDA` is fine. Calling it `U3_PIN12` is fragile — it breaks the moment you change the IC or the pin assignment.
-- **Over-annotation clutters the schematic.** Not every component needs a paragraph of explanation. Annotate the non-obvious choices; trust that standard practices (like 100nF decoupling on every IC power pin) don't need explanation.
-- **Documentation without maintenance becomes misinformation.** If you change R7 from 4.7k to 10k but don't update the annotation explaining the original 4.7k choice, the annotation is now actively misleading. Update notes whenever you change the thing they describe.
-- **The TX/RX swap is the most common wiring error in UART connections.** It appears on amateur and professional boards alike. Document the convention explicitly on the schematic, and verify it during design review.
+- Decide on a naming convention at the start of the design and document it on the title sheet -- consistency across all sheets prevents false connections and confusion
+- Name signals from one device's perspective (typically the MCU) and annotate that choice on the schematic so UART TX/RX assignments are unambiguous
+- Annotate every non-obvious component value with the design calculation or rationale, so reviewers and future readers can verify without re-deriving from the datasheet
+- Treat the BOM as a manufacturing document: include tolerance specs, dielectric requirements, and approved alternates for every critical component
+
+## Caveats
+
+- **Inconsistent naming creates false connections.** If one sheet calls a net `SPI_CLK` and another calls it `SPI1_CLK`, they're not connected -- but a reader might assume they are. Decide on names early and enforce them through the entire design
+- **Unnamed nets are invisible bugs.** A net with no name that happens to connect two things through a coincidental tool-assigned identifier will break silently if the schematic is reorganized. Name every net that crosses a sheet boundary
+- **Signal names that describe the implementation instead of the function become wrong when the implementation changes.** Calling a net `I2C_SDA` is fine. Calling it `U3_PIN12` is fragile -- it breaks the moment the IC or the pin assignment changes
+- **Over-annotation clutters the schematic.** Not every component needs a paragraph of explanation. Annotate the non-obvious choices; trust that standard practices (like 100nF decoupling on every IC power pin) don't need explanation
+- **Documentation without maintenance becomes misinformation.** If R7 changes from 4.7k to 10k but the annotation explaining the original 4.7k choice is not updated, the annotation is now actively misleading. Update notes whenever the thing they describe changes
+- **The TX/RX swap is the most common wiring error in UART connections.** It appears on amateur and professional boards alike. Document the convention explicitly on the schematic, and verify it during design review

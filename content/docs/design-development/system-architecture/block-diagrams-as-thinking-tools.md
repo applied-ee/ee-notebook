@@ -9,7 +9,7 @@ Block diagrams are not documentation — or rather, they're not just documentati
 
 ## What a Block Diagram Should Capture
 
-A system-level block diagram should answer: what are the major functional blocks, how do they connect, and what flows between them? This sounds simple, but getting it right requires thinking through the design at a level of abstraction that many people skip in their rush to the schematic.
+A system-level block diagram should answer: what are the major functional blocks, how do they connect, and what flows between them? This sounds simple, but getting it right requires thinking through the design at a level of abstraction that many engineers skip in their rush to the schematic.
 
 The essential elements:
 
@@ -23,9 +23,9 @@ The essential elements:
 
 Not all block diagrams serve the same purpose. Different levels of abstraction answer different questions:
 
-**System-level diagram.** Shows the entire system in one view. Answers: what are the major subsystems and how do they interact? This fits on one page and is the first thing you draw. It's also the diagram you show someone who asks "what does your project do?"
+**System-level diagram.** Shows the entire system in one view. Answers: what are the major subsystems and how do they interact? This fits on one page and is the first thing to draw. It's also the diagram to show someone who asks "what does this project do?"
 
-**Subsystem diagram.** Zooms into one block from the system-level diagram and shows its internal structure. A "sensor interface" block at the system level might expand into an excitation source, a signal conditioning chain, an ADC, and a digital interface. This level is where you start making circuit topology decisions.
+**Subsystem diagram.** Zooms into one block from the system-level diagram and shows its internal structure. A "sensor interface" block at the system level might expand into an excitation source, a signal conditioning chain, an ADC, and a digital interface. This level is where circuit topology decisions begin.
 
 **Detailed block diagram.** Close to a schematic but still abstracted. Shows specific functional stages (gain stage, filter stage, reference) with key parameter values. This is the bridge between architecture and circuit design — the last step before opening the schematic editor.
 
@@ -33,7 +33,7 @@ Each level serves a purpose. Jumping directly to the detailed level skips the sy
 
 ## Drawing Conventions
 
-Consistency in how you draw block diagrams makes them easier to read and less likely to hide problems. Some conventions I've found useful:
+Consistency in drawing block diagrams makes them easier to read and less likely to hide problems. Some conventions I've found useful:
 
 - **Signal type differentiation.** Use different line styles or colors for analog signals, digital signals, and power connections. At minimum, distinguish power from signal. A single-color diagram with power and signal mixed together obscures the power architecture.
 - **Direction arrows.** Always show signal direction. Bidirectional interfaces (I2C, SPI with MISO/MOSI) get double arrows or a note. A diagram without arrows is ambiguous.
@@ -47,10 +47,10 @@ The block diagram should go through multiple revisions before the schematic is s
 
 Useful iteration questions:
 
-- **Can each block be tested independently?** If a block can only be verified with the entire system running, testing and debugging will be painful. Consider how you would test each block in isolation and whether the interfaces support that.
+- **Can each block be tested independently?** If a block can only be verified with the entire system running, testing and debugging will be painful. Consider how each block would be tested in isolation and whether the interfaces support that.
 - **Are the interfaces between blocks clearly defined?** If two blocks share an interface that's described as "data connection," that's not defined enough. What protocol? What voltage levels? What timing? Vagueness in the block diagram becomes ambiguity in the schematic, which becomes bugs in the hardware.
 - **Is the power architecture visible?** If the block diagram doesn't show how power flows, the power design will be an afterthought. Power should be a first-class element of the architecture, not something added after the signal path is designed.
-- **Are there circular dependencies?** If block A needs an output from block B to initialize, and block B needs an output from block A, you have a startup sequencing problem. Block diagrams reveal these loops when schematics might hide them across multiple sheets.
+- **Are there circular dependencies?** If block A needs an output from block B to initialize, and block B needs an output from block A, there is a startup sequencing problem. Block diagrams reveal these loops when schematics might hide them across multiple sheets.
 - **Is anything missing?** Common omissions: reset circuitry, programming/debug interfaces, status indicators, protection circuits, test access points. These are functional blocks that deserve representation even if they're simple.
 
 ## When the Block Diagram Reveals Problems
@@ -59,7 +59,7 @@ A well-drawn block diagram acts as a design review in itself. Problems that are 
 
 **Circular dependencies.** Block A generates a clock that block B needs, but block B generates the enable signal for block A. The block diagram shows this as a loop; the schematic might spread it across three sheets where the loop isn't visible.
 
-**Missing functions.** The sensor block feeds the ADC, and the ADC feeds the MCU, but there's no anti-aliasing filter between the sensor and the ADC. At the block level, this gap is obvious. In a schematic, you might not notice the missing stage until you see aliasing artifacts in the data.
+**Missing functions.** The sensor block feeds the ADC, and the ADC feeds the MCU, but there's no anti-aliasing filter between the sensor and the ADC. At the block level, this gap is obvious. In a schematic, the missing stage might not be noticed until aliasing artifacts appear in the data.
 
 **Power architecture gaps.** The system has a 3.3V block and a 5V block, but no level translation between them. The block diagram shows two power domains with a digital interface crossing the boundary — that crossing needs a level translator.
 
@@ -69,15 +69,22 @@ A well-drawn block diagram acts as a design review in itself. Problems that are 
 
 ## Block Diagrams for Small Projects
 
-Even small projects benefit from a block diagram, though it might be a five-minute sketch on a notepad rather than a formal drawing. A one-sensor, one-MCU, one-display project has at least four blocks: sensor interface, processing, display, and power. Drawing those four blocks with their connections — even informally — forces you to think about the interfaces and power before jumping to the schematic.
+Even small projects benefit from a block diagram, though it might be a five-minute sketch on a notepad rather than a formal drawing. A one-sensor, one-MCU, one-display project has at least four blocks: sensor interface, processing, display, and power. Drawing those four blocks with their connections — even informally — forces thinking about the interfaces and power before jumping to the schematic.
 
 The investment is tiny. The return is disproportionate. The five-minute sketch might reveal that the sensor output range doesn't match the MCU's ADC input range, or that the display needs 5V but the MCU runs at 3.3V. Better to discover these on paper than after the PCB arrives.
 
-## Gotchas
+## Tips
 
-- **A block diagram is not a schematic with big boxes.** If you're showing component-level detail in the block diagram, you've gone too deep. Stay at the functional level. The schematic is where components live.
-- **Don't skip the power architecture.** It's tempting to leave power off the block diagram because "it's just a regulator." Power distribution affects noise, sequencing, and fault behavior. It deserves first-class representation.
-- **Label your interfaces with numbers, not just names.** "Analog signal" tells you nothing about design constraints. "0-2.5V analog, 10 kHz bandwidth, 100 ohm source impedance" tells you nearly everything you need to design the receiving block.
-- **Update the block diagram when the design changes.** An outdated block diagram is worse than no block diagram — it gives false confidence that the architecture is understood. If you add a block to the schematic, add it to the block diagram too.
-- **Don't confuse physical layout with logical architecture.** Blocks that are logically separate may share a chip (e.g., a dual op-amp serves two different signal conditioning functions). The block diagram shows logical functions; the schematic shows physical implementation.
-- **Time spent on the block diagram is not time wasted.** Every hour spent iterating the architecture saves multiple hours of schematic rework, layout redo, and debugging. It doesn't feel productive because you're not placing components, but it's the highest-leverage activity in the design process.
+- Start every project with a system-level block diagram before opening the schematic editor — even a five-minute sketch on a notepad reveals interface and power issues early
+- Label every interface with quantitative parameters (voltage range, bandwidth, impedance) so each block can be designed independently
+- Iterate the block diagram through at least two or three revisions, using the "can each block be tested independently?" question as a quality check
+- Include power domains as first-class elements from the beginning rather than adding them after the signal path is drawn
+
+## Caveats
+
+- **A block diagram is not a schematic with big boxes.** Showing component-level detail in the block diagram means the abstraction is too deep — stay at the functional level; the schematic is where components live
+- **Do not skip the power architecture.** It is tempting to leave power off the block diagram because "it's just a regulator." Power distribution affects noise, sequencing, and fault behavior and deserves first-class representation
+- **Label interfaces with numbers, not just names.** "Analog signal" tells nothing about design constraints. "0-2.5V analog, 10 kHz bandwidth, 100 ohm source impedance" tells nearly everything needed to design the receiving block
+- **Update the block diagram when the design changes.** An outdated block diagram is worse than no block diagram — it gives false confidence that the architecture is understood. Adding a block to the schematic means adding it to the block diagram too
+- **Do not confuse physical layout with logical architecture.** Blocks that are logically separate may share a chip (e.g., a dual op-amp serves two different signal conditioning functions). The block diagram shows logical functions; the schematic shows physical implementation
+- **Time spent on the block diagram is not time wasted.** Every hour spent iterating the architecture saves multiple hours of schematic rework, layout redo, and debugging. It may not feel productive, but it is the highest-leverage activity in the design process

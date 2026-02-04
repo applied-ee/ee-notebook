@@ -36,7 +36,7 @@ Neither approach is universally better. But if the system already has an MCU and
 
 A common need in sensor systems is correcting for offset and gain errors. There are two approaches:
 
-**Hardware precision:** Use 0.1% resistors, precision voltage references, and low-drift op-amps to minimize errors at the circuit level. This can work, but the BOM cost is high and you're still subject to temperature drift, aging, and production variation.
+**Hardware precision:** Use 0.1% resistors, precision voltage references, and low-drift op-amps to minimize errors at the circuit level. This can work, but the BOM cost is high and the design is still subject to temperature drift, aging, and production variation.
 
 **Software calibration:** Use reasonable components (1% resistors, standard op-amps) and calibrate out the errors in firmware. Measure a known reference during production, store correction coefficients in non-volatile memory, and apply them to every reading.
 
@@ -86,11 +86,18 @@ A well-designed sensor interface, for example, might use a hardware instrumentat
 
 This division isn't always obvious. It evolves with experience and with the capabilities of available MCUs. As microcontrollers get faster and ADCs get better, the boundary shifts — more processing moves to software, and the analog front-end gets simpler.
 
-## Gotchas
+## Tips
 
-- **Anti-aliasing is always a hardware problem.** No amount of software filtering can recover from an undersampled signal. If you're digitizing analog signals, the anti-aliasing filter must exist in hardware before the ADC input.
-- **Firmware bugs can be harder to find than hardware bugs.** A wrong resistor value shows up on a multimeter. A firmware timing bug might only appear under specific conditions after hours of operation. Software flexibility comes with debugging complexity.
-- **Software adds latency.** Every firmware processing step takes time — ADC conversion, filter computation, communication. If the application is time-critical, measure the software latency budget before assuming the MCU can handle it.
-- **Software requires a working MCU.** If the MCU hasn't booted yet (during power-up sequencing), or has crashed, or is in a brown-out state, all software functions are offline. Critical functions that must work regardless of MCU state must be in hardware.
-- **"We'll fix it in firmware" is a dangerous phrase.** It's valid when the firmware fix is straightforward and the hardware is adequate. It's dangerous when it becomes an excuse for not fixing a hardware design problem that should be fixed at the source.
-- **Don't forget the development tools.** A software solution requires a development environment, a debugger, and someone who can write and maintain the code. If the project doesn't already include firmware development, adding it solely to replace a simple hardware function may not save effort.
+- If the system already has an MCU and ADC, consider moving filtering and calibration into firmware — the marginal cost is essentially zero compared to adding analog components
+- Use software calibration with reasonable components (1% resistors, standard op-amps) instead of chasing precision hardware; store correction coefficients in non-volatile memory
+- Design hybrid systems that use hardware for what only hardware can do (anti-aliasing, protection, impedance matching) and software for everything that benefits from flexibility
+- Before adding a hardware variant for a configuration option, check whether firmware-selectable behavior can serve the same need with a single hardware platform
+
+## Caveats
+
+- **Anti-aliasing is always a hardware problem.** No amount of software filtering can recover from an undersampled signal — when digitizing analog signals, the anti-aliasing filter must exist in hardware before the ADC input
+- **Firmware bugs can be harder to find than hardware bugs.** A wrong resistor value shows up on a multimeter, but a firmware timing bug might only appear under specific conditions after hours of operation — software flexibility comes with debugging complexity
+- **Software adds latency.** Every firmware processing step takes time — ADC conversion, filter computation, communication — if the application is time-critical, measure the software latency budget before assuming the MCU can handle it
+- **Software requires a working MCU.** If the MCU hasn't booted yet (during power-up sequencing), or has crashed, or is in a brown-out state, all software functions are offline — critical functions that must work regardless of MCU state must be in hardware
+- **"We'll fix it in firmware" is a dangerous phrase.** It's valid when the firmware fix is straightforward and the hardware is adequate, but dangerous when it becomes an excuse for not fixing a hardware design problem that should be fixed at the source
+- **Don't forget the development tools.** A software solution requires a development environment, a debugger, and someone who can write and maintain the code — if the project doesn't already include firmware development, adding it solely to replace a simple hardware function may not save effort

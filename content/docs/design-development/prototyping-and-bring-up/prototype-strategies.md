@@ -5,7 +5,7 @@ weight: 10
 
 # Prototype Strategies: Fast vs Faithful
 
-Not every prototype serves the same purpose, and confusing the purpose leads to wasted time and money. By this stage, [proof-of-concept work]({{< relref "../proof-of-concept" >}}) has already answered the riskiest questions using breadboards, dev boards, and simulation. Now the question shifts from "can this idea work?" to "does this design work as a system on a real PCB?" Choosing the right prototype strategy means understanding what question you're trying to answer — and building only enough hardware to answer it.
+Not every prototype serves the same purpose, and confusing the purpose leads to wasted time and money. By this stage, [proof-of-concept work]({{< relref "../proof-of-concept" >}}) has already answered the riskiest questions using breadboards, dev boards, and simulation. Now the question shifts from "can this idea work?" to "does this design work as a system on a real PCB?" Choosing the right prototype strategy means understanding what question needs answering — and building only enough hardware to answer it.
 
 ## The Prototype Spectrum
 
@@ -20,7 +20,7 @@ A functional prototype should include:
 - Generous component spacing for rework access
 - Extra I/O or expansion headers for flexibility
 
-What it teaches you:
+What it teaches:
 - Whether the power supply design works under real load
 - Whether signal integrity is acceptable on the actual PCB
 - Whether the firmware can drive all the hardware
@@ -38,7 +38,7 @@ Not every project needs both stages. The decision depends on risk, cost, and sch
 
 ## Choosing the Right Strategy
 
-A useful framework for choosing which PCB prototype stage you need:
+A useful framework for choosing the appropriate PCB prototype stage:
 
 | Question | Strategy |
 |----------|----------|
@@ -48,10 +48,16 @@ A useful framework for choosing which PCB prototype stage you need:
 
 For earlier-stage questions — "does this physics work?" or "does this component do what we need?" — those belong in the [proof-of-concept]({{< relref "../proof-of-concept" >}}) phase before committing to a PCB.
 
-## Gotchas
+## Tips
 
-- **PCB prototypes take longer than you think.** Even with fast-turn PCB services (2-3 days for bare boards), the total turnaround — order boards, receive them, order components, assemble, test — is typically 1-2 weeks. Plan for this.
-- **Order extra boards.** The marginal cost of 5 boards vs 3 is negligible with most fabricators. Extra boards save you when the first one gets damaged during rework or when you need to test a modification without destroying the original.
-- **Functional prototypes should include test infrastructure.** Test points, debug headers, jumper-selectable options, and unpopulated footprints for alternate components all cost nothing on the schematic and pay dividends during bring-up.
-- **Don't optimize the functional prototype for cost.** The functional prototype exists to find bugs and validate the design. Use larger footprints than production, add extra decoupling, include debug features. Cost optimization belongs on the pre-production revision.
-- **Pre-production prototypes must be built with production processes.** A pre-production board assembled by hand doesn't validate manufacturing. Use the same assembly house and process you'll use for production.
+- Include generous test infrastructure on functional prototypes — test points, debug headers, and jumper-selectable options cost nothing on the schematic and pay for themselves during bring-up
+- Order extra bare boards (5 instead of 3); the marginal cost is negligible and spares prevent a full re-order when rework damages the original
+- Clearly define the question the prototype must answer before committing to fabrication — this prevents over-building or under-building for the current project stage
+
+## Caveats
+
+- **PCB prototypes take longer than expected.** Even with fast-turn PCB services (2-3 days for bare boards), the total turnaround — order boards, receive them, order components, assemble, test — is typically 1-2 weeks
+- **Order extra boards.** The marginal cost of 5 boards vs 3 is negligible with most fabricators; extra boards provide insurance when the first one gets damaged during rework or when a modification needs testing without destroying the original
+- **Functional prototypes should include test infrastructure.** Test points, debug headers, jumper-selectable options, and unpopulated footprints for alternate components all cost nothing on the schematic and pay dividends during bring-up
+- **Don't optimize the functional prototype for cost.** The functional prototype exists to find bugs and validate the design — use larger footprints than production, add extra decoupling, and include debug features; cost optimization belongs on the pre-production revision
+- **Pre-production prototypes must be built with production processes.** A pre-production board assembled by hand doesn't validate manufacturing; use the same assembly house and process planned for production

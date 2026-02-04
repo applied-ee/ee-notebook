@@ -17,13 +17,13 @@ Every component on a PCB generates some heat. The question is how much, and whet
 - **Power transistors and MOSFETs** dissipate P = I^2 x Rds(on) when conducting, plus switching losses during transitions. High-current designs can easily generate several watts per transistor.
 - **Traces** dissipate P = I^2 x R. A 10-mil trace carrying 1A on a 1-oz copper layer has a resistance of about 50 milliohms per inch, so a 2-inch trace dissipates 100 mW. Not much individually, but the total trace heating across a power distribution network adds up.
 
-The first step in thermal management is knowing your power budget — adding up the dissipation of every significant heat source on the board.
+The first step in thermal management is knowing the power budget — adding up the dissipation of every significant heat source on the board.
 
 ## Thermal Paths: How Heat Moves
 
 Heat flows from hot to cold through three mechanisms, and PCB design primarily deals with conduction:
 
-**Component to pad:** The thermal connection from the IC die to the PCB is through the package. Many power components have an exposed thermal pad on the bottom — this is the primary heat exit path. A component's thermal resistance from junction to pad (theta-JC) is a fixed property of the package. You can't change it, but you can ensure the PCB side of the connection doesn't bottleneck it.
+**Component to pad:** The thermal connection from the IC die to the PCB is through the package. Many power components have an exposed thermal pad on the bottom — this is the primary heat exit path. A component's thermal resistance from junction to pad (theta-JC) is a fixed property of the package. This value is fixed, but the PCB side of the connection must not bottleneck it.
 
 **Pad to copper plane (thermal vias):** An exposed thermal pad on the board surface needs a path to inner copper layers for heat spreading. This is where thermal vias come in — small vias directly under the thermal pad that connect the surface pad to internal ground or power planes. Without thermal vias, the heat is trapped on the surface layer and can only spread laterally through the top copper.
 
@@ -41,7 +41,7 @@ Unused board area on outer layers should generally be filled with copper pour co
 
 For components that dissipate significant power, the surrounding copper pour area directly affects the steady-state temperature. A TO-252 (DPAK) voltage regulator on a 1 cm^2 copper island will run much hotter than the same part on a 10 cm^2 pour connected to inner planes through thermal vias.
 
-When estimating thermal performance, the datasheet's thermal resistance values are typically specified for a given board area — often a "1 inch^2 2-layer board" or a "JEDEC standard thermal test board." Your actual board will be different. If your board has more copper area and more layers, the component will run cooler than the datasheet suggests. If less, it will run hotter.
+When estimating thermal performance, the datasheet's thermal resistance values are typically specified for a given board area — often a "1 inch^2 2-layer board" or a "JEDEC standard thermal test board." The actual board will be different. If the board has more copper area and more layers, the component will run cooler than the datasheet suggests. If less, it will run hotter.
 
 ## Heatsinks and Thermal Interface Materials
 
@@ -53,17 +53,17 @@ When copper alone can't remove enough heat, external heatsinks become necessary.
 
 ## Temperature Estimation
 
-Before building the board, you can estimate component temperatures using the thermal resistance chain from the datasheet:
+Before building the board, component temperatures can be estimated using the thermal resistance chain from the datasheet:
 
 T_junction = T_ambient + (P_dissipated x theta_JA)
 
-Where theta_JA (junction-to-ambient thermal resistance) is the total thermal resistance from the IC die to the surrounding air. This value is published in datasheets but is specific to the test conditions. Your board will be different, so treat the calculation as an estimate, not a guarantee.
+Where theta_JA (junction-to-ambient thermal resistance) is the total thermal resistance from the IC die to the surrounding air. This value is published in datasheets but is specific to the test conditions. The actual board will be different, so treat the calculation as an estimate, not a guarantee.
 
 For more accuracy, break the thermal path into segments:
 
 T_junction = T_ambient + P x (theta_JC + theta_CS + theta_SA)
 
-Where theta_JC is junction-to-case, theta_CS is case-to-sink (the TIM), and theta_SA is sink-to-ambient. This approach lets you evaluate the impact of heatsink selection and TIM choice independently.
+Where theta_JC is junction-to-case, theta_CS is case-to-sink (the TIM), and theta_SA is sink-to-ambient. This approach allows evaluating the impact of heatsink selection and TIM choice independently.
 
 If the estimated junction temperature exceeds the component's maximum rating with comfortable margin, redesign before building. Options include: better thermal paths (more vias, more copper), a heatsink, a different package (a TO-263 instead of a SOT-223), or a different component entirely (switching regulator instead of linear).
 
@@ -89,10 +89,17 @@ Heat doesn't just degrade performance — it creates mechanical stress. Every ma
 
 When the board heats up, these mismatches create stress in solder joints. Components near heat sources experience thermal cycling — heating when the system is on, cooling when it's off — and this cycling fatigues solder joints over time. This is why large ceramic capacitors (1206 and above) near heat sources are more prone to cracking than small ones, and why BGA packages on boards with frequent thermal cycling need careful attention to solder joint reliability.
 
-## Gotchas
+## Tips
 
-- **Thermal vias under QFN pads are essential, not optional.** A QFN package with no thermal vias under its exposed pad can easily reach junction temperatures 30-50C higher than the same package with proper vias. This is one of the most commonly missed layout details.
-- **Solder wicking through open thermal vias starves the pad.** If thermal vias under a component are not plugged or tented, solder can wick down through the via during reflow, leaving insufficient solder on the thermal pad. The result is a poor thermal connection despite proper via placement.
-- **Natural convection is weaker than you think.** In still air, a small PCB can only dissipate about 5-10 mW per square centimeter through natural convection. Forced airflow improves this dramatically — even a small fan can halve component temperatures.
-- **Hot spots on inner layers are invisible.** You can feel a hot component on the surface, but heat building up on an inner copper plane is undetectable without thermal imaging. An IR camera during bring-up is enormously valuable.
-- **Adjacent component heating is cumulative.** Two 1W components placed 5 mm apart will each run hotter than either would alone, because each one heats the other's local environment. Space hot components apart when possible.
+- Add up the power dissipation of every significant heat source on the board early — the total power budget shapes component selection, copper pours, and heatsink decisions
+- Place thermal vias on a 1-1.2 mm grid under every exposed thermal pad, and specify plugged or tented vias to prevent solder wicking during reflow
+- Fill unused outer-layer board area with ground-connected copper pour, which serves double duty as both a ground return path and a heat spreader
+- Estimate junction temperatures using the thermal resistance chain (theta_JC + theta_CS + theta_SA) before building, and redesign if the result leaves insufficient margin
+
+## Caveats
+
+- **Thermal vias under QFN pads are essential, not optional.** A QFN package with no thermal vias under its exposed pad can easily reach junction temperatures 30-50C higher than the same package with proper vias — one of the most commonly missed layout details
+- **Solder wicking through open thermal vias starves the pad.** If thermal vias under a component are not plugged or tented, solder can wick down through the via during reflow, leaving insufficient solder on the thermal pad and a poor thermal connection despite proper via placement
+- **Natural convection is weaker than expected.** In still air, a small PCB can only dissipate about 5-10 mW per square centimeter through natural convection; forced airflow improves this dramatically — even a small fan can halve component temperatures
+- **Hot spots on inner layers are invisible.** A hot component on the surface is easy to feel, but heat building up on an inner copper plane is undetectable without thermal imaging — an IR camera during bring-up is enormously valuable
+- **Adjacent component heating is cumulative.** Two 1W components placed 5 mm apart will each run hotter than either would alone, because each one heats the other's local environment — space hot components apart when possible

@@ -5,11 +5,11 @@ weight: 10
 
 # Functional Validation
 
-A circuit that powers up and doesn't smoke is not a circuit that works. Functional validation is the process of systematically confirming that the system does what it was designed to do — that every requirement has a corresponding test, and that every test produces a clear, recorded result. Without this discipline, "it seems to work" is the best you can say, and that's not enough when the design moves forward.
+A circuit that powers up and doesn't smoke is not a circuit that works. Functional validation is the process of systematically confirming that the system does what it was designed to do — that every requirement has a corresponding test, and that every test produces a clear, recorded result. Without this discipline, "it seems to work" is the best anyone can say, and that's not enough when the design moves forward.
 
 ## Test Against Requirements
 
-Every requirement in the design should map to at least one test. This is the core of functional validation: if you can't test a requirement, you can't confirm it's met — and you should question whether the requirement was well-defined in the first place.
+Every requirement in the design should map to at least one test. This is the core of functional validation: if a requirement can't be tested, it can't be confirmed as met — and the requirement's definition should be questioned.
 
 Start with the requirements list (see [Problem Definition vs Solution Bias]({{< relref "/docs/design-development/ideation-and-requirements/problem-definition-vs-solution-bias" >}}) for how that list should be developed). For each item, write a test that would confirm the requirement is satisfied. Some requirements map neatly to single measurements — "output voltage shall be 3.3V +/- 3%" is a voltage measurement with clear pass/fail boundaries. Others are harder: "the system shall be responsive" needs a concrete definition (latency under what threshold, under what conditions?) before it can be tested at all.
 
@@ -19,9 +19,9 @@ The process of writing tests often exposes requirements that are vague, contradi
 
 Traceability is the mapping between requirements and the tests that verify them. In its simplest form, this is a table with three columns: requirement, test method, and result. For a small personal project, a markdown table is more than sufficient. For larger efforts, spreadsheets or dedicated requirements management tools earn their keep.
 
-The value of traceability is that it makes gaps visible. If a requirement has no corresponding test, you can see it immediately. If a test doesn't trace back to any requirement, it might be wasted effort — or it might reveal an implicit requirement that was never written down.
+The value of traceability is that it makes gaps visible. If a requirement has no corresponding test, the gap is immediately visible. If a test doesn't trace back to any requirement, it might be wasted effort — or it might reveal an implicit requirement that was never written down.
 
-Traceability also matters at the other end of the process: when a test fails, the trace tells you exactly which requirement is at risk and what the impact of the failure might be.
+Traceability also matters at the other end of the process: when a test fails, the trace identifies exactly which requirement is at risk and what the impact of the failure might be.
 
 ## Pass/Fail Criteria
 
@@ -35,7 +35,7 @@ Where possible, express criteria numerically. "LED is bright enough" becomes "LE
 
 Individual subsystems can each work perfectly in isolation and still fail when combined. Integration testing verifies that subsystems work together: the power supply delivers clean voltage to the analog front end, the ADC correctly digitizes the signal, the MCU processes the data, and the communication interface transmits it.
 
-Integration testing should be incremental. Don't power on the entire system and hope for the best. Start with the power supply, verify it's clean, then bring up the next subsystem. At each step, confirm that the previously working subsystems are still behaving correctly. This layered approach makes failures much easier to diagnose — if something breaks when you add subsystem C, the problem is likely in subsystem C or its interaction with A and B, not somewhere random.
+Integration testing should be incremental. Avoid powering on the entire system and hoping for the best. Start with the power supply, verify it's clean, then bring up the next subsystem. At each step, confirm that the previously working subsystems are still behaving correctly. This layered approach makes failures much easier to diagnose — if something breaks when subsystem C is added, the problem is likely in subsystem C or its interaction with A and B, not somewhere random.
 
 The interfaces between subsystems are where most integration failures occur. Signal levels, timing, impedance mismatches, grounding paths — these are the places to focus attention.
 
@@ -57,15 +57,22 @@ The demo trap catches projects that were tested only under ideal conditions. Avo
 
 A test result that isn't recorded is a test that will be repeated. Every test should produce a documented outcome that includes: what was tested, how it was tested, what equipment was used, what the measured value was, and whether it passed or failed.
 
-"PASS" alone is nearly useless. "3.301V, within specification of 3.3V +/- 5%" is useful. The measured value matters because it tells you how much margin you have — a result that barely passes is a warning, even if it's technically within specification.
+"PASS" alone is nearly useless. "3.301V, within specification of 3.3V +/- 5%" is useful. The measured value matters because it reveals how much margin exists — a result that barely passes is a warning, even if it's technically within specification.
 
-Record conditional results honestly. If a test passed at room temperature but you haven't tested at temperature extremes, the result is "PASS at 25C, untested at extremes" — not just "PASS." Incomplete information is fine; misleading information is not.
+Record conditional results honestly. If a test passed at room temperature but temperature extremes remain untested, the result is "PASS at 25C, untested at extremes" — not just "PASS." Incomplete information is fine; misleading information is not.
 
-## Gotchas
+## Tips
 
-- **Requirements without tests are wishes.** If you can't define a test for a requirement, the requirement isn't concrete enough. Refine the requirement until it's testable, or accept that it's aspirational rather than verifiable.
+- Map every requirement to at least one test before starting validation — the process of writing tests often exposes vague, contradictory, or missing requirements
+- Define quantitative pass/fail criteria before running tests, converting subjective assessments like "bright enough" into measurable quantities like "greater than 200 mcd at 20 mA"
+- Integrate subsystems incrementally rather than powering on the entire system at once — this makes failures far easier to diagnose
+- Put the device in its real (or simulated) environment and exercise it through actual use cases to catch failures that only appear in context
+
+## Caveats
+
+- **Requirements without tests are wishes.** If a test cannot be defined for a requirement, the requirement isn't concrete enough. Refine it until it's testable, or accept that it's aspirational rather than verifiable
 - **The demo trap is insidious.** It feels like success because the system works — but it works in a carefully controlled environment that doesn't represent reality. Always ask "what conditions are we not testing?"
-- **Integration failures hide in interfaces.** The power supply works. The ADC works. But the switching noise from the power supply corrupts the ADC reading. Integration testing exists to find these interactions.
-- **Subjective criteria invite debate.** "Fast enough" and "clean enough" mean different things to different people. Convert subjective criteria to numbers before testing, not after.
-- **Test coverage is never complete.** You can't test every possible combination of conditions. Focus on the most likely failure modes and the highest-consequence failures. Accept that some risks remain untested and document what you didn't cover.
-- **User-scenario testing feels inefficient.** It's slower and less controlled than bench testing. But it finds an entirely different class of failures — the kind that matter most to whoever will actually use the device.
+- **Integration failures hide in interfaces.** The power supply works. The ADC works. But the switching noise from the power supply corrupts the ADC reading. Integration testing exists to find these interactions
+- **Subjective criteria invite debate.** "Fast enough" and "clean enough" mean different things to different people. Convert subjective criteria to numbers before testing, not after
+- **Test coverage is never complete.** It's impossible to test every possible combination of conditions. Focus on the most likely failure modes and the highest-consequence failures. Accept that some risks remain untested and document what was not covered
+- **User-scenario testing feels inefficient.** It's slower and less controlled than bench testing. But it finds an entirely different class of failures — the kind that matter most to whoever will actually use the device

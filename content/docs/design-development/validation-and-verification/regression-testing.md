@@ -9,7 +9,7 @@ Every change to a design — every component swap, every firmware update, every 
 
 ## The Regression Test Suite
 
-A regression test suite is the set of tests that must pass after any change. It's not every test you've ever run — it's a curated subset that covers the critical functionality, safety requirements, and performance benchmarks. The suite should be comprehensive enough to catch regressions, but lean enough to run regularly.
+A regression test suite is the set of tests that must pass after any change. It's not every test ever run — it's a curated subset that covers the critical functionality, safety requirements, and performance benchmarks. The suite should be comprehensive enough to catch regressions, but lean enough to run regularly.
 
 Building the suite is an ongoing process. Start with the functional validation tests from the [Functional Validation]({{< relref "/docs/design-development/validation-and-verification/functional-validation" >}}) page — each requirement should have a corresponding test. Then add tests that were created in response to specific bugs: if a firmware change once caused the ADC to misread, the test that caught (or would have caught) that failure belongs in the regression suite permanently.
 
@@ -17,7 +17,7 @@ The suite grows over time as new failure modes are discovered. This growth is na
 
 ## Automated vs Manual Regression
 
-For firmware-heavy designs, automated regression testing is transformative. A test harness that exercises the firmware, checks outputs, and reports pass/fail can run in minutes with no human intervention. This means you can run the full suite after every commit, catching regressions within hours instead of weeks.
+For firmware-heavy designs, automated regression testing is transformative. A test harness that exercises the firmware, checks outputs, and reports pass/fail can run in minutes with no human intervention. This means the full suite can run after every commit, catching regressions within hours instead of weeks.
 
 Automated testing requires investment: test fixtures, scripts, and a reliable way to stimulate inputs and capture outputs. For a microcontroller project, this might be a second MCU that acts as a test controller, exercising GPIOs, sending serial commands, and verifying responses. For analog designs, automated testing is harder — it requires programmable sources and measurement instruments, which pushes the complexity and cost up significantly.
 
@@ -57,7 +57,7 @@ Pruning also helps. If a test has passed on every run for the last twenty revisi
 
 ## Configuration Management
 
-Regression testing is only meaningful if you know exactly what you're testing. "The board passed all tests" is useless unless you can specify which board revision, which firmware version, which test fixture, and which test script version was used.
+Regression testing is only meaningful when the exact configuration under test is known. "The board passed all tests" is useless unless the board revision can be specified, which firmware version, which test fixture, and which test script version was used.
 
 Configuration management is the discipline of recording this context. For each test run, document:
 
@@ -67,21 +67,28 @@ Configuration management is the discipline of recording this context. For each t
 - Test equipment used (instrument serial numbers, calibration dates)
 - Environmental conditions (at least ambient temperature)
 
-This level of detail feels excessive on a personal project, but it pays for itself the first time you need to answer "did this board pass with the old firmware or the new firmware?" Without configuration records, that question is unanswerable.
+This level of detail feels excessive on a personal project, but it pays for itself the first time the question arises: "did this board pass with the old firmware or the new firmware?" Without configuration records, that question is unanswerable.
 
 ## Golden Units
 
 A golden unit is a known-good reference board that has passed the full test suite and is kept as a baseline for comparison. When a new board revision behaves differently, testing the golden unit distinguishes between "the new board is different" and "the test setup has changed."
 
-Golden units are especially valuable for analog designs where absolute measurements are difficult and relative comparisons are more reliable. If the new board's ADC reads 2% higher than the golden unit under identical conditions, the difference is meaningful. Without the golden unit, you'd need to trust the absolute accuracy of your test setup, which is a higher bar.
+Golden units are especially valuable for analog designs where absolute measurements are difficult and relative comparisons are more reliable. If the new board's ADC reads 2% higher than the golden unit under identical conditions, the difference is meaningful. Without the golden unit, the absolute accuracy of the test setup must be trusted, which is a higher bar.
 
 Store golden units carefully — labeled, protected from damage, and not used for development. They're reference instruments, not prototypes. If a golden unit needs to be retired (because the design has evolved beyond compatibility), designate a new one from the current revision.
 
-## Gotchas
+## Tips
 
-- **The suite you skip is the one that would have caught the bug.** Schedule pressure is the enemy of regression testing. The cost of skipping a test run is invisible until the regression reaches the field.
-- **"It's a small change" is famous last words.** A one-line firmware change can break everything. A single component substitution can change timing, noise, or thermal behavior. The size of the change does not predict the size of the impact.
-- **Automated tests can have bugs too.** A test that always passes might have a broken assertion. Periodically verify that your tests can actually detect failures by deliberately injecting a known fault.
-- **Configuration drift invalidates results.** If you don't record what you tested, the results are anecdotal, not evidence. Get in the habit of logging configuration before running tests.
-- **The regression trap is real.** A test suite that takes four hours to run won't get run daily. Tier your suite: fast smoke tests for constant use, full suite for milestones.
-- **Golden units age.** Component parameters drift over time and operating hours. Periodically revalidate the golden unit against known-good references, or replace it with a fresh unit from the current production batch.
+- Structure the regression suite in tiers — a fast "smoke test" tier for constant use (minutes to run) and a full regression tier for milestones (hours to run)
+- Add a regression test for every bug found and fixed — if a bug happened once, conditions exist for it to happen again
+- Log the full configuration (hardware revision, firmware version, test script version, equipment serial numbers) before every test run
+- Periodically inject known faults to verify that automated tests can actually detect failures, not just report false passes
+
+## Caveats
+
+- **The suite skipped is the one that would have caught the bug.** Schedule pressure is the enemy of regression testing. The cost of skipping a test run is invisible until the regression reaches the field
+- **"It's a small change" is famous last words.** A one-line firmware change can break everything. A single component substitution can change timing, noise, or thermal behavior. The size of the change does not predict the size of the impact
+- **Automated tests can have bugs too.** A test that always passes might have a broken assertion. Periodically verify that tests can actually detect failures by deliberately injecting a known fault
+- **Configuration drift invalidates results.** Without recording what was tested, the results are anecdotal, not evidence. Logging configuration before running tests should be habitual
+- **The regression trap is real.** A test suite that takes four hours to run won't get run daily. Tier the suite: fast smoke tests for constant use, full suite for milestones
+- **Golden units age.** Component parameters drift over time and operating hours. Periodically revalidate the golden unit against known-good references, or replace it with a fresh unit from the current production batch

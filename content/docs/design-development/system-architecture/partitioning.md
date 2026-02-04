@@ -50,7 +50,7 @@ RF circuits are the prima donnas — demanding and unforgiving:
 
 - **Impedance control is essential.** A 50-ohm transmission line that varies by 10% creates reflections that degrade signal quality. RF traces need controlled stackups and consistent geometry.
 - **Shielding may be required.** RF circuits both radiate and are susceptible. Shield cans, guard traces, and ground plane isolation are common partitioning techniques.
-- **Placement is dictated by physics.** The antenna, matching network, and RF front-end must be co-located with minimal trace length. You can't route a 2.4 GHz signal across the board and expect it to work.
+- **Placement is dictated by physics.** The antenna, matching network, and RF front-end must be co-located with minimal trace length. Routing a 2.4 GHz signal across the board will not work.
 - **Ground plane continuity under RF traces.** Any gap or slot in the ground plane under an RF trace creates an impedance discontinuity and increases radiation.
 
 ## Physical Partitioning Strategies
@@ -94,11 +94,18 @@ Physical separation alone isn't enough. Electrical partitioning controls how pow
 
 Partitioning decisions made at the architecture level have direct consequences in layout and testing. The physical placement of analog and digital sections determines routing constraints, ground plane design, and EMC performance. Similarly, the power architecture (covered in [Interfaces & Boundaries]({{< relref "/docs/design-development/system-architecture/interfaces-and-boundaries" >}})) defines how domains interact electrically.
 
-## Gotchas
+## Tips
 
-- **A ground plane split is not always the answer.** Splitting the ground plane forces return currents to take long paths around the split, which can increase noise instead of reducing it. A solid ground plane with careful component placement often works better.
-- **ADC placement is a partitioning decision.** The ADC sits at the boundary between analog and digital domains. Its physical location on the board determines where the domain boundary falls. Place it at the transition between analog and digital zones, not deep in one or the other.
-- **Switching regulator inductors have a preferred orientation.** The magnetic field from an inductor is directional. Orient inductors so their field doesn't couple into sensitive analog traces or components. Rotating an inductor 90 degrees can make a measurable difference.
-- **Clock traces are the worst offenders.** A clock signal is the highest-frequency, most repetitive signal on the board. Keep clock traces as short as possible, away from analog signals, and over a continuous ground plane. A clock trace routed near an analog input will couple into it.
-- **Don't partition in the schematic and then ignore it in the layout.** A schematic with cleanly separated analog and digital sections is meaningless if the layout intermixes them. The partitioning must be carried through from architecture to physical placement.
-- **RF sections need their own ground via stitching.** The ground plane under RF traces should be densely via-stitched to the reference plane to maintain a low-impedance return path and prevent cavity resonances.
+- Identify all signal domains (analog, digital, power, RF) in the block diagram and assign each to a physical zone on the PCB before starting layout
+- Use separate regulators for analog and digital sections — a low-noise LDO for analog, a switching regulator for digital — to keep switching noise out of sensitive circuits
+- Prefer a continuous ground plane with careful component placement over ground plane splits, which can force return currents into unintended paths
+- Place the ADC at the physical transition between analog and digital zones so it naturally bridges the two domains
+
+## Caveats
+
+- **A ground plane split is not always the answer.** Splitting the ground plane forces return currents to take long paths around the split, which can increase noise instead of reducing it. A solid ground plane with careful component placement often works better
+- **ADC placement is a partitioning decision.** The ADC sits at the boundary between analog and digital domains. Its physical location on the board determines where the domain boundary falls. Place it at the transition between analog and digital zones, not deep in one or the other
+- **Switching regulator inductors have a preferred orientation.** The magnetic field from an inductor is directional. Orient inductors so their field does not couple into sensitive analog traces or components. Rotating an inductor 90 degrees can make a measurable difference
+- **Clock traces are the worst offenders.** A clock signal is the highest-frequency, most repetitive signal on the board. Keep clock traces as short as possible, away from analog signals, and over a continuous ground plane. A clock trace routed near an analog input will couple into it
+- **Do not partition in the schematic and then ignore it in the layout.** A schematic with cleanly separated analog and digital sections is meaningless if the layout intermixes them. The partitioning must be carried through from architecture to physical placement
+- **RF sections need their own ground via stitching.** The ground plane under RF traces should be densely via-stitched to the reference plane to maintain a low-impedance return path and prevent cavity resonances

@@ -49,8 +49,8 @@ Solution bias isn't always wrong. There are situations where jumping to a known 
 
 - **Proven reference designs.** If a chip vendor provides a reference design that matches the project requirements, using it isn't bias — it's engineering. The evaluation has been done by the vendor's application engineers.
 - **Well-established patterns.** Using a linear regulator for a low-current, low-dropout application isn't bias; it's applying a well-understood solution to a well-understood problem.
-- **Learning projects.** If the purpose of the project is to learn how a specific component or topology works, then choosing that component first is the point. The "problem" is education, and the "solution" is the thing you want to learn about.
-- **Time-critical projects.** Sometimes you need something working by Friday. In that case, reaching for a known-good solution is pragmatic, not lazy.
+- **Learning projects.** If the purpose of the project is to learn how a specific component or topology works, then choosing that component first is the point. The "problem" is education, and the "solution" is the specific thing being studied.
+- **Time-critical projects.** Sometimes the deadline is Friday and something needs to be working by then. In that case, reaching for a known-good solution is pragmatic, not lazy.
 
 The key distinction is awareness. Solution bias is harmful when it's unconscious — when what feels like an informed decision is actually just defaulting to familiarity.
 

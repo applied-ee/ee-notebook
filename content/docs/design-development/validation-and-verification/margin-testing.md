@@ -11,7 +11,7 @@ A design that works at nominal conditions and fails at the edges is a design tha
 
 Every component has a tolerance. A 10k resistor marked 1% could be anywhere from 9.9k to 10.1k. A 3.3V regulator might output 3.25V to 3.35V. An oscillator might run 50 ppm fast or slow. In any given circuit, every component sits somewhere within its tolerance band, and the combination of all those tolerances determines the actual circuit behavior.
 
-On your bench, with components from one batch, at room temperature, fed from a clean bench supply, the design works. But in production, across thousands of units, with components from different suppliers, across the full temperature range, powered from a noisy real-world source — some combination of tolerances will conspire to push your circuit outside its operating window. Margin testing finds that boundary before production does.
+On the bench, with components from one batch, at room temperature, fed from a clean bench supply, the design works. But in production, across thousands of units, with components from different suppliers, across the full temperature range, powered from a noisy real-world source — some combination of tolerances will conspire to push the circuit outside its operating window. Margin testing finds that boundary before production does.
 
 ## Supply Voltage Margins
 
@@ -21,11 +21,11 @@ Test at three points minimum: nominal, minimum, and maximum. For a 3.3V supply, 
 
 For battery-powered designs, the supply voltage sweep is especially important because the battery voltage changes continuously as it discharges. Test at full charge, nominal, and end-of-discharge voltages. The circuit should function correctly across the entire range, and it should fail gracefully (shutdown or warning, not data corruption or oscillation) when the battery drops below the minimum.
 
-A bench power supply with adjustable output is the only tool you need. Set the voltage to each test point, run your functional tests, and record the results. This takes minutes and catches a large fraction of field failures.
+A bench power supply with adjustable output is the only tool needed. Set the voltage to each test point, run the functional tests, and record the results. This takes minutes and catches a large fraction of field failures.
 
 ## Temperature Margins
 
-Temperature affects nearly every component parameter: resistor values drift, capacitor values shift (especially ceramics), semiconductor thresholds change, and oscillator frequencies wander. Testing across the specified temperature range is essential, but testing beyond it — margin testing — tells you how close you are to the edge.
+Temperature affects nearly every component parameter: resistor values drift, capacitor values shift (especially ceramics), semiconductor thresholds change, and oscillator frequencies wander. Testing across the specified temperature range is essential, but testing beyond it — margin testing — reveals how close the design is to the edge.
 
 If the design is specified for 0C to 70C, test at -10C and 80C to see how much margin exists. A design that fails at 75C when specified to 70C has effectively no margin — real-world temperature variation, self-heating, or a slightly warm enclosure will push it past the edge.
 
@@ -73,11 +73,18 @@ Shmoo plots are powerful because they reveal how margin depends on multiple vari
 
 Creating a shmoo plot requires automated testing or a lot of patience. For critical parameters, the effort is worth it. For less critical parameters, testing the corners (minimum voltage at maximum temperature, maximum voltage at minimum temperature, etc.) provides similar insight with less effort.
 
-## Gotchas
+## Tips
 
-- **Nominal testing proves nothing.** Passing at 3.3V and 25C means the circuit works under ideal conditions. It says nothing about real-world robustness. Margin testing is where real confidence comes from.
-- **Self-heating eats margin.** A device that runs at 50C ambient might reach 70C internally due to power dissipation. Your margin from the 85C spec is 15 degrees, not 35. Measure junction or case temperature, not ambient.
-- **Component tolerances stack.** Each component in a signal chain contributes its own error. The total error is the combination of all tolerances — and it's always worse than any single component's tolerance suggests.
-- **Transient loads are worse than steady state.** A power supply that regulates cleanly at 1A may overshoot badly when the load steps from 100 mA to 1A in microseconds. Test the transitions, not just the endpoints.
-- **The first failure is the margin boundary.** When margin testing reveals a failure at 3.0V but the spec says 3.15V minimum, you have 150 mV of margin. Is that enough? It depends on the application — but now you know the number instead of guessing.
-- **Batch variation hides margin problems.** Your bench prototype uses components from one batch. The next batch might shift the other direction. Margin testing on one unit establishes the margin for that unit — not for all units.
+- Start margin testing with supply voltage variation — it requires only an adjustable bench supply, takes minutes, and catches a large fraction of field failures
+- Always measure temperature at the device (junction or case), not ambient, since self-heating means the device is always warmer than its environment
+- Test load transients (sudden changes from light to heavy load and back), not just steady-state loads — transient conditions are where most power supply instabilities appear
+- Create shmoo plots for critical parameter pairs to reveal interactions that single-variable tests miss
+
+## Caveats
+
+- **Nominal testing proves nothing.** Passing at 3.3V and 25C means the circuit works under ideal conditions. It says nothing about real-world robustness. Margin testing is where real confidence comes from
+- **Self-heating eats margin.** A device that runs at 50C ambient might reach 70C internally due to power dissipation. The margin from the 85C spec is 15 degrees, not 35. Measure junction or case temperature, not ambient
+- **Component tolerances stack.** Each component in a signal chain contributes its own error. The total error is the combination of all tolerances — and it's always worse than any single component's tolerance suggests
+- **Transient loads are worse than steady state.** A power supply that regulates cleanly at 1A may overshoot badly when the load steps from 100 mA to 1A in microseconds. Test the transitions, not just the endpoints
+- **The first failure is the margin boundary.** When margin testing reveals a failure at 3.0V but the spec says 3.15V minimum, the margin is 150 mV. Is that enough? It depends on the application — but now the number is known instead of guessed
+- **Batch variation hides margin problems.** A bench prototype uses components from one batch. The next batch might shift the other direction. Margin testing on one unit establishes the margin for that unit — not for all units

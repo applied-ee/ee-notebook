@@ -14,8 +14,8 @@ A quiet failure often looks like a design that passes its tests but doesn't meet
 Performance degradation hides behind "good enough" testing:
 
 - **Testing only at room temperature.** Most bench testing happens at 20-25C. If the product operates in a wider range, untested conditions may reveal marginal behavior.
-- **Testing with one unit.** The prototype you built might be in the sweet spot of component tolerances. The next ten units, built with components from a different manufacturing lot, might behave differently.
-- **Testing with ideal inputs.** Your bench power supply is clean and regulated. The field power source may have noise, droops, and transients that your test setup didn't replicate.
+- **Testing with one unit.** The prototype on the bench might be in the sweet spot of component tolerances. The next ten units, built with components from a different manufacturing lot, might behave differently.
+- **Testing with ideal inputs.** A bench power supply is clean and regulated. The field power source may have noise, droops, and transients that the test setup didn't replicate.
 - **Testing for function, not margin.** Verifying that the output is "correct" doesn't reveal how close the design is to incorrect. A measurement that's within spec by 1% has no margin for component aging, temperature drift, or manufacturing variation.
 
 The antidote is margin testing — deliberately stressing the design beyond its nominal operating conditions to see where it breaks. If it breaks just outside the specified range, the design is marginal and will eventually fail in the field.
@@ -55,19 +55,26 @@ Quiet failures are expensive precisely because they're quiet. By the time they'r
 
 ## Finding Quiet Failures
 
-Quiet failures don't announce themselves, so you have to look for them deliberately:
+Quiet failures don't announce themselves, so they must be sought out deliberately:
 
 - **Margin testing.** Test beyond the specified operating range. If the design fails at 1% beyond spec, it's marginal. If it works at 50% beyond spec, it has healthy margin.
 - **Accelerated life testing.** Run the product at elevated temperature, humidity, and vibration to simulate aging. Failures that would take years under normal conditions appear in weeks under accelerated stress.
 - **Statistical testing.** Test multiple units, not just one. Manufacturing variation means that the worst unit in a batch behaves differently from the best. Understanding the distribution reveals margin issues that a single prototype hides.
-- **Honest self-assessment.** Ask uncomfortable questions: where did I cut corners? What tests did I skip? What do I not fully understand about this design? The answers often point directly to quiet failures waiting to surface.
+- **Honest self-assessment.** Ask uncomfortable questions: where were corners cut? What tests were skipped? What parts of this design are not fully understood? The answers often point directly to quiet failures waiting to surface.
 
-The retrospective is the last line of defense. If quiet failures slipped through testing and into the field, the retrospective is where you identify them and figure out what process or analysis would have caught them earlier.
+The retrospective is the last line of defense. If quiet failures slipped through testing and into the field, the retrospective is where they get identified and where the process or analysis that would have caught them earlier gets figured out.
 
-## Gotchas
+## Tips
 
-- **"It passed testing" doesn't mean "it works."** Testing coverage is always incomplete. A design that passes every test you defined can still fail in conditions you didn't test.
-- **Quiet failures are most dangerous in safety-critical systems.** A marginal shutdown circuit that works 99% of the time is far worse than one that never works — because the 99% rate creates false confidence.
-- **The most common quiet failure is insufficient margin.** Designs that meet spec with no room to spare are ticking clocks. Temperature, aging, and manufacturing variation will eventually consume whatever margin exists.
-- **Process failures compound.** Skipping one review is minor. Skipping reviews, documentation updates, and testing creates a Swiss cheese model of defenses — and eventually the holes align.
-- **Quiet failures are the ones you don't learn from — unless you look.** Loud failures force investigation. Quiet failures let you move on without understanding what went wrong. The retrospective is the mechanism that forces the investigation.
+- Perform margin testing on every critical parameter by deliberately stressing the design beyond its nominal operating range to reveal how close it is to failure
+- Test multiple units from different manufacturing lots rather than relying on a single prototype that may sit in the sweet spot of component tolerances
+- After every project, ask explicitly: what process steps were skipped, and did the consequences materialize later?
+- Treat any parameter that meets spec by less than 10% as a quiet failure waiting to happen and redesign for wider margin
+
+## Caveats
+
+- **"It passed testing" does not mean "it works."** Testing coverage is always incomplete. A design that passes every defined test can still fail in conditions that were not tested
+- **Quiet failures are most dangerous in safety-critical systems.** A marginal shutdown circuit that works 99% of the time is far worse than one that never works — because the 99% rate creates false confidence
+- **The most common quiet failure is insufficient margin.** Designs that meet spec with no room to spare are ticking clocks. Temperature, aging, and manufacturing variation will eventually consume whatever margin exists
+- **Process failures compound.** Skipping one review is minor. Skipping reviews, documentation updates, and testing creates a Swiss cheese model of defenses — and eventually the holes align
+- **Quiet failures are the ones that go unlearned — unless deliberately examined.** Loud failures force investigation. Quiet failures allow moving on without understanding what went wrong. The retrospective is the mechanism that forces the investigation

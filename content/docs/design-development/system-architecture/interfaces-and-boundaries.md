@@ -81,7 +81,7 @@ Clean interfaces — well-defined, well-documented, and minimal — provide a po
 
 This matters for:
 
-- **Debugging.** You can test each block independently by injecting known signals at the interface and measuring the output. A well-defined interface is a natural test point.
+- **Debugging.** Each block can be tested independently by injecting known signals at the interface and measuring the output. A well-defined interface is a natural test point.
 - **Iteration.** When revision 2 improves the analog front-end, the digital processing doesn't change — the interface contract is the same.
 - **Reuse.** A block with a clean interface can be reused in a different project. A block that's tightly coupled to the rest of the system can't be separated.
 - **Collaboration.** If two people are working on the project, clean interfaces let them work independently on their respective blocks.
@@ -96,13 +96,20 @@ An informal ICD might be:
 - Annotations on the block diagram specifying key interface parameters
 - Comments in the schematic at block boundaries describing the expected signal characteristics
 
-The format doesn't matter. What matters is that the information exists somewhere other than your memory. Future you, debugging a problem at 11 PM, will be grateful for a note that says "this SPI bus runs at 1 MHz, Mode 0, 3.3V logic, active-low chip select."
+The format doesn't matter. What matters is that the information exists somewhere other than memory. A future debugging session at 11 PM will go much better with a note that says "this SPI bus runs at 1 MHz, Mode 0, 3.3V logic, active-low chip select."
 
-## Gotchas
+## Tips
 
-- **"It's all on one board" doesn't mean there are no interfaces.** The boundary between the analog section and the digital section is an interface even if it's on the same PCB. It needs the same attention to level matching, impedance, and ground management.
-- **Bidirectional interfaces are harder than unidirectional ones.** An SPI bus with separate MOSI and MISO lines is easier to reason about than an I2C bus with a shared bidirectional data line. Bidirectional level translators add complexity and potential failure modes.
-- **Don't forget the power-up state.** What does the interface look like before the system is fully initialized? Floating outputs, undefined states, and contention during startup cause glitches that can confuse downstream blocks or, in worst cases, cause hardware damage.
-- **Cable interfaces pick up noise.** Any cable between boards is an antenna for EMI. Long cables between analog and digital sections are especially problematic. Use differential signaling, shielding, or filters at cable entry points.
-- **The interface spec should include fault conditions.** What happens if one side of the interface loses power? What if a signal is shorted to ground? Including fault behavior in the interface definition prevents one block's failure from damaging the other.
-- **Test access is an interface.** Test points, debug headers, and programming connectors are interfaces between the design and the test equipment. They need to be defined in the architecture, not added as an afterthought in layout.
+- Define every inter-block interface with at least signal levels, impedance, direction, and protocol before starting the schematic — this lets each block be designed independently
+- Specify power-up sequencing requirements as part of the interface definition, especially when signals cross between different voltage domains
+- Treat mechanical connections (connectors, cables, thermal paths) as first-class interfaces that need the same attention as electrical ones
+- Keep an informal interface table in the project notebook listing each interface and its key parameters — even a few notes catch mismatches before they become hardware bugs
+
+## Caveats
+
+- **"It's all on one board" does not mean there are no interfaces.** The boundary between the analog section and the digital section is an interface even if it is on the same PCB, and it needs the same attention to level matching, impedance, and ground management
+- **Bidirectional interfaces are harder than unidirectional ones.** An SPI bus with separate MOSI and MISO lines is easier to reason about than an I2C bus with a shared bidirectional data line. Bidirectional level translators add complexity and potential failure modes
+- **Do not forget the power-up state.** What does the interface look like before the system is fully initialized? Floating outputs, undefined states, and contention during startup cause glitches that can confuse downstream blocks or, in worst cases, cause hardware damage
+- **Cable interfaces pick up noise.** Any cable between boards is an antenna for EMI. Long cables between analog and digital sections are especially problematic. Use differential signaling, shielding, or filters at cable entry points
+- **The interface spec should include fault conditions.** What happens if one side of the interface loses power? What if a signal is shorted to ground? Including fault behavior in the interface definition prevents one block's failure from damaging the other
+- **Test access is an interface.** Test points, debug headers, and programming connectors are interfaces between the design and the test equipment, and they need to be defined in the architecture, not added as an afterthought in layout

@@ -5,13 +5,13 @@ weight: 10
 
 # Translating Blocks into Schematics
 
-A block diagram tells you what the system does. A schematic tells you how it does it. The translation between these two is one of the most important steps in electronics design, and it's where many projects first go wrong — not because the circuits are bad, but because the organization is unclear and the intent gets lost in a tangle of wires and symbols.
+A block diagram describes what the system does. A schematic describes how it does it. The translation between these two is one of the most important steps in electronics design, and it's where many projects first go wrong — not because the circuits are bad, but because the organization is unclear and the intent gets lost in a tangle of wires and symbols.
 
 ## From Blocks to Sheets
 
 The block diagram created during [system architecture]({{< relref "/docs/design-development/system-architecture" >}}) defines functional blocks: power supply, microcontroller, sensor interface, communication, user interface, and so on. Each of these blocks typically becomes one or more schematic sheets. The mapping isn't always one-to-one — a simple block might fit as a section of a shared sheet, while a complex power supply might need two or three sheets — but the block diagram provides the organizing principle.
 
-The key decision is granularity. Too few sheets and each one becomes a dense, unreadable wall of components. Too many sheets and you spend all your time navigating between them, losing sight of how signals flow through the system. A reasonable guideline: if a sheet requires scrolling or zooming to see the whole thing, it's too dense. If a sheet has fewer than a dozen components, it's probably too sparse and should be combined with related circuitry.
+The key decision is granularity. Too few sheets and each one becomes a dense, unreadable wall of components. Too many sheets and all the time goes to navigating between them, losing sight of how signals flow through the system. A reasonable guideline: if a sheet requires scrolling or zooming to see the whole thing, it's too dense. If a sheet has fewer than a dozen components, it's probably too sparse and should be combined with related circuitry.
 
 For most projects I've worked on, organizing by function works well: one sheet for power supply and distribution, one for the microcontroller and its immediate support circuitry (crystal, decoupling, reset), one for each major peripheral interface (sensor front end, communication, motor drive), and one for connectors and mechanical interface. This keeps related circuits together and makes it natural to hand off sections for review or parallel development.
 
@@ -19,7 +19,7 @@ For most projects I've worked on, organizing by function works well: one sheet f
 
 Schematic tools offer two organizational approaches: flat (multiple sheets with named nets connecting them) and hierarchical (a top-level sheet with blocks that expand into sub-sheets). Both work. The choice depends on project complexity and personal workflow.
 
-Flat schematics are simpler to manage and work well for most projects up to moderate complexity — maybe 5-10 sheets. Every net that crosses a sheet boundary is connected by name, and you can see all sheets at the same level. The downside is that with many sheets, it becomes hard to see the overall signal flow without referring back to the block diagram.
+Flat schematics are simpler to manage and work well for most projects up to moderate complexity — maybe 5-10 sheets. Every net that crosses a sheet boundary is connected by name, and all sheets are visible at the same level. The downside is that with many sheets, it becomes hard to see the overall signal flow without referring back to the block diagram.
 
 Hierarchical schematics add a top-level sheet that looks like the block diagram, with each block expanding into a detailed sub-sheet. This is powerful for large designs — it makes navigation intuitive and preserves the architectural view. But it adds complexity to the design tool workflow. Ports on hierarchical blocks must be carefully maintained, and changes to interfaces between blocks require editing both the top-level sheet and the sub-sheets. For small-to-medium projects, the overhead often isn't worth it.
 
@@ -59,7 +59,7 @@ Net names are the primary mechanism connecting signals across schematic sheets. 
 
 Good net naming follows predictable patterns. Power rails should include their voltage: `VCC_3V3`, `VCC_5V`, `VIN_12V`. Signal names should indicate function: `SPI_CLK`, `I2C_SDA`, `ADC_CH0`. Active-low signals need a consistent prefix or suffix: `nRESET`, `nCS`, `nIRQ` (I prefer the `n` prefix, but some teams use `_B` suffix or an overbar).
 
-Bus signals benefit from consistent numbering: `DATA[0]`, `DATA[1]`, ... `DATA[7]`, or `ADDR[0:15]`. Most schematic tools support bus notation that lets you draw a single thick line representing all signals in the bus, with individual signals breaking out where they connect to pins. This dramatically cleans up schematics with wide parallel buses.
+Bus signals benefit from consistent numbering: `DATA[0]`, `DATA[1]`, ... `DATA[7]`, or `ADDR[0:15]`. Most schematic tools support bus notation that allows drawing a single thick line representing all signals in the bus, with individual signals breaking out where they connect to pins. This dramatically cleans up schematics with wide parallel buses.
 
 One naming trap I've fallen into: using the same signal name for logically different nets. If two separate I2C buses exist in the design, naming them both `SDA` and `SCL` creates a short circuit. Use `I2C0_SDA`/`I2C1_SDA` or `SENSOR_SDA`/`DISPLAY_SDA` to distinguish them.
 
@@ -67,7 +67,7 @@ One naming trap I've fallen into: using the same signal name for logically diffe
 
 Even experienced designers make organizational errors that cause problems downstream. A few I've encountered or learned about the hard way:
 
-**Orphaned nets.** A net name on one sheet with no matching name anywhere else. The designer intended a connection, but a typo or copy-paste error means the signal goes nowhere. Most ERC (Electrical Rules Check) tools catch this, but only if you run them — and only if you don't dismiss the warnings.
+**Orphaned nets.** A net name on one sheet with no matching name anywhere else. The designer intended a connection, but a typo or copy-paste error means the signal goes nowhere. Most ERC (Electrical Rules Check) tools catch this, but only if they are actually run — and only if the warnings are not dismissed.
 
 **Missing power connections.** A component is placed but its power pins aren't connected, often because the schematic symbol hides them (implicit power pins). This is especially common with op-amps, logic gates, and other multi-unit components where power pins are on a separate symbol. Always verify that every component has power and ground connected.
 
@@ -75,10 +75,17 @@ Even experienced designers make organizational errors that cause problems downst
 
 **Schematic-layout mismatch.** Changing the schematic without updating the layout, or vice versa. This is a tool discipline issue — always forward-annotate schematic changes to the layout, and back-annotate layout changes (like component value adjustments) to the schematic. The schematic is the source of truth.
 
-## Gotchas
+## Tips
 
-- **Hidden power pins create hidden bugs.** Many schematic symbols have implicit power connections that don't appear on the schematic. Always check that the symbol's hidden pins match your actual power net names, or make them explicit.
-- **Copy-paste across sheets breaks net connections.** Copying a circuit block from one sheet to another often duplicates net names that should be unique. Review every pasted block for unintended connections.
-- **The first schematic organization is rarely the best.** As the design evolves, the original sheet organization may no longer make sense. Reorganizing mid-project feels wasteful but often pays off in reduced confusion during layout and debug.
-- **ERC warnings are not optional.** Electrical Rules Check exists to catch exactly the mistakes that manual review misses. Running ERC and resolving every warning — not just suppressing them — is one of the highest-value habits in schematic design.
-- **Schematic readability is a feature, not vanity.** A schematic that "works" but is incomprehensible to anyone else (including your future self) is a liability. Time spent on layout, alignment, and annotation is not wasted.
+- Organize schematic sheets by function (power, controller, peripherals, connectors) rather than by physical board location -- this mirrors the block diagram and makes navigation intuitive
+- Name every net that crosses a sheet boundary with an explicit, meaningful name -- never rely on tool-assigned net identifiers
+- Keep signal flow consistent: inputs on the left, outputs on the right, power at the top, ground at the bottom
+- Run ERC after every significant schematic change and resolve every warning rather than suppressing them
+
+## Caveats
+
+- **Hidden power pins create hidden bugs.** Many schematic symbols have implicit power connections that don't appear on the schematic. Always check that the symbol's hidden pins match the actual power net names, or make them explicit
+- **Copy-paste across sheets breaks net connections.** Copying a circuit block from one sheet to another often duplicates net names that should be unique. Review every pasted block for unintended connections
+- **The first schematic organization is rarely the best.** As the design evolves, the original sheet organization may no longer make sense. Reorganizing mid-project feels wasteful but often pays off in reduced confusion during layout and debug
+- **ERC warnings are not optional.** Electrical Rules Check exists to catch exactly the mistakes that manual review misses. Running ERC and resolving every warning -- not just suppressing them -- is one of the highest-value habits in schematic design
+- **Schematic readability is a feature, not vanity.** A schematic that "works" but is incomprehensible to anyone else (including a future version of the designer) is a liability. Time spent on layout, alignment, and annotation is not wasted
