@@ -5,7 +5,7 @@ weight: 40
 
 # Field Failure Modes by Component
 
-How components actually fail in the field, and how those failures present at the bench. This is not about how components work or how to characterize them on a curve tracer — for test procedures and instrument settings, see [Component Testing]({{< relref "/docs/measurement/component-testing" >}}). This page is symptom-driven: what you see, what to suspect, how to confirm, and where to go next.
+How components actually fail in the field, and how those failures present at the bench. This is not about how components work or how to characterize them on a curve tracer — for test procedures and instrument settings, see [Component Testing]({{< relref "/docs/measurement/component-testing" >}}). This page is symptom-driven: what shows up at the bench, what to suspect, how to confirm, and where to go next.
 
 ## Electrolytic Capacitors
 
@@ -20,7 +20,7 @@ The most failure-prone passive component. Electrolytics have a liquid electrolyt
 
 **Visual signs:** Bulging top vent, leaking residue, discolored PCB underneath, cap sitting crooked (pushed up by internal pressure).
 
-**Testing detail:** A basic capacitance meter won't catch the most common failure (ESR rise). You need an ESR meter or an LCR meter that reports ESR at the right frequency. See [ESR, Leakage & Gain]({{< relref "/docs/measurement/component-testing/esr-leakage-gain" >}}).
+**Testing detail:** A basic capacitance meter won't catch the most common failure (ESR rise). This requires an ESR meter or an LCR meter that reports ESR at the right frequency. See [ESR, Leakage & Gain]({{< relref "/docs/measurement/component-testing/esr-leakage-gain" >}}).
 
 **Rule of thumb:** In consumer electronics more than 5–10 years old, electrolytics near heat sources (voltage regulators, power transistors) are the first suspect.
 
@@ -30,7 +30,7 @@ Usually reliable, but they have one spectacular failure mode.
 
 | Symptom | Suspect | Quick confirmation | Next step |
 |---------|---------|-------------------|-----------|
-| Rail shorted to ground, upstream protection trips | Cracked ceramic → internal short | Remove ceramic caps one at a time near the fault; short clears when you pull the cracked one | Replace; investigate mechanical stress source |
+| Rail shorted to ground, upstream protection trips | Cracked ceramic → internal short | Remove ceramic caps one at a time near the fault; short clears when the cracked one is removed | Replace; investigate mechanical stress source |
 | Subtle capacitance loss on high-K dielectric (X5R/X7R) | DC bias derating — not a field failure, a design issue | Measure capacitance at operating voltage vs. at zero bias | Redesign with lower-K dielectric or larger package |
 
 **How cracks happen:** Board flex during assembly, thermal shock, rough handling, or press-fit connectors nearby. Visually, a hairline crack may be visible on the top surface, but often the crack is hidden underneath.
@@ -58,7 +58,7 @@ Linear and switching regulators are common failure points because they handle th
 | MOSFET won't turn off, drain-source always conducting | Gate oxide breakdown or D-S short from overcurrent | Diode-check D-S; check gate threshold voltage | Replace; investigate ESD or Vgs overvoltage source |
 | MOSFET switching but running hotter than expected | Increased Rds(on) from partial damage | Measure Rds(on) or compare thermal behavior to a known-good part | Replace — partial damage gets worse |
 
-**Testing:** Diode check across all terminal pairs (gate-source, gate-drain, drain-source, both directions). Compare readings to what you expect from the device type. See [Dead or Alive?]({{< relref "/docs/measurement/component-testing/dead-or-alive" >}})
+**Testing:** Diode check across all terminal pairs (gate-source, gate-drain, drain-source, both directions). Compare readings to what the device type should show. See [Dead or Alive?]({{< relref "/docs/measurement/component-testing/dead-or-alive" >}})
 
 ## Resistors
 

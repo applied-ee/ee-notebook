@@ -31,10 +31,10 @@ The circuit works when cold and fails when hot (or vice versa). Temperature-depe
 
 **How to provoke:**
 - Heat gun on individual components (not the whole board) to isolate which part is sensitive
-- Freeze spray on suspected components — if the circuit starts working when you freeze component X, that's your suspect
+- Freeze spray on suspected components — if the circuit starts working when a specific component is frozen, that component is the suspect
 - Let the board warm up naturally and monitor for when the failure appears — note which components are hottest at that moment
 
-**Caution:** Heat guns can damage components. Use low settings, keep moving, and don't heat anything you can't replace.
+**Caution:** Heat guns can damage components. Use low settings, keep moving, and don't heat anything that can't be replaced.
 
 ## Ground Problems
 
@@ -43,7 +43,7 @@ The circuit works when cold and fails when hot (or vice versa). Temperature-depe
 **Symptoms:**
 - Voltage difference between two ground points (measure it — even millivolts matter for analog)
 - Signals that look noisy on the scope but measure fine with a DMM
-- Behavior that changes when you move the scope ground clip to a different location
+- Behavior that changes when the scope ground clip is moved to a different location
 - Audio hum, video bars, or repeating interference patterns
 
 **What to check:**
@@ -55,7 +55,7 @@ See [Ground Loop Detection]({{< relref "/docs/measurement/noise-interference-gro
 
 ## Hidden Oscillation
 
-A circuit oscillates at high frequency, and you don't see it because you're not looking for it.
+A circuit oscillates at high frequency, and it goes unnoticed because nobody is looking for it.
 
 **What happens:** A voltage regulator, op-amp, or transistor circuit breaks into oscillation — often at tens of MHz. The oscillation eats voltage headroom, generates heat, causes EMI, and makes downstream circuits behave unpredictably.
 
@@ -73,7 +73,7 @@ See [Ripple & Noise on the Rail]({{< relref "/docs/measurement/power-rails-suppl
 
 Connectors are mechanical components, and mechanical components wear out.
 
-**Position-sensitive intermittent:** The circuit works if you hold the cable at a certain angle, press on a connector, or flex the board. This is always a mechanical connection issue.
+**Position-sensitive intermittent:** The circuit works when the cable is held at a certain angle, a connector is pressed, or the board is flexed. This is always a mechanical connection issue.
 
 - Wiggle test: gently flex cables, press on connectors, tap the board near suspects
 - Corroded pins: look for green/white deposits, especially in humid environments
@@ -99,7 +99,7 @@ Electrostatic discharge can damage components without leaving any visible trace.
 
 ## Pattern Recognition Table
 
-When you see a symptom, start with the most common cause and the quickest measurement to confirm or rule it out:
+Given a symptom, start with the most common cause and the quickest measurement to confirm or rule it out:
 
 | Symptom | First Suspect | First Measurement |
 |---------|---------------|-------------------|

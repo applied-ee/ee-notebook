@@ -5,15 +5,15 @@ weight: 70
 
 # Post-Mortems & Lessons Learned
 
-A debug session teaches you something — but only if you capture it. The post-mortem is where you convert a painful debugging experience into a pattern you'll recognize instantly next time.
+A debug session teaches something — but only if it gets captured. The post-mortem is where a painful debugging experience becomes a pattern that's instantly recognizable next time.
 
 ## Why Bother
 
-Writing up what happened after you've fixed it feels like extra work when you just want to move on. Here's why it's worth doing:
+Writing up what happened after the fix feels like extra work when the temptation is to move on. Here's why it's worth doing:
 
-- **Your future self will forget.** The details that seem obvious now — the exact symptom, the misleading first hypothesis, the measurement that finally revealed the root cause — will fade in weeks. Write them down while they're fresh
-- **Pattern recognition compounds.** The more failures you've documented, the faster you recognize the next one. A post-mortem library is a personal debugging accelerator
-- **"What fooled me" is the most valuable part.** The root cause is interesting. The thing you wasted an hour on before finding the root cause is *instructive*. Recording your wrong turns teaches you to avoid them
+- **Details fade fast.** The details that seem obvious now — the exact symptom, the misleading first hypothesis, the measurement that finally revealed the root cause — will fade in weeks. Write them down while they're fresh
+- **Pattern recognition compounds.** The more failures documented, the faster the next one gets recognized. A post-mortem library is a personal debugging accelerator
+- **"What fooled me" is the most valuable part.** The root cause is interesting. The hour wasted before finding it is *instructive*. Recording wrong turns builds the instinct to avoid them
 
 ## Post-Mortem Template
 
@@ -99,9 +99,9 @@ downstream. Oscillation from bad output caps is common on LDOs
 and always presents as "voltage too low."
 ```
 
-## Building Your Pattern Library
+## Building a Pattern Library
 
-Organize post-mortems by **symptom**, not by root cause. When you encounter a new failure, you start with a symptom and need to find the cause — so the lookup path should match the diagnostic path.
+Organize post-mortems by **symptom**, not by root cause. A new failure presents as a symptom first, and the cause needs to be found — so the lookup path should match the diagnostic path.
 
 **Useful categories:**
 - Board dead / no power
@@ -112,7 +112,7 @@ Organize post-mortems by **symptom**, not by root cause. When you encounter a ne
 - Mechanical intermittent
 - "Works on bench, fails in the field"
 
-Over time, patterns emerge. You'll notice that you see the same handful of root causes over and over — bad caps, bad connections, power problems — and your instinct for where to look first will sharpen.
+Over time, patterns emerge. The same handful of root causes appear over and over — bad caps, bad connections, power problems — and instinct for where to look first sharpens naturally.
 
 ## "What Fooled Me" — A Growing List
 
@@ -126,14 +126,14 @@ This section is intended to be expanded over time with actual debugging experien
 
 ## "What to Check First Next Time"
 
-A personal checklist built from experience. Start with the universal items and add to it as you accumulate post-mortems.
+A personal checklist built from experience. Start with the universal items and add entries as post-mortems accumulate.
 
 1. **All power rails correct?** Measure at the point of use, not at the source
-2. **Any visual damage?** Look before you probe
+2. **Any visual damage?** Look before probing
 3. **What changed?** If it was working before, something changed — find it
 4. **Current draw normal?** Abnormal current is the fastest indicator of many faults
 5. **Scope the supply rail** — Ripple, oscillation, and transient dips hide from DMMs
 6. **Check connectors and cables** — The most likely mechanical failure point
-7. **Check the obvious things you're sure are fine** — They often aren't
+7. **Check the obvious things that seem fine** — They often aren't
 
-This list should grow with every post-mortem. When you write "next time I'll check X first" in a post-mortem, add X to this list.
+This list should grow with every post-mortem. Whenever a post-mortem concludes with "next time I'll check X first," add X here.

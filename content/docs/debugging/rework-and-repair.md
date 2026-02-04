@@ -5,7 +5,7 @@ weight: 50
 
 # Rework & Repair Techniques
 
-Once you've found the faulty component, you need to remove it and install a replacement without damaging the board. Rework is a manual skill — reading about it helps, but practice on scrap boards is essential.
+Once the faulty component is identified, the next step is removing it and installing a replacement without damaging the board. Rework is a manual skill — reading about it helps, but practice on scrap boards is essential.
 
 ## Through-Hole Desoldering
 
@@ -40,11 +40,11 @@ Best for: cleaning up pads, removing solder bridges, through-hole joints where t
 
 ### Pad Care
 
-Through-hole pads and traces are bonded to the board with adhesive and copper plating. They can lift if you apply too much force or heat.
+Through-hole pads and traces are bonded to the board with adhesive and copper plating. They can lift under too much force or heat.
 
-- **Don't pry** components out. If it's not free, you need to remove more solder
+- **Don't pry** components out. If it's not free, remove more solder
 - **Limit heat time** — a few seconds per pad. If it's not working, let the board cool and try again
-- **If a pad lifts**, you can sometimes glue it back with cyanoacrylate (super glue) and re-solder carefully. If the trace is broken, you'll need a jumper wire
+- **If a pad lifts**, it can sometimes be glued back with cyanoacrylate (super glue) and re-soldered carefully. If the trace is broken, a jumper wire is needed
 
 ## SMD Replacement
 
@@ -85,11 +85,11 @@ The simplest SMD rework. Two approaches:
 
 ### QFN and BGA
 
-These packages have pads underneath, not on the sides. You cannot rework them with an iron alone.
+These packages have pads underneath, not on the sides. An iron alone cannot rework them.
 
 **QFN:** Hot air is the standard approach. Apply flux, heat from above evenly. The part will visibly settle when the solder melts. For removal, lift with tweezers once molten.
 
-**BGA:** Requires controlled hot air (ideally a rework station with a nozzle matched to the package), solder paste or preforms for re-balling, and good alignment. This is advanced rework — practice on scrap before attempting it on something you care about.
+**BGA:** Requires controlled hot air (ideally a rework station with a nozzle matched to the package), solder paste or preforms for re-balling, and good alignment. This is advanced rework — practice on scrap before attempting it on a board that matters.
 
 **Temperature guidance:**
 - Lead-free solder: 240–260°C peak (hot air station set higher to account for airflow losses)
@@ -98,7 +98,7 @@ These packages have pads underneath, not on the sides. You cannot rework them wi
 
 ## Lifted Pads and Trace Repair
 
-When a pad lifts or a trace breaks, you need to restore the electrical connection.
+When a pad lifts or a trace breaks, the electrical connection needs to be restored.
 
 ### Trace Repair
 
@@ -116,7 +116,7 @@ If a through-hole pad has lifted but the trace is intact:
 
 ## Jumper Wiring
 
-When you need to add a connection that doesn't exist on the board — whether for a repair, a modification, or a design fix.
+Sometimes a connection needs to be added that doesn't exist on the board — whether for a repair, a modification, or a design fix.
 
 **Wire gauge selection:**
 - Signal lines: 30 AWG wire-wrap wire (thin, easy to route, handles mA-level signals)
@@ -127,31 +127,31 @@ When you need to add a connection that doesn't exist on the board — whether fo
 - Keep jumpers short and direct
 - Secure long jumpers to the board with kapton tape or a dab of adhesive to prevent snagging
 - Route away from heat sources
-- Label the jumper (a tag of tape with a note) so future you knows why it's there
+- Label the jumper (a tag of tape with a note) so the reason is clear months later
 
 ## When to Stop Reworking
 
-Repair skill includes knowing when you're about to make things worse. Every rework attempt carries risk — heat stress, lifted pads, solder bridges, damaged adjacent components — and the risk accumulates.
+Repair skill includes knowing when further attempts are about to make things worse. Every rework attempt carries risk — heat stress, lifted pads, solder bridges, damaged adjacent components — and the risk accumulates.
 
 ### Pad Damage Threshold
 
-If you've lifted two pads on the same board, stop. You're either applying too much heat, too much mechanical force, or working on a board with weak copper adhesion (common in cheap or old PCBs). A third attempt at the same technique will likely lift a third pad.
+If two pads have lifted on the same board, stop. The cause is either too much heat, too much mechanical force, or weak copper adhesion (common in cheap or old PCBs). A third attempt at the same technique will likely lift a third pad.
 
 **Pause and reconsider:**
 - Switch to a different technique (e.g., hot air instead of iron, or vice versa)
-- Lower your iron temperature and use more flux
-- Accept that the board may need jumper wires for the lifted pads before you continue
-- Ask whether the board is worth further rework or whether a fresh board is cheaper than the repair time
+- Lower the iron temperature and use more flux
+- Accept that the board may need jumper wires for the lifted pads before continuing
+- Consider whether the board is worth further rework or whether a fresh board is cheaper than the repair time
 
 ### Thermal Collateral Damage
 
-Hot air is powerful but indiscriminate. Everything in the airflow gets heated.
+Hot air is powerful but indiscriminate. Everything in the airflow path gets heated.
 
-**Plastic connectors** — Most plastic housings deform or melt well below reflow temperatures. If a connector is near your rework target, either shield it with kapton tape and aluminum foil, or remove the connector first and replace it after. "I'll be careful" is not a shielding strategy.
+**Plastic connectors** — Most plastic housings deform or melt well below reflow temperatures. If a connector is near the rework target, either shield it with kapton tape and aluminum foil, or remove the connector first and replace it after. "I'll be careful" is not a shielding strategy.
 
-**Adjacent components** — Small passives near your target can reflow and shift, tombstone, or float away in the airflow. Shield with kapton tape, or tack them down with a dot of adhesive. After hot air rework, inspect neighbors — not just the part you replaced.
+**Adjacent components** — Small passives near the target can reflow and shift, tombstone, or float away in the airflow. Shield with kapton tape, or tack them down with a dot of adhesive. After hot air rework, inspect neighbors — not just the replaced part.
 
-**Multi-layer boards** — Internal copper planes act as heat sinks. You may find yourself cranking the temperature to get enough heat to the target pad. But the surface temperature around the joint is now much higher than you think. Use preheat to bring the whole board up to ~100–150°C first, so the delta from the hot air nozzle is smaller.
+**Multi-layer boards** — Internal copper planes act as heat sinks. The temptation is to crank the temperature to get enough heat to the target pad, but the surface temperature around the joint ends up much higher than expected. Use preheat to bring the whole board up to ~100–150°C first, so the delta from the hot air nozzle is smaller.
 
 ### Diminishing Returns
 
@@ -159,17 +159,17 @@ Some signs that further rework is unlikely to succeed:
 
 - **Board is physically damaged** — substrate is delaminated, charred, or warped from repeated reflow cycles
 - **Multiple repairs stacked on repairs** — jumper wires patching lifted pads that were damaged while replacing a component that was only suspect, not confirmed faulty
-- **The replacement part is the third one you've tried** — if the first two didn't fix it, the component probably isn't the problem. Go back to diagnosis
-- **You're working angry or tired** — rework requires steady hands and patience. If you're frustrated, walk away. The board will still be broken tomorrow, but it won't have additional damage from a shaky hand
+- **The replacement part is the third one tried** — if the first two didn't fix it, the component probably isn't the problem. Go back to diagnosis
+- **Working angry or tired** — rework requires steady hands and patience. Frustration is a signal to walk away. The board will still be broken tomorrow, but it won't have additional damage from a shaky hand
 
-The cheapest rework is the one you didn't have to do twice.
+The cheapest rework is the one that didn't have to be done twice.
 
 ## Cleaning After Rework
 
-Flux residue left on the board can cause problems over time: corrosion, leakage currents, and unreliable measurements.
+Flux residue left on the board can cause problems over time: corrosion, leakage currents, and unreliable measurement readings.
 
 **Why it matters:**
-- Activated flux residue is corrosive — it was designed to dissolve oxides, and it'll keep corroding copper if left in place
+- Activated flux residue is corrosive — it was designed to dissolve oxides, and it keeps corroding copper if left in place
 - Flux residue between pads can create leakage paths, especially at higher voltages or with moisture
 - Sticky flux attracts dust and makes inspection harder
 

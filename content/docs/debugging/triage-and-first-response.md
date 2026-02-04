@@ -5,7 +5,7 @@ weight: 10
 
 # Failure Triage & First Response
 
-Before reaching for a meter or scope, stop and look. The first few seconds of observation often tell you more than the first ten minutes of measurement — if you pay attention.
+Before reaching for a meter or scope, stop and look. The first few seconds of observation often reveal more than the first ten minutes of measurement — if attention is paid.
 
 ## Five Senses Check
 
@@ -15,11 +15,11 @@ Always the first step. Do this before powering anything on (or immediately after
 |-------|-----------------|
 | **Look** | Charred components, bulging capacitors, cracked packages, discolored PCB, solder bridges, missing parts, bent pins, loose wires |
 | **Smell** | Burnt electronics (unmistakable), hot plastic, ozone (arcing), chemical smell from leaking electrolytic |
-| **Listen** | Clicking relays, buzzing transformers, high-pitched whine from oscillation, silence where you expect fan noise |
-| **Touch** | Hot components (power off first!), loose connectors, cracked solder joints you can feel, board flex |
+| **Listen** | Clicking relays, buzzing transformers, high-pitched whine from oscillation, silence where fan noise is expected |
+| **Touch** | Hot components (power off first!), loose connectors, cracked solder joints detectable by feel, board flex |
 | **Context** | What changed? New firmware? New power supply? Was it dropped? Different environment? |
 
-If something looks burnt or smells burnt, don't power it up again until you understand why. A visual fault is a gift — it tells you where to start.
+If something looks burnt or smells burnt, don't power it up again until the cause is understood. A visual fault is a gift — it tells exactly where to start.
 
 ## Categorize the Failure
 
@@ -62,7 +62,7 @@ Resist the urge to measure the symptom directly. Instead, work from power toward
 2. **Clocks second** (digital/embedded) — Is the oscillator running? Is the clock getting to the IC?
 3. **Signals third** — Now trace the signal path from input toward output, looking for where the signal stops or goes wrong
 
-This order exists because power faults masquerade as everything else. A brownout on a 3.3 V rail can look like a firmware bug, a logic error, or a communication failure. If you chase the symptom first, you can waste hours before discovering the rail is at 2.8 V.
+This order exists because power faults masquerade as everything else. A brownout on a 3.3 V rail can look like a firmware bug, a logic error, or a communication failure. Chasing the symptom first can waste hours before revealing the rail is at 2.8 V.
 
 ## Hardware vs. Firmware Boundary
 
@@ -80,7 +80,7 @@ For embedded systems, determining whether the fault is hardware or firmware is c
 - Symptoms are perfectly repeatable and state-dependent
 - Debug output shows the code reaching unexpected states
 
-**The boundary cases** — hardware marginal enough that firmware sometimes trips over it — are the hardest. A noisy power rail that causes occasional flash corruption looks like a firmware bug until you scope the rail.
+**The boundary cases** — hardware marginal enough that firmware sometimes trips over it — are the hardest. A noisy power rail that causes occasional flash corruption looks like a firmware bug until the rail is scoped.
 
 ## Safety Note
 

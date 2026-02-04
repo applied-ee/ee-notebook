@@ -5,20 +5,20 @@ weight: 20
 
 # Fault Isolation Strategies
 
-Once triage tells you what kind of failure you're dealing with, isolation narrows down *where* the fault lives. The goal is to cut the search space in half with each step, not to wander through the circuit hoping to stumble on the problem.
+Once triage identifies the kind of failure, isolation narrows down *where* the fault lives. The goal is to cut the search space in half with each step, not to wander through the circuit hoping to stumble on the problem.
 
 ## The Debugging Loop
 
-Every effective debugging session follows this loop, whether you're aware of it or not:
+Every effective debugging session follows this loop, whether consciously or not:
 
-1. **Hypothesize** — Based on what you know so far, what's the most likely fault?
+1. **Hypothesize** — Based on what's known so far, what's the most likely fault?
 2. **Predict** — If this hypothesis is correct, what should a specific measurement show?
 3. **Measure** — Make that measurement
-4. **Update** — Does the result confirm, refute, or modify your hypothesis?
+4. **Update** — Does the result confirm, refute, or modify the hypothesis?
 
-Then repeat. The key discipline is step 2: *predict before you measure*. If you don't have a prediction, you don't have a hypothesis — you're just collecting data. A measurement that matches your prediction is confirming. A measurement that contradicts your prediction is *more* valuable — it eliminates a theory and forces you to think harder.
+Then repeat. The key discipline is step 2: *predict before measuring*. Without a prediction, there is no hypothesis — just data collection. A measurement that matches the prediction is confirming. A measurement that contradicts the prediction is *more* valuable — it eliminates a theory and forces harder thinking.
 
-When you're stuck, it's almost always because you skipped step 2 and are taking measurements without clear expectations.
+When progress stalls, it's almost always because step 2 was skipped — measurements are being taken without clear expectations.
 
 ## Divide and Conquer
 
@@ -27,13 +27,13 @@ The most powerful general strategy. Split the signal path in half and determine 
 ### How It Works
 
 1. Identify the full signal chain from input to output (or source to load)
-2. Pick a midpoint — a node you can probe or disconnect
+2. Pick a midpoint — a node that can be probed or disconnected
 3. Check: is the signal correct at the midpoint?
    - **Yes** → fault is in the second half. Probe between midpoint and output
    - **No** → fault is in the first half. Probe between input and midpoint
 4. Repeat, halving the search space each time
 
-This is O(log n) debugging — for a 16-stage signal chain, you need at most 4 measurements to find the faulty stage.
+This is O(log n) debugging — for a 16-stage signal chain, at most 4 measurements are needed to find the faulty stage.
 
 ### Where It Applies
 
@@ -44,7 +44,7 @@ This is O(log n) debugging — for a 16-stage signal chain, you need at most 4 m
 
 ## Known-Good Substitution
 
-Swap a suspected component or module with one you know works. If the fault goes away, you found it.
+Swap a suspected component or module with one known to work. If the fault goes away, that confirms the source.
 
 **When it works well:**
 - Socketed ICs, modules, cables, connectors
@@ -53,10 +53,10 @@ Swap a suspected component or module with one you know works. If the fault goes 
 
 **When it doesn't work:**
 - Soldered components (destructive to test, use other methods first)
-- When you don't actually have a known-good substitute
+- When no known-good substitute is actually available
 - When the fault might be in the interface between components, not the component itself
 
-**The trap:** Make sure your "known-good" really is known-good. A spare from the same batch may have the same defect. A cable that "should work" might not.
+**The trap:** Make sure the "known-good" really is known-good. A spare from the same batch may have the same defect. A cable that "should work" might not.
 
 ## Disconnecting Subsystems
 
@@ -73,9 +73,9 @@ This is especially useful for current draw problems. See [Is current draw expect
 
 ## Forcing Known States
 
-When you can't observe a node passively, force it to a known state and see how the circuit responds.
+When a node can't be observed passively, force it to a known state and see how the circuit responds.
 
-| Technique | What it tells you |
+| Technique | What it reveals |
 |-----------|------------------|
 | Tie an input HIGH or LOW | Does the downstream circuit respond correctly to a known logic level? Isolates the input source from the downstream logic |
 | Inject a known signal (function generator) | Does the circuit process a clean, known input correctly? Eliminates the possibility that the input source is the problem |
@@ -86,7 +86,7 @@ Forcing a known state turns a "something is wrong somewhere" into a "this specif
 
 ## Working Without a Schematic
 
-Sometimes you don't have documentation — or you have a partial schematic that covers the block you're *not* debugging. Reverse-engineering enough to debug is a different skill from full reverse-engineering. You don't need to understand the whole board. You need to understand enough to isolate the fault.
+Sometimes there's no documentation — or only a partial schematic that covers the block that *isn't* under investigation. Reverse-engineering enough to debug is a different skill from full reverse-engineering. Understanding the whole board isn't necessary. Understanding enough to isolate the fault is.
 
 ### Step 1: Identify Power Rails
 
@@ -96,22 +96,22 @@ Power is the skeleton of the board. Everything else hangs off it.
 - Follow the input to voltage regulators — look for 3-terminal devices (SOT-223, TO-220, SOT-23-5) near the input, often with chunky capacitors on both sides
 - Measure each regulator's output to identify the rails (common: 5 V, 3.3 V, 1.8 V, 1.2 V)
 - Trace where each rail goes. On a 2-layer board, one side is often a ground pour — check with continuity
-- Label the rails on a photo or sketch as you go. Everything downstream depends on knowing which rail feeds which section
+- Label the rails on a photo or sketch along the way. Everything downstream depends on knowing which rail feeds which section
 
 ### Step 2: Find Grounds
 
 - Check for a ground plane (continuity from the input ground to exposed copper, mounting holes, or shield cans)
 - Identify ground pins on connectors — often the outermost pin or the shell/shield
 - On 2-layer boards, the bottom layer is frequently a ground pour. Confirm with continuity between multiple exposed points
-- Mark your ground reference — you'll need a reliable ground connection for every measurement from here on
+- Mark the ground reference — a reliable ground connection is needed for every measurement from here on
 
 ### Step 3: Identify Clocks and Crystals
 
-Clocks tell you what the board does and whether the brain is running.
+Clocks reveal what the board does and whether the brain is running.
 
 - Look for crystals and crystal oscillators — silver cans, small 4-pin packages, or 2-pin HC49 packages
 - Read the frequency marking on the crystal (e.g., 8.000 MHz, 12.000, 25.000, 32.768 kHz for RTC)
-- Trace which IC the crystal connects to — that's your processor, FPGA, or communications chip
+- Trace which IC the crystal connects to — that's the processor, FPGA, or communications chip
 - Probe the crystal/oscillator output with a scope. If the clock isn't running, nothing downstream will work. This is one of the highest-value early measurements on an unknown board
 
 ### Step 4: Find Reset Pin Behavior
@@ -121,21 +121,21 @@ A processor held in reset looks dead but isn't broken.
 - Look up the main IC's datasheet (read the part number, search online). Find the reset pin
 - Trace the reset pin back — it usually connects to an RC network, a reset supervisor IC, or a pushbutton
 - Measure the reset pin: is it at the active level (held in reset) or the inactive level (running)?
-- If the reset pin is stuck active, trace upstream to find out why — voltage supervisor seeing a low rail, external signal holding it down, or a missing pull-up
+- If the reset pin is stuck active, trace upstream to find out why — a voltage supervisor seeing a low rail, an external signal holding it down, or a missing pull-up
 
 ### Step 5: Signal Tracing With Continuity and Visual Routing
 
-When you need to know "what connects to what" without a netlist.
+For figuring out "what connects to what" without a netlist.
 
 - **Visual tracing** — Follow traces on the board surface. A magnifying lamp or USB microscope helps. Traces on the top layer are usually visible; bottom-layer traces may be partially hidden by solder mask
-- **Continuity meter** — Set your DMM to continuity mode. Touch one probe to the pin you're tracing, then systematically check candidate destinations (nearby IC pins, connector pins, test points). The beep tells you the connection exists; silence rules it out
-- **IC datasheets as cheat sheets** — Once you've identified a part number, the datasheet's pinout tells you what *should* be connected to each pin. Use continuity to confirm the actual connections match, and to figure out where each net goes on the board
+- **Continuity meter** — Set the DMM to continuity mode. Touch one probe to the pin under investigation, then systematically check candidate destinations (nearby IC pins, connector pins, test points). A beep confirms the connection exists; silence rules it out
+- **IC datasheets as cheat sheets** — Once a part number is identified, the datasheet's pinout shows what *should* be connected to each pin. Use continuity to confirm the actual connections match, and to figure out where each net goes on the board
 - **Connector pinouts** — Connectors are the board's external interface. Identifying what each pin carries (power, ground, data, clock) often reveals the board's functional blocks. Standard connectors (USB, JTAG, SPI headers, UART) have known pinouts — check against the standard first
 
 **Practical tips:**
-- Take photos and annotate them as you go — you'll forget which pin you already checked
-- Connectors and test points are debugging gifts — access points the original designer left for you
-- You don't need a complete schematic to debug. You need to know: where is power, is the clock running, is reset released, and is the signal present at the boundary of the block you're investigating
+- Take photos and annotate them along the way — it's easy to forget which pin was already checked
+- Connectors and test points are debugging gifts — access points the original designer left on the board
+- A complete schematic isn't necessary to debug. The key questions are: where is power, is the clock running, is reset released, and is the signal present at the boundary of the block under investigation
 
 ## Working With a Schematic
 
@@ -143,8 +143,8 @@ Having a schematic doesn't mean trusting it blindly.
 
 - **Verify the schematic matches the board** — revision mismatches, hand modifications, and errata are common
 - **Read the schematic functionally**: trace the signal path from input to output, identify power distribution, find feedback loops
-- **Mark up a printed copy** as you go — check marks on verified nodes, X on faults found, ? on things to investigate
-- The schematic tells you what *should* happen. The board tells you what *does* happen. When they disagree, the board is always right.
+- **Mark up a printed copy** along the way — check marks on verified nodes, X on faults found, ? on things to investigate
+- The schematic shows what *should* happen. The board shows what *does* happen. When they disagree, the board is always right.
 
 ## Cross-References
 

@@ -30,4 +30,4 @@ Entries capture debugging strategies, common failure patterns, repair procedures
 
 - **[Verification After Repair]({{< relref "verification-after-repair" >}})** — Confirming the fix and catching regressions
 
-- **[Post-Mortems & Lessons Learned]({{< relref "post-mortems" >}})** — Recording what happened so you get faster next time
+- **[Post-Mortems & Lessons Learned]({{< relref "post-mortems" >}})** — Recording what happened to speed up future debugging
