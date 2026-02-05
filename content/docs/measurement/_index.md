@@ -34,4 +34,4 @@ Subsections are ordered prerequisites-first: safety and probing technique before
 
 - **[Calibration & Measurement Confidence]({{< relref "calibration-confidence" >}})** — Trusting the readings: accuracy, artifacts, calibration status, and measurement uncertainty.
 
-- **[Test Instruments]({{< relref "test-instruments" >}})** — Reference pages for the instruments on the bench: specs, usage notes, and limits.
+- **[Test Instruments]({{< relref "test-instruments" >}})** — Understanding instruments by type: key specs, what they mean, feature tiers, and which capability level different work demands.

@@ -86,7 +86,7 @@ Even with timer-driven execution, several things can introduce unexpected timing
 
 ## The Scope as Timing Verifier
 
-Code review and simulation help, but the oscilloscope is the ground truth for timing verification. When I need to verify that a control loop meets its deadline, I toggle a GPIO pin and measure with the scope. The scope shows not just the average timing but the distribution -- {{< relref "/docs/measurement/test-instruments/scope" >}} persistence mode is particularly useful for spotting occasional outliers that would be invisible in a logic analyzer's protocol view.
+Code review and simulation help, but the oscilloscope is the ground truth for timing verification. When I need to verify that a control loop meets its deadline, I toggle a GPIO pin and measure with the scope. The scope shows not just the average timing but the distribution -- [persistence mode]({{< relref "/docs/measurement/test-instruments/oscilloscope" >}}) is particularly useful for spotting occasional outliers that would be invisible in a logic analyzer's protocol view.
 
 The test setup matters. Run the system under realistic load with all features active. The timing measured with interrupts disabled and no communication traffic is not the timing the system will have in production.
 
