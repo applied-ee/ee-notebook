@@ -89,3 +89,6 @@ Capacitive and inductive coupling between adjacent traces. When one trace switch
 - Glitches on adjacent signals coinciding with fast edges confirms crosstalk — increase spacing or slow edges
 - Circuit that works on PCB but fails on breadboard indicates the breadboard is the problem, not the circuit
 - Overshoot exceeding IC absolute maximum ratings can damage receivers — must be fixed even if circuit "works"
+- **A system that works at room temperature but fails at temperature extremes** is often showing a timing interface failure — margins that were adequate at nominal conditions have shrunk as delays shifted with temperature.
+- **A digital interface that has no errors on the bench but intermittent errors in the system** is frequently showing timing margin erosion — the combination of temperature, supply voltage variation, and loading in the system has consumed the margin that was comfortable under bench conditions.
+- **A logic IC that works at room temperature but fails at high temperature,** with no timing violations visible at room temperature, often indicates that the internal delay margins are shrinking with temperature and the setup or hold times are being violated at the internal flip-flop level — a failure mechanism that requires understanding the internal timing architecture to diagnose.

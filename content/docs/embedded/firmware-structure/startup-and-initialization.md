@@ -115,3 +115,4 @@ Strategies that help:
 - Peripheral configuration that has no effect suggests the peripheral clock was not enabled in RCC
 - Random hard faults after increasing the clock speed indicate flash wait states were not set properly
 - A startup sequence that works on one chip revision but fails on another points to power-on state differences or timing dependencies
+- **A peripheral that produces wrong output values or timing immediately after power-up but works correctly after re-initialization** commonly appears when the bring-up firmware initializes subsystems in an order that doesn't account for dependencies — a peripheral begins operating before its clock source, reference, or configuration is fully established.

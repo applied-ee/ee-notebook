@@ -111,3 +111,4 @@ For I2C specifically, an oscilloscope is also valuable because rise time and sig
 - I2C communication that works sometimes and fails at other times often has marginal pull-up resistors — check rise times with a scope
 - An I2C bus that stops responding entirely (no ACK from any device) may have a locked-up slave holding SDA low — implement bus recovery
 - SPI data corruption only on long transfers suggests CS is being toggled between bytes — switch to GPIO-controlled CS
+- **Noise on an analog measurement that correlates with digital communication activity** often shows up as bursts of noise coinciding with SPI, I2C, or UART transactions — the digital subsystem's switching current is coupling through the shared supply or ground into the analog subsystem's reference or signal path.

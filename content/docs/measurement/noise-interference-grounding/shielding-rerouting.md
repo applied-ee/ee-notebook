@@ -73,3 +73,5 @@ For noise at specific frequency, choose capacitor for lowest impedance at that f
 - Noise reduced by ferrite bead indicates high-frequency conducted noise — ferrite filters work
 - Noise reduced by trace rerouting confirms proximity coupling was dominant — layout matters
 - Ground pour that helps indicates capacitive coupling was significant — consider guard traces
+- **A noise problem that persists after extensive supply filtering** often shows up when the noise is coupling through a path other than the supply — ground impedance, electromagnetic radiation, or substrate coupling inside an IC. The supply was never the mechanism; it was just the first place investigated because supply noise was easy to measure.
+- **A debugging session that requires numerous attempts at the same type of fix (more capacitors, more filtering, more shielding) without resolution** commonly appears when the coupling mechanism has been misidentified — each additional filter addresses the assumed path while the actual path remains untreated.

@@ -80,3 +80,5 @@ This reveals whether pull-up resistors are present and working, whether a line i
 - Both lines stuck low with resistance to ground indicates a short — isolate and locate
 - Lines at expected idle levels but no activity when communication expected indicates firmware issue, not electrical
 - I2C SDA stuck low after partial transaction indicates bus lockup — needs clock recovery
+- **A communication interface that develops bit errors under specific data patterns** often indicates a power supply coupling problem — certain data patterns create specific current transient signatures on the supply, which propagate upward as noise into the signal path, corrupting only the patterns that produce the worst-case supply transients.
+- **An intermittent communication error that correlates with system load** commonly appears when a timing race exists in the protocol — under light load, the processing completes within the timeout, but under heavy load, the processing occasionally exceeds it. The error rate increases with load, creating a correlation that points to timing rather than hardware.

@@ -66,9 +66,3 @@ The most instructive block failures aren't component failures — they're compos
 - **Block boundaries are a thinking tool, not a physical reality** — The same set of components can be grouped into blocks in different ways depending on the analysis. A feedback resistor "belongs" to the gain block when analyzing gain, but "belongs" to the stability analysis when checking phase margin. The grouping should match the current question.
 - **Not every cluster of parts is a block** — Decoupling capacitors, test points, and ESD protection components are primitives that serve the design without forming a functional block of their own. Trying to force every component into a block-level grouping overcomplicates the analysis.
 - **Textbook blocks and real blocks diverge** — A textbook common-emitter stage has four or five components. A real one may have additional parts for bias stability, frequency compensation, or protection that aren't in the canonical topology. Recognizing the core topology while accounting for the additions is part of reading real schematics.
-
-## Bench Relevance
-
-- A block whose output changes when a scope probe is connected reveals a loading violation — the probe impedance is comparable to the block's output impedance, and the composition contract assumed a lighter load.
-- Oscillation in an amplifier block that isn't supposed to oscillate is a composition failure, not a component failure. Check the feedback path, the supply bypassing, and the input/output impedance interactions before suspecting bad parts.
-- A filter that doesn't cut off where expected often has parasitic capacitance or inductance modifying the block's transfer function. The parts are right; the block includes more than what's on the schematic.

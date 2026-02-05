@@ -47,3 +47,4 @@ DC-couple the channel, set vertical scale to show the expected voltage, set time
 - Rail that measures correctly on DMM but circuit doesn't work suggests the problem is downstream, not the supply
 - Rail that shows oscillation or ringing on scope during startup indicates possible instability — check compensation
 - Multiple rails where one is missing and others are present suggests sequencing issue or fault on that specific supply
+- **A regulator whose output voltage doesn't match the calculated value from the feedback resistor ratio** often shows up when the feedback divider's resistor values have drifted, when leakage current into the IC's feedback pin is significant relative to the divider current, or when the PCB has a parasitic resistance in the feedback path — the IC is regulating to the voltage it sees at its feedback pin, which differs from the voltage at the output.

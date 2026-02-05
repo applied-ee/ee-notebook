@@ -80,3 +80,5 @@ This reveals whether timing is tight but consistent (narrow band, safe) or jitte
 - Data changing immediately after clock edge indicates hold violation — metastability possible
 - Timing that works at low speed but fails at high speed indicates margins consumed by propagation delay
 - Wide timing jitter band on persistence display indicates unstable timing — investigate source of jitter
+- **A clock-dependent subsystem that works at room temperature on the bench but fails at temperature in the integrated device** often indicates that thermal coupling from an adjacent power subsystem is shifting a timing-sensitive parameter — the bench test at room temperature had no thermal coupling, and the integrated device at elevated temperature has less timing margin.
+- **An intermittent fault that occurs more frequently at high temperature and fast clock speeds** is showing, through the time lens, a timing margin that shrinks with conditions — the failure point moves in a predictable direction as temperature and speed increase, confirming that propagation delay versus timing requirement is the mechanism.

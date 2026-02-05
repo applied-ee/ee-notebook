@@ -81,3 +81,4 @@ Diagnosis: Measure VOH at the driver with the actual load connected, then measur
 - Pin reading mid-rail voltage when it should be driven indicates floating input or bus contention
 - Logic level that's correct at DC but fails at speed indicates capacitive loading slowing the edges
 - Interface that works on some boards but not others suggests component tolerance pushing margins — tighten tolerances or redesign interface
+- **A digital output whose logic levels have degraded (higher VOL, lower VOH)** commonly appears after the output has been subjected to bus contention or excessive load — the output transistors have been partially degraded by overcurrent, and their on-resistance has increased, a primitive-level consequence of a system-level configuration error.

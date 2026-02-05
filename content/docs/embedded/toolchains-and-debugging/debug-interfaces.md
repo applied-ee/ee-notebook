@@ -139,3 +139,5 @@ This is intentional — it prevents competitors from reading the firmware. But i
 - SWO output that is garbled or absent after a clock change means the SWO prescaler needs reconfiguration to match the new CPU clock
 - A hard fault during semihosting calls indicates the firmware is running without a debugger attached
 - Firmware that builds but fails to run from flash may have exceeded the hardware breakpoint limit during a previous debug session — power cycle the target
+- **A board where debugging requires soldering wires to BGA pads or cutting traces** is showing the consequences of insufficient debug design — the information needed for diagnosis exists inside the circuit but isn't accessible, turning a diagnosis problem into a physical access problem.
+- **A prototype that can't be debugged because the debug port shares pins with a production function** often indicates that debug accessibility was sacrificed for pin economy during design — the debug interface was available during firmware development but is unusable in the assembled prototype because the shared pins are committed to their production function.

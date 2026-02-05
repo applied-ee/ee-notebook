@@ -79,3 +79,4 @@ Remove the component from circuit, set LCR meter to inductance mode at appropria
 - Inductor measuring much lower than marked value suggests core damage (cracks in ferrite) — inspect physically
 - 3-terminal SMD device that doesn't behave like a transistor in diode mode could be a voltage regulator or small IC — package markings and circuit context help more than DMM
 - Potentiometer that reads correctly at extremes but jumps erratically in the middle has worn resistive element
+- **A component that measures within tolerance on a component tester but causes circuit malfunction** often shows up when the component's parameter at the specific operating condition (voltage, temperature, frequency) differs from its parameter at the tester's conditions — the component is "healthy" by the tester's standard but "broken" for the circuit's requirements.

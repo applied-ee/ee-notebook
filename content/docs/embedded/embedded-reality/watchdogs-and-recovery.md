@@ -117,3 +117,4 @@ A botched firmware update that bricks a device in the field is worse than the bu
 - A system that crashes under load but works on the bench may have marginal power supply causing brownout resets — check the reset cause register for BOR flags
 - Intermittent failures that correlate with environment changes (temperature, EMI) suggest hardware-induced faults — add diagnostic logging to capture the conditions
 - A crashed system where a motor or heater stays on indicates safe state was not designed into the hardware — outputs should default to off without firmware intervention
+- **A fault recovery that makes things worse** often indicates an incomplete coordination protocol — the recovery procedure restores one device's state but leaves another in an incompatible state, causing a secondary failure that's different from the original fault.

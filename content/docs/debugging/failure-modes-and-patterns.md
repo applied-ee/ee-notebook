@@ -113,3 +113,10 @@ Given a symptom, start with the most common cause and the quickest measurement t
 | Works on bench, fails in enclosure | Thermal, grounding, EMI | Temperature monitoring, ground integrity |
 | Audio hum / video bars | Ground loop, power supply ripple | Measure ground-to-ground voltage, scope supply |
 | Consumes too much current | Shorted component, latch-up, oscillation | Current draw, thermal imaging / touch test |
+
+## Bench Relevance
+
+- **A board revision that fixes one problem but introduces another** often indicates that the original diagnosis was at the wrong layer — the board change coincidentally improved the original condition while disturbing a different coupling path or timing relationship that was previously adequate.
+- **A system that works for hours and then fails** is frequently showing a coordination failure that accumulates — a small timing drift, a slow memory leak, a gradual thermal shift — that eventually crosses a threshold. The individual devices haven't degraded; the coordination margin has eroded.
+- **An intermittent fault that occurs more frequently under high system load** often indicates a marginal condition — timing, supply, or thermal — that crosses its threshold only when the full system is active and drawing maximum current, generating maximum heat, and creating maximum electromagnetic interference simultaneously.
+- **A subsystem IC that works correctly in evaluation board form but fails in the production design** is frequently showing that the collapsed subsystem's internal design assumed specific external conditions (layout, component placement, thermal environment) that the evaluation board provided but the production design does not.

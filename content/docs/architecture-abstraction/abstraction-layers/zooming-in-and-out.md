@@ -83,9 +83,3 @@ The fix: when a fault at one level has no apparent local cause, consider what ot
 - **Fast zooming requires familiarity with the design** — Without knowing the design well, zooming in efficiently isn't possible because there's no reference for what's supposed to be there. In unfamiliar circuits, expect to spend time building a map at each level before navigating quickly.
 - **Multiple simultaneous faults break the zoom model** — The zoom-in/zoom-out approach assumes one dominant root cause. When two independent faults interact, the symptoms may not localize cleanly to any single level, and the "fix one thing, check if the symptom resolves" strategy may not converge.
 - **The right zoom level can depend on the available instrumentation** — If the scope can't capture the event (too fast, too infrequent, wrong trigger), the investigation might be at the right conceptual level but unable to observe it. Zooming to a level where the instruments can actually see the behavior is sometimes necessary, even if it's not the ideal level for the question.
-
-## Bench Relevance
-
-- A symptom that appears only when the full system is running — but disappears when any single subsystem is isolated — is a cross-level effect that requires zooming out to the system level to observe, then zooming in along the coupling path (power, ground, thermal, EMI) to find the root cause.
-- A probe that changes the behavior it's measuring is a signal that the measurement itself is part of the system at this level. Zoom out and infer the behavior indirectly, or change the measurement technique to reduce loading.
-- Intermittent faults that appear to move around the circuit when probed from different points often have a fixed root cause at a different level than where the symptoms appear. The wandering symptoms are the effect of changing the observation point; the root cause doesn't move.

@@ -77,3 +77,4 @@ This assumes a single-pole (first-order) rolloff. Higher-order systems have a di
 - Rolloff slope reveals filter order — first-order = -20 dB/decade, second-order = -40 dB/decade
 - Peaks or dips in the passband indicate resonance or impedance mismatch
 - Bandwidth that changes with load indicates the circuit is sensitive to output impedance — check if the actual load matches test conditions
+- **A filter that doesn't cut off where expected** often has parasitic capacitance or inductance modifying the block's transfer function. The parts are right; the block includes more than what's on the schematic.

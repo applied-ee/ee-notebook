@@ -65,9 +65,3 @@ Identifying a subsystem on a schematic requires recognizing the relationships be
 - **Subsystem boundaries aren't always obvious on schematics** — A schematic may spread a single subsystem across multiple sheets, or place parts of two subsystems on the same sheet for layout convenience. The schematic hierarchy reflects the designer's page layout habits, not necessarily the functional hierarchy.
 - **IC-based subsystems hide the block structure** — When a switching regulator IC integrates the oscillator, error amplifier, gate driver, and protection circuits, the internal block structure still exists but is invisible on the schematic. The IC datasheet's block diagram is often the best map of the internal composition.
 - **Subsystem specifications depend on external components** — An IC may specify a regulation tolerance, but only with specific external components (feedback resistors at specific values, output capacitors with specific ESR ranges). The subsystem specification is the IC plus its external components, not the IC alone.
-
-## Bench Relevance
-
-- A power supply that rings or overshoots on load transients reveals a feedback loop with insufficient phase margin — a subsystem-level composition problem that won't be visible from any individual block measurement.
-- A subsystem that starts up correctly on some power-on cycles but not others has a sequencing or startup timing issue — the blocks may all be functional, but they're initializing in the wrong order or with insufficient settling time.
-- Touching a probe to a node inside a feedback loop and seeing the output shift indicates that the probe's impedance is loading the loop enough to change its operating point — the subsystem's behavior depends on the inter-block relationships that the probe is altering.

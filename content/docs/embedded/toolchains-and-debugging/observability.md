@@ -144,3 +144,4 @@ This is the embedded equivalent of a crash dump, and it transforms field debuggi
 - A system that crashes in the field but works on the bench benefits from post-mortem data capture — add fault handler logging to preserved memory
 - Protocol problems (SPI, I2C, UART) that are hard to diagnose in software become clear with a logic analyzer showing actual bus transactions
 - Intermittent resets that do not appear in logs may be power supply related — use a scope to check for voltage droops during high-current transitions
+- **A field failure that requires the product to be returned to the bench for diagnosis** is frequently showing a design that lacks built-in observability — no error logging, no remote diagnostic interface, no status indicators that would allow the failure to be characterized at the installation site.

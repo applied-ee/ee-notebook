@@ -74,3 +74,5 @@ Set DMM to AC Volts and measure between ground terminals of the two devices (or 
 - Hum that persists regardless of cable and power configuration indicates magnetic coupling, not ground loop
 - Hum reduced but not eliminated by balanced connection indicates CMRR limit or imbalance in the connection
 - Multiple ground connections creating parallel paths indicate potential for ground loops — simplify grounding topology
+- **An analog circuit that develops a DC offset only when integrated** commonly appears when the ground potential at the subsystem's input differs from the ground potential at the subsystem's output — the ground shift, caused by return current from other subsystems flowing through the shared ground, appears as a differential-mode signal that the circuit amplifies.
+- **An analog measurement with an unexpected DC offset in the system that doesn't exist on the bench** commonly appears when ground potential difference between the sensor and the ADC is being measured as part of the signal — the bench test shared a quiet ground between sensor and ADC, while the system's ground carries return current that creates the offset.

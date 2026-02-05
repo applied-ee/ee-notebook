@@ -72,3 +72,5 @@ Differential-mode noise is on the signal and must be filtered on the signal path
 - Noise eliminated by ferrite clamp is common-mode conducted — ferrites at cable entry are the fix
 - Noise eliminated by shielding is capacitive or magnetic field coupling — permanent shield needed
 - Noise reduced by both ferrite and shield indicates both paths exist — address both
+- **A signal that becomes noisy only when a specific nearby IC is active, even though the two share no electrical connections,** is frequently electromagnetic coupling through the PCB — the active IC's bond wires or output traces are radiating, and the victim signal's trace is acting as a receiving antenna.
+- **A design that works on revision A of a PCB but fails on revision B, where the only changes were "non-functional" layout improvements,** is frequently revealing an unrecognized layout dependency — the "non-functional" changes modified a parasitic property that the circuit's behavior depended on.

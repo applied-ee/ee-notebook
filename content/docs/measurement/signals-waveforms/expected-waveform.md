@@ -54,3 +54,5 @@ When no known-good reference exists, simulate the circuit in SPICE with realisti
 - Wrong waveshape suggests the circuit topology isn't doing what's expected — square wave from what should be a sine oscillator indicates clipping or wrong circuit type
 - Asymmetric waveform on a push-pull stage indicates bias problem or mismatched components
 - Duty cycle off from 50% on a symmetric clock suggests timing component imbalance or loading on one edge
+- **A signal that changes shape or level when a load is added or removed downstream** reveals a hidden impedance interaction the block-level model didn't account for.
+- **A signal that measures correctly with a DMM (correct average value) but incorrectly with a scope (distorted waveform)** is showing, through the information lens, that the signal's frequency content has been corrupted — the DC information is intact but the AC information has been degraded by noise, distortion, or bandwidth limitation.

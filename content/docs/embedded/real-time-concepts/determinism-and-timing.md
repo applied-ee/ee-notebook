@@ -112,3 +112,4 @@ The test setup matters. Run the system under realistic load with all features ac
 - Periodic tasks with timing drift likely use delay loops instead of timer interrupts — switch to hardware timer-driven execution
 - Jitter that increases under interrupt load confirms higher-priority ISRs are consuming the jitter budget
 - Timing that degrades after flash writes suggests code is running from the same flash bank being erased
+- **A circuit that works with one firmware version but not another, with no changes to the relevant firmware module,** often indicates a timing or resource dependency that isn't explicit — the new firmware changed the timing of an interrupt, the allocation of a DMA channel, or the phase relationship between two periodic tasks, and the hardware depended on the old timing implicitly.

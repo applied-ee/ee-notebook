@@ -99,3 +99,4 @@ This confirms switching function but doesn't measure exact threshold voltage or 
 - Transistor with very low gain but healthy junctions has likely suffered thermal stress
 - MOSFET that won't turn on from DMM gate charging may be standard-threshold (not dead) — or may have damaged gate oxide (check for gate conductivity)
 - Power supply with excessive ripple after years of service — check ESR of output electrolytics before anything else
+- **A precision measurement that drifts over minutes after a load change** commonly appears when thermal coupling from a power-dissipating subsystem is shifting a temperature-sensitive parameter in the measurement subsystem — the thermal time constant creates a delay between the load change and the measurement drift.

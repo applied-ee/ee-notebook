@@ -54,3 +54,4 @@ A stage with wrong DC bias voltages won't process signals correctly — fix the 
 - Output railed high or low while input varies indicates stage is saturated — check bias and power supply
 - Signal fine through a stage with probe connected but wrong when probe removed suggests probe loading is masking an oscillation problem
 - DC bias voltages all correct but no signal output suggests an open coupling capacitor between stages
+- **A signal that measures clean at the driver but is distorted at the receiver** has a signal interface problem — impedance mismatch, excessive loading, or parasitic coupling along the interconnect.

@@ -213,3 +213,4 @@ GPIO pins operate in a physical world of voltage levels, capacitance, and protec
 - An I2C bus with slow, rounded edges or communication failures likely has insufficient pull-up strength — check pull resistor values against bus capacitance
 - A pin that floats during power-up and causes external circuits to misbehave needs an external pull resistor, not just firmware configuration
 - Excessive EMI or signal ringing on GPIO outputs indicates drive strength is set higher than necessary
+- **A motor or actuator that twitches during power-up** often indicates that the motor driver's output pins are in an undefined state during the bring-up window — the driver IC's outputs float or default to a state that briefly activates the motor before firmware configures the pins to their correct quiescent state.

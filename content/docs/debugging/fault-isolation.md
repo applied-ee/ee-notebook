@@ -150,3 +150,13 @@ Having a schematic doesn't mean trusting it blindly.
 
 - Signal tracing procedures: [Signal Tracing]({{< relref "/docs/measurement/signals-waveforms/signal-tracing" >}})
 - Current draw measurement: [Is Current Draw Expected?]({{< relref "/docs/measurement/power-rails-supplies/current-draw" >}})
+
+## Bench Relevance
+
+- **A circuit that works reliably in isolation but fails intermittently when integrated into a larger system** is the signature of an abstraction boundary that's leaking.
+- **A symptom that appears only when the full system is running — but disappears when any single subsystem is isolated** — is a cross-level effect that requires zooming out to the system level to observe, then zooming in along the coupling path (power, ground, thermal, EMI) to find the root cause.
+- **A device that passes all bench tests but fails in the installed system** often shows up when the bench test environment doesn't replicate the real interface conditions — the bench supply is cleaner than the field supply, the bench temperature is lower than the enclosure temperature, or the bench ground connection is shorter and lower impedance than the field installation.
+- **A subsystem that works correctly when the rest of the device is idle but produces errors when the full device is active** is frequently showing a cross-subsystem interaction — the other subsystems' activity creates supply noise, ground shift, or electromagnetic interference that only exists when the full device is operating.
+- **A failure that appears in the field but can't be reproduced on the bench** often shows up because the bench environment is too benign — the bench supply is too clean, the bench temperature is too stable, or the bench load is too constant. Reproducing the field conditions at the bench requires deliberately degrading the bench environment to match the field.
+- **A device that works perfectly on the bench but intermittently fails in the system** is frequently showing a system-level coordination failure — the bench provided controlled, ideal interface conditions that the system doesn't provide.
+- **A system where isolating a fault requires removing components or cutting traces** commonly appears when the design lacks isolation mechanisms — zero-ohm jumpers, enable pin access, or supply isolation that would allow subsystems to be disabled without physical modification.

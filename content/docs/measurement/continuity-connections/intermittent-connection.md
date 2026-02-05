@@ -69,3 +69,4 @@ This reveals dropout duration (microseconds vs milliseconds), the nature of the 
 - Fault that appears during thermal transition but not at steady-state temperature indicates the expansion/contraction movement is the trigger
 - Scope capture showing clean drop to zero indicates full open; noisy/bouncing signal indicates marginal contact or arcing
 - Connector that fails during one specific motion (pull direction, wiggle angle) narrows down whether it's pin, crimp, or strain relief
+- **A connector-related failure that's triggered by touching or moving a cable** is frequently showing a degraded connection — corrosion, cracked solder, or loose retention — that the bench environment (short, stress-free cables) didn't expose but the field environment (long cables, vibration, thermal cycling) created.
