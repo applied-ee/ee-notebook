@@ -81,7 +81,7 @@ Board-mount connectors are mechanically vulnerable. A cable attached to a connec
 
 - **Through-hole mounting legs.** Many SMD connectors include through-hole retention tabs that anchor the connector body to the board mechanically, independent of the signal solder joints. Always use these features — don't leave the mounting holes unconnected to save board space.
 - **Cable tie-down points.** Adding a hole or slot near a connector for a cable tie or cable clamp transfers cable forces from the connector to the board structure.
-- **Enclosure-mounted strain relief.** In some designs, the cable clamps to the enclosure rather than the board, so cable forces never reach the PCB at all. This is the best option for heavy cables or harsh environments.
+- **Enclosure-mounted strain relief.** In some designs, the cable clamps to the enclosure rather than the board, so cable forces never reach the PCB at all. This is often preferred for heavy cables or harsh environments.
 
 ## Test and Debug Connectors
 

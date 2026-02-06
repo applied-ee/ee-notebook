@@ -59,7 +59,7 @@ In normal mode (when the helix is much smaller than a wavelength), it behaves li
 
 For compact products, the choice between wire antennas, PCB trace antennas, and ceramic chip antennas involves significant tradeoffs:
 
-**Wire antennas** (whip, coil, helix) typically have the best efficiency because they can be designed with physical dimensions close to the optimal electrical length. A quarter-wave whip for 915 MHz is about 8 cm — acceptable for many products. For 2.4 GHz, it's about 3 cm.
+**Wire antennas** (whip, coil, helix) typically offer superior efficiency because they can be designed with physical dimensions close to the optimal electrical length. A quarter-wave whip for 915 MHz is about 8 cm — acceptable for many products. For 2.4 GHz, it's about 3 cm.
 
 **PCB trace antennas** (meandered inverted-F, meandered dipole, slot) are printed directly on the circuit board, costing nothing in assembly. They offer good efficiency when properly designed with adequate ground plane size and clearance. The main challenge is that they're sensitive to PCB layout, ground plane size, and nearby components.
 

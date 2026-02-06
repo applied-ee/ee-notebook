@@ -11,7 +11,7 @@ There is also the production case. Deployed systems do not have a debug probe at
 
 ## GPIO Toggling
 
-The simplest and most underrated debugging technique. Toggle a GPIO pin high at the start of a function or ISR and low at the end. Connect the pin to an oscilloscope or logic analyzer. This reveals:
+A powerful and often overlooked debugging technique. Toggle a GPIO pin high at the start of a function or ISR and low at the end. Connect the pin to an oscilloscope or logic analyzer. This reveals:
 
 - **Execution duration** — The pulse width is the function's execution time, measured to nanosecond accuracy by the scope.
 - **Jitter** — Variation in pulse width or period reveals scheduling inconsistency, interrupt latency variation, or contention for shared resources.

@@ -61,7 +61,7 @@ CAN includes sophisticated built-in error management that I find genuinely impre
 
 Firmware must monitor these states and implement recovery. The error counters and current state are available in the CAN peripheral's status registers. A bus-off node can re-enter the bus after detecting 128 occurrences of 11 consecutive recessive bits, but on some MCU peripherals this recovery must be explicitly initiated by firmware. A persistent bus-off condition indicates a hardware problem (bad termination, damaged transceiver, bus wiring issue) or a configuration mismatch (wrong bit rate or sample point).
 
-In practice, monitoring the error counters in firmware and logging their values is the best early warning system for bus health issues. Error counters that slowly climb during normal operation suggest marginal timing or electrical problems that will eventually cause a bus-off event.
+In practice, monitoring the error counters in firmware and logging their values is a valuable early warning system for bus health issues. Error counters that slowly climb during normal operation suggest marginal timing or electrical problems that will eventually cause a bus-off event.
 
 ### CAN in Practice
 

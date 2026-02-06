@@ -11,7 +11,7 @@ This notebook exists to bridge that gap. It is a working reference for electroni
 
 **What lives here:**
 
-- **Practical depth** — Each topic goes deep enough to apply correctly. Not just Ohm's law, but where it misleads. Not just decoupling, but why placement matters and what happens when it's wrong.
+- **Practical depth** — Topics extend beyond definition into application. Ohm's law includes where it misleads. Decoupling includes placement, behavior, and failure modes.
 
 - **Tips and Caveats** — Each entry calls out the conditions where intuition breaks down, measurements mislead, or simplified models quietly fail. These are surfaced explicitly so they are recognized before costing hours of investigation.
 
