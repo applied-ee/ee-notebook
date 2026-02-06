@@ -5,7 +5,7 @@ weight: 80
 
 # Components & Patterns
 
-A quick reference to building blocks commonly encountered in audio and signal processing circuits, emphasizing signal quality, frequency response, and dynamic range. Key parameters include THD, SNR, latency, and headroom.
+A quick reference to components and patterns commonly encountered in audio and signal processing circuits, emphasizing signal quality, frequency response, and dynamic range. Key parameters include THD, SNR, latency, and headroom.
 
 ## Passive Components
 

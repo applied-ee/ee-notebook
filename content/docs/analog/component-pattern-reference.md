@@ -5,7 +5,7 @@ weight: 70
 
 # Components & Patterns
 
-A quick reference to building blocks commonly encountered in analog circuit design, emphasizing biasing, operating regions, transfer functions, and the parameters that matter most: gain, bandwidth, impedance, and noise.
+A quick reference to components and patterns commonly encountered in analog circuit design, emphasizing biasing, operating regions, transfer functions, and the parameters that matter most: gain, bandwidth, impedance, and noise.
 
 ## Passive Components
 

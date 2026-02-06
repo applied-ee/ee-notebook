@@ -5,7 +5,7 @@ weight: 90
 
 # Components & Patterns
 
-A quick reference to building blocks commonly encountered in retro and legacy electronics, emphasizing discrete construction, era constraints, and aging effects. Key parameters include original specifications and substitution compatibility.
+A quick reference to components and patterns commonly encountered in retro and legacy electronics, emphasizing discrete construction, era constraints, and aging effects. Key parameters include original specifications and substitution compatibility.
 
 ## Passive Components
 

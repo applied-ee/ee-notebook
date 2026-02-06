@@ -5,7 +5,7 @@ weight: 80
 
 # Components & Patterns
 
-A quick reference to building blocks commonly encountered in embedded system design, emphasizing integration, power budget, and peripheral interaction. Key parameters include current consumption and interface compatibility.
+A quick reference to components and patterns commonly encountered in embedded system design, emphasizing integration, power budget, and peripheral interaction. Key parameters include current consumption and interface compatibility.
 
 ## Passive Components
 
