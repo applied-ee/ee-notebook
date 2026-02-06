@@ -37,6 +37,10 @@ The sections follow a rough layering. Nature's constraints come first. Human-eng
 
 - **[Design & Development]({{< relref "/docs/design-development" >}})** — From requirements through schematic, layout, prototyping, and validation. The workflow and discipline of turning a concept into working hardware.
 
+**The context layer** — learning from what came before:
+
+- **[Retro & Legacy Systems]({{< relref "/docs/retro-legacy" >}})** — Vintage equipment, legacy interfaces, and discrete-era design. Older circuits expose the physics directly — every gain stage and bias network visible on the schematic. Understanding how things were built before integration builds intuition that transfers forward, and bridges the gap when interfacing modern systems with hardware that's still in service.
+
 **The practice layer** — verifying and fixing the things you build:
 
 - **[Measurement & Test]({{< relref "/docs/measurement" >}})** — Organized by what you're trying to measure, not which instrument you pick up. How you find out what's actually happening.
