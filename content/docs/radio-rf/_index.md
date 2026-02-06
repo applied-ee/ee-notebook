@@ -30,6 +30,8 @@ Entries cover antennas, impedance matching, transmission lines, RF layout, propa
 
 - **[Software-Defined Radio (SDR)]({{< relref "software-defined-radio" >}})** — Where the analog front end meets the digital back end: I/Q signals, sampling, architectures, and SDR as a learning tool.
 
-- **[Measurement, Debugging & RF Tools]({{< relref "measurement-debugging-and-rf-tools" >}})** — Seeing invisible problems: spectrum analyzers, VNAs, probing techniques, and debugging oscillations.
+- **[RF Test Instruments]({{< relref "rf-test-instruments" >}})** — Spectrum analyzers, vector network analyzers, power meters, and oscilloscopes at RF frequencies.
+
+- **[RF Debugging & Optimization]({{< relref "rf-debugging" >}})** — Probing techniques, debugging oscillations and spurs, and field-expedient measurement with modest equipment.
 
 - **[Practical RF Projects & Case Studies]({{< relref "practical-rf-projects" >}})** — Learning by building and breaking: transmitters, antenna experiments, SDR explorations, and postmortems.

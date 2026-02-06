@@ -47,4 +47,4 @@ Understanding what an instrument actually measures, what its specs mean, and whi
 
 ## Related Coverage Elsewhere
 
-Spectrum analyzers and vector network analyzers are covered in **[Radio & RF — Measurement, Debugging & RF Tools]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools" >}})**, since their primary use case is RF work and the context there is more relevant than repeating it here.
+Spectrum analyzers and vector network analyzers are covered in **[Radio & RF — RF Test Instruments]({{< relref "/docs/radio-rf/rf-test-instruments" >}})**, since their primary use case is RF work and the context there is more relevant than repeating it here.

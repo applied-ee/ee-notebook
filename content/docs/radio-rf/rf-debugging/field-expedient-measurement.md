@@ -28,7 +28,7 @@ SDR limitations for measurement:
 
 ## NanoVNA for Impedance and Antenna Measurement
 
-The NanoVNA (discussed in detail in [Vector Network Analyzers]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/vector-network-analyzers" >}})) is the single most impactful low-cost instrument for RF learning. At $30-100, it provides:
+The NanoVNA (discussed in detail in [Vector Network Analyzers]({{< relref "/docs/radio-rf/rf-test-instruments/vector-network-analyzers" >}})) is the single most impactful low-cost instrument for RF learning. At $30-100, it provides:
 
 - Antenna impedance and VSWR measurement across frequency
 - Filter characterization (passband, stopband, insertion loss)
@@ -55,7 +55,7 @@ The procedure:
 
 This is tedious compared to an automated VNA sweep, but it works. The frequency response obtained is a scalar measurement (magnitude only, no phase), equivalent to |S21|. For characterizing a bandpass filter's passband shape and approximate insertion loss, this is entirely adequate.
 
-The accuracy depends on the oscilloscope's frequency response (see [Using Oscilloscopes at RF]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/using-oscilloscopes-at-rf" >}})) and the generator's amplitude flatness. A DDS generator's output amplitude varies with frequency — characterize the generator into a 50-ohm load first, then subtract its frequency response from the device measurements.
+The accuracy depends on the oscilloscope's frequency response (see [Using Oscilloscopes at RF]({{< relref "/docs/radio-rf/rf-test-instruments/using-oscilloscopes-at-rf" >}})) and the generator's amplitude flatness. A DDS generator's output amplitude varies with frequency — characterize the generator into a 50-ohm load first, then subtract its frequency response from the device measurements.
 
 ## LED Power Indicator
 

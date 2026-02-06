@@ -90,7 +90,7 @@ A return loss bridge is a simpler, less expensive alternative to a VNA for measu
 
 Connected to a signal generator and spectrum analyzer (or even an oscilloscope), a return loss bridge measures scalar return loss — magnitude only, no phase. This indicates how well matched a device is at each frequency, but does not reveal whether the mismatch is capacitive, inductive, or resistive. For antenna tuning and cable testing, scalar return loss is often sufficient.
 
-Return loss bridges cost $20-50 and cover broad frequency ranges (1 MHz to 1+ GHz). They are a useful tool when a VNA is not available. See [Field-Expedient RF Measurement]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/field-expedient-measurement" >}}) for more on making do with affordable instruments.
+Return loss bridges cost $20-50 and cover broad frequency ranges (1 MHz to 1+ GHz). They are a useful tool when a VNA is not available. See [Field-Expedient RF Measurement]({{< relref "/docs/radio-rf/rf-debugging/field-expedient-measurement" >}}) for more on making do with affordable instruments.
 
 ## Connecting It All Together
 

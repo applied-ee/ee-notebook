@@ -59,8 +59,8 @@ Despite the limitations, oscilloscopes serve several important roles in RF work:
 
 ## What Oscilloscopes Are Not Useful For at RF
 
-- **Spectral analysis**: The FFT function on most oscilloscopes provides a quick-look spectrum, but the dynamic range is limited to roughly 40-50 dB (compared to 100+ dB on a spectrum analyzer), and frequency resolution depends on the time capture length. Use a [spectrum analyzer]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/spectrum-analyzers" >}}) for frequency-domain work.
-- **Impedance measurement**: An oscilloscope shows voltage, not impedance. Impedance can be estimated by measuring voltage across a known load, but a [VNA]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/vector-network-analyzers" >}}) provides direct, calibrated impedance data.
+- **Spectral analysis**: The FFT function on most oscilloscopes provides a quick-look spectrum, but the dynamic range is limited to roughly 40-50 dB (compared to 100+ dB on a spectrum analyzer), and frequency resolution depends on the time capture length. Use a [spectrum analyzer]({{< relref "/docs/radio-rf/rf-test-instruments/spectrum-analyzers" >}}) for frequency-domain work.
+- **Impedance measurement**: An oscilloscope shows voltage, not impedance. Impedance can be estimated by measuring voltage across a known load, but a [VNA]({{< relref "/docs/radio-rf/rf-test-instruments/vector-network-analyzers" >}}) provides direct, calibrated impedance data.
 - **Precise power measurement**: Oscilloscopes measure voltage, and converting to power requires knowing the exact impedance — which changes with frequency at RF. Use a power meter or spectrum analyzer for power measurements.
 - **Frequency accuracy**: Oscilloscope timebase accuracy is typically 10-50 ppm. For a 100 MHz signal, that is 1-5 kHz uncertainty. A frequency counter or spectrum analyzer gives far better frequency accuracy.
 

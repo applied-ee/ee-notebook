@@ -53,7 +53,7 @@ The best approach to RF measurement is to design test access into the circuit fr
 
 - **Sense resistors**: A small resistor (1-10 ohms) in series with a power supply or signal path creates a voltage drop proportional to current. Measuring across the resistor with a high-impedance probe reveals current flow without significantly disturbing the circuit. At RF, the sense resistor value should be kept low enough that its impedance is small compared to the circuit impedance.
 
-- **Directional couplers**: A coupler built into the signal path samples forward or reverse power continuously. See [Directional Couplers & Power Meters]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/directional-couplers-and-power-meters" >}}) for details.
+- **Directional couplers**: A coupler built into the signal path samples forward or reverse power continuously. See [Directional Couplers & Power Meters]({{< relref "/docs/radio-rf/rf-test-instruments/directional-couplers-and-power-meters" >}}) for details.
 
 - **Pad-out components**: Leave unpopulated footprints on the PCB for optional series or shunt components. A pad-out series resistor location allows breaking the signal path and inserting test equipment. A pad-out shunt capacitor location allows adding filtering or loading during debugging.
 

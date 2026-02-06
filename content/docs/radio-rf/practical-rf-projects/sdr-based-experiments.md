@@ -91,7 +91,7 @@ One of the most practical SDR applications is comparing antennas. The procedure:
 
 For more rigorous comparison, use a satellite pass: both antennas experience the same signal over the same time period, and comparing the received signal strength curves provides a reliable relative measurement.
 
-This is a relative measurement — the SDR's absolute calibration does not matter because the comparison involves two readings on the same instrument. See [Field-Expedient RF Measurement]({{< relref "/docs/radio-rf/measurement-debugging-and-rf-tools/field-expedient-measurement" >}}) for more on relative measurement techniques.
+This is a relative measurement — the SDR's absolute calibration does not matter because the comparison involves two readings on the same instrument. See [Field-Expedient RF Measurement]({{< relref "/docs/radio-rf/rf-debugging/field-expedient-measurement" >}}) for more on relative measurement techniques.
 
 ## Bandpass Filter Effects
 
