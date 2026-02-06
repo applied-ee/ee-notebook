@@ -1,9 +1,9 @@
 ---
-title: "Component & Pattern Quick Reference"
+title: "Components & Patterns"
 weight: 70
 ---
 
-# Component & Pattern Quick Reference
+# Components & Patterns
 
 A quick reference to building blocks commonly encountered in analog circuit design, emphasizing biasing, operating regions, transfer functions, and the parameters that matter most: gain, bandwidth, impedance, and noise.
 

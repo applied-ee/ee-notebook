@@ -1,9 +1,9 @@
 ---
-title: "Component & Pattern Quick Reference"
+title: "Components & Patterns"
 weight: 110
 ---
 
-# Component & Pattern Quick Reference
+# Components & Patterns
 
 A quick reference to building blocks commonly encountered in RF circuit design, emphasizing frequency-dependent behavior, matching, and parasitics. Key parameters include S-parameters, noise figure, IP3, and VSWR.
 

@@ -1,9 +1,9 @@
 ---
-title: "Component & Pattern Quick Reference"
+title: "Components & Patterns"
 weight: 70
 ---
 
-# Component & Pattern Quick Reference
+# Components & Patterns
 
 A quick reference to building blocks commonly encountered in digital circuit design, emphasizing timing, edges, logic levels, and power integrity. Key parameters include propagation delay, setup/hold times, and voltage thresholds.
 

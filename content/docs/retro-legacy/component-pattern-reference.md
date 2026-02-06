@@ -1,9 +1,9 @@
 ---
-title: "Component & Pattern Quick Reference"
+title: "Components & Patterns"
 weight: 90
 ---
 
-# Component & Pattern Quick Reference
+# Components & Patterns
 
 A quick reference to building blocks commonly encountered in retro and legacy electronics, emphasizing discrete construction, era constraints, and aging effects. Key parameters include original specifications and substitution compatibility.
 
