@@ -107,4 +107,4 @@ The goal is to eliminate the test setup itself as a variable. When the cables, a
 
 The general fixtures above apply to everything. The pages below cover purpose-built test setups for specific device types.
 
-- **[Dummy Load for Car Audio Amps]({{< relref "dummy-load-car-audio" >}})** — Building and using a resistive dummy load for high-power 12 V amplifier testing
+- **[Amplifier Dummy Load]({{< relref "amplifier-dummy-load" >}})** — Building and using a resistive dummy load for amplifier testing
