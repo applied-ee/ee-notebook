@@ -122,7 +122,7 @@ The cable connecting two connectors is as important as the connectors themselves
 - **Cable loss adds up quickly at GHz frequencies** — A 1-meter cable with 1 dB/m loss at 5.8 GHz eats 1 dB of the link budget; in a receiver, that 1 dB directly degrades noise figure; keep cables short or use lower-loss types
 - **Connector return loss degrades with wear** — A new SMA connector might have 26 dB return loss; after hundreds of mating cycles, this can degrade to 15-18 dB; replace connectors in precision setups periodically
 
-## Bench Relevance
+## In Practice
 
 - Return loss measured at a connector that worsens compared to previous measurements (e.g., 26 dB dropping to 15 dB) indicates connector wear and the need for replacement
 - A VNA sweep showing a reflection spike right at the board edge where the SMA connector mounts points to a launch impedance discontinuity from a non-optimized pad-to-trace transition

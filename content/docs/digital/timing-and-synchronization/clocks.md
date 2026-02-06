@@ -125,7 +125,7 @@ A clock signal has a frequency, duty cycle, rise time, overshoot, ringing, and a
 - **PLL lock time is non-negligible** — if logic starts running before the PLL locks, the clock frequency and phase are undefined and system behavior is unpredictable. Lock time ranges from microseconds to milliseconds depending on the PLL configuration and loop bandwidth
 - **Multiple clock domains create synchronization challenges** — using more than one clock requires explicit synchronization at every boundary. See [Clock Domain Crossing]({{< relref "/docs/digital/timing-and-synchronization/clock-domain-crossing" >}})
 
-## Bench Relevance
+## In Practice
 
 **Jitter visible on an oscilloscope as a thickened or blurred edge in persistence mode** — the clock edge position wanders from cycle to cycle. The width of the blur at the threshold-crossing point directly measures peak-to-peak jitter, and the distribution shape indicates whether the source is random (Gaussian spread) or deterministic (discrete clusters).
 

@@ -60,7 +60,7 @@ An LCR meter measures ESR too, but it is typically more expensive, more complex 
 - **Semiconductor junctions can confuse in-circuit readings** — If the test voltage exceeds ~0.3V (germanium) or ~0.6V (silicon), in-circuit measurements may forward-bias diodes or transistor junctions, creating a low-impedance parallel path that masks the real ESR
 - **"Good ESR" depends on the application** — A 0.5Ω ESR cap is fine in an audio coupling application but may be failing in a 500 kHz switching supply where the datasheet specifies 0.05Ω. Always compare to the spec for the specific part and application
 
-## Bench Relevance
+## In Practice
 
 - A power supply that develops increased output ripple while the regulation voltage stays correct almost always has a cap with rising ESR — the ESR meter finds it in minutes
 - LCD monitor or TV power boards that develop symptoms over time (flickering, failure to start, intermittent shutoff) are classic electrolytic ESR failure. Test every electrolytic on the board; replace the high-ESR ones as a set, not individually

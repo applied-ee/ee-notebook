@@ -123,7 +123,7 @@ I have seen teams attempt this transition mid-project under schedule pressure. I
 - **Context switch time includes FPU context** — on Cortex-M4F and M7, saving and restoring the 32 floating-point registers roughly doubles the context switch time
 - **An RTOS does not make timing deterministic by itself** — it provides the mechanism (preemptive scheduling), but the timing guarantees depend on correct priority assignment, bounded ISR execution times, and proper use of synchronization primitives
 
-## Bench Relevance
+## In Practice
 
 - Bizarre, intermittent crashes that change when code is modified suggest stack overflow — enable overflow checking and increase stack sizes
 - A task that never runs despite being ready may have the wrong priority or be blocked on a resource held by a lower-priority task

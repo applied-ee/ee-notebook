@@ -52,7 +52,7 @@ Combine magnification with electrical testing for suspect joints:
 - A joint can look ugly (rough, dull) and be electrically perfect — common with lead-free solder
 - BGA and QFN joints are invisible — assess only electrically or with X-ray
 
-## Bench Relevance
+## In Practice
 
 - Beep that cuts out momentarily when pressing on a joint indicates a cracked or cold solder connection
 - Resistance that varies when wiggling a component indicates the joint is not mechanically sound

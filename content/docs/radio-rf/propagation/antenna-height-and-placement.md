@@ -107,7 +107,7 @@ Based on patterns seen over many installations:
 - **Nearby antennas can detune each other** — Two antennas mounted close together on the same frequency band will couple and shift each other's resonant frequency and impedance; if adding a second antenna degrades the first, separation is insufficient
 - **Do not forget about snow and ice** — An antenna designed for summer conditions may detune or degrade significantly when covered in ice; radomes help, but ice on a radome still adds loss and changes the electrical environment
 
-## Bench Relevance
+## In Practice
 
 - Measuring RSSI while slowly raising an antenna on a telescoping mast reveals the height-dependent null pattern — signal strength oscillates as the antenna moves through ground-reflection nulls and peaks
 - A VNA sweep of an antenna's return loss that shifts noticeably when the antenna is moved from a test jig to its final mounting location shows the effect of nearby metal and building structures on tuning

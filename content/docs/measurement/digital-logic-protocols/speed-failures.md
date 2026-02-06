@@ -82,7 +82,7 @@ Capacitive and inductive coupling between adjacent traces. When one trace switch
 - Series termination only works for point-to-point — intermediate receivers see initial half-swing
 - Return current path matters — broken ground plane forces current detour, enlarging current loop
 
-## Bench Relevance
+## In Practice
 
 - Signal clean at low speed, ringing at high speed indicates transmission line effects — add termination
 - Ringing that goes away with series resistor at driver confirms reflections — size resistor to match trace impedance

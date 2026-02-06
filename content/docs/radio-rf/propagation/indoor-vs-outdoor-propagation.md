@@ -125,7 +125,7 @@ Walk testing reveals surprises that no model predicts: the metal filing cabinet 
 - **People absorb 2.4 and 5 GHz significantly** — A crowded conference room has 10-15 dB more loss than an empty one at 2.4 GHz; this is one reason links that work during testing (empty building) fail during actual use
 - **Do not trust floor plan models alone** — The only way to know indoor coverage is to measure it; plans do not show rebar density, metal ductwork, lead-lined walls (found in hospitals and labs), or the giant metal bookshelf someone placed between the device and the access point
 
-## Bench Relevance
+## In Practice
 
 - A WiFi signal strength reading that drops 12-18 dB when moving from one room to the next through a concrete wall confirms the wall penetration loss values in the table above
 - A link that works reliably during after-hours testing but drops packets during business hours points to human body absorption — each person in the path adds 3-10 dB of loss at 2.4 GHz

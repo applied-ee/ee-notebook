@@ -105,7 +105,7 @@ Solutions:
 - **Phase shift** — A first-order filter introduces up to 90° of phase shift. At the cutoff frequency, the phase shift is 45°. In feedback loops, this phase shift can affect stability
 - **The same topology can serve different functions** — an RC network is a filter, a delay element, or a snubber depending on where it sits and what problem it solves
 
-## Bench Relevance
+## In Practice
 
 - Cutoff frequency lower than calculated suggests source impedance is adding to the filter resistance
 - A low-pass filter that stops attenuating at very high frequencies has hit the capacitor's self-resonant frequency — use a smaller capacitor in parallel for high-frequency bypass

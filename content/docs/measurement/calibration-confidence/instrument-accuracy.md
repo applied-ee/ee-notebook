@@ -75,7 +75,7 @@ Most bench oscilloscopes have 3–5% vertical accuracy — vastly worse than a D
 - Memory depth limits effective sample rate at long timebases
 - Averaging reduces random noise but hides intermittent events
 
-## Bench Relevance
+## In Practice
 
 - Measurement that fluctuates in last two digits when signal should be stable indicates instrument resolution/accuracy limit
 - Two instruments disagreeing on same measurement indicates at least one is at its accuracy limit — trust the one with better specs

@@ -101,7 +101,7 @@ In the linear region, a MOSFET acts as a voltage-controlled resistor (R_DS varie
 - **Sub-threshold conduction** — Below V_th, drain current doesn't drop to exactly zero — it decreases exponentially. In ultra-low-power design, this region is deliberately used. In switching applications, it means nonzero off-state leakage that increases with temperature
 - **Miller effect** — The gate-drain capacitance (C_GD) appears multiplied by the voltage gain at the drain. This slows switching and can cause unexpected oscillation if gate drive impedance is high
 
-## Bench Relevance
+## In Practice
 
 - A MOSFET that doesn't turn on despite adequate V_GS may have a damaged gate oxide — check for gate-source short or open
 - Switching waveforms that show slow transitions or ringing indicate inadequate gate drive or excessive gate impedance

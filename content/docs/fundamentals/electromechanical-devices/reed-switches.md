@@ -75,7 +75,7 @@ Reed switches are not power-handling devices. Their limitations are important to
 - No flyback diode needed for the switch itself — Reed switches are just contacts. But if the reed switch is switching an inductive load, the inductive kickback still needs suppression — just as with any switch
 - Mounting stress — Soldering too close to the glass envelope or applying mechanical stress to the leads can crack the seal. Follow the datasheet's recommended lead bending and soldering distances
 
-## Bench Relevance
+## In Practice
 
 - A reed switch that doesn't actuate when a magnet approaches may have the wrong field orientation — try rotating the magnet
 - A reed switch that stays closed with no magnet nearby may have become permanently magnetized — try degaussing

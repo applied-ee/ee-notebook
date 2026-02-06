@@ -66,7 +66,7 @@ The laws aren't wrong. The model or the measurement is.
 - **Any loop works** — In a complex circuit there are many possible loops. Independent loops give independent equations; redundant loops give equations that are algebraically dependent (still true, but not new information)
 - **Inductive loops and changing magnetic flux** — In circuits with mutual inductance or time-varying magnetic fields, the simple "sum of voltages = 0" needs to account for induced EMF. For lumped-element circuits at reasonable frequencies, this doesn't come up often, but it's worth knowing the limitation
 
-## Bench Relevance
+## In Practice
 
 **A voltage drop in a series path that doesn't add up to the source voltage** means KVL is pointing to a drop missing from the model — trace resistance, a connector, or wire not on the schematic. The gap between the expected sum and the measured sum equals the unaccounted drop.
 

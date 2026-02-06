@@ -138,7 +138,7 @@ The safest approach is to first optimize the antenna itself (maximize radiation 
 - **Environmental coupling changes during tuning** -- the body, the metal workbench, and nearby equipment all affect the antenna during measurement; step back from the antenna, use a remote readout if possible, and do not touch the antenna while measuring
 - **Trimming is one-directional** -- if the cut overshoots (too short), extension pieces, loading, or a new element are needed; be conservative with each trim increment
 
-## Bench Relevance
+## In Practice
 
 - Trimming 1 cm from each arm of a VHF dipole and re-measuring on a NanoVNA shows the resonant frequency shift upward by a predictable amount, building intuition for the length-to-frequency relationship
 - Measuring a resonant antenna before and after adding an L/C matching network reveals how the Smith chart trajectory moves toward 50 ohms -- and whether any loss is introduced

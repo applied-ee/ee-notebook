@@ -110,7 +110,7 @@ Watchdog configuration and recovery strategies are covered in detail in the Embe
 - **Dead-time values need bench verification** — Calculated dead time based on datasheet switching times is a starting point, not a finished value. Board parasitics, gate drive strength, and temperature all affect actual switching speed
 - **Changing timer registers mid-count can glitch** — Writing to the auto-reload or compare registers while the timer is running can produce unexpected output pulses if the new value is below the current counter value
 
-## Bench Relevance
+## In Practice
 
 - PWM output at the wrong frequency often traces to prescaler off-by-one errors or incorrect timer clock assumptions — verify with a scope
 - Input capture measurements that are occasionally wildly wrong (by exactly one timer period) indicate missed overflow tracking

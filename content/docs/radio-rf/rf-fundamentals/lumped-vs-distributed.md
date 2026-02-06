@@ -96,7 +96,7 @@ Beyond about lambda/5, however, a single lumped parasitic is no longer enough. T
 - **The transition frequency is lower on PCBs than in free space** — Because the dielectric shortens wavelengths, effects appear at lower frequencies than free-space calculations suggest. A 5 cm trace on FR4 reaches lambda/10 around 350 MHz, not 600 MHz
 - **Every discontinuity is a distributed problem** — Solder joints, pad transitions, bends, vias, and connector interfaces all create local impedance changes. At microwave frequencies, each one must be modeled individually
 
-## Bench Relevance
+## In Practice
 
 - A filter whose measured passband is shifted from simulation suggests parasitic inductance and capacitance from the physical layout — check component SRF and trace electrical length
 - A circuit that works in SPICE but oscillates on the bench has unmodeled feedback through layout parasitics — look for unintended coupling paths

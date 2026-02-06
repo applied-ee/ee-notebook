@@ -113,7 +113,7 @@ Modern PLL synthesizer ICs (such as the TI LMX2594, Analog Devices ADF4351, or M
 - **OCXO warmup takes minutes** — An oven-controlled oscillator reaches stable frequency only after the oven stabilizes, typically 3-10 minutes. Plan for this in system startup
 - **Free-running VCOs are not frequency-stable** — Without a PLL locking it to a reference, a VCO drifts with temperature, supply voltage, and mechanical vibration. Never use a free-running VCO where frequency accuracy matters
 
-## Bench Relevance
+## In Practice
 
 - A PLL that shows elevated phase noise shoulders symmetric about the carrier at the loop bandwidth frequency indicates that the loop filter bandwidth is too wide, allowing VCO noise to dominate close-in
 - An oscillator whose frequency drifts slowly over minutes after power-on is exhibiting thermal settling — crystal oscillators and OCXOs require warmup time before reaching specified stability

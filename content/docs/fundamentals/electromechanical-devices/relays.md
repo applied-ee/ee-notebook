@@ -109,7 +109,7 @@ Not actually relays — no mechanical contacts. An optocoupler drives a MOSFET (
 - Contact material matters — Silver contacts have low resistance but are susceptible to sulfide tarnishing in contaminated environments. Gold-plated contacts resist tarnishing and work better for low-level signals (microvolts, microamps) where oxide films would cause intermittent connections
 - Coil suppression slows release — The flyback diode that protects the transistor also extends the relay's release time from ~1 ms to ~5-20 ms. If switching speed matters, use a Zener-clamped suppression circuit
 
-## Bench Relevance
+## In Practice
 
 - A relay that won't release when the coil is de-energized likely has welded contacts
 - A transistor that fails when switching a relay likely lacks a flyback diode

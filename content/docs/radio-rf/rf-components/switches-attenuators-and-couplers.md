@@ -118,7 +118,7 @@ A directional coupler has four ports: input, output (through), coupled, and isol
 - **Wilkinson dividers only work well at the design frequency** — The quarter-wave sections are frequency-specific. Off-frequency, the isolation between output ports degrades. For broadband splitting, use resistive dividers or multi-section Wilkinson designs
 - **Attenuator resistors at RF are not ideal** — At GHz frequencies, even thin-film resistors in an attenuator have parasitic inductance and capacitance. Purpose-built RF attenuator components outperform ad-hoc resistor networks above about 1 GHz
 
-## Bench Relevance
+## In Practice
 
 - An SMD attenuator that runs hot to the touch is being operated near or above its power rating — measure the actual input power and compare to the component's maximum dissipation
 - A T/R switch whose receive-path noise figure measures worse than the LNA alone is contributing its insertion loss directly to the system noise figure; the difference between the two measurements equals the switch loss

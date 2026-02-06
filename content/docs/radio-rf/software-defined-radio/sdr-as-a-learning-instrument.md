@@ -126,7 +126,7 @@ For someone starting with an RTL-SDR:
 - **Unrecognized signals are common** — The spectrum is full of signals that do not correspond to any obvious source; many are digital protocols, utility systems, or harmonics; identifying unknown signals is a skill that takes time to develop, and resources like sigidwiki.com catalog the visual signatures of hundreds of signal types
 - **Phase noise and spurious responses look like signals** — Inexpensive SDR hardware produces artifacts that can be mistaken for real signals; learning to recognize the center DC spike, I/Q mirror images, and LO harmonics avoids wasted time chasing phantom signals
 
-## Bench Relevance
+## In Practice
 
 - Switching from the supplied rubber duck antenna to a tuned dipole for a specific frequency produces a dramatic and immediate change on the waterfall — this is the most visceral demonstration of antenna importance
 - A signal that appears at a fixed offset from the center frequency regardless of where the SDR is tuned is almost certainly an internal spurious product or LO harmonic, not a real transmission

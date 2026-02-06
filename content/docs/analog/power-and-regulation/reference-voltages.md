@@ -105,7 +105,7 @@ For high-resolution ADCs (16+ bits), reference noise and drift become the domina
 - **Mechanical stress** — Some references are sensitive to PCB stress (bending, thermal gradients). Conformal coating and PCB stress relief help in precision applications
 - **Don't use a regulator as a reference** — Regulators and references look similar (both produce fixed voltages), but regulators are optimized for load current capability and transient response, not for absolute voltage accuracy or tempco. A 3.3 V LDO might have 1% initial accuracy and 100 ppm/°C tempco — usable for power but poor as a measurement reference
 
-## Bench Relevance
+## In Practice
 
 - ADC readings that drift over time may trace to reference warm-up — measure the reference voltage directly over time after power-on
 - Reference voltage that varies with load indicates insufficient buffering or load regulation issues

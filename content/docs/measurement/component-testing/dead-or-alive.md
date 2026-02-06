@@ -82,7 +82,7 @@ Set DMM to continuity or low-ohm mode. A good inductor reads very low resistance
 - Electrolytic capacitors normally have some leakage — resistance may settle at a few MΩ rather than true OL
 - Resistance alone doesn't reveal if an inductor's core is cracked or saturated
 
-## Bench Relevance
+## In Practice
 
 - Diode reading 0.000V in both directions indicates shorted junction — part is dead
 - Diode reading OL in both directions could be open (dead) or reversed leads on an LED — check twice

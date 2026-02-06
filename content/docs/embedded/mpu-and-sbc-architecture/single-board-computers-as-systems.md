@@ -70,7 +70,7 @@ For production, **compute modules** (Raspberry Pi CM4/CM5) separate the hard par
 - **The 40-pin header is a Pi convention, not a standard** — Other boards may use the same connector with completely different pinouts
 - **Thermal throttling is silent** — The SoC reduces clock speed with no log message unless actively monitored
 
-## Bench Relevance
+## In Practice
 
 - An SBC that reboots randomly likely has power supply issues — measure voltage at the board under load
 - File system corruption that develops over weeks of operation points to SD card wear — switch to eMMC or read-only root

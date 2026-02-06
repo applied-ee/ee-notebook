@@ -97,7 +97,7 @@ The most reliable debugging approach is to start with the simplest possible conf
 - **Channel mapping conflicts are a system design problem** — Two peripherals mapped to the same DMA channel cannot both use DMA simultaneously. This constraint is fixed in hardware on many MCUs
 - **DMA errors are easy to ignore** — Most DMA controllers have error flags that go unchecked. DMA failures produce symptoms that seem unrelated to data transfer
 
-## Bench Relevance
+## In Practice
 
 - DMA that appears to complete but produces stale or corrupted data on Cortex-M7 likely has cache coherency issues — check buffer placement and cache invalidation
 - Buffer overruns or short transfers often trace to confusion between byte count and transfer count — verify the width setting matches the count

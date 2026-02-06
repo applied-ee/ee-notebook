@@ -103,7 +103,7 @@ These circuits manage the energy in leakage inductance and damp ringing:
 - Interleaving reduces leakage but increases inter-winding capacitance — There's a direct tradeoff: bringing windings closer together improves magnetic coupling (less leakage) but increases electric field coupling (more capacitance). The design choice depends on whether leakage spikes or common-mode noise is the bigger problem
 - Self-resonant frequency applies to inductors too — A filter inductor that's a perfect inductor at 100 kHz may be capacitive at 10 MHz. If it's intended for EMI filtering at high frequencies, check the SRF. Above it, the inductor is actually making things worse
 
-## Bench Relevance
+## In Practice
 
 - Ringing on switch node waveforms indicates leakage inductance resonating with stray capacitance — measure the frequency to identify the parasitic values
 - Voltage spikes that exceed the switch rating indicate inadequate clamping — add or resize the snubber/clamp

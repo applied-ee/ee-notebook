@@ -133,7 +133,7 @@ This is intentional — it prevents competitors from reading the firmware. But i
 - **Locking debug access is permanent on some MCUs** — Write-protecting the debug interface (read-out protection level 2 on STM32, for example) is irreversible. The chip cannot be debugged, reprogrammed, or unlocked
 - **Watchpoints on peripheral registers may not work as expected** — The DWT watchpoint comparators monitor the CPU's data bus. DMA transfers that bypass the CPU will not trigger a watchpoint, even if they write to the watched address
 
-## Bench Relevance
+## In Practice
 
 - A debugger that cannot connect to a previously working board may indicate debug lock was accidentally enabled — check option bytes
 - Variables showing as "optimized out" in the debugger indicate the code was built with optimization — use the `-O0` debug build

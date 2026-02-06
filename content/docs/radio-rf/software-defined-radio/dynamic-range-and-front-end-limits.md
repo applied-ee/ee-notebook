@@ -117,7 +117,7 @@ The RTL-SDR cannot do this. Its 8-bit ADC, basic filtering, and moderate clock l
 - **Linearity matters as much as dynamic range** — The IP3 (third-order intercept point) of the front end determines at what signal levels intermodulation products become significant; a front end with high IP3 tolerates strong signals better even if the ADC dynamic range is the same
 - **Do not judge SDR performance in a noisy environment** — If the RTL-SDR seems to work poorly, testing it in a quieter location (rural area) or with a band-pass filter can clarify whether the hardware is fine and the environment is simply too demanding for its dynamic range
 
-## Bench Relevance
+## In Practice
 
 - Spurious signals that appear at predictable frequency relationships (2*f1-f2, 2*f2-f1) and change intensity with tuner gain are intermodulation products — reducing gain or adding filtering should suppress them
 - A noise floor that rises uniformly across the entire displayed bandwidth when a strong signal is present indicates ADC compression or clipping, not just local interference at that frequency

@@ -86,7 +86,7 @@ CMOS ICs contain parasitic thyristor structures (PNPN paths between VDD and VSS)
 - Humidity below 30% RH allows static charge to accumulate readily — winter in heated buildings is peak ESD season
 - Synthetic clothing (polyester, nylon, fleece) and carpet are triboelectric charge generators
 
-## Bench Relevance
+## In Practice
 
 - One or two GPIO pins stop responding while the rest of the chip functions normally — ESD or overvoltage damaged the I/O cell for those specific pins; check for microamps of leakage current or shorts to VDD/VSS
 - ADC readings become noisier or show offset that wasn't there before — damaged analog input structure or ESD clamp diode has increased leakage; compare against a known-good channel

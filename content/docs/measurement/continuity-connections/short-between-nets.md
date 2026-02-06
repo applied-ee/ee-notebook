@@ -55,7 +55,7 @@ Measure both polarities by swapping leads.
 - Voltage injection can damage sensitive components — keep voltage < 1V and current limited
 - On multi-layer boards, the short may be on an internal layer — invisible and unreachable without removing components
 
-## Bench Relevance
+## In Practice
 
 - Brief low resistance reading that rises to OL indicates capacitor charging, not a short
 - 0.000V in diode mode both directions confirms a true metal-to-metal short, not a semiconductor path

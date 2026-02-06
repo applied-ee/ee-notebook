@@ -111,7 +111,7 @@ Active filters use positive feedback (indirectly, through the filter's frequency
 - **DC offset** — Op-amp offset voltage appears at the output, potentially amplified by the filter's DC gain. For band-pass and high-pass filters, this is naturally blocked. For low-pass filters, it passes through
 - **Capacitor selection matters** — C0G/NP0 capacitors are preferred for active filters because their capacitance doesn't change with voltage, temperature, or time. X7R introduces nonlinearity (voltage-dependent capacitance means signal-dependent filter characteristics — a subtle form of distortion)
 
-## Bench Relevance
+## In Practice
 
 - A filter that oscillates has Q that's too high for the component tolerances — reduce Q or use tighter-tolerance parts
 - Gain peaking near the cutoff frequency suggests underdamped poles (Q > 0.707) — check component values against design

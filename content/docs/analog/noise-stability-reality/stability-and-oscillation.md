@@ -112,7 +112,7 @@ A resistor in series with the output, outside the feedback loop, isolates capaci
 - **Unity-gain is the worst case** — For a feedback amplifier, unity gain (voltage follower) has the highest noise gain and the widest bandwidth. If the amplifier is stable at unity gain, it's stable at any higher gain. This is why op-amps are typically characterized for stability at unity gain
 - **Intermittent oscillation** — A circuit that oscillates only sometimes (on power-up, at certain temperatures, with certain loads) has marginal stability. This is worse than continuous oscillation because it's harder to detect and debug
 
-## Bench Relevance
+## In Practice
 
 - Continuous sine-wave oscillation at a specific frequency indicates the circuit is meeting the Barkhausen criteria at that frequency
 - Damped ringing on step responses indicates insufficient phase margin but not full oscillation — the ringing frequency shows where phase margin is worst

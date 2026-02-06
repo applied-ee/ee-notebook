@@ -112,7 +112,7 @@ With this topology, the regulator sees 12.5–14.8V in normal operation, 5–10V
 - Capacitive loads cause inrush current that can blow fuses on power-up — NTC thermistors or active soft-start circuits prevent nuisance blowing
 - A "dead" battery below ~6V can still deliver amps briefly — don't assume low voltage means safe to work around without disconnecting
 
-## Bench Relevance
+## In Practice
 
 - Circuit powers through a simulated cranking dip without reset — regulator has sufficient input range and capacitance margin
 - Microcontroller resets cleanly during voltage dip and restarts normally — acceptable behavior if firmware handles restart gracefully

@@ -74,7 +74,7 @@ Pulse-based encoding also applies to transmitting signals over digital links:
 - **Class-D dead time adds distortion** — To prevent shoot-through (both output transistors on simultaneously), a dead time is inserted during switching transitions. This creates crossover distortion similar to Class-B amplifiers. Compensation techniques exist but add complexity
 - **PWM duty cycle extremes are problematic** — Very narrow or very wide pulses (near 0% or 100% duty cycle) may be shorter than the minimum switching time of the output stage, causing nonlinearity or missing pulses at signal extremes
 
-## Bench Relevance
+## In Practice
 
 - A PWM output that shows jitter on the edges (visible on oscilloscope) indicates clock noise limiting resolution
 - Audio from a Class-D amplifier that sounds harsh at low levels may have dead-time distortion — check for crossover artifacts

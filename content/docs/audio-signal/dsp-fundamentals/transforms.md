@@ -99,7 +99,7 @@ The FFT dominates, but other transforms serve specific purposes:
 - **The DC and Nyquist bins are special** — Bin 0 (DC) and bin N/2 (Nyquist) are purely real in a DFT of a real signal. They represent zero frequency and the Nyquist frequency respectively. Their amplitude scaling differs from other bins by a factor of 2 in some normalization conventions
 - **FFT of clipped signals shows spurious harmonics** — A clipped sine wave generates odd harmonics that are real distortion, not FFT artifacts. But a sine wave that clips due to quantization (exceeding dBFS) also wraps around, creating even-harmonic artifacts that depend on the clipping mechanism. Know whether the harmonics are from the signal or the measurement
 
-## Bench Relevance
+## In Practice
 
 - Spectral peaks that spread across many bins indicate leakage — use a window function or verify that the signal frequency falls on a bin center
 - A noise floor that varies wildly between measurements needs more averaging

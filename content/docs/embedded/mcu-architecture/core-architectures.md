@@ -96,6 +96,6 @@ The pattern across these families: the choice is about the combination of core a
 - **AVR flash reads require special handling** — String constants and lookup tables stored in flash on AVR cannot be read with normal pointer dereferences. Forgetting `PROGMEM` and `pgm_read_*` produces garbage data at runtime
 - **Soft-float on an FPU-equipped core wastes the hardware** — If the compiler flags do not enable hard float, the FPU sits idle while software emulation burns cycles. Check the build flags whenever floating-point performance seems wrong
 
-## Bench Relevance
+## In Practice
 
 Knowing the core architecture turns confusing failures into directed diagnoses. Firmware that runs on Cortex-M4 but hard-faults on M0 almost certainly involves an unaligned access — M4 handles it silently, M0 does not. Floating-point code that is unexpectedly slow on an FPU-equipped core often means the build system is using software emulation despite the hardware being present — a compiler flag issue, not a silicon issue. On AVR, string data displaying as garbage typically means flash data was read with a normal SRAM pointer, missing the `PROGMEM` handling. In each case the symptom is opaque until the architectural constraint behind it is understood; once it is, the fix is usually a single line or a build flag change.

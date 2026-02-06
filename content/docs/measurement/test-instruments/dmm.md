@@ -66,7 +66,7 @@ For most electronics bench work, a mid-range handheld DMM covers daily needs. A 
 - **AC bandwidth is not a cliff** — Accuracy degrades gradually above the rated bandwidth. A meter rated to 1 kHz does not read zero at 2 kHz — it reads something, just not accurately. This is worse than no reading because it looks plausible
 - **CAT rating is not just voltage** — CAT III-600V and CAT II-1000V handle different fault energies despite the lower voltage on CAT III. The CAT category matters more than the voltage number for safety
 
-## Bench Relevance
+## In Practice
 
 - A 3.3V rail that reads 3.28V on a mid-range DMM (±0.7% + 5 counts) could actually be anywhere from 3.23V to 3.33V — the reading is consistent with both in-spec and out-of-spec regulation. Use a bench-grade meter or scope for tighter verification
 - Resistance readings that jump around suggest dirty contacts, intermittent connections, or the meter auto-ranging between scales — clean and retry before concluding the component is bad

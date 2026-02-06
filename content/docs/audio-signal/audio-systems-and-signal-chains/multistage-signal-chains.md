@@ -97,7 +97,7 @@ Every chain has a limiting stage. Designing a signal chain means identifying whi
 - **Thermal gradients cause drift** — In precision signal chains, temperature differences between stages cause offset drift. Matched component temperatures and thermal isolation from heat sources (regulators, power stages) matter for DC and low-frequency accuracy
 - **Test equipment can be the weakest link** — If the oscilloscope or analyzer has worse noise, bandwidth, or distortion than the circuit under test, the measurement reflects the instrument, not the circuit. Always verify that the test equipment exceeds the DUT's specifications
 
-## Bench Relevance
+## In Practice
 
 - Hum at 50/60 Hz (and harmonics) indicates a ground loop — find where the loop closes
 - Distortion that varies with signal level suggests a stage running out of headroom

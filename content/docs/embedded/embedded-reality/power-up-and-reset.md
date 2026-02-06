@@ -108,7 +108,7 @@ The internal RC oscillator is also only roughly calibrated from the factory -- t
 - **The reset cause register must be read before clearing** — Some HAL libraries clear the reset status register during initialization. Application code that checks it later sees nothing
 - **First-line-of-main is not first-line-of-execution** — The startup code and SystemInit() run before main(). Bugs in these routines cause failures that appear to happen before application code
 
-## Bench Relevance
+## In Practice
 
 - A system that behaves erratically at power-up but works after a reset button press may have marginal VCC ramp — measure with a scope
 - Corrupted configuration data or EEPROM after power loss suggests brownout detection is not enabled — check option bytes

@@ -104,7 +104,7 @@ Feedback isn't always obvious. Some circuits that use feedback without looking l
 - **Feedback around nonlinear elements doesn't linearize them perfectly.** Feedback reduces distortion by the loop gain factor, but it doesn't eliminate it. A transistor amplifier with 40 dB of loop gain reduces distortion by 100× — significant, but not zero
 - **The feedback network itself has parasitics.** Resistors have capacitance, traces have inductance. At high frequencies, the feedback fraction B is not what the schematic suggests. This is another reason circuits oscillate in practice but not in simulation
 
-## Bench Relevance
+## In Practice
 
 - Closed-loop gain that deviates from the calculated value indicates insufficient loop gain at the operating frequency
 - Output that overshoots and rings on step inputs suggests inadequate phase margin — the ringing frequency indicates where phase margin is worst

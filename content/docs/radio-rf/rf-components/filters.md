@@ -130,7 +130,7 @@ BAW/FBAR filters outperform SAW above about 2 GHz, where SAW insertion loss and 
 - **SAW and BAW filters are not interchangeable even at the same frequency** — Different parts have different impedances, bandwidths, and PCB layout requirements. Always follow the datasheet layout recommendations
 - **Filter return loss affects the stages connected to it** — A filter with poor input return loss reflects energy back to the driving amplifier, potentially causing instability. Check S11 as well as S21
 
-## Bench Relevance
+## In Practice
 
 - A filter whose measured passband is noticeably wider and shallower than the simulation predicts is typically limited by the Q of the inductors used — replacing them with higher-Q parts will sharpen the response
 - A shift in measured center frequency compared to the design target usually indicates that the source or load impedance is not the expected 50 ohms, or that component tolerances have accumulated

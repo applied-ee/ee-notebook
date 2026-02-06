@@ -111,7 +111,7 @@ SDR is not strictly superior to traditional receivers. There are real tradeoffs:
 - **Raw I/Q files are large** — At 2.4 MSPS with 8-bit I/Q samples, the data rate is about 4.8 MB/s — roughly 17 GB per hour; at higher sample rates and bit depths, storage fills quickly
 - **The computer is now part of the receiver** — CPU performance, USB bandwidth, and operating system scheduling all affect SDR performance; a USB dropout causes a gap in the received signal, a CPU spike causes dropped samples, and the computer must be treated as a reliability-critical part of the receive chain
 
-## Bench Relevance
+## In Practice
 
 - If the waterfall display shows intermodulation products or a raised noise floor across the entire bandwidth, the ADC is likely being overloaded by a strong signal that the analog front end failed to reject
 - A persistent bright line at the center frequency of the waterfall is a DC offset artifact from I/Q processing, not a real signal — it confirms the SDR is using quadrature downconversion

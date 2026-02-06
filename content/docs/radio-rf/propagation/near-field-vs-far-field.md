@@ -87,7 +87,7 @@ This works precisely because near-field coupling is localized. A far-field measu
 - **377 ohms is free-space wave impedance, not antenna impedance** — The 377-ohm impedance of free space is the ratio of electric to magnetic field strength in a propagating wave; it has nothing to do with the 50-ohm or 75-ohm impedance conventions used for transmission lines and antenna feedpoints
 - **Near-field does not mean "no radiation"** — Even in the reactive near-field, some energy radiates; the distinction is that most energy is stored reactively; the radiated component exists but is hard to separate from the reactive fields until the far-field is reached
 
-## Bench Relevance
+## In Practice
 
 - A near-field probe scanning across a PCB shows dramatically different emission levels at individual IC pins and trace segments — a hot spot at one pin versus a quiet adjacent pin indicates the source of radiated emissions
 - When an NFC or wireless charging system exhibits inconsistent coupling range, the symptom is often near-field detuning caused by nearby metal objects or enclosure changes shifting the antenna resonance

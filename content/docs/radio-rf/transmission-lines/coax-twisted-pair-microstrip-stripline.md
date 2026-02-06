@@ -107,7 +107,7 @@ Coplanar waveguide (CPW) places the signal trace between ground areas on the sam
 - **Twisted pair impedance varies with bending** — Bending a twisted pair changes the spacing between conductors, altering Z0; for impedance-sensitive applications, maintaining consistent bend radii and avoiding sharp bends or crushing is important
 - **Mixing transmission line types creates discontinuities** — A coax-to-microstrip transition, for example, changes the field geometry even if both are nominally 50 ohm; well-designed transitions minimize the discontinuity, but there is always some reflection at the boundary
 
-## Bench Relevance
+## In Practice
 
 - Comparing S21 insertion loss on a VNA between two cables of the same Z0 but different construction (e.g., RG-58 vs. LMR-400) shows the dramatic difference in attenuation at GHz frequencies
 - A TDR measurement across a coax-to-microstrip connector launch reveals the impedance bump at the transition — the size of this bump indicates how well the launch geometry is designed

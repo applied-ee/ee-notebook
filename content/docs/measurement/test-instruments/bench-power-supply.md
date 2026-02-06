@@ -67,7 +67,7 @@ For most digital and general embedded work, a switching bench supply is fine. Fo
 - **Displayed current is average** — Pulsed loads (like a transmitting radio module) draw high peak current but the supply display shows the average. The supply must be able to source the peak, not just the average, or the voltage will droop during pulses
 - **Ground is not always earth** — Floating-output supplies have output terminals isolated from earth ground. Connecting the negative terminal to circuit ground and assuming it is at earth potential can create ground loops or safety issues if other equipment is also connected
 
-## Bench Relevance
+## In Practice
 
 - A board that works from a battery but not from the bench supply may be reacting to supply noise or turn-on overshoot — check with a scope at the power input
 - Current draw that creeps upward over minutes suggests thermal runaway or a component operating outside its safe region

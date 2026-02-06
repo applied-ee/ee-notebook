@@ -137,7 +137,7 @@ RF datasheets specify absolute maximum input power, DC voltages, and temperature
 - **Evaluation board performance is the best case** — IC vendors optimize their evaluation board layouts. A custom layout will likely perform slightly worse. Budget margin accordingly
 - **Datasheet plots are hard to read precisely** — Small-format plots in PDFs make it difficult to read values at specific frequencies. Request S-parameter data files (Touchstone .s2p format) for accurate simulation
 
-## Bench Relevance
+## In Practice
 
 - A device whose measured gain differs from the datasheet S21 by more than 1 dB is likely operating at different bias conditions or seeing a port impedance mismatch — checking the supply voltage and current against the datasheet test conditions is the first diagnostic step
 - An amplifier that oscillates on the bench but shows unconditional stability in the datasheet is probably seeing an impedance outside the characterized range, often from an uncontrolled supply pin or poorly bypassed bias network

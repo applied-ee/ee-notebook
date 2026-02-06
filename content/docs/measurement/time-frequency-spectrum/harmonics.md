@@ -61,7 +61,7 @@ For most bench debugging, the scope FFT is sufficient. When dynamic range beyond
 - Scope FFT update rate is slow — looking at a snapshot, not a real-time sweep; intermittent interference may not appear in a single capture
 - If a peak appears at exactly half the sample rate or moves when sample rate changes, it's likely aliasing, not a real signal
 
-## Bench Relevance
+## In Practice
 
 - Harmonics of the fundamental frequency indicate distortion — compare relative amplitude to fundamental to quantify THD
 - Peaks at unrelated frequencies indicate interference coupling in from external sources

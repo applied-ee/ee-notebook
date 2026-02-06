@@ -53,7 +53,7 @@ The critical insight is what happens when the matching process fails. If a node'
 - **The device tree is not validated against actual hardware** — A device tree can describe hardware that does not physically exist. The kernel will try to probe it
 - **Device tree changes require a reboot** — The kernel consumes the device tree at boot. No practical hot-reload mechanism exists
 
-## Bench Relevance
+## In Practice
 
 - A device that does not appear in `/dev/` despite having a device tree node likely has a wrong `compatible` string or is `status = "disabled"`
 - An overlay that "does nothing" may be overridden by a later overlay or may conflict with the base device tree

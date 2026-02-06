@@ -61,7 +61,7 @@ When something doesn't add up:
 - **Transient vs. steady state** — During power-up, energy is being stored in caps and inductors. The power balance only works as "source = dissipation" after everything has settled
 - **Negative resistance isn't free energy** — Tunnel diodes and certain oscillator circuits exhibit negative resistance in a limited region. This doesn't violate energy conservation — there's always an external energy source enabling the behavior
 
-## Bench Relevance
+## In Practice
 
 **A component running hotter than expected** indicates higher dissipation than the power model predicts. The excess heat points to a current path, a voltage drop, or a loss mechanism not captured in the schematic — the thermal behavior is the circuit revealing where the model is incomplete.
 

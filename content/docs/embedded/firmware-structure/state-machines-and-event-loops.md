@@ -163,7 +163,7 @@ Where `log_transition` writes to a circular buffer in SRAM, outputs on a debug U
 - **State machine transitions from ISR context introduce race conditions** — If both the ISR and the main loop can modify the state variable, this is a classic data race. Either limit transitions to one context or protect the state variable with an interrupt-disable guard
 - **Testing state machines in isolation requires decoupling hardware** — If state transition logic is tangled with direct register access, off-target testing is impossible. Abstraction layers make state machines testable on a PC
 
-## Bench Relevance
+## In Practice
 
 - Erratic behavior that correlates with specific event sequences suggests missed state transitions — add transition logging
 - A system that processes events in wrong order may have event queue overflow — check queue sizing and add overflow detection

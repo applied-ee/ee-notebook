@@ -140,7 +140,7 @@ Beyond general SDR applications, several tools decode specific protocols:
 - **I/Q file formats are not standardized** — Different tools produce and expect different file formats (sample type, byte order, interleaving); getting the format wrong produces noise; always document or use SigMF metadata for recorded files
 - **SDR is not a calibrated instrument** — The amplitude displayed on the spectrum is relative, not absolute; two signals that appear the same height on the waterfall may differ by several dB in actual power; for quantitative measurements, a calibrated spectrum analyzer or known calibration correction factors are necessary
 
-## Bench Relevance
+## In Practice
 
 - If the waterfall display shows a uniformly elevated noise floor with no discernible signals, the most likely cause is front-end overload from excessive gain — reducing the tuner gain setting should restore individual signal visibility
 - Gaps or horizontal lines in the waterfall at regular intervals indicate dropped samples, typically caused by USB bandwidth limitations or CPU overload — reducing the sample rate is the first diagnostic step

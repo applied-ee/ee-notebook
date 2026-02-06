@@ -85,7 +85,7 @@ Logic analyzers have fixed voltage thresholds — they don't show analog signal 
 - Cheap logic analyzers may have limited sample rate or buffer depth — check specs for the bus speed needed
 - Logic analyzers can't show if a signal is marginal — use scope for signal quality assessment
 
-## Bench Relevance
+## In Practice
 
 - I2C NACK on every transaction indicates wrong address, missing device, or device not powered
 - I2C ACK on address but NACK on data bytes indicates device communication but register access problem

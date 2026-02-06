@@ -79,7 +79,7 @@ DMA with double-buffering (ping-pong) is the standard approach: while DMA fills 
 - **I2S clock accuracy matters audibly** — A PLL that cannot produce an exact audio bit clock introduces periodic phase errors that manifest as clicks, pops, or pitch drift
 - **I2S DMA underrun causes audible glitches** — If DMA does not deliver the next buffer in time, the I2S peripheral repeats the last sample or outputs zeros, producing clicks or dropouts
 
-## Bench Relevance
+## In Practice
 
 - Audio in the wrong channel or shifted by one sample indicates I2S format mismatch — verify standard vs. left-justified vs. right-justified setting
 - A codec that configures correctly (I2C responds, registers read back as expected) but produces no audio likely lacks MCLK or has the wrong frequency

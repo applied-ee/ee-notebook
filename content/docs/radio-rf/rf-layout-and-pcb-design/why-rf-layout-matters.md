@@ -81,7 +81,7 @@ The good news is that the principles are consistent and learnable. Controlled im
 - **Ground pour is not automatically good ground** — A copper pour labeled "GND" that connects to the ground plane through a single via in the corner provides virtually no RF grounding; ground must be low-impedance at the frequency of interest, which means many vias and short paths
 - **Every uncontrolled structure is an antenna** — An ungrounded copper shape, a floating pad, or a long unmatched trace will radiate or receive energy; if it is not part of the design, it is part of the problem
 
-## Bench Relevance
+## In Practice
 
 - A network analyzer sweep that shows unexpected gain variation or dips often traces back to uncontrolled trace impedances or parasitic feedback paths in the layout
 - Oscillation visible on a spectrum analyzer (a strong tone not present in the schematic design) frequently results from output-to-input coupling through parallel traces or shared return paths

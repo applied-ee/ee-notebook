@@ -63,7 +63,7 @@ Inductor energy is usually a transient hazard — released as a voltage spike wh
 - True RMS meters give accurate AC readings on non-sinusoidal waveforms; average-responding meters can be significantly off on switched or distorted waveforms
 - Measuring across a series string of capacitors shows only total voltage, not per-capacitor voltage — measure each individually if balance matters
 
-## Bench Relevance
+## In Practice
 
 - Capacitor voltage ratings printed on components indicate the expected rail voltage — a 450V-rated cap suggests a high-voltage DC bus
 - Transformer markings and fuse ratings reveal expected power levels and help identify the energy domain before measurement

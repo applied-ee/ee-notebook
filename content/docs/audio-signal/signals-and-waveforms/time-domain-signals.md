@@ -76,7 +76,7 @@ AC coupling (a series capacitor) removes the DC component. This is useful for me
 - **RMS of noise is not the peak** — Gaussian noise has occasional peaks 3-4× the RMS value. Designing signal swing based on noise RMS will clip the peaks. Use 3σ or 4σ for headroom calculations
 - **Phase matters for interference** — Two signals of the same frequency add constructively when in phase and cancel when 180° out. This is the basis of noise cancellation, balanced signaling, and many interference problems
 
-## Bench Relevance
+## In Practice
 
 - A signal that appears clipped only on peaks suggests insufficient headroom for the crest factor — reduce gain or increase the supply rails
 - An oscilloscope showing a "rounded" square wave indicates bandwidth limiting — either in the circuit or the scope/probe

@@ -102,7 +102,7 @@ Voltage dividers aren't limited to resistors. Capacitive and inductive dividers 
 - Don't use voltage dividers as power supplies — A voltage divider can set a voltage, but it can't regulate it. Any load variation changes the output. For stable supply voltages, use a regulator
 - Potentiometers are variable voltage dividers — A pot is R1 and R2 in one package with an adjustable tap. All the loading analysis applies — the pot's output impedance varies with the wiper position (maximum at the midpoint)
 
-## Bench Relevance
+## In Practice
 
 - A voltage divider output that reads lower than calculated suggests unexpected loading — check what's connected to the node
 - Connecting a scope probe to a high-impedance divider changes the reading — use a 10× probe or buffer the divider

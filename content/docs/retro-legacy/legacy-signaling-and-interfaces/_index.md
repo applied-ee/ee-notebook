@@ -88,7 +88,7 @@ The PC parallel port (DB-25, LPT) was repurposed as a general-purpose digital I/
 - **Relay logic is powered by mains voltage** -- Ladder logic circuits typically operate at 120 V AC or 24 V DC. These are not bench-safe voltages. Use proper lockout/tagout procedures before probing relay logic circuits. For measurement technique and safety procedures, see [Measurement & Test]({{< relref "/docs/measurement" >}})
 - **Legacy interfaces have no protection** -- Modern interfaces (USB, Ethernet) include ESD protection, termination, and defined failure modes. Legacy interfaces assume the operator understands the electrical requirements. Miswiring RS-232, RS-485, or a current loop can damage equipment
 
-## Bench Relevance
+## In Practice
 
 - A 4-20 mA loop reading exactly 0 mA indicates a broken wire or dead transmitter, not a zero measurement -- the live-zero at 4 mA is specifically designed to distinguish faults from valid readings
 - An RS-485 bus that shows garbage characters during idle periods is likely missing bias resistors -- without pull-up and pull-down biasing, the bus floats when no driver is active

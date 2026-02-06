@@ -85,7 +85,7 @@ Core losses add to DCR losses. At high switching frequencies, core losses can do
 - Self-resonant frequency — Like capacitors, inductors have parasitic capacitance (between turns). Above the SRF, the "inductor" becomes capacitive. For RF work, always check SRF vs. operating frequency
 - Current rating vs. saturation rating — Some datasheets list two current ratings: thermal (current before overheating due to DCR losses) and saturation (current before inductance drops by 20-30%). Use the lower of the two as the design limit
 
-## Bench Relevance
+## In Practice
 
 - An inductor that gets hot under DC current has DCR losses — check if the current is within the thermal rating
 - A switching converter with excessive output ripple may have an inductor operating near or in saturation

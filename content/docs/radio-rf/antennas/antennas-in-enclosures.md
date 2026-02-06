@@ -135,7 +135,7 @@ The practical workflow for product antenna design:
 - **Conformal coating on the PCB affects antenna performance** -- coating applied over a PCB trace antenna adds dielectric loading; account for this in the design or keep coating away from the antenna area
 - **"It worked on the eval board" is not a valid antenna design** -- evaluation boards from module vendors have specific PCB sizes and layouts optimized for their antenna; a different product has a different PCB, different ground plane, and different enclosure; the antenna must be re-tuned for each design
 
-## Bench Relevance
+## In Practice
 
 - Measuring VSWR on a PCB antenna before and after snapping on the plastic enclosure typically shows a downward frequency shift of 2-5%, confirming the dielectric loading effect
 - Placing a metal screw in different positions near a chip antenna during a VNA sweep reveals how much the screw couples to the near field -- expect VSWR changes of 0.5:1 or more at 2.4 GHz

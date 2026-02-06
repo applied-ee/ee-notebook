@@ -175,12 +175,12 @@ Prevent mistakes and false confidence.
 
 ---
 
-### 5. Bench Relevance
+### 5. In Practice
 
-**Purpose:**  
+**Purpose:**
 Tie theory to **what is observed at the bench**.
 
-Bench Relevance answers:
+In Practice answers:
 > “How does this concept explain the measurements or symptoms I’m seeing right now?”
 
 **What goes here:**
@@ -202,7 +202,7 @@ Bench Relevance answers:
 - “a frequent cause of this symptom is…”
 - “this measurement usually indicates…”
 
-**Bench Relevance is not a summary — it is a bridge between laws and observations.**
+**In Practice is not a summary — it is a bridge between laws and observations.**
 
 ---
 
@@ -210,12 +210,12 @@ Bench Relevance answers:
 
 Not every domain benefits equally from all standard sections. The following exceptions apply:
 
-| Domain | Tips | Caveats | Bench Relevance |
-|--------|------|---------|-----------------|
+| Domain | Tips | Caveats | In Practice |
+|--------|------|---------|-------------|
 | Most sections | ✓ | ✓ | ✓ |
 | **Design & Development** | ✓ | ✓ | — |
 
-Design & Development pages cover process, methodology, and decision-making rather than circuit behavior. Bench Relevance — which ties theory to observable measurements and symptoms — does not apply. Tips and Caveats remain required.
+Design & Development pages cover process, methodology, and decision-making rather than circuit behavior. In Practice — which ties theory to observable measurements and symptoms — does not apply. Tips and Caveats remain required.
 
 ---
 
@@ -223,16 +223,16 @@ Design & Development pages cover process, methodology, and decision-making rathe
 
 Each L2 section has a single job:
 
-- **Tips** — how to succeed  
-- **Caveats** — how things fail  
-- **Bench Relevance** — how behavior and failures *appear in measurements or symptoms*. Make sure to add distinction to unrelated items and add bold for the main symptom
+- **Tips** — how to succeed
+- **Caveats** — how things fail
+- **In Practice** — how behavior and failures *appear in measurements or symptoms*. Make sure to add distinction to unrelated items and add bold for the main symptom
 
 If a paragraph contains:
-- advice **and** diagnosis → split it  
-- warnings **and** interpretation → split it  
-- techniques **and** symptoms → move techniques to Tips  
+- advice **and** diagnosis → split it
+- warnings **and** interpretation → split it
+- techniques **and** symptoms → move techniques to Tips
 
-**If it explains *why something looks wrong*, it belongs in Bench Relevance.**  
+**If it explains *why something looks wrong*, it belongs in In Practice.**
 **If it explains *how to avoid it*, it belongs in Tips or Caveats.**
 
 ---
@@ -270,12 +270,12 @@ Use these terms verbatim across all pages:
 
 - **Tips**
 - **Caveats**
-- **Bench Relevance**
+- **In Practice**
 
 Avoid:
-- “Practical Bench Relevance”
-- “Why This Matters at the Bench”
-- “Bench Notes” (unless a special callout)
+- "Practical Considerations"
+- "Why This Matters"
+- "Practice Notes" (unless a special callout)
 
 Consistency beats cleverness.
 

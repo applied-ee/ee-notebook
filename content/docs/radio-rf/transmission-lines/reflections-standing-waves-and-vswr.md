@@ -136,7 +136,7 @@ Most RF transmitters include protection circuits that reduce power or shut down 
 - **Multiple cascaded mismatches can cancel or compound** — Two mismatches spaced lambda/4 apart may cancel at one frequency but compound at twice that frequency, creating frequency-dependent ripple in insertion loss and return loss
 - **Digital ringing is a reflection problem** — If a digital signal overshoots and rings, it is because of impedance mismatch and unterminated transmission lines, not because of "bad signal quality"; proper termination eliminates ringing
 
-## Bench Relevance
+## In Practice
 
 - Ringing visible on an oscilloscope after a digital edge — overshoot followed by decaying oscillation — is a direct time-domain manifestation of reflections on an unterminated line
 - A VNA sweep showing S11 ripple with a regular period indicates multiple cascaded impedance discontinuities, and the ripple spacing reveals the electrical distance between them

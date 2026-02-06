@@ -107,7 +107,7 @@ A counter used purely to divide a clock frequency. An n-bit counter divides the 
 - **Gray code counters avoid multi-bit transitions** — A binary counter can change multiple bits simultaneously (e.g., 0111 to 1000 changes all 4 bits). In a Gray code counter, only one bit changes per count. This is essential for counters whose outputs cross clock domains (FIFO read/write pointers). See [Clock Domain Crossing]({{< relref "/docs/digital/timing-and-synchronization/clock-domain-crossing" >}})
 - **Shift register initial state** — Like flip-flops, shift registers power up in an indeterminate state. A ring counter with no guaranteed initial state may have zero bits set (stuck at all-0) or multiple bits set (invalid one-hot). Always include reset logic to initialize the correct starting pattern
 
-## Bench Relevance
+## In Practice
 
 **A counter output that briefly shows a wrong value for one clock cycle** — visible as a flicker in decoded output — typically indicates a ripple counter being read by synchronous logic before all bits have settled. The propagation delay through the ripple chain means intermediate bits are still changing when the synchronous logic samples them.
 

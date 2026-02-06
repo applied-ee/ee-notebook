@@ -125,7 +125,7 @@ Not all distortion sounds equally bad:
 - **"Sounds good" does not mean "measures well"** — Some distortion is euphonic (pleasant tube warmth). Some specs are excellent but the system sounds sterile. Engineering requires both measurement and listening, with the understanding that objective metrics are necessary for reproducibility
 - **Dynamic range is not just peak-to-noise** — The usable dynamic range depends on the signal content. Music with a high crest factor (20 dB) uses the top 20 dB for peaks and has only 76 dB of quiet-signal SNR from a 96 dB system. Design for the music, not the sine wave
 
-## Bench Relevance
+## In Practice
 
 - A circuit that measures well on sine waves but sounds harsh on music may have intermodulation distortion or crossover artifacts — test with multitone signals
 - Noise that's inaudible in A-weighted measurements but audible in practice suggests low-frequency content (rumble, hum) that A-weighting de-emphasizes

@@ -79,7 +79,7 @@ Digital audio links carry multi-megahertz signals with timing precision requirem
 - **TDM slot alignment is unforgiving** — A one-clock-cycle offset in TDM alignment shifts all channels by one slot. The audio sounds correct on each channel but is assigned to the wrong output. This is a common integration bug with multi-channel codecs
 - **8b/10b and biphase encoding double the bandwidth** — A 192 kHz, 24-bit stereo S/PDIF link requires about 12 MHz of signal bandwidth due to the encoding overhead. The cable, connectors, and optical link must support this
 
-## Bench Relevance
+## In Practice
 
 - Garbled audio at the correct sample rate on I2S usually indicates format mismatch — check alignment and word length settings
 - An S/PDIF link that works at 48 kHz but fails at 192 kHz is likely bandwidth-limited (especially TOSLINK)

@@ -47,7 +47,7 @@ Every circuit is a product of what was available and what it cost at the time. D
 - **Cost constraints were not uniform** -- Military and aerospace designs had very different cost profiles from consumer electronics. A military circuit from 1970 might use expensive precision parts that a consumer design of the same era could not afford. The era alone does not reveal the design philosophy -- the application context matters too
 - **Discrete does not mean simple** -- A discrete circuit with 40 components can be harder to analyze than a modern circuit with 5 ICs, because every component interacts with its neighbors. The parts count is lower, but the analysis complexity per part is higher
 
-## Bench Relevance
+## In Practice
 
 - A board full of 7400-series logic ICs performing a simple sequencing function is a hallmark of pre-microcontroller design -- the physical size reflects the era's parts catalog, not the complexity of the function
 - Trimpots scattered across a vintage board indicate the designer compensated for component tolerance by hand-adjustment rather than paying for precision parts

@@ -130,7 +130,7 @@ The gap between theory and practice in antenna work is consistently larger than 
 - **Ignoring velocity factor of the wire** — Insulated wire has a lower velocity factor (typically 0.95-0.97) than bare wire. The antenna will be electrically longer than its physical length, resonating at a lower frequency than the bare-wire formula predicts
 - **Assuming the Smith chart shows impedance at the antenna** — If calibration was not done at the feedpoint, the Smith chart shows the impedance at the calibration plane (possibly at the NanoVNA port), transformed by the cable. This is a different impedance and a common source of confusion
 
-## Bench Relevance
+## In Practice
 
 - A dipole with common-mode current on the feedline produces erratic, non-repeatable VSWR readings that shift when the coax cable is moved or touched — adding a ferrite choke stabilizes the measurement immediately
 - An antenna resonating below the target frequency shows an inductive (positive) reactance on the Smith chart; trimming the elements moves the impedance trace clockwise toward the resistive axis

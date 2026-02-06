@@ -86,7 +86,7 @@ This is an important detail that is easy to forget: the lambda/10 rule applies t
 - **Component self-resonant frequencies hide in datasheets** — A 100 nF ceramic capacitor might self-resonate at 20 MHz. Above that frequency, it behaves as an inductor. The impedance vs. frequency curve matters, not just the capacitance value
 - **Wavelength thinking applies to digital signals too** — A 1 ns rise time has frequency content above 300 MHz, regardless of the clock rate. Even a 10 MHz clock with fast edges needs RF-aware layout for the edge transitions
 
-## Bench Relevance
+## In Practice
 
 - A filter that performs worse on the bench than in SPICE simulation likely has parasitic effects from leads, traces, or pads not captured in the lumped model
 - Unexpected resonances appearing above a few hundred MHz on an FR4 board suggest trace lengths have crossed the lambda/10 boundary for the in-medium wavelength

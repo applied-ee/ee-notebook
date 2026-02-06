@@ -35,7 +35,7 @@ For quick go/no-go without waveform detail, measure with AC Volts mode. This giv
 - Most DMMs measure AC with limited bandwidth (few hundred Hz to ~100 kHz) — switching ripple at 500 kHz may be partially or fully rejected
 - DMM shows RMS, not peak-to-peak — a 50 mVpp triangle reads as ~14 mV RMS, which can mislead when comparing to peak-to-peak specs
 
-## Bench Relevance
+## In Practice
 
 - Ripple at the switching frequency confirms the switcher is the source — compare amplitude to datasheet limits
 - Ripple frequency that doesn't match expected switching frequency indicates something else is modulating the supply

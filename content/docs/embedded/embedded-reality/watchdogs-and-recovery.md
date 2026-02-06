@@ -110,7 +110,7 @@ A botched firmware update that bricks a device in the field is worse than the bu
 - **Safe state requires hardware design, not firmware** — Relying on firmware to drive outputs to safe values during a crash is unreliable. Pull resistors, normally-open relays, and hardware enable interlocks provide safety independent of CPU execution
 - **Dual-bank bootloaders need a rollback trigger** — Writing a new image to the inactive bank is not enough. The bootloader must detect that the new image failed and revert automatically
 
-## Bench Relevance
+## In Practice
 
 - A system that resets periodically but "works" likely has watchdog resets that are not being logged — check the reset cause register and add persistent counters
 - Watchdog resets that occur only during flash operations suggest the timeout is too short for the erase time — extend the timeout or kick during erase wait loops

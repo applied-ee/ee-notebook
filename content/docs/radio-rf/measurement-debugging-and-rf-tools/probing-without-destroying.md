@@ -95,7 +95,7 @@ When measuring an RF circuit:
 - **Multiple probes multiply the loading** — Probing two nodes simultaneously adds capacitance to both. On a tightly coupled circuit like a differential pair or a filter, two probes can cause more disruption than one
 - **Temperature affects active probes** — FET-based probe amplifiers have gain that drifts with temperature. Let the probe warm up (10-15 minutes) before making precise measurements, and recalibrate if the ambient temperature changes significantly
 
-## Bench Relevance
+## In Practice
 
 - An oscillator that stops when a passive probe touches the tank circuit but runs normally without the probe is exhibiting classic capacitive loading — the 12 pF probe capacitance is detuning the tank far enough to violate the oscillation conditions
 - Large ringing and overshoot on a digital clock edge that disappear when the ground clip is replaced with a spring-tip ground confirm that the artifacts are probe-induced, not present in the circuit

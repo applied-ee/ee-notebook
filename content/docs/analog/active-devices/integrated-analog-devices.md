@@ -133,7 +133,7 @@ When evaluating an application-specific analog IC, the critical question is: **w
 - **Supply sensitivity is real** — Integrated bias networks derive their currents from the supply rails. Noise, ripple, and transients on the supply propagate into the analog signal path. The PSRR specification tells how well the IC rejects supply variation, but it degrades with frequency — high-frequency supply noise gets through
 - **Latch-up is a physical hazard in CMOS analog ICs** — Parasitic thyristor structures in the substrate can be triggered by input or output voltages that exceed the supply rails. Once triggered, the IC draws excessive current and can be destroyed. This is why absolute maximum ratings for input voltage relative to supply matter
 
-## Bench Relevance
+## In Practice
 
 - An analog IC that works on the bench but fails in the field may have thermal or supply noise issues not present in the lab environment
 - An op-amp or regulator that oscillates after a "drop-in" replacement likely has different compensation or ESR requirements than the original

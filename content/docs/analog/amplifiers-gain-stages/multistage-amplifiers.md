@@ -104,7 +104,7 @@ This is the fundamental stability problem, and it's why:
 - **Bandwidth shrinks** — Cascading identical stages reduces bandwidth. Two identical stages with bandwidth B each give a combined bandwidth of about B × 0.64. Three stages: B × 0.51. This is called bandwidth shrinkage
 - **Ground loops between stages** — If stages are on different boards or sections of a board, ground impedance between them can couple signals. This is especially problematic in high-gain chains where millivolts of ground noise become volts at the output
 
-## Bench Relevance
+## In Practice
 
 - Large DC offset at the output of a DC-coupled chain indicates offset accumulation — check the first stage bias and consider AC coupling or DC servo
 - A multistage amplifier that oscillates likely has insufficient phase margin — verify compensation and check for parasitic feedback paths

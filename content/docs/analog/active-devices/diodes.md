@@ -75,7 +75,7 @@ Zener diodes are designed to operate in reverse breakdown at a specific voltage.
 - **Capacitance** — Diodes have junction capacitance that varies with reverse voltage. This matters in high-frequency and tuning circuits (varactors exploit this deliberately)
 - **Thermal runaway in parallel diodes** — The hotter diode drops less voltage, draws more current, gets hotter. Parallel diodes need current-sharing resistors or matched thermal coupling
 
-## Bench Relevance
+## In Practice
 
 - A diode that measures low resistance in both directions is shorted — replace it
 - A diode that measures high resistance in both directions is open — replace it

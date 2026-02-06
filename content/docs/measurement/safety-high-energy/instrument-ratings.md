@@ -68,7 +68,7 @@ Professional meters (Fluke, Klein, etc.) use HRC ceramic fuses rated for high in
 - Some meters have unfused voltage inputs — the fuse only protects current ranges, and voltage-range protection relies on internal circuitry, not a fuse
 - Temperature, humidity, and altitude affect insulation performance — ratings assume standard conditions
 
-## Bench Relevance
+## In Practice
 
 - Current measurement reading zero on a known-live circuit indicates a blown fuse — check the fuse before assuming the circuit is dead
 - A blown current fuse doesn't always show visible damage — open the fuse compartment and test continuity

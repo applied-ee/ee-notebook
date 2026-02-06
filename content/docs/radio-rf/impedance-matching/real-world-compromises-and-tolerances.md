@@ -111,7 +111,7 @@ The choice depends on volume, cost target, and how much variation the design can
 - **Production spread kills tight tolerances** — A matching network that works perfectly with hand-selected components might have 30% yield with standard tolerance parts. Simulate the tolerance stack before committing to a design
 - **Matching in a jig and deploying in a product are different things** — If the antenna impedance changes between the test fixture and the final product enclosure, the matching network needs to be designed for the final environment, not the jig
 
-## Bench Relevance
+## In Practice
 
 - Measuring a matching network across temperature (e.g., with a heat gun and a VNA) shows the S11 dip shifting in frequency — C0G-based networks barely move, while X7R-based networks can shift by 10% or more
 - Placing a hand near an antenna under VNA measurement visibly moves the Smith chart trace, demonstrating proximity detuning in real time and revealing how much margin the matching network needs

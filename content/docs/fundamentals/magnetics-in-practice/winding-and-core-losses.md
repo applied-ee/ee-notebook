@@ -106,7 +106,7 @@ A useful rule of thumb: if the inductor can't be touched comfortably (above ~60�
 - Manufacturers don't always specify core loss directly — Some inductor datasheets give a "maximum temperature rise" at rated current and frequency. Others give core loss curves for the raw core material but not for the finished inductor. Calculation or measurement of core loss may be necessary
 - Skin effect matters in inductors, not just transformers — A power inductor carrying mostly DC with small ripple might seem immune to skin effect, but the ripple current (which can be 30–40% of DC at the switching frequency) flows through the AC resistance. If the wire is thick and the frequency is high, the AC loss component can be surprisingly large
 
-## Bench Relevance
+## In Practice
 
 - An inductor running hotter than expected despite correct DC current suggests core losses — check if the switching frequency is appropriate for the core material
 - Temperature rise that increases with frequency (at constant current) indicates core loss dominance

@@ -73,7 +73,7 @@ This reveals whether pull-up resistors are present and working, whether a line i
 - Level-shifted buses may idle at unexpected voltages if the level shifter has no pull-ups or wrong pull-up voltage
 - I2C bus lockup is a common failure: a slave holds SDA low waiting for a clock that never comes (interrupted transaction) — clock SCL manually until SDA releases
 
-## Bench Relevance
+## In Practice
 
 - Clock toggling but data flat indicates the master is sending clock but the slave isn't responding — check slave power, address, and CS
 - Data toggling but clock flat indicates something is driving data without a clock — unusual, suggests configuration error

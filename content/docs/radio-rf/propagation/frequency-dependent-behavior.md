@@ -102,7 +102,7 @@ Between these peaks are "windows" of relatively low absorption — at 35 GHz, 94
 - **Lower frequency does not always mean better coverage** — While lower frequencies penetrate and diffract better, they also require larger antennas and have less bandwidth; a 900 MHz link through two walls may deliver 100 kbps; a 5 GHz link in the same room with line-of-sight delivers 100 Mbps; the right frequency depends on the application, not just the propagation
 - **The 2.4 GHz band is brutally congested** — WiFi, Bluetooth, Zigbee, microwave ovens, baby monitors, and countless other devices all share the 2.4 GHz ISM band; in a dense apartment building, interference can be a bigger problem than propagation loss; moving to 5 GHz or 6 GHz may improve performance despite worse propagation because of reduced interference
 
-## Bench Relevance
+## In Practice
 
 - A spectrum analyzer sweep across bands reveals the congestion difference firsthand — the 2.4 GHz ISM band typically shows dozens of signals in a residential area, while 5 GHz channels appear comparatively empty
 - Testing the same wireless link at 900 MHz and 2.4 GHz through a concrete wall shows the penetration difference directly: the 900 MHz signal may come through 5-8 dB stronger

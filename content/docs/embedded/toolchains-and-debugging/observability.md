@@ -137,7 +137,7 @@ This is the embedded equivalent of a crash dump, and it transforms field debuggi
 - **Logic analyzer sample rate must exceed signal frequency** — A 24 MHz logic analyzer sampling a 12 MHz SPI clock will alias or miss edges. At least 4x the signal frequency is needed for reliable capture
 - **Binary logging is unreadable without the matching decoder** — If binary log encoding is used, a host-side tool that knows the message format is required. Version the log format and keep the decoder in sync with firmware
 
-## Bench Relevance
+## In Practice
 
 - A bug that disappears when logging is added suggests timing-sensitive behavior — reduce logging overhead or use GPIO toggling instead
 - ITM output that becomes garbled after a clock configuration change indicates an SWO prescaler mismatch

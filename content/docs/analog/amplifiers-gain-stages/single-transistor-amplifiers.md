@@ -92,7 +92,7 @@ Practical single-stage voltage gains: 10-50 with degeneration, 50-200 without. F
 - **Bypass capacitor on R_E** — Placing a cap across R_E restores the full (non-degenerated) AC gain while keeping the DC bias stable. This makes the gain frequency-dependent and can create peaking or instability if not sized correctly
 - **Miller effect** — In common emitter/source stages, the collector/drain-to-base/gate capacitance is amplified by the voltage gain (C_miller = C_cb × (1 + |A_v|)). This limits high-frequency response and is the main reason common emitter/source stages are bandwidth-limited
 
-## Bench Relevance
+## In Practice
 
 - Output clipping on one half of the waveform indicates the bias point is too close to cutoff or saturation — adjust the DC operating point
 - Distortion that appears only at low signal levels suggests the stage is biased near cutoff — increase bias current

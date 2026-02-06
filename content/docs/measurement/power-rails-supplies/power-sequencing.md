@@ -39,7 +39,7 @@ This reveals whether enable timing matches design intent, whether reset is held 
 - Digital threshold on MSO inputs must be set appropriately — a 1.0V rail's power-good may not trip a 1.65V default logic threshold
 - Long capture at low sample rate may miss fast glitches on enable lines — balance capture length vs sample rate
 
-## Bench Relevance
+## In Practice
 
 - Rail that rises before it should (ahead of sequence) can cause latch-up in ICs that require a different rail first
 - Power-good that asserts before all rails are stable can allow the processor to start executing before supplies are valid

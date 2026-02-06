@@ -114,7 +114,7 @@ Given a symptom, start with the most common cause and the quickest measurement t
 | Audio hum / video bars | Ground loop, power supply ripple | Measure ground-to-ground voltage, scope supply |
 | Consumes too much current | Shorted component, latch-up, oscillation | Current draw, thermal imaging / touch test |
 
-## Bench Relevance
+## In Practice
 
 - **A board revision that fixes one problem but introduces another** often indicates that the original diagnosis was at the wrong layer — the board change coincidentally improved the original condition while disturbing a different coupling path or timing relationship that was previously adequate.
 - **A system that works for hours and then fails** is frequently showing a coordination failure that accumulates — a small timing drift, a slow memory leak, a gradual thermal shift — that eventually crosses a threshold. The individual devices haven't degraded; the coordination margin has eroded.

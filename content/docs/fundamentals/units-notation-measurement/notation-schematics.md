@@ -103,7 +103,7 @@ Things that vary between schematics and can cause confusion:
 - Schematic ≠ layout — Component placement on the schematic has no relationship to physical placement on the PCB. Two adjacent components on the schematic might be on opposite sides of the board
 - Outdated schematics — Schematics don't always match the built hardware. Rework, component substitutions, and cut traces create discrepancies. When debugging a physical board, verify critical connections rather than just trusting the drawing
 
-## Bench Relevance
+## In Practice
 
 - A signal that doesn't appear where the schematic says it should may indicate a schematic/board mismatch
 - Missing bypass capacitors (not on schematic but needed) often cause noise or oscillation issues

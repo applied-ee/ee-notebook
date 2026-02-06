@@ -57,7 +57,7 @@ This reveals whether bulk capacitance is sufficient for the load and how the reg
 - The regulator's dropout behavior affects holdup time as much as capacitance — they're a system
 - Microcontrollers may brown-out and reset before the rail actually drops below the regulator's output during holdup testing
 
-## Bench Relevance
+## In Practice
 
 - Battery that shows good open-circuit voltage but sags badly under load has high internal resistance — aged or undersized for the application
 - Capacitor with elevated ESR on a switcher output causes increased ripple even if capacitance is correct — check ESR first when debugging ripple

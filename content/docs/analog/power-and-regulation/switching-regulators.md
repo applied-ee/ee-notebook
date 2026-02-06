@@ -114,7 +114,7 @@ Switching regulator layout is critical — far more so than linear regulators. P
 - **EMI compliance** — Switching regulators are the #1 source of conducted and radiated EMI on most boards. Meeting EMI standards often requires input filters, shielding, and careful layout — all of which add cost and complexity
 - **Start-up and soft-start** — Inrush current during start-up can trip upstream protection or cause voltage dips. Most modern converters have soft-start features that ramp the output voltage slowly, but the soft-start time and behavior need to be appropriate for the application
 
-## Bench Relevance
+## In Practice
 
 - A converter that oscillates or has ringing on the output has loop stability problems — check compensation component values and verify against the datasheet
 - Output voltage that exceeds the target at light loads indicates minimum load isn't met — add a dummy load resistor

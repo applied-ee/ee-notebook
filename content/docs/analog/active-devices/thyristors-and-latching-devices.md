@@ -130,7 +130,7 @@ In power electronics, IGBTs and MOSFETs have largely replaced thyristors for new
 - **Minimum load current** — If the load current is less than the holding current, the thyristor drops out of conduction after every trigger pulse. This looks like erratic behavior — the device works at high power settings but flickers or fails at low settings
 - **Thermal considerations** — Thyristors have relatively high on-state voltage drops (1-2 V). At high currents, this means significant heat. Heatsinking is required for anything beyond a few amps
 
-## Bench Relevance
+## In Practice
 
 - A triac that conducts full power regardless of gate timing has commutation failure — add or increase the snubber
 - A thyristor that triggers erratically at low power settings but works at high settings is dropping below the holding current — increase the minimum load or use a different device

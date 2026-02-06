@@ -84,6 +84,6 @@ The key insight for low-power design is "race to sleep": a sensor node that wake
 - **Peripheral clock gating hides hard faults** — Accessing a peripheral register before enabling its clock causes a bus fault. The first thing to check during bringup
 - **Wake-up from stop mode restarts on the internal RC** — After exiting stop mode, the system clock is the internal oscillator, not the PLL. Firmware must re-initialize the clock tree before timing-sensitive peripherals can resume
 
-## Bench Relevance
+## In Practice
 
 A UART producing garbled output at a steady wrong baud rate almost always means the system clock is not what the firmware expects — typically the PLL was not configured or the crystal failed to start, leaving the MCU on its internal RC oscillator. A device that works on the bench but resets in the field often traces to a brownout: the supply dips below the BOR threshold under transient load, triggering a reset that looks like a power cycle. When firmware hangs at startup with no debug output, the external crystal is the first suspect — a bad solder joint or incorrect load capacitors can prevent oscillation entirely, and if the startup code waits for the crystal ready flag without a timeout, the MCU stalls before reaching `main()`. These symptoms are opaque until the clock and reset architecture is understood; once it is, the diagnosis follows directly from the reset cause register or a frequency measurement on the clock output pin.

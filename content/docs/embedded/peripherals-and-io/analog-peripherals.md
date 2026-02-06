@@ -111,7 +111,7 @@ The same DMA pattern works for DAC output — filling a buffer with waveform sam
 - **DAC output buffers add offset** — Enabling the on-chip DAC output buffer adds a few millivolts of offset and limits the output swing to slightly less than rail-to-rail
 - **DMA buffer alignment and volatility matter** — DMA writes to memory bypassing the CPU cache (on MCUs with cache). The buffer must be in a non-cacheable region or the cache must be invalidated before reading
 
-## Bench Relevance
+## In Practice
 
 - ADC readings that are consistently low (not just noisy) suggest insufficient sample time for the source impedance — try increasing sample time or adding a buffer amplifier
 - ADC noise that correlates with digital activity indicates poor VDDA filtering or layout — add filtering and verify supply cleanliness with a scope

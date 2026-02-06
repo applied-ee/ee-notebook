@@ -75,7 +75,7 @@ Headroom = clip point − nominal signal level.
 - DMM bandwidth limits apply — most are accurate only to a few hundred kHz
 - True RMS meters give correct readings on any waveshape; average-responding meters only accurate on sine waves
 
-## Bench Relevance
+## In Practice
 
 - Stage with no output indicates open coupling cap, dead device, or no power
 - Stage with unexpected gain indicates wrong component value or feedback problem

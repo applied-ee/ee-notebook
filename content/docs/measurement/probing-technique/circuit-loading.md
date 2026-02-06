@@ -64,7 +64,7 @@ A DMM measures current by inserting a low-value shunt resistor in series with th
 - 1x probes have much higher tip capacitance (~100 pF+) than 10x probes (~12–15 pF)
 - Auto-range switching changes the shunt resistance, which can cause transient current disturbances in sensitive circuits
 
-## Bench Relevance
+## In Practice
 
 - Voltage reading that drops when the meter is connected indicates significant loading — the source impedance is comparable to the meter's input impedance
 - Oscillator that stops or shifts frequency when probed indicates capacitive loading is affecting the circuit

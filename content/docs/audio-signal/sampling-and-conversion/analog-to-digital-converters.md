@@ -101,7 +101,7 @@ For MCU ADC peripherals, the sampling rate is often limited by the conversion ti
 - **Delta-sigma settling time** — After changing channels or input conditions, a delta-sigma ADC needs multiple output samples to settle its internal filters. Don't trust the first several readings after a change
 - **Don't confuse throughput with bandwidth** — A 1 Msps SAR ADC doesn't necessarily have 500 kHz analog bandwidth. The actual usable bandwidth depends on ENOB at the frequency of interest
 
-## Bench Relevance
+## In Practice
 
 - An ADC showing fewer distinct output levels than expected (staircase with missing steps) indicates DNL problems or missing codes
 - Noise floor higher than the theoretical quantization noise suggests clock jitter, reference noise, or analog front-end issues

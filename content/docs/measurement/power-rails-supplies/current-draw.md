@@ -44,7 +44,7 @@ DC/AC clamps (Hall sensor) can see DC but have limited bandwidth (< 100 kHz) and
 - Sense resistor inductance matters at high frequencies — use non-inductive types for fast transients
 - Ground-referenced scope probes measuring ground-side sense resistor may need differential probe or two-channel subtraction
 
-## Bench Relevance
+## In Practice
 
 - Current significantly higher than expected indicates possible short, latch-up, or component drawing excess current
 - Current significantly lower than expected indicates something isn't powering up or a connection is broken

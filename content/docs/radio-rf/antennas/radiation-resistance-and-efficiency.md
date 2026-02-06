@@ -122,7 +122,7 @@ For hobby purposes, the Wheeler cap method with a tin can is surprisingly practi
 - **Ground system losses are often the dominant loss** -- for HF vertical antennas, improving the ground radial system often helps more than improving the antenna element itself; going from 4 radials to 32 radials can improve efficiency by 3-6 dB
 - **FR4 substrate loss matters at GHz frequencies** -- a 2.4 GHz PCB antenna on FR4 (loss tangent ~0.02) might lose 1-2 dB in the substrate alone; low-loss substrates like Rogers or Isola make a measurable difference for efficiency-critical designs
 
-## Bench Relevance
+## In Practice
 
 - A NanoVNA showing VSWR 1.2:1 on a chip antenna does not confirm the antenna is radiating well -- a matched dummy load shows the same VSWR with zero radiation; a comparative range test is needed to verify actual performance
 - Measuring the feedpoint impedance of a shortened dipole reveals how rapidly radiation resistance drops -- a half-wave dipole shows ~73 ohms, while a 1/10-wave version shows only ~2 ohms at the feedpoint

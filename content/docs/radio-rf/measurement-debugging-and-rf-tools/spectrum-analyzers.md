@@ -78,7 +78,7 @@ When connecting a signal to a spectrum analyzer, the common things to check incl
 - **Cable loss is real** — A 3-foot RG-174 cable at 1 GHz loses about 1.5 dB. That loss makes the signal look weaker than it actually is. Characterize cables or use short, low-loss connections
 - **Confusing analyzer artifacts with real signals** — Every analyzer generates its own internal spurious responses. If a signal disappears when the center frequency is changed but the same input is maintained, it might be an analyzer artifact, not a real signal
 
-## Bench Relevance
+## In Practice
 
 - A transmitter that appears clean on an oscilloscope may reveal significant harmonic content 30-40 dB below the fundamental on a spectrum analyzer — harmonics strong enough to violate emission regulations
 - A noise floor that rises 3-6 dB when a switching regulator is powered up (compared to a linear supply) indicates broadband noise coupling from the supply into the RF signal path

@@ -107,7 +107,7 @@ In practice, FPGA designers use D flip-flops almost exclusively. ASIC designers 
 - **Asynchronous inputs are not debounced** — Mechanical switches connected to set/reset inputs will bounce, producing multiple triggers. Always debounce mechanical inputs before connecting to flip-flop control inputs
 - **Latch inference in HDL** — In hardware description languages, an incomplete if/else statement (one that doesn't cover all cases) infers a latch rather than a flip-flop. This is almost always a bug, not intentional. Synthesis tools usually warn about inferred latches
 
-## Bench Relevance
+## In Practice
 
 **Unpredictable behavior after power-up that clears after a manual reset** often traces to uninitialized flip-flops — the hardware started in a random state that the design did not account for. Once the reset forces every flip-flop to a known value, the circuit operates normally because the logic itself is correct.
 

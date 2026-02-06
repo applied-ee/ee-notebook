@@ -67,7 +67,7 @@ The ADC input is typically the most vulnerable node in the signal chain. Overvol
 - **AC coupling creates low-frequency rolloff** — The coupling capacitor and bias resistors form a high-pass filter. For 20 Hz audio with 100 kΩ bias: C ≥ 1/(2π × 20 × 50k) ≈ 160 nF (using parallel R of 50 kΩ). Use the next standard value up
 - **Protection adds parasitic capacitance** — Clamp diodes and TVS devices add capacitance to the ADC input, potentially limiting bandwidth or affecting the anti-alias filter response. Account for this in the filter design
 
-## Bench Relevance
+## In Practice
 
 - An ADC that shows noisy or inconsistent readings from a high-impedance source likely has settling time issues — add a buffer or reduce source impedance
 - Clipping on only one polarity of a signal indicates incorrect DC biasing or an asymmetric input range

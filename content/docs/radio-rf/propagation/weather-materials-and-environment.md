@@ -128,7 +128,7 @@ Several environmental factors change with time:
 - **Ice on the antenna is worse than ice in the path** — Detuning from ice on the antenna elements can cost 3-10 dB, while ice in the air path has negligible effect at most frequencies; protect the antenna, not the air space
 - **Soil moisture affects ground-mounted and buried antennas dramatically** — A ground-plane antenna on wet soil has different impedance and radiation characteristics than on dry soil; if the antenna is at or near ground level, expect performance to vary with weather
 
-## Bench Relevance
+## In Practice
 
 - Monitoring a long-running outdoor link's RSSI alongside a rain gauge produces a clear correlation above 10 GHz — signal drops appear during heavy rain and recover as the rain stops
 - A VNA sweep of a dish antenna before and after spraying it with water shows the resonant frequency shift and increased return loss caused by moisture on the antenna surface

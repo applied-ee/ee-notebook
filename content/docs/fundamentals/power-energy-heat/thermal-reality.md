@@ -73,7 +73,7 @@ The spectacular failures (magic smoke, fire, package cracking) happen when therm
 - Copper pours help — PCB copper area acts as a heatsink. Datasheets for power components often specify minimum copper area. Skimping on copper area reduces the effective power rating
 - Transient thermal behavior — Thermal mass provides short-term protection. A component can survive brief power pulses above its continuous rating because it takes time to heat up. But thermal mass runs out — this is borrowed time, not a design margin
 
-## Bench Relevance
+## In Practice
 
 - A component too hot to touch comfortably is above ~60°C — investigate the power path
 - Burning immediately on contact indicates 70-80°C or higher — likely approaching or exceeding limits

@@ -206,7 +206,7 @@ GPIO pins operate in a physical world of voltage levels, capacitance, and protec
 - **Internal pull resistors have wide tolerances** — The datasheet may specify a pull-up of "20-50 kohm." If a circuit depends on a precise pull value (for instance, forming a voltage divider with a sensor output), use an external resistor with a known value instead
 - **ESD protection diodes are not voltage clamps** — The internal diodes protect against brief transients, not sustained overvoltage. Connecting a 5 V signal to a non-tolerant 3.3 V pin forward-biases the ESD diode continuously, injecting current into VDD and potentially damaging the MCU
 
-## Bench Relevance
+## In Practice
 
 - A pin that reads the wrong value despite correct configuration may be in the wrong alternate function mode — verify the mux register setting
 - Intermittent glitches on GPIO outputs under interrupt load suggest read-modify-write races — switch to set/clear registers

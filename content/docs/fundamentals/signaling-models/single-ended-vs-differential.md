@@ -179,7 +179,7 @@ That said, shielding and differential signaling are even more effective in combi
 - **Single-ended signals don't have zero common-mode noise — they have uncontrolled common-mode noise.** The ground reference in a single-ended system carries the common-mode noise, but there's no cancellation mechanism. The receiver sees all of it
 - **Converting between single-ended and differential requires active circuitry or a transformer.** Connecting one wire to ground does not make a signal differential. A proper single-ended to differential converter (balun, differential amplifier, or dedicated driver IC) generates the complementary signal
 
-## Bench Relevance
+## In Practice
 
 **Noise appearing equally on both lines of a differential pair** is common-mode — the receiver rejects it, and it does not degrade the signal unless it exceeds the receiver's common-mode input range or converts to differential-mode through path asymmetry.
 

@@ -161,7 +161,7 @@ The radio is by far the largest power consumer on a BLE SoC. Minimizing radio-on
 - **BLE stacks consume significant RAM** — Nordic's SoftDevice uses 8-20 KB depending on configuration. On 32 KB RAM MCUs, this is a substantial fraction
 - **Interference in the 2.4 GHz band** — BLE shares the band with WiFi, microwave ovens, and Zigbee. Connection quality can degrade in noisy environments
 
-## Bench Relevance
+## In Practice
 
 - A device that connects but transfers data very slowly likely has not negotiated a larger MTU — check MTU after connection
 - iOS devices that fail to see updated GATT services have cached the old structure — "forget" the device in Settings and reconnect

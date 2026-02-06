@@ -109,7 +109,7 @@ IC failures are usually diagnosed by exclusion — verify everything around the 
 | Connector | Corroded / worn | Intermittent, position-sensitive | Wiggle test, continuity |
 | IC | Various | Wrong outputs despite correct inputs | Verify all inputs first |
 
-## Bench Relevance
+## In Practice
 
 - **An IC that works for weeks and then fails without any change in operating conditions** often indicates cumulative downward damage — electromigration, oxide degradation, or solder joint fatigue that has been progressing since initial deployment, finally reaching the threshold where the circuit can no longer function.
 - **A gradually increasing error rate over weeks or months** often indicates aging at the primitive level — a solder joint developing a fatigue crack, a capacitor losing capacitance, a connector contact corroding — propagating upward through the hierarchy as a gradually worsening performance metric at the system level.

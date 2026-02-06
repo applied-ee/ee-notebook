@@ -146,7 +146,7 @@ For designs requiring SI discipline:
 - **Differential pairs are not just "two wires"** — Differential impedance depends on the coupling between the two traces (spacing), not just individual trace impedance. The PCB stackup must specify both single-ended and differential impedance
 - **Edge rate is set by the driver, not the clock frequency** — A 74AUC buffer produces ~0.5 ns edges regardless of whether the signal is toggling at 1 MHz or 100 MHz. Don't use faster logic families than necessary
 
-## Bench Relevance
+## In Practice
 
 - Ringing on signal edges (damped oscillation) indicates unterminated transmission line reflections — add appropriate termination
 - Overshoot that triggers double-clocking or data corruption suggests reflections crossing the input threshold

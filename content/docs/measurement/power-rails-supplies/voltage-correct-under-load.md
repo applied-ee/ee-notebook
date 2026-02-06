@@ -36,7 +36,7 @@ Observe initial droop depth, recovery time, and any ringing or overshoot.
 - AC coupling can zoom in on transients but distorts slow events due to coupling time constant
 - If the load step is very fast (nanoseconds), probe artifacts may dominate — compare with a slower load step
 
-## Bench Relevance
+## In Practice
 
 - Rail that measures correct at idle but sags under load indicates regulation or capacity problem — check regulator headroom
 - Large transient droop with slow recovery suggests insufficient output capacitance or high ESR

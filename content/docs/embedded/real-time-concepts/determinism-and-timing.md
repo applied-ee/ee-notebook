@@ -106,7 +106,7 @@ The test setup matters. Run the system under realistic load with all features ac
 - **SysTick is not free** — The RTOS tick interrupt fires at 1 kHz (typically) and takes time to execute. On systems with tight microsecond-level deadlines, the SysTick ISR is another jitter source
 - **Toggling a GPIO for measurement adds its own latency** — GPIO set/clear instructions take a few nanoseconds on most Cortex-M cores, but if the GPIO is on a slow peripheral bus, the write may take longer. Use a fast-bus GPIO for timing instrumentation
 
-## Bench Relevance
+## In Practice
 
 - A control loop that occasionally misses deadlines despite adequate average margin has WCET exceeding the budget — measure under stress conditions
 - Periodic tasks with timing drift likely use delay loops instead of timer interrupts — switch to hardware timer-driven execution

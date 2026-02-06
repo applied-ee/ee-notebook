@@ -88,7 +88,7 @@ Same exponential behavior, but for current in an inductor. After one time consta
 - Time constants assume linear circuits — The exponential response assumes constant R and C (or L and R). Nonlinear elements (voltage-dependent capacitance, current-dependent inductance) change the dynamics
 - Supercapacitors bridge the gap — With farads of capacitance, supercaps can provide seconds to minutes of holdup. But they have limited voltage ranges and high ESR compared to batteries
 
-## Bench Relevance
+## In Practice
 
 - A circuit that works during continuous operation but fails on power-up suggests inrush current issues
 - Voltage droop on a power rail after the supply is disconnected indicates how much holdup time the bulk capacitance provides

@@ -72,7 +72,7 @@ Remove the component from circuit, set LCR meter to inductance mode at appropria
 - Zero-ohm resistors (jumpers) look identical to inductors under the DMM — check inductance
 - Very small ceramic capacitors (< 100 pF) may read as open on a DMM
 
-## Bench Relevance
+## In Practice
 
 - Resistance measurement that differs from color code by more than tolerance indicates drift or damage
 - Capacitor measuring correct value but circuit still misbehaves suggests ESR or voltage derating issue — DMM capacitance doesn't reveal these

@@ -124,7 +124,7 @@ This is a quick bench technique when a TDR or VNA is not available.
 - **SMA connectors have a torque specification** — SMA connectors must be tightened to 5-8 in-lb (0.56-0.90 N-m) with a torque wrench; hand-tight connections have inconsistent contact resistance that produces measurement artifacts, especially above 6 GHz
 - **Open and short calibration standards are not perfect** — They have their own parasitic capacitance and inductance, which is accounted for in the calibration model; using an unknown open (like an unconnected cable end) as a calibration standard introduces systematic error
 
-## Bench Relevance
+## In Practice
 
 - A TDR trace that shows a sudden impedance step at a known connector location confirms a damaged or improperly torqued connector — retorquing or replacing it and re-measuring provides immediate verification
 - Measuring S11 on a VNA and seeing a result that slowly drifts during repeated sweeps (without touching anything) indicates calibration drift, often caused by temperature changes or a flexing test cable

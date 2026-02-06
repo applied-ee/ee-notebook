@@ -114,7 +114,7 @@ See the parameter matching guidelines above. Beyond electrical parameters:
 - **Re-check bias voltages after substitution** -- A replacement transistor with different beta or V_BE can shift the bias point of a stage. Measure the DC operating voltages after replacement and compare to the expected values (or the values measured before the original part failed)
 - **Document everything** -- Take photos, draw schematics, record measurements. Legacy repair often spans multiple sessions, and information captured now saves hours of re-work later
 
-## Bench Relevance
+## In Practice
 
 - A stage that worked before a transistor substitution but now clips or oscillates likely has a shifted bias point -- compare the collector voltage of the replacement to the value recorded before the swap
 - Wide copper pours and large traces on a board indicate power and ground paths; narrow traces indicate signal routing -- this distinction speeds up the initial power-rail identification step

@@ -95,7 +95,7 @@ For compact products, the choice between wire antennas, PCB trace antennas, and 
 - **Yagi gain claims are often exaggerated** -- a manufacturer claiming 15 dBi for a 5-element Yagi is almost certainly overstating; check the boom length and compare to published Yagi gain curves
 - **Matching is part of the antenna, not separate** -- a chip antenna or PCB antenna with a required matching network should be evaluated as a system; the matching network loss reduces the effective gain; a chip antenna with 2 dBi gain and a 1 dB matching loss gives 1 dBi in practice
 
-## Bench Relevance
+## In Practice
 
 - Measuring a vertical monopole's VSWR while varying the ground plane size reveals how impedance depends on the ground plane -- expect the match to degrade noticeably when the ground plane is smaller than a quarter wavelength
 - Swapping a chip antenna for a quarter-wave whip on the same PCB typically shows a measurable improvement in received signal, illustrating the efficiency tradeoff of miniaturization

@@ -113,7 +113,7 @@ A buzzer mounted in an enclosure with a small port (Helmholtz resonator) can be 
 - Back-EMF from speakers — A speaker is also a microphone and a generator. Sound hitting the cone generates a voltage. Moving the cone by hand generates a voltage. In some circuits, this back-EMF can feed back into the amplifier and cause unexpected behavior
 - Piezo elements are microphonic — Mechanical vibration produces voltage on the piezo element's terminals, which can couple back into the circuit as noise. This is a feature in sensors but a bug in buzzer applications where the mounting is subject to vibration
 
-## Bench Relevance
+## In Practice
 
 - A speaker that draws excessive current when driven suggests a shorted voice coil
 - A piezo buzzer that's quiet may be driven at the wrong frequency — sweep frequency to find the resonance

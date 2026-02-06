@@ -90,7 +90,7 @@ Drawing a level diagram before building the system reveals gain staging problems
 - **Automatic gain control (AGC) masks problems** — AGC adjusts gain to maintain a constant output level. This is useful for recording, but it makes it impossible to judge the raw signal quality. AGC can boost noise during quiet passages and compress dynamic range in ways that aren't always desirable
 - **Clipping in one channel affects all channels in shared stages** — A summing bus, shared power supply, or multiplexed ADC can clip from one channel's signal and affect others. System headroom must account for worst-case combined signals
 
-## Bench Relevance
+## In Practice
 
 - Distortion that increases with signal level but not frequency suggests clipping in the signal chain — find the stage where headroom is exhausted
 - A signal chain that measures well with test tones but sounds bad with music may have insufficient headroom for peaks (music has higher crest factor than test tones)

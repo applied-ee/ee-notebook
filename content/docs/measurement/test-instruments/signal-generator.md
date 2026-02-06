@@ -66,7 +66,7 @@ Most modern signal generators include both DDS and AWG functions in the same box
 - **Triggering the scope from the generator's sync output adds jitter** — For precise timing measurements, trigger from the main output instead and use the scope's trigger level to catch the waveform directly
 - **Modulation depth and frequency interact** — At high modulation depths or fast modulation rates, some generators produce artifacts because the DAC or output amplifier runs into slew-rate limits
 
-## Bench Relevance
+## In Practice
 
 - A filter whose measured response does not match simulation may be seeing distortion from the generator — check the stimulus purity by connecting the generator directly to the scope and measuring THD (or looking at the FFT) before blaming the filter
 - When a circuit behaves differently at "the same frequency" from different generators, the difference is usually in the rise time, harmonic content, or output impedance — not the fundamental frequency

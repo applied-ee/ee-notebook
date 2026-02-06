@@ -108,7 +108,7 @@ Reading a map file for the first time is overwhelming — they are long and dens
 - **`objcopy` binary output does not encode the base address** — If flash is at 0x08000000 and the `.bin` is flashed at 0x00000000, the firmware will not run and the programmer gives no error. Intel HEX avoids this problem
 - **Newlib pulls in more than expected** — The default C library for `arm-none-eabi-gcc` is newlib, which includes full `printf` with floating-point support. A single `printf` call can add 20-50 KB of flash usage
 
-## Bench Relevance
+## In Practice
 
 - Firmware that faults immediately after flashing with a custom Makefile may be missing the `-mthumb` flag
 - A bug that disappears at `-O0` and reappears at `-O2` indicates undefined behavior or missing `volatile` — not a compiler bug

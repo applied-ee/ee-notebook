@@ -132,7 +132,7 @@ RF cables are more fragile than they appear:
 - **Cable assemblies degrade over time** — Connector wear, moisture ingress, UV damage to the jacket, and repeated flexing all increase loss and impedance irregularities
 - **Do not coil excess cable at RF** — A coil of cable acts as an inductor at lower frequencies and a common-mode choke; if there is excess cable length, route it in a non-inductive pattern (figure-8) or cut it to length, since excess cable also adds unnecessary loss
 
-## Bench Relevance
+## In Practice
 
 - Measuring S21 insertion loss on a cable at the operating frequency — and comparing it against the datasheet specification — immediately reveals whether the cable is degraded or whether a different cable type is needed for the link budget
 - A TDR sweep along a cable that shows a localized impedance bump at a connector or bend point pinpoints physical damage that would be invisible to a simple continuity check

@@ -92,7 +92,7 @@ Working effectively at RF requires a fundamental change in how circuits are unde
 - **Resonances hide until frequency is swept** — A cavity resonance at 2.1 GHz will not show up when testing only at 915 MHz. Broadband sweeps and EMC pre-scans are the only way to find unexpected resonances before they cause problems in the field
 - **The "same" circuit works differently on different boards** — Layout differences, ground plane integrity, stackup changes, and even solder mask thickness can shift RF behavior. If a proven design stops working on a new board revision, the layout and fabrication are the first places to look, not the components
 
-## Bench Relevance
+## In Practice
 
 - A circuit whose behavior changes when touched or when a hand is brought near it has a high-impedance node coupling to the environment — this identifies the source of instability
 - An oscillator whose frequency shifts when a nearby cable is moved has parasitic coupling to that cable — the cable is part of the resonant circuit

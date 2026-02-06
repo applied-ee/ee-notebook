@@ -68,7 +68,7 @@ Bridge outputs are small — 1–3 mV/V at full scale. A 10V excitation at full 
 - Lead resistance matters for bridge sensors — use 4-wire connection for long cable runs
 - Temperature affects strain gauges — allow thermal equilibration before measuring
 
-## Bench Relevance
+## In Practice
 
 - Sensor output that doesn't change with stimulus indicates disconnected, dead, or wrong sensor type
 - Output that changes smoothly with stimulus confirms sensor is working — check magnitude against datasheet

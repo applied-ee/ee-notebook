@@ -73,7 +73,7 @@ Capacitors provide short-term energy during supply interruptions. Energy = ½CV�
 - Capacitors in series halve the capacitance but double the voltage rating — Useful for AC mains work. But the voltage division is only equal if the capacitors are identical. Mismatched caps get unequal voltage sharing, and one might see more than its rating
 - Temperature and aging effects are almost always larger than expected — a design that works on the bench at 25°C may fail in the field at 60°C, and the failure will trace back to a component whose parameter shifted outside the assumed range
 
-## Bench Relevance
+## In Practice
 
 - A swollen or bulging electrolytic cap is failing — replace it
 - An electrolytic that measures correct capacitance but high ESR is at end of life

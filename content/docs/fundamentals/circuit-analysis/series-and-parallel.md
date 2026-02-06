@@ -71,7 +71,7 @@ Some networks (bridges, T-networks, pi-networks) can't be fully reduced by serie
 - Real components aren't purely R, C, or L — A real capacitor in a series chain adds its ESR as a series resistance and its ESL as a series inductance. At some frequency, this changes the effective impedance significantly
 - Don't over-simplify for AC — At AC, impedances are needed, not just resistances. A 1 kΩ resistor in parallel with a 100 nF cap has different equivalent impedance at every frequency. Series/parallel reduction still works, but with complex numbers
 
-## Bench Relevance
+## In Practice
 
 - A measured resistance that doesn't match the expected series/parallel combination suggests a component is out of tolerance, damaged, or there's a parallel path not accounted for
 - Unexpected voltage at a node often means the assumed series/parallel model is missing a load or leakage path

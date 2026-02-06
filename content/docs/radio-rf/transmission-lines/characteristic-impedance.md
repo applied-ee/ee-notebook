@@ -101,7 +101,7 @@ In practice, nothing is perfectly matched. A connector might be 49.5 ohm instead
 - **Connector choice must match the system impedance** — Mixing 50 ohm and 75 ohm connectors and cables creates a 6 dB return loss mismatch at every interface; BNC connectors come in both 50 and 75 ohm versions that are physically compatible but electrically mismatched
 - **Via transitions disrupt Z0** — A via through a PCB is not a transmission line with controlled Z0; it is a short, uncontrolled-impedance structure (typically 25-40 ohm for a standard via in FR4), and at frequencies where the via is electrically significant, this discontinuity causes reflections
 
-## Bench Relevance
+## In Practice
 
 - A TDR trace that dips at a via location reveals the impedance drop caused by the via's uncontrolled geometry — a common sight on high-speed PCB measurements
 - Measuring a microstrip test coupon with and without solder mask shows the 2-5 ohm impedance shift directly on a TDR or VNA

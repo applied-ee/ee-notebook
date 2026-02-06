@@ -49,7 +49,7 @@ DMM frequency bandwidth is limited — typically a few hundred kHz to 10 MHz dep
 - Temperature affects all oscillators — crystal oscillators drift tens of ppm across the operating range; RC oscillators drift hundreds or thousands of ppm
 - Startup time matters — some oscillators take milliseconds to seconds to stabilize; don't judge frequency during the startup transient
 
-## Bench Relevance
+## In Practice
 
 - Frequency off by a large amount (>1%) on a crystal oscillator indicates wrong crystal, wrong load capacitors, or crystal damage
 - Frequency drifting continuously indicates oscillator hasn't stabilized or has a temperature problem

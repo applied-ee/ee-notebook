@@ -116,7 +116,7 @@ At frequencies below about 5 GHz, chamfered bends are usually adequate. Above 10
 - **Coplanar ground must connect to the ground plane** — CPW ground copper on the same layer needs frequent via connections to the ground plane below; without them, the coplanar ground floats and the impedance is undefined
 - **Fabrication etch varies across the panel** — Trace width may differ between the center and edge of a PCB panel by 0.5-1 mil; for tight-tolerance designs, specify where on the panel the board should be placed, or accept that edge boards may have wider tolerances
 
-## Bench Relevance
+## In Practice
 
 - A TDR measurement showing impedance deviations along an RF trace (bumps above or below 50 ohms) directly reveals trace width errors or stackup mismatches
 - Return loss worse than -15 dB on a VNA sweep across a connector or transition often indicates an uncontrolled pad-to-trace taper or incorrect trace width

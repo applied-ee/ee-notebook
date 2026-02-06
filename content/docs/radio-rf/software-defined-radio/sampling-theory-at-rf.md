@@ -112,7 +112,7 @@ At 100 MHz with 1 ps of jitter, the SNR ceiling is about 64 dB. No amount of ADC
 - **Decimation requires computation** — The processing gain from oversampling is not free; the digital decimation filter must process every sample at the full rate before outputting at the reduced rate, and higher oversampling ratios demand more computational power
 - **The 6.02N + 1.76 formula assumes ideal conditions** — Real ADCs with real clocks at real frequencies rarely achieve theoretical SNR; ENOB (effective number of bits) from the datasheet, measured at the frequency of interest, is the correct figure to use rather than the headline bit count
 
-## Bench Relevance
+## In Practice
 
 - When an unexpected signal appears in the passband and does not shift with retuning, it is likely an alias of an out-of-band signal folding through inadequate anti-alias filtering
 - A noise floor that drops noticeably when narrowing the SDR software bandwidth (without changing sample rate) demonstrates processing gain from decimation in real time

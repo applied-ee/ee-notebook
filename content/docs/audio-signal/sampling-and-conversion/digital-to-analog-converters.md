@@ -83,7 +83,7 @@ When a DAC changes output code, the transition is not instantaneous:
 - **Differential outputs need proper termination** — High-speed current-steering DACs have differential outputs that must be terminated correctly. Impedance mismatches create reflections and even-order distortion
 - **Don't ignore the update rate** — A DAC that can output 16-bit values but only updates at 1 kHz produces a staircase with 1 ms steps. For smooth analog output, the update rate must be much higher than the signal frequency
 
-## Bench Relevance
+## In Practice
 
 - Visible glitches on major code transitions indicate a binary-weighted DAC without deglitching — consider adding a sample-and-hold or switching to a segmented architecture
 - A DAC output that doesn't reach the expected voltage suggests reference or output amplifier issues

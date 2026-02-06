@@ -56,7 +56,7 @@ Ohm’s law isn’t wrong in these cases — it’s just incomplete or only vali
 - **Contact resistance** — Probes, connectors, and corroded joints add unaccounted resistance. A measurement may include resistance that isn't in the schematic
 - **Temperature dependence** — Resistance changes with temperature. A wire-wound resistor's value at room temperature isn't the same as its value at 150 C under load
 
-## Bench Relevance
+## In Practice
 
 **An unexpected voltage drop across a wire, trace, or connector** often points to resistance that isn't in the schematic. V = IR applied to the measured drop and known current gives the parasitic resistance directly — trace resistance, contact resistance, or a degraded solder joint.
 

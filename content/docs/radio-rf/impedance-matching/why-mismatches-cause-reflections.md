@@ -95,7 +95,7 @@ Mismatch loss — the power that fails to reach the load due to reflection — i
 - **A perfect match at one frequency may be terrible at another** — If the load impedance varies with frequency (as most antennas do), the match quality varies too. Always check VSWR across the intended operating bandwidth, not just at center frequency
 - **Return loss and insertion loss are different things** — Return loss measures reflected power. Insertion loss measures power not delivered to the load (including both reflection and dissipation). A lossy matched cable has low return loss but high insertion loss
 
-## Bench Relevance
+## In Practice
 
 - An SWR meter needle rising above 3:1 during transmission typically triggers the radio's foldback protection, visibly reducing output power — a direct sign of significant reflections
 - On a TDR trace, a sharp upward step indicates a high-impedance discontinuity (partial open) and a downward step indicates a low-impedance discontinuity (partial short), pinpointing the physical location of the mismatch

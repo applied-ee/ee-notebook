@@ -119,7 +119,7 @@ Not all paths need to complete in one clock cycle.
 - **Timing constraints must be specified correctly** — in FPGA design, the constraints file (SDC or XDC format) tells the tools what clock frequencies, IO timing, and exceptions to check. Incorrect or incomplete constraints can produce a design that meets its constraints but fails in hardware
 - **Metastability from timing violations is probabilistic** — a marginal setup violation doesn't always fail. It fails with some probability that increases as the margin decreases, making timing violations difficult to reproduce — the design may work "most of the time" but fail under specific conditions
 
-## Bench Relevance
+## In Practice
 
 **Intermittent bit errors that shift with temperature or supply voltage** point to marginal setup or hold timing. Small environmental changes move the data transition into the forbidden window around the clock edge, causing the flip-flop to occasionally capture the wrong value.
 

@@ -70,7 +70,7 @@ This assumes a single-pole (first-order) rolloff. Higher-order systems have a di
 - Datasheets specify bandwidth under specific conditions (gain setting, load, supply voltage, temperature) — match test conditions before concluding the part is underperforming
 - "Gain-bandwidth product" for op-amps means bandwidth depends on closed-loop gain — at gain of 10, bandwidth is 1/10th of the GBW product
 
-## Bench Relevance
+## In Practice
 
 - Bandwidth lower than datasheet spec suggests parasitic capacitance, loading, or component tolerance issues
 - Bandwidth significantly higher than expected with peaking indicates marginal stability — the system is close to oscillating

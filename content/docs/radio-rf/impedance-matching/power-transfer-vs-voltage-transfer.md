@@ -79,7 +79,7 @@ Audio systems operating at RF carrier frequencies (like in audio-over-fiber or d
 - **Receive systems can tolerate more mismatch than transmit systems** — A 3:1 VSWR on a receive antenna wastes about 25% of available signal power, which is only about 1.25 dB. The same mismatch on a transmitter wastes real watts and generates heat
 - **Mixing paradigms at an interface causes problems** — Driving a 50-ohm transmission line from a high-impedance audio output creates reflections. The cable doesn't know it's carrying audio — it only knows the impedances are wrong for its characteristic impedance
 
-## Bench Relevance
+## In Practice
 
 - A transmitter into a mismatched antenna shows elevated reflected power on an SWR meter and the PA may fold back or shut down — this is the power transfer problem made visible
 - Connecting a 75-ohm video cable to a 50-ohm instrument input produces a small but measurable amplitude ripple across frequency on a VNA sweep, confirming the impedance mismatch

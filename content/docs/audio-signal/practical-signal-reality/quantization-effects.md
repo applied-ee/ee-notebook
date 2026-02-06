@@ -86,7 +86,7 @@ Each doubling of the sample rate improves SNR by 3 dB (= ½ bit). Getting one ex
 - **Re-dithering at every bit-depth reduction** — If a signal is reduced from 24 to 20 bits, then later from 20 to 16 bits, dither should be applied at each reduction. But the accumulated dither noise is higher than a single 24-to-16-bit dithered conversion. Minimize the number of bit-depth reductions
 - **Fixed-point DSP accumulates quantization error** — Every multiply-and-round operation in fixed-point arithmetic introduces quantization error. Long filter chains or recursive (IIR) structures accumulate this error. Use wider accumulators (40-bit or 64-bit) for intermediate calculations, and only truncate/round at the final output
 
-## Bench Relevance
+## In Practice
 
 - Audio that sounds harsh or metallic at low levels but clean at high levels indicates quantization distortion — add dither or use more bits
 - A spectrum showing harmonics of a low-level sine wave that disappear when dither is added confirms quantization distortion

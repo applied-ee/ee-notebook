@@ -136,7 +136,7 @@ Leaving a transmission line unterminated is the most common signal integrity mis
 - **The return path must not be neglected** — A termination resistor to "ground" must have a low-impedance path to the actual ground plane; a via directly under the resistor pad is ideal, and a long trace to a distant ground point adds inductance that defeats the termination
 - **Differential termination needs a resistor between the pair, not just to ground** — A 100 ohm differential pair is terminated with a 100 ohm resistor between the two lines, not with two 50 ohm resistors to ground (which would be common-mode termination only)
 
-## Bench Relevance
+## In Practice
 
 - On an oscilloscope, the characteristic two-step staircase waveform at the far end of a series-terminated line is visible — the signal steps to half amplitude on the incident wave and settles to full amplitude after one round-trip delay
 - Ringing that persists on a multi-drop bus with series termination (and disappears when switching to parallel termination) confirms that mid-line receivers are seeing the reflected intermediate state

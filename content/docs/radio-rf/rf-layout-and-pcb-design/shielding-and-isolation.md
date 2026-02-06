@@ -105,7 +105,7 @@ The transition frequency is not sharp. In practice, for RF work above 100 MHz, a
 - **Shield can resonances can fall on the operating frequency** — A 20 mm x 20 mm shield can has a first resonance around 5-7 GHz depending on height and fill; if the circuit operates near that frequency, the shield amplifies instead of attenuating; add absorber material or partition the can
 - **Slots in shield seams are worse than holes** — A 0.5 mm gap running the length of a shield can seam is an efficient slot antenna; ensure seam continuity with solder or conductive gaskets
 
-## Bench Relevance
+## In Practice
 
 - A near-field probe scan that shows unexpectedly high emissions from a shielded section often indicates insufficient ground vias around the shield can perimeter, turning it into a resonant cavity
 - Removing a shield can lid and observing improved (not degraded) performance is a strong sign that the can was resonating at the operating frequency

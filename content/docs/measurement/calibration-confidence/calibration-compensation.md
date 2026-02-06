@@ -68,7 +68,7 @@ Most hobbyists never formally calibrate meters. For bench electronics work, fact
 - If two meters disagree, the one with more recent calibration wins — otherwise check both against known reference
 - Cheap meters may never have been properly calibrated at factory
 
-## Bench Relevance
+## In Practice
 
 - Square wave with droopy corners indicates under-compensated probe — adjust before trusting any waveform
 - Square wave with overshoot indicates over-compensated probe — adjust to flat corners

@@ -106,7 +106,7 @@ A solid ground plane under signal traces:
 - **Solder joints are connections** — Cold solder joints, cracked joints, and corroded joints add resistance and create intermittent connections. A circuit that works with new solder may fail after thermal cycling
 - **"It worked on the breadboard" means nothing** — Breadboards have high parasitic capacitance (often 5-10 pF between adjacent rows), high trace inductance, and long ground paths. A circuit that works on a breadboard despite these parasitics is robust. A circuit that only works on a breadboard is relying on parasitics that won't exist on the PCB (and vice versa)
 
-## Bench Relevance
+## In Practice
 
 - A circuit that works in simulation but not on the PCB is likely affected by parasitics the model doesn't include
 - Oscillation that appears only on certain PCB layouts points to layout-dependent parasitic feedback

@@ -105,7 +105,7 @@ Circuits that aren't designed as filters still have frequency-dependent behavior
 - **Phase margin is hard to measure directly** — In a closed-loop system, injecting a signal into the feedback loop without breaking it is difficult. Loop-breaking techniques (like Middlebrook's method) exist but require careful setup
 - **Frequency response changes with operating point** — A transistor amplifier's bandwidth depends on its bias current. An op-amp's bandwidth depends on its closed-loop gain. The frequency response measured at one operating point may not apply at another
 
-## Bench Relevance
+## In Practice
 
 - Overshoot on a step response indicates gain peaking — measure the frequency response to locate the resonance
 - Slow rise time compared to calculations suggests bandwidth is limited by the measurement equipment, not the circuit

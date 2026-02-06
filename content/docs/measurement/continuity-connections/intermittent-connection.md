@@ -61,7 +61,7 @@ This reveals dropout duration (microseconds vs milliseconds), the nature of the 
 - Setting scope trigger correctly is critical — too sensitive triggers on noise, too loose misses the fault
 - "I reflowed everything and it works now" is valid repair but without identifying the exact joint, the fault may return
 
-## Bench Relevance
+## In Practice
 
 - Beep that cuts out when flexing a specific board area localizes the fault to that region
 - Resistance that jumps when tapping near a component indicates that joint or nearby trace is marginal

@@ -315,7 +315,7 @@ MCU DAC ── series resistor (1kΩ) ── AC coupling cap (10µF) ── outp
 - **Ground voltage between systems can drift with load** -- A DMM may show 0V between the grounds at idle, but once the interface is active, 500 mV of offset appears because the interface cable carries return current through a high-impedance path. Measure the ground offset with the interface active and current flowing, not just at idle
 - **USB ground is not isolated** -- USB-connected devices share ground with the host PC. If the legacy system has a ground offset relative to the PC, that offset appears across the interface. A USB isolator module (such as one based on the ADUM4160) breaks this connection
 
-## Bench Relevance
+## In Practice
 
 - An MCU that resets or locks up when a relay on the same board switches likely has insufficient flyback protection or poor ground routing -- check the flyback diode polarity and placement, and monitor the supply rail on a scope during relay switching
 - A 4-20 mA reading that shows 0 mA indicates a broken wire or dead transmitter, not a zero measurement -- firmware should flag any reading below 4 mA as a fault condition

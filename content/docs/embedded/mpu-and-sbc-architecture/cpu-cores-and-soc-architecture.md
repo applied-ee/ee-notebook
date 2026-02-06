@@ -70,7 +70,7 @@ The pattern across these families: the choice involves a combination of silicon 
 - **SoC documentation is often under NDA or incomplete** — Expect to discover missing information through experimentation
 - **Thermal throttling on small SBCs limits sustained performance** — A Cortex-A72 in a fanless case throttles within minutes under sustained load. Quoted clock speed is a peak, not a sustained guarantee
 
-## Bench Relevance
+## In Practice
 
 - Performance that varies unpredictably under similar conditions suggests cache behavior differences — run timing tests multiple times and look at worst case, not average
 - A multi-core SoC with one core at 100% and others idle indicates a single-threaded workload — parallelizing will help, but only if the workload is parallelizable

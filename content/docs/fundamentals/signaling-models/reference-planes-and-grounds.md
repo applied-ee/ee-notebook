@@ -143,7 +143,7 @@ In an unfamiliar schematic, ground symbols may not all refer to the same net. It
 
 - **Isolated power supplies don't guarantee floating operation.** An isolated DC-DC converter provides galvanic isolation at the power supply — but if the output ground connects to earth through any other path (a USB cable, a signal cable, a chassis connection), the system is no longer floating
 
-## Bench Relevance
+## In Practice
 
 **An unexplained DC offset between two instruments connected by a signal cable** usually indicates a ground potential difference. The two instruments reference different ground points at different potentials, and the cable's ground conductor carries the resulting current, developing an offset voltage.
 

@@ -107,7 +107,7 @@ Train to convert fluently. Mixing up prefixes during calculation is a common sou
 - Percent vs. ppm — 1% = 10,000 ppm. Temperature coefficients in ppm/°C and tolerance in percent are measuring the same kind of thing at different scales
 - Angular frequency vs. frequency — ω = 2πf. Forgetting the 2π gives an answer that's off by a factor of 6.28. Some formulas use ω, some use f. Know which one is expected
 
-## Bench Relevance
+## In Practice
 
 - A measurement that's off by exactly 1000× usually indicates a prefix conversion error
 - Component values that seem wrong often trace back to milli/micro confusion on the label or schematic

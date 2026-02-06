@@ -112,7 +112,7 @@ Each failure above points to a general debugging principle. When an RF circuit d
 - **Intermittent problems that "go away"** — An intermittent failure that disappears on its own will return. Document the conditions (temperature, cable position, mechanical stress) that triggered it and design a test to reproduce it reliably
 - **Not documenting failures** — Every failure is data. Record what happened, what was measured, and what fixed it. The next time a similar symptom appears, those notes are more valuable than any textbook
 
-## Bench Relevance
+## In Practice
 
 - A parasitic oscillation shows up as an unexpected spectral peak on a wide-span spectrum analyzer sweep, often at a frequency unrelated to the design frequency, and disappears when a ferrite bead or series resistor is added to the supply rail
 - Ground plane coupling between a transmitter and receiver section manifests as a rise in the receiver's noise floor that correlates exactly with transmitter activation — measuring noise floor with the transmitter on and off isolates this effect

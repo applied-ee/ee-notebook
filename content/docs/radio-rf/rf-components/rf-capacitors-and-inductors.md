@@ -124,7 +124,7 @@ Above approximately 5-10 GHz, discrete inductors become impractical (SRF too low
 - **Component placement orientation affects parasitic coupling** — Two 0402 capacitors placed parallel and close together couple more than the same two placed perpendicular. Orient components to minimize coupling in sensitive circuits
 - **Manufacturer simulation tools are more reliable than generic models** — Murata SimSurfing, TDK SEAT, and Coilcraft design tools use measured S-parameter data for each specific part number. Generic parasitic estimates are much less accurate
 
-## Bench Relevance
+## In Practice
 
 - A bypass capacitor that resonates below its intended frequency range may show unexpected high-impedance behavior on an impedance analyzer, appearing inductive rather than capacitive
 - Swapping an 0805 capacitor for an 0402 of the same value in a VHF matching network can produce a measurable improvement in return loss due to the higher SRF

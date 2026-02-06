@@ -47,7 +47,7 @@ A stage with wrong DC bias voltages won't process signals correctly — fix the 
 - Match the injected signal to what the stage expects — don't inject 1Vpp into a stage that normally sees 10 mV, which would overdrive it
 - DC bias is necessary but not sufficient — a stage can have correct DC bias and still not pass the signal (open coupling capacitor, bad feedback component, oscillation eating up headroom)
 
-## Bench Relevance
+## In Practice
 
 - Signal correct at input, wrong at output of a specific stage identifies that stage as the fault location
 - Signal amplitude dropping through a stage that should amplify indicates gain problem — check feedback resistors and component values

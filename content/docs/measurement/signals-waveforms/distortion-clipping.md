@@ -61,7 +61,7 @@ Apply a clean sine wave at the frequency of interest and capture the output. Run
 - Most bench scopes can reliably measure THD down to about -50 to -60 dB (0.1–0.3%) — below that, the scope's distortion dominates
 - Phase delay through the stage causes XY trace to open into an ellipse even with no distortion — this is normal for stages with frequency-dependent phase shift
 
-## Bench Relevance
+## In Practice
 
 - Clipping on both positive and negative peaks indicates the stage is running out of headroom symmetrically — reduce input level or increase supply voltage
 - Clipping on one side only indicates asymmetric bias or a failed component in one half of the output stage

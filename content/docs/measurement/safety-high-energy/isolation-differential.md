@@ -63,7 +63,7 @@ This technique works for low-frequency, low-common-mode situations — such as m
 - Both channels receive full common-mode voltage with math subtraction; if common-mode exceeds the scope's input range, clipping occurs before subtraction
 - Probe cable length differences create phase errors at high frequency that appear as false differential signal
 
-## Bench Relevance
+## In Practice
 
 - Smoke or dead FETs when probing a bridge circuit indicates the ground clip shorted a switch node to earth
 - Tripped breaker when probing mains-connected equipment indicates the ground clip connected live or neutral to earth

@@ -122,7 +122,7 @@ The MPU has a limited number of regions (typically 8 on Cortex-M3/M4, 16 on M7),
 - **NULL pointer dereference may not fault on Cortex-M** — Address 0x00000000 is the start of the vector table and is valid readable memory. Dereferencing NULL reads the initial stack pointer value. Only writes to flash addresses fault at the bus level
 - **Floating-point instructions fault if the FPU is not enabled** — On Cortex-M4F and M7, the FPU is disabled at reset. Any floating-point instruction triggers a UsageFault until the CPACR register is configured
 
-## Bench Relevance
+## In Practice
 
 - A system that crashes but halts in an infinite loop with no diagnostic output has the default fault handler — add PC and fault register reporting
 - Corrupted global variables or state machine jumps to impossible states suggest stack overflow — enable MPU guard regions or check stack painting

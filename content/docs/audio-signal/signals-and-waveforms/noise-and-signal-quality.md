@@ -89,7 +89,7 @@ The first stage in a signal chain dominates the system noise figure (Friis formu
 - **Noise adds as power, not voltage** — Two uncorrelated noise sources of 1 mV RMS each produce √(1² + 1²) = 1.41 mV total, not 2 mV. Correlated signals (interference) can add as voltage in the worst case
 - **The quietest stage is not the most important** — The stage with the worst noise contribution referred to the input is what matters. A noisy gain stage followed by a quiet one is fine; a quiet first stage followed by a noisy second stage might not be — it depends on the gain distribution (see [Gain Staging]({{< relref "/docs/audio-signal/audio-systems-and-signal-chains/gain-staging" >}}))
 
-## Bench Relevance
+## In Practice
 
 - A noise floor that changes with bandwidth setting confirms the noise is broadband (thermal or quantization), not discrete interference
 - Noise that appears at specific frequencies (60 Hz, switching frequencies) is interference, not fundamental noise — look for coupling paths

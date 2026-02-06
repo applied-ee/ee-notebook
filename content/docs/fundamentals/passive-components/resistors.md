@@ -60,7 +60,7 @@ The textbook formulas are straightforward. The practical nuances:
 - 0 Ω resistors exist — They're jumpers in SMD form. Used for routing flexibility on PCBs. They have milliohms of actual resistance and limited current ratings
 - Temperature and aging effects are almost always larger than expected — a design that works on the bench at 25°C may fail in the field at 60°C, and the failure will trace back to a component whose parameter shifted outside the assumed range
 
-## Bench Relevance
+## In Practice
 
 - A resistor measuring significantly different from its marked value (beyond tolerance) indicates damage or wrong part
 - A hot resistor suggests more power dissipation than expected — trace back to find why current or voltage is higher than designed

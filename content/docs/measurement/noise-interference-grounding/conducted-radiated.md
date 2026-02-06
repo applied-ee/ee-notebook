@@ -65,7 +65,7 @@ Differential-mode noise is on the signal and must be filtered on the signal path
 - Common-mode noise converts to differential-mode at any asymmetry (different trace lengths, mismatched impedances)
 - Some fixes interact — adding filter capacitor to switching regulator output can affect stability
 
-## Bench Relevance
+## In Practice
 
 - Noise that drops with distance is radiated — shielding and separation are effective fixes
 - Noise unchanged by distance is conducted — filtering and ground improvement are needed

@@ -119,7 +119,7 @@ If the state machine should complete a sequence within a bounded time, a timer t
 - **One-hot encoding needs illegal-state detection** — In a one-hot state machine, any state where more than one flip-flop is set (or none is set) is illegal. A single bit-flip (from noise or SEU) creates an illegal state. Adding a parity check or using a Hamming-encoded state can detect and recover from single-bit errors
 - **Clock enable vs. state machine clock** — Slowing down a state machine by gating its clock creates timing analysis problems. The preferred approach is to run the state machine at the full system clock and use a clock enable (derived from a counter) to advance the state only at the desired rate
 
-## Bench Relevance
+## In Practice
 
 **A state machine that sticks in an unexpected state and requires a reset to recover** often points to a missing default transition for an illegal or unreachable state encoding. A single bit-flip (from noise or SEU) can land the state register in an encoding that has no defined exit, leaving the machine permanently stuck.
 

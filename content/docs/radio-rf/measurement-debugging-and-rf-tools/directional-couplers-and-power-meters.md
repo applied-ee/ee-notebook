@@ -119,7 +119,7 @@ This setup allows measurement of transmitter output power, harmonic content (on 
 - **Connector mismatch** — Mixing connector types (SMA, BNC, N-type) with adapters adds reflection and loss at each junction. For serious power measurements, use the same connector type throughout and keep adapters to a minimum
 - **Forgetting cable loss** — A 20 dB attenuator followed by 2 dB of cable loss gives 22 dB total attenuation. If the attenuator is corrected for but the cable is forgotten, the reading is 2 dB high. Characterize or estimate all losses in the measurement path
 
-## Bench Relevance
+## In Practice
 
 - Forward power reads +30 dBm (1 W) but reflected power reads +20 dBm (100 mW) — that 10 dB return loss means the antenna or load is poorly matched, and 10% of the power is bouncing back into the transmitter
 - A power meter shows 2 dB less output than expected from an amplifier — before suspecting the amplifier, check for cable loss and connector wear; 1 dB of connector loss plus 1 dB of cable loss accounts for the discrepancy

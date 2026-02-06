@@ -59,7 +59,7 @@ Modern circuits default to 3.3 V or 1.8 V logic, split ground planes, and low-im
 - **Star ground wiring looks like a mess** -- The seemingly random ground wiring in a star-grounded chassis is intentional. Before "fixing" it by connecting grounds together more conveniently, understand why each return runs where it does. Consolidating star ground returns can introduce ground loops and noise
 - **Jumper wires on single-sided boards are factory, not repairs** -- A single-sided board with several jumper wires on the component side is standard manufacturing for the era. Do not remove them assuming someone made a hack repair
 
-## Bench Relevance
+## In Practice
 
 - An op-amp output sitting near 0 V or railing to one side on a board with bipolar supplies often indicates a failed negative rail rather than a signal-path fault -- check the negative regulator and its filter caps first
 - Intermittent hum or noise that appears when the chassis is moved or tapped points to degraded chassis ground connections -- look for corroded screws, painted-over mounting points, or loose star-ground lugs

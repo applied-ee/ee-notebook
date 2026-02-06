@@ -124,7 +124,7 @@ For the "matters less" cases, diversity techniques (using two orthogonally polar
 - **Multipath can occasionally help with polarization** -- in a rich scattering environment, signals arrive from many angles and polarizations; a cross-polarized antenna might still receive adequate signal through reflected paths, masking the cross-pol problem
 - **RHCP and LHCP are defined from the transmitter's perspective** -- some references define them from the receiver's perspective, which reverses the sense; always check the convention being used, especially when specifying satellite antennas
 
-## Bench Relevance
+## In Practice
 
 - Rotating a dipole from vertical to horizontal while receiving a vertically polarized signal produces a dramatic signal drop (20+ dB) that directly demonstrates cross-polarization loss
 - Tilting a handheld radio 30 degrees while monitoring signal strength on a base station shows the combined effect of polarization mismatch and pattern orientation -- expect 1-3 dB of loss

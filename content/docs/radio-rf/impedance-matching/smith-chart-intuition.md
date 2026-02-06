@@ -117,7 +117,7 @@ The Smith chart also makes VNA measurements immediately interpretable. Instead o
 - **Lossy lines don't just rotate — they spiral inward** — A real transmission line has loss, so moving toward the generator decreases the reflection coefficient. The point spirals toward center, not just rotates. This matters for long or lossy cables
 - **Impedance and admittance charts are easily confused** — The admittance chart looks identical but is rotated 180 degrees. Some software overlays both. Mixing them up leads to matching networks that transform impedance in the wrong direction
 
-## Bench Relevance
+## In Practice
 
 - On a VNA Smith chart display, an antenna trace that loops tightly around the center across the operating band confirms a broadband match, while a trace that arcs far from center indicates a narrowband or poorly matched antenna
 - Soldering a series inductor into a matching network and watching the VNA Smith chart trace move clockwise along the constant-R circle provides direct visual confirmation of the theoretical model

@@ -74,7 +74,7 @@ The approach is different from reading a modern schematic full of ICs. With ICs,
 - **Coupling capacitor values affect low-frequency response** -- In AC-coupled amplifiers, the coupling capacitor and the input impedance of the next stage form a high-pass filter. A legacy circuit designed with specific coupling cap values has an intentional low-frequency rolloff. Changing the cap value changes the frequency response
 - **Bias points drift with temperature** -- Discrete circuits are more sensitive to ambient temperature than IC-based circuits, because there is no on-chip thermal tracking between the bias network and the active devices. A circuit that works perfectly at room temperature may clip or distort at high or low temperatures if the bias compensation is marginal
 
-## Bench Relevance
+## In Practice
 
 - A common-emitter stage that clips asymmetrically (one side of the waveform compressed) usually indicates a shifted bias point -- measure the collector DC voltage and compare to the expected midpoint between VCC and the emitter voltage
 - Oscillation at a frequency well above the signal band in a discrete amplifier often traces to a missing or degraded compensation capacitor (Miller cap between collector and base) or a bootstrap cap that has gone open

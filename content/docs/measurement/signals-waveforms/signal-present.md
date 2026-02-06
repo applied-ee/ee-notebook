@@ -42,7 +42,7 @@ For tracing audio signals through an audio chain without a scope, connect a smal
 - AC-coupled DMM measurement misses the DC component — useful for ripple checks but misleading when expecting full signal level
 - Always use a DC-blocking capacitor when probing with a speaker — many circuit nodes have a DC bias that could damage a speaker or headphone, or cause a loud pop
 
-## Bench Relevance
+## In Practice
 
 - No signal at a node that should have one indicates an open connection, unpowered stage, or failed component upstream
 - Signal present but at unexpected amplitude suggests gain error or loading problem

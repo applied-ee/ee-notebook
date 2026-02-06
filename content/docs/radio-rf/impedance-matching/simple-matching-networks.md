@@ -116,7 +116,7 @@ For complex impedances (with a reactive component), the first step is to absorb 
 - **Verification with a VNA is essential** — Calculated values get close, but parasitic capacitance from the PCB layout, lead inductance, and coupling between components shift the actual match. Always measure and tweak on the bench
 - **Temperature changes component values** — Inductors with ferrite cores can drift significantly with temperature. NPO/C0G capacitors are stable; X7R and Y5V are not. Use stable dielectrics in matching networks
 
-## Bench Relevance
+## In Practice
 
 - After soldering in calculated matching components, a VNA S11 measurement immediately shows whether the match landed at the target frequency or shifted — a shifted dip indicates component tolerance or parasitic effects
 - Swapping a series inductor for one slightly larger or smaller value and watching the Smith chart trace move along the constant-R circle confirms the theoretical model in real time

@@ -120,7 +120,7 @@ The voltage regulator maintains the DC supply voltage, but it has a finite bandw
 - **More capacitors don't always help** — Adding capacitors of the same value in parallel reduces ESR but the mounting inductance of each cap also adds up. A mix of values (for different frequency ranges) is more effective than many identical caps
 - **Core voltage tolerance is tight** — Modern FPGAs and processors use core voltages of 0.8-1.0 V with ±3-5% tolerance. A 3% tolerance on 0.85 V is ±25 mV. The total PDN noise budget must fit within this margin
 
-## Bench Relevance
+## In Practice
 
 - Signal ringing and jitter that correlate with bus switching activity suggest ground bounce — measure the power rails
 - Noise on power rails that increases with clock frequency or switching activity confirms PDN impedance is too high

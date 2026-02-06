@@ -57,7 +57,7 @@ A rough decision framework: for anything requiring better than ~100 microseconds
 - **`nice` is not RT priority** — The `nice` value only affects CFS scheduler fairness. For real-time behavior, use `SCHED_FIFO` or `SCHED_RR`
 - **Worst case matters, not average** — An average latency of 10 microseconds is meaningless if the worst case is 2 milliseconds
 
-## Bench Relevance
+## In Practice
 
 - Latency histograms with a sharp peak and a long tail reveal the difference between average and worst case — measure both
 - RT tasks that run fine for a few seconds then stall are hitting the RT throttling limit — check `sched_rt_runtime_us`

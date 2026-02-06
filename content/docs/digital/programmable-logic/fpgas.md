@@ -110,7 +110,7 @@ Steps 3-5 often iterate: if timing fails, the designer modifies the HDL, constra
 - **The bitstream is the design** — Protecting the bitstream is protecting the intellectual property. Most FPGAs support bitstream encryption (AES-256) to prevent reverse engineering from the configuration file. Without encryption, the design is readable by anyone with JTAG access
 - **Simulation is essential but not sufficient** — RTL simulation verifies functional correctness but not timing. Gate-level simulation with back-annotated timing is very slow. Real hardware testing catches issues that no simulation anticipated
 
-## Bench Relevance
+## In Practice
 
 - Designs that fail to route despite available LUTs have routing congestion — reduce utilization or restructure high-fan-out logic
 - Timing failures that appear only at high utilization suggest the design is too crowded for the tools to find good placements

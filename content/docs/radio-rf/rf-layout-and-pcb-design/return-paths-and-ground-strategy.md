@@ -89,7 +89,7 @@ A signal via without adjacent ground vias forces the return current to find its 
 - **Via fences need to be continuous** — A via fence with a gap is like a wall with a door; RF energy will find the gap and leak through it; close all gaps, especially at corners
 - **Layer transitions need ground vias, not just the signal via** — A single signal via changing layers without ground vias is one of the most common sources of unexpected impedance bumps in RF designs
 
-## Bench Relevance
+## In Practice
 
 - A TDR trace that shows a sudden impedance spike or dip along an RF path often indicates a ground plane slot or discontinuity directly beneath the signal trace
 - Radiated emissions that increase by 10-20 dB at specific frequencies, visible on a near-field probe scan, typically point to return current detours around ground plane interruptions

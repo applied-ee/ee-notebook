@@ -113,7 +113,7 @@ For simple PLDs (22V10), the tool chain is minimal: the ABEL or CUPL languages w
 - **I/O standards must match** — Modern CPLDs support multiple I/O voltage standards (3.3 V, 2.5 V, 1.8 V) configured per bank. Mixing standards incorrectly can damage the CPLD or the connected devices. Check the bank assignments before programming
 - **PLDs are disappearing from the market** — Simple PLDs (22V10, PAL-type devices) are aging out of production. Small CPLDs or low-cost FPGAs (Lattice iCE40, Gowin GW1N) are replacing them
 
-## Bench Relevance
+## In Practice
 
 - Fitting errors that report "product term exceeded" require simplifying the logic or splitting across multiple macrocells
 - Glitchy power-up behavior from a CPLD-controlled reset suggests the CPLD's power-on reset period needs external management

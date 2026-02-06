@@ -121,7 +121,7 @@ A noiseless amplifier has NF = 0 dB. Real amplifiers add noise: NF = 1-5 dB for 
 - **Noise measurements require averaging** — Noise is random. A single oscilloscope capture gives one realization. Averaging (or spectrum analysis) is needed to characterize noise accurately
 - **EMI is not noise** — Interference from external sources (switching supply harmonics, radio signals, digital crosstalk) is deterministic, not random. It can be eliminated by shielding, filtering, or fixing the source. True noise cannot be eliminated — only minimized
 
-## Bench Relevance
+## In Practice
 
 - Random fuzz on a signal that doesn't correlate with anything specific is likely fundamental noise (thermal or shot)
 - Noise with discrete frequency components visible on an FFT indicates EMI or pickup — trace the source

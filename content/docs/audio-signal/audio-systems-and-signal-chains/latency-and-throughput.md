@@ -94,7 +94,7 @@ Measuring actual end-to-end latency:
 - **Low latency costs CPU** — Smaller block sizes mean more frequent processing calls, more overhead, and less opportunity for the CPU to batch operations efficiently. There's a minimum block size below which the system can't keep up, and it depends on CPU speed and algorithm complexity
 - **Delta-sigma converter settling adds hidden latency** — After a gain change or input switch, delta-sigma converters need multiple output samples for their internal digital filters to settle. During this time, the output is invalid. This matters for multiplexed measurement systems
 
-## Bench Relevance
+## In Practice
 
 - Clicks or pops during audio playback indicate buffer underruns — increase block size or reduce CPU load
 - Latency that varies over time suggests OS scheduling jitter — check for competing processes or interrupt contention

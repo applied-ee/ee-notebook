@@ -114,7 +114,7 @@ When the schematic is proven (by simulation or previous builds) but the board do
 - **Confusing the fix with the problem** — Adding a ferrite bead that shifts an oscillation from 800 MHz to 1.2 GHz has not fixed anything — it has moved the problem. Verify that the oscillation is gone, not just moved
 - **Intermittent oscillation from mechanical stress** — Board flex, connector pressure, or thermal cycling can change parasitic capacitance enough to trigger or suppress an oscillation. If a problem comes and goes with handling, suspect a mechanical interaction
 
-## Bench Relevance
+## In Practice
 
 - A transistor amplifier stage drawing 30 mA when the design calls for 15 mA — with no obvious schematic error — is a classic sign of oscillation; the excess current comes from power dissipated at the oscillation frequency
 - Touching the board enclosure or moving a hand near the circuit causes a spur to appear or shift on the spectrum analyzer, indicating that body capacitance is part of the feedback path — a shielding or grounding deficiency

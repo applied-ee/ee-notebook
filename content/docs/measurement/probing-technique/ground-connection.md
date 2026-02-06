@@ -60,7 +60,7 @@ The ringing artifact only matters when the signal has frequency content near the
 - Even with a spring-tip ground, the probe still adds some capacitance and a small amount of inductance — for multi-GHz measurements, active probes with integrated ground contacts are needed
 - Some probes don't come with a spring-tip accessory — aftermarket options exist, or a short (< 10 mm) ground wire can be soldered directly to the probe's ground barrel
 
-## Bench Relevance
+## In Practice
 
 - Ringing that disappears or significantly reduces when switching from long ground clip to spring-tip ground is a measurement artifact, not circuit behavior
 - Ringing that remains at the same frequency and amplitude with both ground configurations is real circuit behavior

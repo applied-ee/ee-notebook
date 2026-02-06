@@ -59,7 +59,7 @@ After discharge, measure again to confirm voltage is below 1V. Then measure *aga
 - "Unplugged" does not mean "safe" — capacitors in power supplies, CRT circuits, and photoflash units hold charge for hours or days
 - Inductors store energy too (E = ½LI²) — disconnecting a current-carrying inductor creates a voltage spike
 
-## Bench Relevance
+## In Practice
 
 - A meter reading 0V on a known-energized circuit indicates dead batteries, blown fuse, or wrong mode — never trust a single 0V reading without meter verification
 - Unexpectedly high voltage (30–80V) on a "dead" circuit with a high-impedance meter suggests ghost voltage from capacitive coupling — switch to LoZ mode to confirm

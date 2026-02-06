@@ -64,7 +64,7 @@ The weaker direction often determines how the load gets connected. If a device s
 - **Exceeding source/sink limits doesn't always cause immediate failure** — the device may still function, but noise margins (explored in Digital Electronics) degrade silently, leading to intermittent errors that are difficult to diagnose.
 - **Some datasheets specify "output current" without clarifying direction** — check the test circuit diagram or the sign convention used. A positive value for I_OL typically means current flowing into the pin (sinking), but conventions vary between manufacturers.
 
-## Bench Relevance
+## In Practice
 
 **An output HIGH voltage that sags below the expected level under load** indicates the source current limit has been reached. The voltage drop is visible on a multimeter or oscilloscope as a HIGH level that falls short of the rail voltage, proportional to the excess current demand.
 

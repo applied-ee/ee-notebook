@@ -92,7 +92,7 @@ Practical systems use several approaches to cope with multipath:
 - **People are RF absorbers and reflectors** — A human body absorbs and scatters 2.4 GHz signals significantly; a person standing between transmitter and receiver can cause 10-15 dB of additional loss; indoor propagation models that ignore people are optimistic
 - **Symmetry is rare in multipath environments** — The path from A to B may have different multipath characteristics than from B to A if the environments around the two antennas differ; do not assume link quality is symmetric
 
-## Bench Relevance
+## In Practice
 
 - Monitoring RSSI on a WiFi or Bluetooth link while slowly sliding the receiver across a table reveals the spatial fading pattern — signal strength visibly oscillates over distances of a few centimeters at 2.4 GHz
 - A wireless link that drops intermittently in a room full of people but works reliably in the same room empty points to body absorption and multipath changes as the root cause

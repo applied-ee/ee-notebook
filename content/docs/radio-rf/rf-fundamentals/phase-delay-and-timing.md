@@ -105,7 +105,7 @@ These delays are built into RF design work. Phase-matched cable assemblies for a
 - **Do not confuse group delay and phase delay** — Phase delay is how long a single frequency takes to traverse a structure. Group delay is how long a modulated signal's envelope takes. In dispersive media, they differ, and the group delay is usually what matters for signal integrity
 - **Scope probe ground leads add delay and phase shift** — A 15 cm ground clip on an oscilloscope probe at 500 MHz represents about 45 degrees of electrical length. The measurement itself introduces phase error and resonance
 
-## Bench Relevance
+## In Practice
 
 - A 1-meter BNC cable introduces roughly 5 ns of delay, enough to fully invert a 100 MHz signal — test setups with long cables can reverse apparent signal phase
 - A signal that appears inverted at one end of a PCB trace at GHz frequencies is not a fault — it is the expected result of propagation delay exceeding half a cycle

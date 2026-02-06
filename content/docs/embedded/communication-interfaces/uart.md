@@ -87,7 +87,7 @@ See [Probing & Measurement Technique]({{< relref "/docs/measurement/probing-tech
 - **Baud rate error accumulates across the frame** — A UART with 1.5% baud rate error might work at 8N1 (10 bits per frame) but fail at 8N2 (11 bits) or with 9-bit data. The sampling error compounds with each bit
 - **TX/RX crossover is the most common wiring mistake** — TX on one side connects to RX on the other. Some boards label pins from their own perspective, others from the perspective of what they connect to
 
-## Bench Relevance
+## In Practice
 
 - Garbled received data at specific intervals suggests baud rate mismatch — verify the clock divider produces acceptable error
 - Missing bytes in bursts indicates FIFO overflow — check the overrun flag and consider DMA or larger buffers

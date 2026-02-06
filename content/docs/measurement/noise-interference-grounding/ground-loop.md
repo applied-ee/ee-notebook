@@ -67,7 +67,7 @@ Set DMM to AC Volts and measure between ground terminals of the two devices (or 
 - Cheap ground loop isolators use small transformers that distort at low frequencies and roll off bass
 - This measurement is AC — ground loops are driven by AC currents; DC ground potential difference is a separate issue
 
-## Bench Relevance
+## In Practice
 
 - Hum that disappears when signal cable is disconnected confirms ground loop through that cable
 - Hum that disappears when devices share same outlet confirms ground potential difference between outlets

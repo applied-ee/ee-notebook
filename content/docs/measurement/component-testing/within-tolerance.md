@@ -85,7 +85,7 @@ When the datasheet isn't available or the marking isn't trusted, compare against
 - Aging: components drift over time, especially in high-temperature environments; film resistors age less than carbon composition
 - The "known-good" reference is only as trustworthy as its provenance — parts from original packaging are reliable; parts from a tape-labeled bin are not
 
-## Bench Relevance
+## In Practice
 
 - Resistor measuring outside its tolerance band indicates drift from aging, thermal stress, or physical damage
 - Capacitor measuring low but within its wide tolerance (-20/+80%) may still be failing — ESR is often a better indicator than capacitance

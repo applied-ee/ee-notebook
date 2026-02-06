@@ -61,7 +61,7 @@ If the signal stays the same regardless of measurement setup changes, it's real.
 - Confirming an artifact explains a weird reading is satisfying but doesn't answer the original question — still need to make the measurement correctly
 - Multiple artifacts can exist simultaneously
 
-## Bench Relevance
+## In Practice
 
 - Ringing that disappears with spring-tip ground was probe artifact, not circuit behavior
 - Oscillation that stops when probe is connected indicates probe capacitance is stabilizing marginal circuit

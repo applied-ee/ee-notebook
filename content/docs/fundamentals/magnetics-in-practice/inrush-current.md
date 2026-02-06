@@ -110,7 +110,7 @@ Requires a solid-state switch (TRIAC or back-to-back SCRs) with zero-crossing de
 - Inrush current creates an inrush voltage dip — If the circuit monitors input voltage to decide when it's safe to start (common in microcontroller supervisory circuits), the voltage dip from inrush on a shared bus can cause repeated reset cycling — the micro starts, draws current, sags the bus, resets, bus recovers, micro starts again
 - Multiple converters on the same input should not all start simultaneously — Stagger the enable signals by a few milliseconds each. The combined inrush of all converters starting at once can exceed the input fuse or upstream regulator capacity, even if each individual converter's inrush is acceptable
 
-## Bench Relevance
+## In Practice
 
 - A fuse that blows randomly on power-up (but not every time) indicates inrush hitting the fuse's I²t limit at worst-case phase angles
 - Equipment that works fine when power is applied gradually (variac) but trips breakers on direct mains connection has an inrush problem

@@ -92,7 +92,7 @@ The key insight: **the DC bias sets the small-signal parameters.** Change the bi
 - **Base current is not zero** — Unlike MOSFETs, BJTs draw continuous base current. This loads the driving circuit. High-impedance sources may not be able to supply enough base current for the desired collector current
 - **Second breakdown** — At high voltage and high current simultaneously, localized heating can cause destructive current focusing. This is a safe operating area (SOA) limit, not a simple power limit
 
-## Bench Relevance
+## In Practice
 
 - A BJT that shows V_CE near V_CC with no collector current is in cutoff — check the base drive circuit
 - A BJT that shows V_CE near 0.1-0.3 V regardless of base current is saturated — check if the load is drawing more current than the bias allows

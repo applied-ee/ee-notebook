@@ -101,7 +101,7 @@ Solutions for triggering at RF:
 - **50-ohm input vs 1 M-ohm input** — Many higher-bandwidth oscilloscopes offer 50-ohm input impedance. Use it for RF signals to avoid reflections on the cable between probe and scope. But never connect a DC bias or large signal to a 50-ohm input — the 50-ohm termination dissipates power and can be damaged (typically limited to 5 Vrms)
 - **Aliasing on digital scopes** — If the sample rate is less than 2x the signal frequency, the scope displays a false lower frequency (alias). Most modern scopes warn about this, but in FFT mode the aliased signals can look real
 
-## Bench Relevance
+## In Practice
 
 - A 100 MHz oscilloscope showing a clean 80 MHz sine wave at 3 Vpp is actually measuring low — the true amplitude is closer to 4 Vpp due to the 3 dB rolloff at the scope's bandwidth limit
 - Large overshoot and ringing on a digital clock edge that disappear when the ground clip is replaced with a short spring ground are probe artifacts, not real circuit behavior

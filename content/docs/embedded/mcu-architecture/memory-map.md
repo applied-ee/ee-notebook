@@ -77,6 +77,6 @@ The startup code is responsible for copying initialized data from flash to SRAM 
 - **Flash wait states must match clock speed** — If the system clock increases but flash wait states remain at the reset default, the CPU reads garbage from flash. Always configure wait states before increasing the clock
 - **Linker script errors are silent until they crash** — If the linker script declares more SRAM than the chip has, the linker happily places data in nonexistent addresses. Everything builds cleanly; the firmware crashes at runtime
 
-## Bench Relevance
+## In Practice
 
 A hard fault on first access to a peripheral register almost always means the peripheral clock has not been enabled — the register address is valid, but the bus returns a fault because the peripheral is powered down. Mysterious data corruption that appears only under load often traces to stack overflow: the stack grows into the heap or `.bss` region, overwriting variables with return addresses and saved registers. When initialized variables contain wrong values at startup, the linker script is the first suspect — either the SRAM region is declared larger than the physical memory, or the startup code is not copying `.data` from flash correctly. In each case, the memory map is the reference that connects the faulting address to the subsystem involved.

@@ -59,7 +59,7 @@ With schematic visible and circuit powered off:
 - Corroded connections add resistance at the connector, not in the wire — high reading on one conductor suggests crimp or solder fault
 - Temperature affects resistance — copper has positive tempco; a cable in a hot environment reads higher
 
-## Bench Relevance
+## In Practice
 
 - One conductor reading significantly higher resistance than others of the same gauge indicates damage or poor termination
 - Pin that beeps to multiple far-end pins indicates an unintentional short (bridge) in the cable or connector

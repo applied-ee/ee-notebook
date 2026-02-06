@@ -110,7 +110,7 @@ Common VNA measurement tasks on the hobbyist and learning bench:
 - **The NanoVNA display is small** — Use PC software (NanoVNA-Saver, NanoVNA-QT) for serious analysis. The built-in display is adequate for quick checks but makes it easy to misread markers and miss details
 - **Phase noise limits close-in measurements** — The NanoVNA's oscillator phase noise means S11 measurements very close to a deep null (better than 40 dB return loss) become unreliable. The instrument's noise floor limits what can be resolved
 
-## Bench Relevance
+## In Practice
 
 - An antenna that worked well at 145 MHz suddenly shows poor VSWR after mounting — the Smith chart reveals the impedance has shifted capacitive, indicating the mounting bracket or feedline routing is detuning the antenna
 - A bandpass filter shows the expected passband shape on S21 but S11 reveals a poor input match (return loss below 6 dB), meaning significant power reflects back into the source — a problem invisible without a VNA

@@ -126,7 +126,7 @@ When winding or specifying a custom transformer, polarity must be defined explic
 - CT secondary must never be open-circuited — The voltage will rise until insulation breaks down or the core saturates violently. Always short the secondary before disconnecting the burden resistor
 - Capacitive coupling between windings — High-frequency noise can couple through the inter-winding capacitance, bypassing the galvanic isolation. Faraday shields (grounded copper foil between windings) reduce this but add cost and complexity
 
-## Bench Relevance
+## In Practice
 
 - A transformer that hums louder than normal may have DC on the mains, loose laminations, or be approaching saturation
 - Voltage droop under load indicates winding resistance and leakage inductance losses — measure no-load vs. loaded voltage to assess regulation

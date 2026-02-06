@@ -124,7 +124,7 @@ The sanity check: if a measurement seems too good or too bad, it probably is. Ve
 - **Ignoring connector quality** — A cheap BNC-to-SMA adapter with poor center pin contact can introduce 1-2 dB of intermittent loss. When measurements fluctuate, suspect the connectors first — wiggle each one and observe whether the reading changes
 - **Comparing measurements made at different times** — If antenna A was measured yesterday and antenna B today, temperature, ambient RF environment, and equipment drift may have changed. Make comparison measurements back-to-back for meaningful results
 
-## Bench Relevance
+## In Practice
 
 - An SDR waterfall display shows a faint signal appearing every 30 seconds at a specific frequency — this periodic pattern points to a nearby appliance or switching device as the interference source, something a single-shot spectrum capture would miss
 - A DDS generator feeding a filter under test shows apparent leakage at 3x the test frequency in the stopband — before concluding the filter has poor rejection, check whether the DDS generator's third harmonic is creating the false reading

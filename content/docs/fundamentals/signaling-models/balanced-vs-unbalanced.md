@@ -247,7 +247,7 @@ The choice is almost always a noise-vs-cost tradeoff. Unbalanced is simpler, che
 - **Driving a balanced input with an unbalanced source loses CMRR.** Connecting a single-ended source to one leg of a differential input and grounding the other leg removes the balance — noise on the ground appears on one input but not the other, and CMRR drops to near zero. A balun or proper differential drive is needed to maintain rejection
 - **"Balanced" in RF mixer terminology is related but distinct.** A "balanced mixer" or "double-balanced mixer" refers to the internal topology of the mixer (how the diodes or transistors are arranged for port-to-port isolation), not to balanced signal transmission. The concepts share the idea of symmetry and cancellation, but the context is different
 
-## Bench Relevance
+## In Practice
 
 **Hum, buzz, or a DC offset that disappears when a DI box or isolation transformer is inserted** points to a balanced/unbalanced topology mismatch. The DI box or transformer converts between the two topologies, and the symptom's disappearance confirms that the noise was entering through the ground path that the balanced topology eliminates.
 

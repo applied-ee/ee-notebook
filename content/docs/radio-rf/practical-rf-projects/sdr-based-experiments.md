@@ -142,7 +142,7 @@ Working with an SDR quickly reveals its limitations — and understanding those 
 - **Sample rate and bandwidth confusion** — The sample rate determines the maximum receivable bandwidth, not the tuning range. An RTL-SDR sampling at 2.4 MHz can see 2.4 MHz of spectrum at once, centered on the tuned frequency. To see a different 2.4 MHz window, retuning is required
 - **Comparing SDR signal levels to absolute power** — SDR software displays signal levels in dBFS (dB relative to full scale of the ADC) or arbitrary units, not in dBm. Without calibration against a known power source, these numbers are relative, not absolute
 
-## Bench Relevance
+## In Practice
 
 - Strong-signal overload from a nearby FM broadcast station appears as a raised noise floor and phantom signals scattered across the entire SDR bandwidth — inserting an FM bandstop filter causes the noise floor to drop and the phantom signals to vanish
 - Swapping between two antennas while receiving the same stable signal (such as a broadcast FM station) shows a clear difference in signal strength on the SDR's S-meter or waterfall brightness, directly demonstrating relative antenna gain

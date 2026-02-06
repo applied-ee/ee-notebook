@@ -61,7 +61,7 @@ Power consumption diverges sharply. A Cortex-M4 in stop mode draws single-digit 
 - **Prototype-to-production gap** — A Raspberry Pi prototype does not map cleanly to a production board. The boot process, device tree, and SoC availability are Pi-specific
 - **Assuming "just add Linux" solves the problem** — Linux adds boot time, security surface area, update mechanisms, and failure modes along with its capabilities
 
-## Bench Relevance
+## In Practice
 
 - A design that meets requirements on an MCU but is implemented on an MPU "for convenience" carries unnecessary complexity and maintenance burden
 - Firmware that runs fine in development but has security vulnerabilities in the field suggests maintenance planning was neglected

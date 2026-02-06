@@ -98,7 +98,7 @@ A ferrite bead in series with the power supply, followed by a bypass capacitor t
 - **Ferrite beads saturate with DC current** — A 600-ohm ferrite bead rated for 200 mA might drop to 100-ohm impedance at 500 mA; always check the saturation curve
 - **Do not put ferrite beads on RF signal paths** — Ferrite beads are for power supply filtering; on a signal path, they add loss and distortion; use proper RF filtering (LC networks, SAW filters) for signal paths
 
-## Bench Relevance
+## In Practice
 
 - Power supply noise measured on an oscilloscope at a specific frequency band that matches an anti-resonance peak between bypass capacitor values confirms a parallel resonance problem
 - An IC that oscillates or exhibits spurious tones only when running at full power may have bypass capacitors that are inductive at the oscillation frequency, providing no decoupling

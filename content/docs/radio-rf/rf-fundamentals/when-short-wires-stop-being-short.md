@@ -93,7 +93,7 @@ For most RF work, anything above about 30-50 MHz requires abandoning the breadbo
 - **Ground lead resonance is real and common** — The most frequent measurement artifact in RF work is the probe ground lead resonating and adding a false peak. A large spike at a particular frequency during oscilloscope measurements warrants shortening the ground lead before concluding the spike is real
 - **Even short wires inside connectors matter** — The center pin of a BNC connector is about 1 cm long. At 4 GHz, that pin is lambda/7 and its inductance creates measurable impedance discontinuity. Precision RF uses SMA or smaller connectors for this reason
 
-## Bench Relevance
+## In Practice
 
 - A large spike at a specific frequency during oscilloscope measurements that disappears when the probe ground lead is shortened is a ground lead resonance artifact, not a circuit problem
 - A circuit that works on the bench but fails EMC testing may have cables or traces acting as unintended antennas at frequencies where their length approaches lambda/4

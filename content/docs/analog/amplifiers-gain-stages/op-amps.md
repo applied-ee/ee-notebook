@@ -117,7 +117,7 @@ When selecting an op-amp for a real application, these are the parameters that a
 - **Decoupling is not optional** — Op-amp power pins need local bypass caps (100 nF ceramic minimum). Without them, the power supply rejection degrades and oscillation can occur
 - **Comparator use** — An op-amp without negative feedback acts as a comparator, but usually a poor one — slow, no hysteresis, and the output doesn't swing cleanly to the rails. Use a dedicated comparator for comparison tasks
 
-## Bench Relevance
+## In Practice
 
 - An op-amp circuit that oscillates or rings often has a capacitive load or missing bypass capacitors — check output wiring and add series resistance or decoupling
 - Output clipping well before the supply rails indicates the op-amp lacks rail-to-rail capability or the load is too heavy

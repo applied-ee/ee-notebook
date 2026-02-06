@@ -84,7 +84,7 @@ A 200 MHz probe on a 100 MHz scope gives about 89 MHz of system bandwidth — th
 - Sample rate is not bandwidth — a scope with 1 GS/s and 100 MHz bandwidth still only shows 100 MHz of signal content
 - Digital filtering can affect displayed bandwidth — some scopes apply interpolation or filtering that changes effective bandwidth
 
-## Bench Relevance
+## In Practice
 
 - Rise time that matches the scope's system rise time regardless of the signal being measured indicates the scope is the limiting factor, not the signal
 - Displayed rise time can be corrected: t_signal = √(t_displayed² - t_system²)

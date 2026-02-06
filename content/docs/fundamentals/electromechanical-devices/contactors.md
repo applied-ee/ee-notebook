@@ -110,7 +110,7 @@ Both levels are required. Electrical interlocking alone can fail if a contactor 
 - Noise and vibration — AC contactors produce mechanical noise when they pull in and release, and a steady hum while energized. In noise-sensitive environments, DC coil contactors or electronic coil drivers are preferred
 - Pre-charge in DC systems — In battery and EV systems, closing a contactor into a large capacitor bank (like a motor drive's DC bus capacitors) draws enormous inrush current that can weld the contacts on the first close. A pre-charge resistor and a secondary contactor are used to slowly charge the capacitors before the main contactor closes
 
-## Bench Relevance
+## In Practice
 
 - A contactor that hums loudly or chatters has insufficient coil voltage or a stuck armature
 - Contacts that won't release indicate welding — check the load for inrush conditions

@@ -100,7 +100,7 @@ The difference between WiFi's -82 dBm and LoRa's -137 dBm is 55 dB — a factor 
 - **dBm and dBi are not the same thing** — dBm is absolute power referenced to 1 milliwatt; dBi is antenna gain referenced to an isotropic radiator; mixing them up in a link budget produces nonsense; keep units straight
 - **Link budgets assume clear line of sight** — If there is no direct line of sight between antennas, the actual loss can be 20-40 dB worse than FSPL; always check whether the path is actually clear, including Fresnel zone clearance (see [Antenna Height & Placement Effects]({{< relref "/docs/radio-rf/propagation/antenna-height-and-placement" >}}))
 
-## Bench Relevance
+## In Practice
 
 - A WiFi link reading -75 dBm at 10 meters with clear line of sight is already 15 dB below what FSPL alone predicts — the gap reveals how much loss the local environment is adding
 - When a short-range wireless module (Bluetooth, Zigbee) loses connectivity at distances well within its rated range, computing the FSPL at the operating frequency helps distinguish between a propagation problem and a hardware fault

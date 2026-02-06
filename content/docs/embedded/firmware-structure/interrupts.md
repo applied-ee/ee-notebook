@@ -124,7 +124,7 @@ On Cortex-M3+, `BASEPRI` offers a finer tool: it masks interrupts below a given 
 - **Interrupt nesting depends on priority grouping configuration** — If all priority bits are assigned to sub-priority (grouping set to 0 preemption bits), no ISR can preempt any other, regardless of assigned priority numbers
 - **Long ISRs cause jitter in all lower-priority interrupts** — A 100 µs ISR at priority 1 adds up to 100 µs of jitter to every interrupt at priority 2 or lower
 
-## Bench Relevance
+## In Practice
 
 - A system that appears frozen with high CPU utilization likely has an interrupt storm — verify interrupt flags are being cleared
 - Timing jitter in periodic interrupts often traces to long higher-priority ISRs — measure ISR execution time with GPIO toggling

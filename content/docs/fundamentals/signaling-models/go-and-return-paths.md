@@ -173,7 +173,7 @@ The right approach for mixed analog/digital designs is usually a continuous grou
 - **The return path changes with frequency.** A signal with both low-frequency and high-frequency content has return current that spreads at low frequencies and concentrates at high frequencies — simultaneously. This is why broadband signal integrity is harder than narrowband
 - **Cable shields are return paths.** In a coaxial cable, the shield carries the return current for the signal on the center conductor. It's not just a shield — it's a fundamental part of the circuit. Disconnecting one end of the shield breaks the return path
 
-## Bench Relevance
+## In Practice
 
 **Unexpected noise or ringing on an otherwise clean signal** often points to a loop area problem — the return current is taking a longer path than expected, and the enlarged loop acts as an antenna that picks up interference. The noise amplitude scales with loop area and frequency.
 

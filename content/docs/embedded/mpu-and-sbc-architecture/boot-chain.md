@@ -53,7 +53,7 @@ The total time from power-on to a shell prompt depends on the platform and confi
 - **Boot ROM bugs exist and cannot be fixed** — Mask ROM errata persist for the lifetime of the silicon revision
 - **Initramfs is not always optional** — If the kernel needs modules to access the root filesystem, an initramfs is required
 
-## Bench Relevance
+## In Practice
 
 - A board that hangs at power-on with no serial output has a boot ROM or first-stage bootloader problem
 - "Unable to mount root fs" in serial output indicates the kernel booted but cannot find the root filesystem — check the `root=` command line and storage drivers

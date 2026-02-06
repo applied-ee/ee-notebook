@@ -88,7 +88,7 @@ The decision is not always obvious. Designs sometimes start on a Raspberry Pi fo
 - **MPU development requires more infrastructure** — An MCU project needs a cross-compiler and debug probe. An MPU project needs a bootloader, kernel, root filesystem, device tree, and often Yocto or Buildroot
 - **Hybrid chips are not twice as easy** — Running a Cortex-A + Cortex-M hybrid means maintaining two firmware images, debugging two cores with different tools, and designing an IPC mechanism
 
-## Bench Relevance
+## In Practice
 
 - A design that starts on a Raspberry Pi for convenience but later discovers hard real-time requirements should have been on an MCU from the start
 - Instant-on requirements rule out MPUs — boot takes seconds to tens of seconds versus the instant-on of an MCU

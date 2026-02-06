@@ -82,7 +82,7 @@ See [Clocks]({{< relref "/docs/digital/timing-and-synchronization" >}}) in the D
 - **Ground and power noise modulate the sampling instant** — Even with a perfect clock oscillator, noise on the ADC's supply or ground shifts the internal comparator thresholds, effectively adding jitter. Converter analog supply filtering is critical
 - **Measuring sub-nanosecond jitter requires specialized equipment** — A standard oscilloscope with 1 GS/s sampling can measure jitter down to about 1 ns. Sub-nanosecond and picosecond jitter requires a dedicated phase noise analyzer or a high-speed oscilloscope with statistics capability. Don't assume the measurement reflects the true clock quality unless the instrument's noise floor has been verified
 
-## Bench Relevance
+## In Practice
 
 - SNR that degrades with signal frequency but not signal level indicates jitter-limited performance
 - A spectrum showing sidebands around the signal at specific frequencies (power supply harmonics, switching frequencies) indicates deterministic jitter

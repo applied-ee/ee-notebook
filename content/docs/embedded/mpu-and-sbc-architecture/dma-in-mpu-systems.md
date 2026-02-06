@@ -45,7 +45,7 @@ User-space DMA exists for specialized high-performance scenarios (networking wit
 - **Coherent DMA memory is uncacheable and slow for CPU access** — `dma_alloc_coherent()` memory bypasses the CPU cache. Do not use it as general-purpose memory
 - **CMA pool size is fixed at boot** — The Contiguous Memory Allocator reserves its pool during early boot. If undersized, large contiguous allocations fail at runtime
 
-## Bench Relevance
+## In Practice
 
 - Data corruption that appears and disappears randomly with DMA transfers suggests missing cache sync calls — the bug depends on cache state
 - DMA transfers that work on MCU code but fail when ported to Linux likely pass virtual addresses instead of using the DMA API

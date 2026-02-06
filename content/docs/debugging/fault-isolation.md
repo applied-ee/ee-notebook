@@ -151,7 +151,7 @@ Having a schematic doesn't mean trusting it blindly.
 - Signal tracing procedures: [Signal Tracing]({{< relref "/docs/measurement/signals-waveforms/signal-tracing" >}})
 - Current draw measurement: [Is Current Draw Expected?]({{< relref "/docs/measurement/power-rails-supplies/current-draw" >}})
 
-## Bench Relevance
+## In Practice
 
 - **Substitution is the fastest diagnostic for primitive-level problems** — when a primitive-level problem is suspected, swap the component and see if the behavior changes.
 - **Circle the blocks first when analyzing unfamiliar schematics** — before tracing individual signals, identifying the functional blocks reveals the designer's intent and makes signal flow legible.

@@ -95,7 +95,7 @@ Red flags that suggest the measurement might not mean what it appears to:
 - **Know the trigger** — On an oscilloscope, an unstable or wrong trigger makes the waveform look wrong even when the signal is fine. Set the trigger appropriately before interpreting what's displayed
 - **Measure twice, differently** — If a measurement is surprising, verify with a different instrument, different probe, or different technique. Agreement between independent measurements builds confidence
 
-## Bench Relevance
+## In Practice
 
 - A voltage reading that changes when the probe is connected indicates the circuit is being loaded — use a higher impedance measurement method
 - A resistance reading that varies with probe pressure indicates contact resistance issues at the measurement points

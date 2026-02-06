@@ -68,7 +68,7 @@ When the noise is characterized but the coupling path is uncertain:
 - Multiple coupling paths can exist simultaneously — fixing one may reveal another
 - Near-field measurements are qualitative — relative "more here, less there," not calibrated dBm
 
-## Bench Relevance
+## In Practice
 
 - Noise at exactly 50/60 Hz indicates mains magnetic coupling — check for ground loops or proximity to transformers
 - Noise at 100/120 Hz indicates power supply rectifier ripple — check bulk capacitor ESR

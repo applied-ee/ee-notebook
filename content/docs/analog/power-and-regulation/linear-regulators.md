@@ -88,7 +88,7 @@ See [Thermal Reality]({{< relref "/docs/fundamentals/power-energy-heat/thermal-r
 - **Ground pin current** — The current flowing out the ground pin is the quiescent current, not the load current (for positive regulators). The load current flows through the pass element from input to output. For some LDO architectures, ground current increases with load — check the datasheet
 - **Thermal shutdown** — Most regulators have thermal shutdown that turns off the output if the junction temperature gets too high. This protects the part but drops the output, potentially causing downstream problems. Design so thermal shutdown is never reached in normal operation
 
-## Bench Relevance
+## In Practice
 
 - A regulator that oscillates typically has the wrong output capacitor ESR — try a different capacitor type or add a small series resistor
 - Output voltage below spec at high load indicates the regulator is in dropout — increase input voltage or reduce the input-output differential

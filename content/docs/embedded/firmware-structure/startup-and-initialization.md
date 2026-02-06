@@ -109,7 +109,7 @@ Strategies that help:
 - **Static constructors in C++ run before main() in unspecified order** — If a static object's constructor touches a peripheral or depends on another static object, the result is undefined. Performing all hardware initialization explicitly in `main()` avoids this problem
 - **SystemInit() varies wildly between vendors and chip families** — The function's behavior is not standardized beyond the name. Some implementations configure clocks, some only set flash wait states, some are nearly empty
 
-## Bench Relevance
+## In Practice
 
 - A system that immediately enters a HardFault loop at reset likely has a vector table problem — check the initial SP and reset handler address
 - Peripheral configuration that has no effect suggests the peripheral clock was not enabled in RCC

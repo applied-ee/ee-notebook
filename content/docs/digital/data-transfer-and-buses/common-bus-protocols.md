@@ -152,7 +152,7 @@ The most common configuration: 8N1 (8 data bits, no parity, 1 stop bit) = 10 bit
 - **Long SPI traces at high speed need signal integrity attention** — At 50 MHz, a 10 cm SPI trace is a significant fraction of a wavelength. Impedance matching and termination may be needed
 - **RS-232 voltage levels will damage CMOS inputs** — Connecting an RS-232 signal (±12 V) directly to a 3.3 V CMOS UART input will destroy the chip. Always use a level translator (MAX3232 or equivalent)
 
-## Bench Relevance
+## In Practice
 
 - I2C signals with slow rise times and rounded edges indicate pull-up resistors are too large for the bus capacitance
 - SPI data that appears shifted or inverted suggests clock polarity or phase mismatch — verify CPOL/CPHA settings

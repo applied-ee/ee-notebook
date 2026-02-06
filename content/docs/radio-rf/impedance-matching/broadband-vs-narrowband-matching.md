@@ -125,7 +125,7 @@ The tradeoff with tunable networks is complexity, loss (switches and varactors h
 - **Broadband matching is not always necessary** — Most RF systems operate on a single frequency or a narrow band. A simple narrowband match is cheaper, lower loss, and more predictable. Only go broadband when the application demands it
 - **Multi-section matching requires careful optimization** — Simply cascading two L-networks with an arbitrary intermediate impedance doesn't guarantee optimal bandwidth. The geometric mean impedance is a starting point, but numerical optimization gives better results
 
-## Bench Relevance
+## In Practice
 
 - Sweeping a narrowband L-network on a VNA shows a sharp dip in S11 at the design frequency with rapid degradation on either side — widening the sweep reveals exactly how narrow the match bandwidth is
 - Replacing an L-network with a two-section match and re-sweeping shows a visibly flatter return loss across the band, confirming the bandwidth improvement at the cost of additional components

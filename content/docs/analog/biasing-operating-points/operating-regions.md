@@ -98,7 +98,7 @@ At the bench:
 - **Load changes move the operating point** — A heavier load draws more current, which can push a transistor into saturation. A circuit that works with one load may clip with a heavier one
 - **Transient excursions** — The bias point might be correct on average, but signal peaks can momentarily push the device out of the active region. The DC multimeter shows everything is fine, but the oscilloscope reveals clipping
 
-## Bench Relevance
+## In Practice
 
 - Flat-topped output waveforms indicate the device is entering saturation — increase V_CE headroom or reduce gain
 - Flat-bottomed output waveforms indicate the device is entering cutoff — adjust bias toward higher current

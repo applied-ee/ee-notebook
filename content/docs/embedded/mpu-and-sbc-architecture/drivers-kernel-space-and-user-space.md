@@ -60,7 +60,7 @@ Before writing a custom kernel driver, always check whether one already exists. 
 - **Loading a kernel module can crash the system** — Kernel modules run with full privilege. A null pointer dereference produces a kernel oops or panic
 - **`/dev/mem` bypasses all protections and is dangerous in production** — Useful for experiments but a security hole and reliability hazard
 
-## Bench Relevance
+## In Practice
 
 - GPIO toggling from user space that cannot exceed ~100 kHz is hitting syscall overhead — use a kernel driver or hardware peripheral
 - A sensor driver that works but is too slow for the required update rate may benefit from moving to a kernel driver

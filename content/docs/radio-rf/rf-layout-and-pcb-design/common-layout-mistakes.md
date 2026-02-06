@@ -99,7 +99,7 @@ A systematic layout review checklist prevents most of these errors:
 - **Some mistakes only appear at temperature or voltage extremes** — A marginally stable amplifier layout might work at room temperature but oscillate at -20C when gain increases; test across the full operating range
 - **Layout mistakes are expensive to fix** — Each PCB respin costs money and weeks of schedule; getting the layout right the first time is worth the review effort
 
-## Bench Relevance
+## In Practice
 
 - A board that passes schematic simulation but shows 10-20 dB worse return loss on the VNA than expected likely has uncontrolled trace impedance or missing ground vias at layer transitions
 - Radiated emissions exceeding limits at specific harmonics, visible on a spectrum analyzer or EMC pre-scan, frequently trace to ground plane slots under high-speed or RF signal traces

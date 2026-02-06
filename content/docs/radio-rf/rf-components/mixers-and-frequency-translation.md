@@ -109,7 +109,7 @@ Solutions:
 - **LO phase noise transfers directly to the IF output** — The mixer multiplies the RF signal by the LO, including the LO's phase noise. A noisy LO degrades the signal-to-noise ratio of the converted signal
 - **Do not exceed the maximum RF input power** — Strong RF signals can forward-bias the mixer diodes, causing compression, intermodulation, and potentially damage. The maximum safe RF input is typically 5-10 dB below the LO drive level
 
-## Bench Relevance
+## In Practice
 
 - A strong tone at the LO frequency appearing on the spectrum analyzer at the RF port indicates LO-to-RF leakage — the isolation specification can be measured directly by comparing this level to the LO drive power
 - Conversion loss that measures 2-3 dB worse than the datasheet typically points to insufficient LO drive or a port impedance mismatch at the IF frequency

@@ -65,7 +65,7 @@ For noise at specific frequency, choose capacitor for lowest impedance at that f
 - Ground plane modifications change return current paths for all signals
 - Adding ground connections can create new ground loops if not done carefully
 
-## Bench Relevance
+## In Practice
 
 - Noise that drops significantly with copper foil shield confirms electric field or high-frequency magnetic coupling — permanent shield effective
 - Noise unchanged by copper but reduced by mu-metal is low-frequency magnetic — need high-permeability shielding

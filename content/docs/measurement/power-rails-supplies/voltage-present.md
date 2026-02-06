@@ -40,7 +40,7 @@ DC-couple the channel, set vertical scale to show the expected voltage, set time
 - At 10x probe attenuation, small voltages can be hard to read on a scope — consider 1x for low-voltage rails
 - Scope ground clips are earth-referenced — connecting to a signal pin instead of ground creates a short
 
-## Bench Relevance
+## In Practice
 
 - Rail reading zero when it should be present indicates supply not running, open trace, or blown fuse — check upstream
 - Rail reading low but nonzero suggests excessive load (possible short) or regulator in current limit

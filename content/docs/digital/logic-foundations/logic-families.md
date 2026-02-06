@@ -132,7 +132,7 @@ Some outputs have only a pull-down transistor (NMOS for open-drain, NPN for open
 - **Fast edges cause ringing and reflections** — Advanced CMOS families (74AC, 74AUC) have sub-nanosecond edges that cause ringing, reflections, and crosstalk on traces longer than a few centimeters. Controlled impedance layout and termination become necessary at these speeds.
 - **Mixed-voltage systems need careful power sequencing** — If a 3.3 V chip powers up before its 5 V neighbor, its inputs may see 5 V signals while its supply is still ramping. Clamping diodes in the input protection circuit can latch up or be damaged. Power-up sequence matters in mixed-voltage designs.
 
-## Bench Relevance
+## In Practice
 
 **Ringing or oscillation following signal edges** is characteristic of fast-edge CMOS families (74AC, 74AUC) driving traces without termination. The ringing amplitude and frequency depend on trace length and impedance mismatch.
 

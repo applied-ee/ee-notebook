@@ -81,7 +81,7 @@ In practice, node analysis is more commonly used because voltages are what's usu
 - Non-planar circuits — Mesh analysis only works directly for planar circuits (circuits that can be drawn without crossing wires). Non-planar circuits need node analysis or generalized loop analysis
 - Overcounting or undercounting equations — For node analysis: (N-1) equations are needed for N nodes. For mesh analysis: M equations are needed for M independent meshes. Getting the count wrong means an unsolvable or redundant system
 
-## Bench Relevance
+## In Practice
 
 - Calculated node voltages that don't match measured values indicate a modeling error, component fault, or measurement issue
 - A node voltage of exactly 0 V where a non-zero value is expected suggests a short to ground

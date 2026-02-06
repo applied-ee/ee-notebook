@@ -122,7 +122,7 @@ While clock domain crossing is the most common context for metastability, it can
 - **Simulation doesn't show metastability** — RTL simulation models flip-flops as perfect digital elements. A metastable condition in simulation produces either 0, 1, or X (unknown) — it doesn't model the analog resolution process
 - **Metastability is not the same as a wrong value** — A flip-flop that captures the wrong value (because it sampled during a transition but resolved quickly) is not metastable — it simply captured the old or new value. Both are problems, but they require different analysis
 
-## Bench Relevance
+## In Practice
 
 - Intermittent data corruption on signals crossing clock domains suggests unsynchronized or under-synchronized crossings
 - A metastable output on an oscilloscope appears as a mid-rail voltage or high-frequency oscillation lasting longer than expected

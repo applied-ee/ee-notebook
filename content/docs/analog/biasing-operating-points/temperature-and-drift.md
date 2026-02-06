@@ -101,7 +101,7 @@ For ultra-low-drift applications, chopper-stabilized amplifiers modulate the sig
 - **The warm-up problem** — Components change from cold to warm, and designs must either tolerate this change through feedback or specify a warm-up period. Open-loop designs relying on exact values drift with temperature
 - **Temperature cycling fatigue** — Repeated heating and cooling mechanically stresses solder joints and component bodies. This is a reliability issue separate from electrical drift, but it's caused by the same thermal variations
 
-## Bench Relevance
+## In Practice
 
 - Output that drifts during warm-up and stabilizes after 10-30 minutes indicates temperature-sensitive components reaching equilibrium
 - Gain that changes with ambient temperature suggests mismatched tempco resistors in the gain-setting network

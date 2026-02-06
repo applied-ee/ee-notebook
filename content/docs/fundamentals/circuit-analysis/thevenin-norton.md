@@ -104,7 +104,7 @@ The Thévenin/Norton equivalent captures the DC or single-frequency behavior per
 - Negative R_th means instability — Some active circuits present negative output impedance in certain frequency ranges. This can cause oscillation when connected to certain loads. If measured R_th comes out negative, investigate stability
 - Don't confuse open-circuit voltage with nominal voltage — A 9 V battery's V_th is 9 V only when fresh and unloaded. Under load, the terminal voltage drops by I × R_internal. The "9 V" on the label is the nominal (approximately open-circuit) voltage
 
-## Bench Relevance
+## In Practice
 
 - Output voltage that drops significantly under load indicates high source impedance — calculate R_th from the voltage drop
 - A circuit that works unloaded but fails under load often has excessive output impedance for the intended load

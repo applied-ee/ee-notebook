@@ -66,7 +66,7 @@ The reactive component determines how much current flows; the resistive componen
 - Power ratings are thermal limits — A "1/4 W resistor" can dissipate 1/4 W before overheating. The actual power dissipated is determined by the circuit, not the rating. The rating is the maximum, not the actual
 - Decibels and power — dBm is referenced to 1 mW. 0 dBm = 1 mW. +3 dB doubles the power
 
-## Bench Relevance
+## In Practice
 
 - A component running hot indicates high power dissipation — trace back to find where the watts are going
 - Unexpectedly high current draw on a supply often means an unintended power dissipation path (short, saturated regulator, oscillation)

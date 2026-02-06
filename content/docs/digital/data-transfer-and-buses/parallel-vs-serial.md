@@ -87,7 +87,7 @@ Similarly, DDR uses a parallel data bus but with source-synchronous clocking (ea
 - **Parallel buses need termination at speed** — A 50 MHz parallel bus with unterminated traces works fine. At 200 MHz, those same traces need proper termination to prevent reflections. The transition from "just wires" to "transmission lines" sneaks up as clock speeds increase
 - **Mixed parallel/serial systems need buffering** — When a fast serial port feeds a slow parallel bus (or vice versa), FIFOs or elastic buffers are needed to absorb the rate difference and crossing latency
 
-## Bench Relevance
+## In Practice
 
 - Parallel bus errors that appear only at higher clock speeds indicate timing skew between signals — check length matching
 - Serial communication that corrupts data intermittently may have signal integrity issues — examine the eye diagram

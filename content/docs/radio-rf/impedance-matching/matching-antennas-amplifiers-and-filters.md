@@ -93,7 +93,7 @@ The NanoVNA and similar low-cost VNAs have made this workflow accessible to hobb
 - **SAW filter matching is not negotiable** — SAW filters are designed for specific complex impedances. Using a SAW filter without its recommended matching network will give wrong passband shape and poor rejection. Follow the datasheet
 - **Stability analysis covers all frequencies, not just the operating band** — An amplifier that's conditionally stable at 500 MHz might oscillate at 2 GHz where the gain is still positive and the matching network presents a problematic impedance. Check stability across the full gain bandwidth
 
-## Bench Relevance
+## In Practice
 
 - Measuring an antenna on a VNA and seeing the Smith chart trace pass through the center at the design frequency confirms resonance — any offset from center at that frequency directly indicates the magnitude and direction of the needed matching correction
 - Replacing a SAW filter's recommended matching network with incorrect values produces a visible passband distortion on a spectrum analyzer sweep, often showing increased ripple and shifted skirts

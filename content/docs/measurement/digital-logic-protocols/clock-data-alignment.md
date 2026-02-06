@@ -73,7 +73,7 @@ This reveals whether timing is tight but consistent (narrow band, safe) or jitte
 - Bus capacitance accumulates with every device and centimeter of trace — I2C spec limits total bus capacitance to 400 pF
 - Temperature and voltage variations cause timing to shift — room-temperature measurements may look fine while extremes fail
 
-## Bench Relevance
+## In Practice
 
 - Data transitions happening close to clock edge indicate tight timing margin — will fail under temperature or voltage variation
 - Data not stable at clock edge indicates setup violation — receiver captures wrong data

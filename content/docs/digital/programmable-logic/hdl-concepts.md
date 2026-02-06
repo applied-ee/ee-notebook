@@ -147,7 +147,7 @@ A testbench is HDL code that drives the design under test (DUT) with stimulus an
 - **Reset strategy must be deliberate** — Synchronous reset is cleanest for timing but requires the clock to be running. Asynchronous reset works without a clock but needs careful deassertion synchronization. Mixing strategies within a design creates confusion and potential bugs
 - **Uninitialized flip-flops are genuinely random in hardware** — Simulation tools assign a default (usually 0 or X). Real flip-flops power up to whatever state the silicon decides. Any design that depends on an initial value without an explicit reset will work in simulation and fail in hardware
 
-## Bench Relevance
+## In Practice
 
 - Hardware that behaves differently from simulation may have latch inference or incomplete sensitivity lists — check synthesis warnings
 - A design that works in simulation but fails at power-up likely has uninitialized state machines or missing resets

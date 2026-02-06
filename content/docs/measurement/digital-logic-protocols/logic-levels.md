@@ -74,7 +74,7 @@ Diagnosis: Measure VOH at the driver with the actual load connected, then measur
 - Capacitive loading rounds edges and reduces time the signal spends at valid levels — at high data rates, the signal may never fully reach VOH or VOL
 - Open-drain buses have levels set by pull-up resistors and bus capacitance — a weak pull-up gives slow rise times and VOH that depends on RC time constant vs. data rate
 
-## Bench Relevance
+## In Practice
 
 - Measured VOH well above VIH threshold indicates healthy noise margin
 - Measured VOH barely above or below VIH threshold indicates marginal interface — will fail under temperature or supply variation

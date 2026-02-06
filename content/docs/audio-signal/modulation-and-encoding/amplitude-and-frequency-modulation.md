@@ -82,7 +82,7 @@ Modulation techniques appear in signal processing and measurement contexts far f
 - **Chopper artifacts** — Residual carrier feedthrough in chopper amplifiers appears as small spikes at the chopping frequency. These are usually filtered by an output low-pass filter, but they limit the useful output bandwidth
 - **AM envelope detectors distort on fast signals** — The diode-capacitor detector tracks the envelope, but the discharge time constant must be slow enough to follow the carrier and fast enough to follow the modulation. Wrong time constant = diagonal clipping distortion
 
-## Bench Relevance
+## In Practice
 
 - Spectral sidebands appearing symmetrically around a carrier indicate AM — the spacing equals the modulating frequency
 - FM signals show constant amplitude on an oscilloscope but spreading sidebands on a spectrum analyzer

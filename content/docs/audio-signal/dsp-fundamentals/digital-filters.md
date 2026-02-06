@@ -87,7 +87,7 @@ The feedback makes IIR filters much more efficient than FIR for the same frequen
 - **IIR filters ring** — Filters with sharp resonances (high Q) ring when excited by transients. This is audible as ringing on percussive sounds and visible as overshoot on step responses. It's the same physics as analog filter ringing, just implemented digitally
 - **Don't design filters in the frequency domain and implement in the time domain without checking** — The FFT-based frequency response of the designed filter and the actual response of the implemented filter (with quantized coefficients, specific arithmetic precision) can differ significantly. Always measure the implemented filter's response
 
-## Bench Relevance
+## In Practice
 
 - A filter that oscillates or produces unbounded output has become unstable — check pole locations and coefficient quantization
 - Ringing on transients indicates high-Q resonances in the filter design

@@ -78,7 +78,7 @@ At 4× oversampling, the analog filter only needs to provide adequate rejection 
 - **Passive filters have impedance interactions** — An RC filter followed by a low-impedance load changes its cutoff frequency. Buffer the filter output or account for the load in the design
 - **Don't forget the input** — An anti-alias filter at the ADC input doesn't help if the ADC's sample-and-hold is exposed to high-frequency signals through other paths (e.g., digital feedthrough on the PCB)
 
-## Bench Relevance
+## In Practice
 
 - A signal that shows unexpected low-frequency content after sampling likely has aliased high-frequency components — verify the anti-alias filter is working
 - A filter that doesn't achieve the expected rolloff may have component tolerance issues or op-amp bandwidth limitations

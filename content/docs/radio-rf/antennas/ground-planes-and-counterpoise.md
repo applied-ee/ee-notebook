@@ -110,7 +110,7 @@ Similarly, adding or removing screws from a metal enclosure near the antenna cha
 - **Battery and LCD placement affect the effective ground plane** -- a lithium battery's foil pouch is conductive and can extend the effective ground plane -- or shield the antenna if placed behind it; LCDs have conductive layers that interact with nearby antennas
 - **Connecting the antenna ground to "system ground" is not enough** -- the ground connection must be low impedance at the operating frequency; a long, thin trace from the antenna ground pad to the main ground plane adds inductance that decouples the ground at RF, even though it is connected at DC
 
-## Bench Relevance
+## In Practice
 
 - Measuring a monopole's VSWR while progressively trimming the ground plane radials shorter shows the impedance shifting away from the ideal 36 ohms as the ground plane becomes undersized
 - Moving a USB cable near a 2.4 GHz chip antenna during a NanoVNA sweep produces a visible resonance shift -- sometimes 50 MHz or more -- demonstrating how cable routing affects the ground plane

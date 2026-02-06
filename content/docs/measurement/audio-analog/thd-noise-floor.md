@@ -71,7 +71,7 @@ Apply a full-scale sine wave (maximum level before clipping) and measure output 
 - Measurement bandwidth directly affects noise reading — wider bandwidth captures more noise
 - The scope's own input noise may be comparable to the circuit's noise — check scope noise floor first
 
-## Bench Relevance
+## In Practice
 
 - Strong 2nd harmonic indicates asymmetric transfer curve — check bias in single-ended stages
 - Strong 3rd harmonic indicates symmetric clipping — check headroom

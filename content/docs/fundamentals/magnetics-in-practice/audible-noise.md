@@ -96,7 +96,7 @@ A sudden increase in transformer hum indicates a problem:
 - Enclosures can amplify or attenuate noise — A plastic enclosure with flat panels can resonate like a drum. A metal enclosure with damping material inside can attenuate. The same circuit may be silent in one enclosure and noisy in another
 - Audible noise can change with temperature — Magnetostriction coefficient varies with temperature for some materials, and mechanical resonance frequencies shift as the PCB and enclosure expand. A product that's quiet at room temperature may whine when warm
 
-## Bench Relevance
+## In Practice
 
 - Touching an inductor with a non-conductive probe that reduces the noise confirms it as the source
 - Noise that correlates with load changes suggests burst-mode or variable-frequency operation

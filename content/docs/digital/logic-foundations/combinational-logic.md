@@ -117,7 +117,7 @@ In purely synchronous designs, hazards are usually harmless — the output is on
 - **Unused inputs on combinational ICs must be tied off** — An unconnected input on a gate, decoder, or mux floats to an undefined level. This causes unpredictable behavior and, in CMOS, excessive power draw. Tie unused inputs to VDD or GND as appropriate for the function
 - **Decoder enables and mux selects have setup timing** — In synchronous designs, the select and enable signals must be stable before the data is sampled. If the select changes while the mux output is being used, the output momentarily reflects the wrong input
 
-## Bench Relevance
+## In Practice
 
 **A combinational circuit that produces correct outputs most of the time but occasionally gives wrong results** points to a timing issue — either a hazard generating a glitch that propagates through an asynchronous path, or a critical path that barely meets timing and fails intermittently.
 

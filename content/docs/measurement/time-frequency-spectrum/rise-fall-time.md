@@ -66,7 +66,7 @@ Crosstalk between adjacent traces is proportional to dV/dt — the rate of volta
 - Sin(x)/x interpolation helps reconstruct edges between samples but can't recover information that wasn't captured
 - Datasheet rise times are specified under particular load conditions — actual circuit may have different loading giving different actual rise times
 
-## Bench Relevance
+## In Practice
 
 - Rise time significantly faster than expected indicates possible overshoot/ringing issues — check for termination
 - Rise time significantly slower than expected indicates excessive capacitive loading or weak driver

@@ -76,7 +76,7 @@ The sampling theorem assumes ideal conditions that real systems don't provide:
 - **Higher sample rates don't always help** — Sampling at 192 kHz for content that only contains energy below 20 kHz wastes storage and processing with no audible benefit. The advantage of higher rates is relaxed anti-alias filter requirements and lower latency, not extended frequency response
 - **Aliasing affects noise too** — Broadband noise above Nyquist aliases back into the signal band. An anti-alias filter that only filters the signal and ignores wideband noise will have a higher-than-expected noise floor after sampling
 
-## Bench Relevance
+## In Practice
 
 - A spectrum showing unexpected low-frequency components that don't correspond to the input signal suggests aliasing — verify the anti-alias filter is properly attenuating above Nyquist
 - Changing the sample rate and seeing frequency components shift position (rather than remaining fixed) indicates aliased content

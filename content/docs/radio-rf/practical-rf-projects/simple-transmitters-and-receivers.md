@@ -128,7 +128,7 @@ Each project builds on the concepts from the previous one and connects to the fu
 - **Receiver overload from nearby transmitters** — A direct conversion receiver near a strong broadcast station or cell tower may produce intermodulation products that sound like real signals. An attenuator or preselector filter at the input helps
 - **Forgetting the output filter** — An unfiltered oscillator transmitter radiates harmonics across a wide spectrum. Always use a low-pass filter between the oscillator and any antenna connection, even for bench testing
 
-## Bench Relevance
+## In Practice
 
 - An oscillator that refuses to start or starts intermittently typically shows no AC signal at the collector/drain while DC bias voltages appear normal — checking for RF activity with a scope probe or near-field sniffer confirms whether oscillation is present
 - Strong harmonics from an unfiltered crystal oscillator appear as distinct spectral lines at odd multiples of the fundamental on an SDR waterfall or spectrum analyzer, often only 10-15 dB below the fundamental

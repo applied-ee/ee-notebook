@@ -115,7 +115,7 @@ Even without designing a quadrature mixer, I/Q understanding is essential becaus
 - **Not all SDR software handles I/Q byte ordering the same way** — Some tools expect I first then Q; others expect interleaved or specific data types (8-bit unsigned, 16-bit signed, 32-bit float); getting the format wrong produces noise or garbage, so always verify documentation for the specific hardware and software combination
 - **Higher-order QAM is extremely sensitive to I/Q quality** — 256-QAM requires I/Q balance, phase noise, and linearity far beyond what inexpensive SDR hardware can provide; if constellation points look smeared, the problem may be hardware limitations rather than a poor signal
 
-## Bench Relevance
+## In Practice
 
 - A persistent bright line at the exact center of the waterfall display confirms DC offset in the I/Q path — enabling DC removal should suppress it without affecting real signals
 - A weak ghost signal mirrored across the center frequency from a strong real signal indicates I/Q gain or phase imbalance in the front end; the image suppression ratio (typically 30-50 dB on inexpensive hardware) determines how visible this artifact is

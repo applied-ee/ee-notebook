@@ -116,7 +116,7 @@ Fast edges radiate electromagnetic energy. The PCB traces act as antennas, and t
 - **"It passed simulation" is not enough** — SI simulation models ideal trace geometry and nominal component values. Real boards have manufacturing tolerances (±10% trace width, ±5% dielectric constant). Margin analysis across these tolerances is necessary for reliable design
 - **Probing high-speed signals is itself a high-speed problem** — A standard oscilloscope probe adds 8-12 pF and 5-10 nH to the node. This changes the signal enough to mask the actual behavior
 
-## Bench Relevance
+## In Practice
 
 - Signal edges that look clean at low frequencies but ring at high frequencies indicate transmission line effects — add termination
 - EMI that fails compliance testing often traces to common-mode currents from ground plane discontinuities

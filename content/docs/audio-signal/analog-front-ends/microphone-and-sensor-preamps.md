@@ -61,7 +61,7 @@ How the source connects to the preamp determines both signal transfer and noise 
 - **Cable capacitance acts as a low-pass filter** — Long cables from high-impedance sources (guitar pickups, piezo sensors) roll off high frequencies. Moving the preamp close to the source (or using a buffer) solves this
 - **EMI pickup scales with impedance** — Higher-impedance nodes pick up more electromagnetic interference. High-impedance preamp inputs need careful shielding, short traces, and guard rings on PCBs
 
-## Bench Relevance
+## In Practice
 
 - A preamp that produces excessive noise with a high-impedance source but not with a low-impedance source suggests input bias current or EMI pickup issues
 - An instrumentation amplifier that shows poor CMRR in practice may have mismatched gain resistors or layout-induced imbalance

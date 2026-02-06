@@ -50,7 +50,7 @@ This removes all ambiguity from power calculations. Without the convention, the 
 - **Reference direction is not actual direction** — it is a coordinate choice. Treating a reference arrow as a physical claim leads to confusion when the math produces a negative sign.
 - **Some older hobbyist and technician references use electron flow** — recognizing which convention a source uses prevents confusion. If a book draws current arrows from negative to positive, it's using electron flow, and all the polarities in that source are internally consistent — just different from the EE standard.
 
-## Bench Relevance
+## In Practice
 
 **A negative reading on an ammeter or current probe** means the instrument is oriented opposite to the conventional current direction. The magnitude is correct; only the sign is flipped. Reversing the leads or rotating the clamp restores a positive reading without changing the measurement.
 

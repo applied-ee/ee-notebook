@@ -91,7 +91,7 @@ For bench work, formal uncertainty analysis is usually overkill:
 - Thermoelectric voltages at dissimilar metal junctions create microvolt offsets — matters for precision DC, not everyday bench work
 - Standard deviation larger than instrument resolution indicates external factors (temperature drift, noise, contact resistance)
 
-## Bench Relevance
+## In Practice
 
 - Two readings differing by less than combined uncertainty are effectively the same
 - Reading fluctuating in last digit is normal — that's the uncertainty

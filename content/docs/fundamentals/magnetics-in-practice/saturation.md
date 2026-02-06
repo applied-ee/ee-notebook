@@ -86,7 +86,7 @@ Datasheets for power inductors often include an "inductance vs. DC bias" curve s
 - Saturation is per-cycle in AC applications — A transformer core can saturate on one half-cycle if the drive waveform is asymmetric (DC offset, duty cycle imbalance in a push-pull converter). The flux walks up the B-H curve cycle by cycle until it hits B_sat. This is called "flux walking" and is a common failure mode in full-bridge and push-pull converters
 - Saturation can't be seen with a DMM — Saturation is a dynamic, current-dependent phenomenon. A resistance measurement tells nothing. An inductance measurement at low test current (as most LCR meters do) shows the small-signal inductance, not the inductance at operating current. A scope and a current waveform are needed to see saturation
 
-## Bench Relevance
+## In Practice
 
 - An inductor current waveform with a curved or hooked rising edge (slope increasing toward the end) indicates approaching saturation
 - Current spikes at the end of the switch on-time in a converter indicate the inductor is saturating

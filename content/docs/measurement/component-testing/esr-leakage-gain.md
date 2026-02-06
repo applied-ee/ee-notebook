@@ -91,7 +91,7 @@ This confirms switching function but doesn't measure exact threshold voltage or 
 - Logic-level MOSFETs (low Vgs threshold ~1.5–2.5V) are easier to turn on with DMM than standard-threshold devices (~4V)
 - Gate oxide damage shows as conductivity Gate-to-Source or Gate-to-Drain — the MOSFET is dead
 
-## Bench Relevance
+## In Practice
 
 - Electrolytic with high ESR on a switcher output causes increased ripple and possible instability — even if capacitance measures correctly
 - Capacitor that reforms (leakage decreases over time with voltage applied) is exhibiting normal behavior after storage

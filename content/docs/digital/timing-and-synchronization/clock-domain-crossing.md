@@ -133,7 +133,7 @@ Clock domain crossings are notoriously difficult to verify by simulation alone, 
 - **"Same frequency" does not mean "same clock"** — two 100 MHz clocks from different sources are asynchronous, even though they have the same nominal frequency. They require CDC synchronization
 - **CDC failures are intermittent and environment-dependent** — a CDC bug might produce failures once per hour, once per day, or once per month. The failure rate depends on clock frequency, temperature (which affects metastability resolution time), and the exact phase relationship at the moment of crossing. Board-level testing may not find the bug; only analysis tools can guarantee correctness
 
-## Bench Relevance
+## In Practice
 
 **Rare, intermittent data corruption that cannot be reproduced reliably** is the classic CDC failure. The error rate depends on the exact phase relationship between the two clocks, which drifts continuously. The failure may appear once per hour or once per month, making it invisible to short test runs and nearly impossible to trigger on demand.
 

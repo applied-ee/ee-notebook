@@ -83,7 +83,7 @@ H-field (magnetic loop) or E-field (capacitive stub) probes for localizing EMI s
 - Standard DMM leads contribute ~0.1–0.5 Ω of lead resistance — negligible above 10 Ω, significant below 1 Ω
 - Probe tip contact quality matters more at low resistance — dirty or oxidized contacts add resistance
 
-## Bench Relevance
+## In Practice
 
 - Signal that looks clean on 10x but distorted on 1x indicates 1x bandwidth is insufficient or capacitive loading is affecting the circuit
 - Oscillator that works normally but stops when probed needs an active probe with lower capacitance

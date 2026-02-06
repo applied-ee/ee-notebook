@@ -137,7 +137,7 @@ The right SDR depends on the intended use case:
 - **Software support varies** — Not all SDR hardware works with all SDR software; RTL-SDR has the broadest software ecosystem because of its popularity, and more specialized platforms may require specific software or plugins
 - **The antenna is still the most important component** — A $300 SDR with a poor antenna performs worse than a $20 RTL-SDR with a good antenna tuned for the frequency of interest; budget for antennas, not just the SDR hardware
 
-## Bench Relevance
+## In Practice
 
 - If dropped samples or gaps appear in the waterfall at high sample rates, the bottleneck is likely USB 2.0 throughput rather than the SDR hardware itself — reducing sample rate or switching to a USB 3.0 platform resolves this
 - Comparing the same signal on an 8-bit SDR versus a 12-bit SDR in a strong-signal environment makes the dynamic range difference immediately visible: the 12-bit platform shows clean reception where the 8-bit platform shows intermodulation products

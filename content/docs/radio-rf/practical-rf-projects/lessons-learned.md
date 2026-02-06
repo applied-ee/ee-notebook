@@ -136,7 +136,7 @@ Even without a manufacturer's eval board, having a previous version of the same 
 - **Neglecting the power supply** — A clean, well-decoupled power supply is the foundation of every RF circuit. A noisy supply undermines everything downstream. Verify supply quality before blaming the RF circuit
 - **Working alone in a vacuum** — RF has a long history and a large community. Forums (eevblog.com, groups.io, reddit.com/r/amateurradio), books (ARRL Handbook, Experimental Methods in RF Design), and local ham radio clubs are resources that can save weeks of debugging. Ask for help when stuck
 
-## Bench Relevance
+## In Practice
 
 - A circuit that draws significantly more supply current than expected (often 2-3x) without obvious cause is likely oscillating at a frequency outside the intended band — a wide-span spectrum sweep confirms or rules out parasitic oscillation
 - Swapping a cable and seeing a measurement suddenly become stable and repeatable confirms that the original cable or connector was the source of the anomaly, not the circuit under test

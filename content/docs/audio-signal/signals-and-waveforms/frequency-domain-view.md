@@ -87,7 +87,7 @@ Key relationships:
 - **Spectral leakage is not noise** — When using the FFT, frequency components that don't fall exactly on bin centers smear across multiple bins. This leakage can look like a raised noise floor but is an artifact of the analysis window (see [Transforms]({{< relref "/docs/audio-signal/dsp-fundamentals/transforms" >}}))
 - **Bandwidth ≠ highest frequency** — A bandpass system centered at 100 MHz with 1 MHz bandwidth handles frequencies from 99.5 to 100.5 MHz. Bandwidth is width, not position
 
-## Bench Relevance
+## In Practice
 
 - Spectral spikes at 50/60 Hz and harmonics indicate power supply noise or ground loop coupling
 - A raised broadband noise floor in the spectrum suggests thermal noise, quantization noise, or jitter

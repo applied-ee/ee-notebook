@@ -200,7 +200,7 @@ Outside of automotive, CAN is widely used but LIN is rare. Industrial and roboti
 - **CAN FD mixed-mode buses need careful planning** — Classic CAN nodes interpret CAN FD frames as errors, incrementing error counters toward bus-off
 - **LIN slave auto-baud depends on receiving the sync field** — If a slave misses the 0x55 sync byte, it cannot calibrate baud rate and misinterprets subsequent data
 
-## Bench Relevance
+## In Practice
 
 - Intermittent CAN errors that look like firmware bugs often trace to missing or incorrect bus termination — check resistance first
 - A CAN node that goes silent after a burst of errors has likely reached bus-off — verify firmware handles bus-off recovery

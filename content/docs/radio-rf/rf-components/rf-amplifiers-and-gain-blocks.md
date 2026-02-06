@@ -118,7 +118,7 @@ Prevention:
 - **Amplifier gain changes with temperature** — Most RF amplifiers lose about 0.01-0.02 dB/C of gain as temperature rises. Over a 50C operating range, that is 0.5-1.0 dB of variation
 - **Never connect an RF amplifier output directly to another amplifier input without checking levels** — Cascading two high-gain blocks can easily exceed the P1dB of the second stage, causing severe distortion
 
-## Bench Relevance
+## In Practice
 
 - An MMIC drawing no DC current despite having a supply voltage usually indicates a missing or open bias inductor/resistor on the output pin
 - Spurious tones on the spectrum analyzer that shift or disappear when a hand is placed near the circuit board suggest an oscillation caused by impedance sensitivity — a classic sign of conditional instability

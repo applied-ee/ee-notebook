@@ -145,7 +145,7 @@ The details are MCU-specific. On some STM32 parts, the USB peripheral has its ow
 - **USB-C connectors need CC resistors for USB 2.0** — Without 5.1k pull-down resistors on each CC pin, a USB-C host may not provide VBUS
 - **Descriptor total lengths must be exact** — If the wTotalLength field is wrong, enumeration fails or the device behaves erratically
 
-## Bench Relevance
+## In Practice
 
 - A device that shows as "unknown" in the host OS likely has descriptor errors — check wTotalLength and descriptor structure
 - USB that works on one machine but not another, or fails intermittently with temperature, suggests clock accuracy issues — verify the 48 MHz source

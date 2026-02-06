@@ -226,7 +226,7 @@ Each step introduces practical considerations: propagation delay through each ga
 - **XOR is expensive** — In terms of transistor count, XOR is more complex than AND or OR. Designs that use XOR heavily (arithmetic, parity) consume more area and power per function.
 - **Boolean simplification assumes static logic** — The simplified expression gives the correct steady-state output but says nothing about transient behavior. Hazards and glitches (see [Combinational Logic]({{< relref "combinational-logic" >}})) can produce incorrect outputs during transitions even when the Boolean function is correct.
 
-## Bench Relevance
+## In Practice
 
 **A digital output that doesn't match the expected truth table for specific input combinations** — re-deriving the Boolean expression from the schematic identifies whether the error is in the logical function itself or in the physical implementation. If the re-derived expression matches the intended truth table, the fault is physical (wiring, stuck pin), not logical.
 

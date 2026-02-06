@@ -101,7 +101,7 @@ At higher frequencies, lambda is smaller, so the effective aperture for the same
 - **Effective aperture is larger than physical size for low-frequency antennas** -- a half-wave dipole at 7 MHz (40m band) has an effective aperture of about 218 m^2, yet the wire is only 20 m long; the fields extend well beyond the physical conductor
 - **Reciprocity does not mean symmetry in a system** -- the antenna is reciprocal, but the transmitter and receiver are not; a system may perform differently in each direction due to power levels, noise figures, and sensitivity, even though the antenna behaves identically
 
-## Bench Relevance
+## In Practice
 
 - A dipole oriented broadside to a transmitter shows maximum received signal; rotating it so the end points at the transmitter drops the signal into the null -- this directly demonstrates the radiation pattern
 - Swapping between a dipole and a Yagi on a receiver shows the gain difference as a measurable increase in signal strength in the favored direction

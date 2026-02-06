@@ -140,7 +140,7 @@ In practice, the best defense is simplicity. Systems with one or two mutexes rar
 - **Deadlock symptoms look like a hang, not a crash** — the system is alive (other tasks may still run, watchdog may still be fed), but the deadlocked tasks produce no output
 - **Compiler reordering defeats hand-rolled synchronization** — the C compiler can reorder memory accesses for performance. `volatile` prevents compiler reordering but not CPU reordering. Using RTOS primitives avoids this class of problem
 
-## Bench Relevance
+## In Practice
 
 - Data corruption that appears intermittently under load suggests a race condition — review all shared data access for proper protection
 - A system that hangs with some tasks still running (watchdog fed) suggests deadlock — dump task state to find blocked tasks

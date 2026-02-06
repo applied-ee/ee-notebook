@@ -122,7 +122,7 @@ Provides galvanic isolation between circuits — either for safety (mains isolat
 - Flyback transformers from different winding houses for the "same" schematic can have dramatically different leakage inductance — Winding technique and consistency are critical. If suppliers change, re-measure leakage and re-validate the snubber
 - Selecting by inductance alone is the most common magnetics mistake in switching converter design — Current rating, saturation current, DCR, and core material all matter as much or more than the inductance value. Two "10 µH, 5 A" inductors from the same distributor search can behave completely differently in the same circuit
 
-## Bench Relevance
+## In Practice
 
 - An inductor that saturates in one design but not another with the "same" requirements likely has different DC bias characteristics
 - Converter efficiency that doesn't match calculations often traces to higher-than-expected DCR or core losses

@@ -153,7 +153,7 @@ This level of accuracy is more than adequate for building, tuning, and troublesh
 - **Cheap cables have variable impedance** -- ultra-thin, no-brand coax can have impedance variations along its length that create standing waves within the cable itself; use quality coax for measurement cables (RG-316, RG-142, or semi-rigid)
 - **NanoVNA accuracy degrades above 300 MHz** -- the original NanoVNA-H is usable to ~900 MHz but increasingly inaccurate; for 2.4 GHz and above, use a NanoVNA-V2 or LiteVNA with verified accuracy at the frequency of interest
 
-## Bench Relevance
+## In Practice
 
 - Sweeping a NanoVNA across a dipole's expected band immediately reveals the resonant frequency as the VSWR minimum -- if it is off target, trimming brings it into range in a few iterations
 - Comparing the VNA reading of a 50-ohm dummy load (VSWR 1.0:1) to the reading on an actual antenna highlights how much of the antenna's impedance deviates from ideal, guiding matching network design

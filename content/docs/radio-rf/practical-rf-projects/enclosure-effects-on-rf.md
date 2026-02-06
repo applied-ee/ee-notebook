@@ -132,7 +132,7 @@ Based on accumulated experience with enclosures at RF:
 - **Cable penetrations dominate leakage** — A perfectly shielded enclosure with one unfiltered cable is no better shielded than the cable. Every cable must be filtered or shielded at the enclosure boundary
 - **Cavity resonance can be excited by digital circuits** — A microcontroller clock at 48 MHz produces harmonics at every 48 MHz interval. The 50th harmonic is at 2.4 GHz — right where a WiFi antenna operates. If the enclosure resonates near 2.4 GHz, the clock harmonic is amplified by the cavity
 
-## Bench Relevance
+## In Practice
 
 - Placing the lid on a metal enclosure causes an amplifier's gain to jump or an oscillation to appear that was absent with the lid off — this indicates coupling through a cavity resonance mode excited by the circuit
 - An antenna that measured -20 dB return loss on the open bench shifts to -6 dB return loss inside a plastic enclosure, with the S11 dip visibly moving to a lower frequency on the NanoVNA — this is dielectric loading in action

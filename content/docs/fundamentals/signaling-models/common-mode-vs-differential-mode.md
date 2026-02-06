@@ -203,7 +203,7 @@ Similarly: adding shielding to a cable might reduce noise pickup, but if the shi
 - **A "balanced" cable with poor balance is worse than advertised.** The cable's balance (symmetry) determines how much common-mode noise converts to differential-mode. A damaged cable, a cable with a broken twist lay, or a cable with mismatched connectors may have 20 dB worse balance than specification — converting 10× more common-mode noise into signal
 - **Common-mode range limits are hard limits.** A differential receiver with a ±10 V common-mode range will clip, distort, or be damaged if the common-mode voltage exceeds that range. CMRR only applies within the specified common-mode range. Ground offsets, noise peaks, and transients must all stay within bounds
 
-## Bench Relevance
+## In Practice
 
 **Noise that disappears when switching from a single-ended to a differential measurement** is common-mode — present on both conductors equally but rejected by the differential measurement. The single-ended measurement was showing the common-mode noise as if it were signal; the differential measurement reveals the actual signal underneath.
 

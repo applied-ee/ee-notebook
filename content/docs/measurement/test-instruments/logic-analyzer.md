@@ -66,7 +66,7 @@ Three form factors serve different needs:
 - **Probing adds capacitance** — Even "high impedance" logic analyzer probes add 3–10 pF per channel. On a fast bus with tight timing margins, connecting 16 probes adds significant capacitive load. Use proper probe connections (short ground leads, minimal wire length) and check that the circuit still works correctly with the probes attached
 - **Not all protocol decoders are equal** — Some decoders handle only the basic case (standard-mode I²C, 8-bit SPI). Edge cases (10-bit I²C addressing, multi-byte SPI with chip-select management, CAN FD) may require specific decoder versions or manual interpretation
 
-## Bench Relevance
+## In Practice
 
 - When an SPI peripheral returns 0xFF or 0x00 for all reads, the logic analyzer instantly shows whether the clock is running, the chip select is asserted, and the peripheral is actually responding — or whether the firmware is talking to itself
 - An I²C device that intermittently NAKs may have an address conflict, be busy with an internal operation, or be seeing a bus condition it interprets as an error. The logic analyzer capture shows the exact byte where the NAK occurs and the bus state leading up to it

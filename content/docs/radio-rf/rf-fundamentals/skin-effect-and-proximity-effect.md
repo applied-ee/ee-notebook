@@ -98,7 +98,7 @@ The result is that the current distribution is even more non-uniform than skin e
 - **Proximity effect is often larger than skin effect in wound components** — Two tightly-wound layers of an inductor may have 5x the AC resistance predicted by skin effect alone. Electromagnetic simulation or measurements are needed for accurate loss prediction
 - **Skin effect changes inductance too, not just resistance** — The internal inductance of a conductor (due to flux linkage inside the conductor) decreases as skin effect forces current to the surface. Total inductance drops slightly at high frequencies, which can shift resonant frequencies in precision circuits
 
-## Bench Relevance
+## In Practice
 
 - An inductor whose measured Q factor is much lower than predicted from skin effect alone is likely suffering from proximity effect between windings
 - PCB trace loss that exceeds simulation predictions at GHz frequencies may indicate rough copper — compare measured insertion loss against smooth-copper models

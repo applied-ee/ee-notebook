@@ -65,7 +65,7 @@ Measure phase with two-channel scope: CH1 on input, CH2 on output. At each frequ
 - Microphone calibration matters for acoustic measurements — cheap microphones have their own frequency response
 - Phase wraps at ±180° — be careful with interpretation near boundaries
 
-## Bench Relevance
+## In Practice
 
 - Frequency response down at low frequencies indicates coupling capacitor too small or high-pass filtering
 - Frequency response down at high frequencies indicates parasitic capacitance, cable loading, or intentional low-pass filtering

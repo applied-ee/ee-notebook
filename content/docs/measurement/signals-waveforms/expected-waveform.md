@@ -47,7 +47,7 @@ When no known-good reference exists, simulate the circuit in SPICE with realisti
 - Simulations use ideal models unless parasitics are explicitly included — stray capacitance, trace inductance, ESR, and leakage affect the real circuit but not the simulation
 - Simulations don't include probe loading — if the probe changes circuit behavior, the measurement won't match the simulation even if the circuit is perfect
 
-## Bench Relevance
+## In Practice
 
 - Amplitude lower than expected suggests gain issue, loading, or component out of tolerance
 - Frequency off from expected suggests timing/component value issue — check R and C values in oscillator circuits

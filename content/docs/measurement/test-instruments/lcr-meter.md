@@ -64,7 +64,7 @@ A DMM capacitance mode gives one number at one frequency. That is fine for check
 - **"Accuracy" includes more than the basic spec** — Temperature, humidity, warm-up time, and test signal level all affect accuracy. The headline spec (e.g., 0.1%) applies under specified conditions. Real-bench conditions may be worse
 - **Winding resistance is not the same as ESR** — For inductors, the DC resistance measured by a DMM differs from the AC resistance (ESR) measured by an LCR meter at frequency, because the AC measurement includes skin effect and core losses. Both numbers are useful for different purposes
 
-## Bench Relevance
+## In Practice
 
 - When a filter circuit does not match simulation, measure the actual inductor and capacitor values at the filter's operating frequency — nominal values from the part marking may be far from actual values at frequency
 - A capacitor that passes DMM testing but fails in-circuit may have acceptable capacitance but excessive ESR or reduced capacitance under DC bias — the LCR meter reveals what the DMM cannot

@@ -105,7 +105,7 @@ When an RF signal trace must transition between layers, the via creates an imped
 - **Back-drilling adds cost but is necessary above 10 GHz** — Via stubs create resonances that can notch out signals at critical frequencies; designs operating above 10 GHz should budget for back-drilling in fabrication
 - **Mutual inductance between parallel vias reduces the benefit** — Two vias placed very close together (touching pads) do not give 50% inductance — mutual coupling keeps the total higher; space parallel vias apart for best reduction
 
-## Bench Relevance
+## In Practice
 
 - A TDR trace showing an impedance spike at a layer transition indicates that the signal via lacks adjacent ground vias for the return current
 - Narrowband noise spikes visible on a spectrum analyzer at frequencies corresponding to ground plane dimensions suggest cavity resonances due to insufficient stitching

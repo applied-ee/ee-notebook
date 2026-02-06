@@ -86,7 +86,7 @@ Adding a series resistor (22–100 Ohm) to a digital output slows the edge witho
 - Spread spectrum reduces peak emission but not total energy — doesn't help broadband susceptibility
 - The problem often isn't where the symptom appears — noise on ADC may originate from switcher on other side of board
 
-## Bench Relevance
+## In Practice
 
 - ADC noise correlating with switcher activity confirms coupling path — improve decoupling and layout
 - Reset triggered by relay/motor/solenoid indicates transient coupling — add snubber and improve decoupling

@@ -79,7 +79,7 @@ Infinite persistence never clears the display — every acquisition adds to the 
 - **FFT on a scope is not a spectrum analyzer** — Scope FFT resolution is limited by memory depth and window function. It is useful for identifying frequency content but lacks the dynamic range and noise floor of a dedicated spectrum analyzer
 - **Deep memory slows the scope down** — Acquiring and processing millions of sample points takes time. At maximum memory depth, the scope's waveform update rate drops, making it harder to spot rare events in real time. Some scopes let you trade memory depth for update rate
 
-## Bench Relevance
+## In Practice
 
 - A "missing" pulse in a digital signal that appears on the scope but not in the logic analyzer view may be a runt (below logic threshold) — use the runt trigger to isolate it
 - Power supply ripple measurement requires AC coupling, bandwidth limit (20 MHz), and a short ground lead on the probe — without these, the measurement includes high-frequency noise pickup from the probe ground loop

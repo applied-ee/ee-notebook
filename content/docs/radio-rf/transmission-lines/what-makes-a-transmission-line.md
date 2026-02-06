@@ -106,7 +106,7 @@ This is why RF and high-speed digital PCBs have solid, unbroken ground planes, a
 - **A transmission line does not need to be long to matter** — Even a 5 mm bond wire or via stub is a transmission line at 10 GHz; the threshold is electrical length relative to the frequency, not physical size by human standards
 - **Transmission line effects appear suddenly** — A design may work perfectly up to a certain frequency and then degrade rapidly as traces cross the lambda/10 threshold; the transition is not always gradual, and impedance mismatches invisible at lower frequencies can create dramatic reflections
 
-## Bench Relevance
+## In Practice
 
 - Ringing on a digital waveform viewed with an oscilloscope — overshoot and oscillation after edges — is the direct symptom of an unterminated trace behaving as a transmission line
 - A ground plane slot beneath a high-speed trace shows up as increased EMI emissions and crosstalk to adjacent signals, often detectable with a near-field probe

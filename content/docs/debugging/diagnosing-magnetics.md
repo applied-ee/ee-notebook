@@ -140,6 +140,6 @@ When a scope or LCR meter isn't available:
 - **"It measures fine on the bench" doesn't mean it works in the circuit.** A magnetics component can pass all static tests (inductance, DCR, SRF) and still fail in the application due to saturation at operating current, core loss at operating frequency, or thermal issues in the enclosure. Bench measurements characterize the component; in-circuit measurements characterize the system
 - **Scope probes on switching nodes need bandwidth and low inductance.** A long ground lead on a scope probe adds inductance that rings with the parasitic capacitance, creating false ringing in the measurement that looks like a circuit problem. A ground spring or tip-and-barrel probing technique produces clean measurements at switching nodes
 
-## Bench Relevance
+## In Practice
 
 - **A switching regulator that drops out of regulation at a current well below its rated maximum** often indicates inductor saturation — the inductor's effective inductance collapses when the current exceeds its saturation rating, and the regulator can no longer maintain the necessary energy storage per cycle. The IC's current limit hasn't been reached; the inductor's physics has been exceeded.

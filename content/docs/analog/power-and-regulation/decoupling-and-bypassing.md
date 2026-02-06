@@ -80,7 +80,7 @@ In practice, the same capacitor does both jobs simultaneously. The distinction m
 - **Don't forget the input side** — Power supply ICs (especially switching regulators) need input decoupling too. The pulsating input current of a buck converter needs a low-impedance path right at the converter
 - **Ferrite beads** — A ferrite bead in series with the supply trace acts as a frequency-dependent resistor that attenuates high-frequency noise. Combined with a bypass cap on the IC side, it forms a low-pass filter. Useful for isolating noisy digital supplies from sensitive analog supplies
 
-## Bench Relevance
+## In Practice
 
 - Digital circuits with glitchy behavior or missed transitions often have inadequate decoupling — check for voltage dips at the IC power pins during switching
 - Analog circuits with unexplained noise may have digital supply noise coupling through shared power rails — add ferrite bead isolation

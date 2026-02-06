@@ -91,7 +91,7 @@ The clock low timeout is worth implementing in firmware regardless of SMBus — 
 - **SMBus PEC failures are silent without checking** — The device sends the PEC byte, but corrupted data passes through undetected if firmware does not compute and compare it
 - **SMBus timeout recovery is not free** — When the 35ms timeout fires, the bus needs reset. Some peripherals handle this automatically; others require manual clock toggling
 
-## Bench Relevance
+## In Practice
 
 - DS18B20 readings of exactly 85.0 degrees C indicate the conversion did not complete — check timing and parasitic power supply strength
 - 1-Wire communication that works on short wires but fails on long runs has timing issues from added capacitance — try a lower pull-up resistor value

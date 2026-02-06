@@ -54,7 +54,7 @@ When physical memory is exhausted and there is no swap, the kernel invokes the O
 - **/dev/mem access bypasses all kernel protections and can crash the system** — Mapping physical memory lets user space write to kernel data structures, DMA buffers, or peripheral registers
 - **Faults manifest differently on MCUs and MPUs** — On a Cortex-M, a bad memory access triggers a HardFault. On an MPU, the kernel delivers a SIGSEGV, killing just that process
 
-## Bench Relevance
+## In Practice
 
 - Latency spikes that appear randomly in otherwise fast code suggest page faults — use `mlockall()` and pre-allocate all memory at startup
 - An embedded system that slows dramatically over time and eventually corrupts the SD card likely has swap enabled — disable it

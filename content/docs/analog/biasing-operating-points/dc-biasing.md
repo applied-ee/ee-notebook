@@ -88,7 +88,7 @@ The Q-point determines:
 - **Decoupling the bias network** — If the bias resistors are not properly bypassed, power supply noise modulates the bias point, adding noise to the signal
 - **Start-up conditions** — Some bias circuits have multiple stable states. At power-on, the circuit might settle at the wrong operating point. This is especially a problem in differential pairs and current mirrors with feedback
 
-## Bench Relevance
+## In Practice
 
 - A transistor that clips asymmetrically has a bias point that isn't centered — measure V_CE and adjust the bias network
 - Inconsistent gain between supposedly identical circuits indicates beta-dependent biasing — switch to voltage divider or current source bias

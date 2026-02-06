@@ -105,7 +105,7 @@ For I2C specifically, an oscilloscope is also valuable because rise time and sig
 - **Hardware CS on SPI often misbehaves for multi-byte transfers** — Many MCU SPI peripherals deassert CS between each byte when using hardware chip select. Most SPI devices expect CS held low for the entire transaction
 - **I2C bus lockup is a real failure mode** — If a slave gets confused mid-transfer, it can hold SDA low indefinitely, locking up the entire bus. Recovery requires clocking SCL manually until the slave releases SDA
 
-## Bench Relevance
+## In Practice
 
 - SPI data that is shifted by one bit suggests wrong clock mode — check CPOL/CPHA against the device datasheet
 - I2C communication that works sometimes and fails at other times often has marginal pull-up resistors — check rise times with a scope

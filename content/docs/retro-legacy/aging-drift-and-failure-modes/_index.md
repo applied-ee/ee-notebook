@@ -84,7 +84,7 @@ Semiconductors are generally the most stable components in a legacy circuit. Sil
 - **Measure before condemning** -- A resistor that reads 10% high might be a drifted carbon comp, or it might be the correct value with a misread color code (faded bands are common on old resistors). Measure rather than guess
 - **Reforming electrolytics** -- Capacitors that have been unpowered for years can sometimes be reformed by slowly ramping up the applied voltage through a current-limiting resistor. This gradually rebuilds the oxide dielectric layer. It does not always work, but it can save a rare or hard-to-replace cap
 
-## Bench Relevance
+## In Practice
 
 - Increasing ripple on a DC power rail under load, with the regulator and rectifier testing good, points to dried-out filter capacitors with elevated ESR -- measure ESR directly rather than relying on a capacitance reading
 - A vintage amplifier that works fine when cold but clips or distorts after warming up likely has thermally marginal bias compensation in a discrete stage -- monitor the bias voltage at the output transistors as temperature rises

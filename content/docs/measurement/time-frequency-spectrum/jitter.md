@@ -55,7 +55,7 @@ Timing variation on clocks and data signals. A perfect clock has edges at exactl
 - Temperature changes cause frequency drift, which looks like very low-frequency jitter on short measurements — this is wander, not jitter
 - A PLL cleans up input jitter within its loop bandwidth but adds its own jitter (VCO phase noise) outside its loop bandwidth
 
-## Bench Relevance
+## In Practice
 
 - Jitter that correlates with power supply ripple indicates supply coupling — improve oscillator decoupling
 - Jitter that correlates with nearby signal switching indicates crosstalk — increase spacing or add shielding

@@ -83,7 +83,7 @@ Whether using Ethernet or WiFi, the software layers above the link are the same:
 - **Ethernet cable detection is not instant** — Auto-negotiation takes 1-3 seconds after power-on. Sending immediately after initialization fails
 - **WiFi throughput depends on conditions** — Real throughput (1-5 Mbps typical for ESP32) is far below theoretical maximums due to signal strength, interference, and processing overhead
 
-## Bench Relevance
+## In Practice
 
 - Ethernet that fails after reset but works after a delay has PHY initialization timing issues
 - Random crashes or memory corruption in networked RTOS applications often trace to lwIP thread-safety violations

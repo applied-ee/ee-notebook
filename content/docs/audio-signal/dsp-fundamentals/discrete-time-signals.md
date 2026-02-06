@@ -78,7 +78,7 @@ A subtlety that causes real bugs: the FFT inherently computes circular (periodic
 - **Zero-padding does not create resolution** — Padding a block with zeros and taking a larger FFT interpolates the spectrum (smoother appearance) but does not increase the fundamental frequency resolution. True resolution depends on the signal duration, not the FFT size
 - **Integer indexing hides timing precision** — A sample at index n represents a moment in time, but the actual sampling instant has jitter. For high-resolution systems, the assumption of perfectly uniform spacing breaks down — see [Clocking & Jitter]({{< relref "/docs/audio-signal/practical-signal-reality/clocking-and-jitter" >}})
 
-## Bench Relevance
+## In Practice
 
 - Clicks or pops at regular intervals in processed audio indicate block boundary discontinuities — verify overlap and windowing
 - Spectral analysis showing smeared peaks rather than clean lines indicates spectral leakage — use an appropriate window function
