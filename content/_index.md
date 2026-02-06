@@ -35,13 +35,13 @@ The sections follow a loose layering. Physical constraints come first. Engineere
 - **[Audio & Signal Processing]({{< relref "/docs/audio-signal" >}})** — Filters, FFT, DACs, ADCs, and sampling theory. The information layer: capturing, transforming, and reproducing signals.
 - **[Radio & RF]({{< relref "/docs/radio-rf" >}})** — Antennas, impedance matching, transmission lines, and propagation. The domain where wavelength matters and low-frequency intuition stops working.
 
-**The design process layer** — turning ideas into working hardware:
-
-- **[Design & Development]({{< relref "/docs/design-development" >}})** — From requirements through schematic, layout, prototyping, and validation. The workflow and discipline required to turn concepts into reliable hardware.
-
 **The context layer** — learning from what came before:
 
 - **[Retro & Legacy Systems]({{< relref "/docs/retro-legacy" >}})** — Vintage equipment, legacy interfaces, and discrete-era design. Older circuits expose the physics directly — gain stages, bias networks, and protection schemes visible on the schematic. Studying earlier designs builds intuition that transfers forward and helps bridge modern systems to hardware still in service.
+
+**The design process layer** — turning ideas into working hardware:
+
+- **[Design & Development]({{< relref "/docs/design-development" >}})** — From requirements through schematic, layout, prototyping, and validation. The workflow and discipline required to turn concepts into reliable hardware.
 
 **The practice layer** — verifying and fixing what gets built:
 
