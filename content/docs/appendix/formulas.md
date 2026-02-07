@@ -1,6 +1,6 @@
 ---
 title: "Formula Reference"
-weight: 99
+weight: 10
 review:
   status: unreviewed
   method: []

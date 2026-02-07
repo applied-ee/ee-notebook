@@ -46,7 +46,7 @@ The probability that a flip-flop remains metastable decreases exponentially with
 
 ## MTBF (Mean Time Between Failures)
 
-MTBF quantifies the reliability of a synchronization scheme — the average time between metastability-induced failures. It depends on the clock frequency, data transition rate, the flip-flop's vulnerability window, available resolution time, and the technology's resolution time constant. Higher clock frequencies dramatically reduce MTBF because there's less time for resolution. See [Formula Reference]({{< relref "/docs/formulas" >}}) for the full equation.
+MTBF quantifies the reliability of a synchronization scheme — the average time between metastability-induced failures. It depends on the clock frequency, data transition rate, the flip-flop's vulnerability window, available resolution time, and the technology's resolution time constant. Higher clock frequencies dramatically reduce MTBF because there's less time for resolution. See [Formula Reference]({{< relref "/docs/appendix/formulas" >}}) for the full equation.
 
 **Practical MTBF targets:**
 - Consumer electronics: > 100 years
