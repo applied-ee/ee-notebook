@@ -4234,7 +4234,10 @@
   {
     "term": "Node",
     "definition": "A junction where two or more branches meet in a circuit.",
-    "anchor": "node"
+    "anchor": "node",
+    "skipPatterns": [
+      "Node\\.js"
+    ]
   },
   {
     "term": "Noise factor",
@@ -5771,7 +5774,12 @@
   {
     "term": "Series",
     "definition": "Components connected end-to-end so that the same current flows through each.",
-    "anchor": "series"
+    "anchor": "series",
+    "skipPatterns": [
+      "\\w*\\d+\\w*\\s+series",
+      "Cortex-\\w+\\s+series",
+      "connector\\s+series"
+    ]
   },
   {
     "term": "Series termination",

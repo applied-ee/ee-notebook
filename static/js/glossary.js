@@ -16,13 +16,14 @@
   // Include aliases as separate lookup entries
   var terms = [];
   data.forEach(function (entry) {
-    var item = { term: entry.term, def: entry.definition, anchor: entry.anchor };
+    var skips = (entry.skipPatterns || []).map(function (p) { return new RegExp(p, "i"); });
+    var item = { term: entry.term, def: entry.definition, anchor: entry.anchor, skips: skips };
     terms.push(item);
     if (entry.aliases) {
       entry.aliases.forEach(function (alias) {
         // Skip single-letter aliases (A, C, J, etc.) — too many false matches
         if (alias.length <= 2) return;
-        terms.push({ term: alias, def: entry.definition, anchor: entry.anchor });
+        terms.push({ term: alias, def: entry.definition, anchor: entry.anchor, skips: skips });
       });
     }
   });
@@ -51,6 +52,7 @@
     while (el && el !== content) {
       if (SKIP_TAGS[el.tagName]) return true;
       if (el.classList && el.classList.contains("glossary-term")) return true;
+      if (el.classList && el.classList.contains("no-glossary")) return true;
       el = el.parentNode;
     }
     return false;
@@ -85,6 +87,15 @@
       var node = textNodes[i];
       var match = pattern.exec(node.textContent);
       if (!match) continue;
+
+      // Check skip patterns — if surrounding text matches a non-EE context, skip this occurrence
+      if (entry.skips.length) {
+        var skipped = false;
+        for (var s = 0; s < entry.skips.length; s++) {
+          if (entry.skips[s].test(node.textContent)) { skipped = true; break; }
+        }
+        if (skipped) continue;
+      }
 
       // Split the text node and insert the glossary link
       var before = node.textContent.substring(0, match.index);

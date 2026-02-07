@@ -112,7 +112,7 @@ An automatic glossary tooltip system links terms on every page (except the gloss
 
 **Coverage:** 1,211 entries as of February 2026. Remaining sections (Embedded, Audio & Signal, Radio & RF, Design & Development, Measurement, Debugging) may still need term extraction.
 
-**Known bug — false positive context matching:** The JS uses word-boundary regex matching, which catches polysemous terms used in non-EE contexts. Example: "series" (EE: series circuit) highlights incorrectly in "The Cortex-M series is specifically designed for microcontroller use" where "series" means product family. Other likely false positives: "gain," "ground," "bias," "load," "sink," "source," "node," "net." Fix TBD — possible approaches include requiring minimum surrounding-context signals, maintaining an exclusion list per term, or switching to phrase-level matching for ambiguous terms.
+**False-positive suppression:** Polysemous terms (words with both EE and non-EE meanings) are handled by two mechanisms. First, entries in `glossary.json` can include a `skipPatterns` array of regex strings — when the surrounding text node matches a skip pattern, that occurrence is skipped but linking continues on later text nodes. Second, content authors can wrap text in `<span class="no-glossary">...</span>` to suppress linking for one-off cases. Currently "Series" and "Node" have skip patterns; add more as needed.
 
 ## Build & Verify
 
