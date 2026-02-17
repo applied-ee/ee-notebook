@@ -18,5 +18,6 @@ The key patterns in bare-metal firmware — startup sequences, interrupt-driven 
 ## What This Section Covers
 
 - **[Startup & Initialization]({{< relref "startup-and-initialization" >}})** — Vector table, startup code, C runtime initialization, and main loop patterns: what happens between power-on and the first line of application code.
-- **[Interrupts]({{< relref "interrupts" >}})** — Priority levels, latency, jitter, nesting, and ISR design rules: the core mechanism for real-time response.
+- **[Interrupts]({{< relref "interrupts" >}})** — ISR design rules, shared data patterns, and critical sections: the core mechanism for real-time response.
+- **[Cortex-M Interrupts and the NVIC]({{< relref "cortex-m-interrupts" >}})** — NVIC configuration, priority grouping, tail-chaining, latency, and jitter on ARM Cortex-M.
 - **[State Machines & Event Loops]({{< relref "state-machines-and-event-loops" >}})** — Cooperative scheduling, event-driven design, and superloop vs dispatch patterns: organizing firmware behavior.

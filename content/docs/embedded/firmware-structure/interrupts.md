@@ -10,58 +10,17 @@ review:
 
 # Interrupts
 
-Interrupts are the fundamental mechanism for real-time response in embedded systems. Instead of constantly polling a peripheral to see if something happened, the hardware itself signals the CPU: "stop what is happening and handle this." The CPU saves its current context, jumps to a handler function, executes it, restores context, and resumes where it left off. This sounds straightforward, but the details — priority levels, nesting, shared data, and latency — are where most embedded bugs come from.
+Interrupts are the fundamental mechanism for real-time response in embedded systems. Instead of constantly polling a peripheral to see if something happened, the hardware itself signals the CPU: "stop what you are doing and handle this." The CPU saves its current context, jumps to a handler function, executes it, restores context, and resumes where it left off. This sounds straightforward, but the details — priority levels, nesting, shared data, and latency — are where most embedded bugs come from.
+
+For ARM Cortex-M specifics — NVIC configuration, priority grouping, tail-chaining, and latency characteristics — see {{< relref "cortex-m-interrupts" >}}.
 
 ## How Interrupts Work
 
-When a peripheral (timer overflow, UART byte received, GPIO edge detected) asserts its interrupt line, the CPU finishes the current instruction, pushes a set of registers onto the stack (on Cortex-M: R0-R3, R12, LR, PC, xPSR — eight words), fetches the handler address from the vector table, and begins executing the ISR. When the ISR returns (via a special return value in the LR), the CPU pops the saved registers and resumes the interrupted code.
+When a peripheral (timer overflow, UART byte received, GPIO edge detected) asserts its interrupt line, the CPU finishes the current instruction, saves a set of registers to the stack, fetches the handler address from a vector table, and begins executing the ISR. When the ISR returns, the CPU restores the saved registers and resumes the interrupted code.
 
-This context save/restore is automatic on Cortex-M — the hardware does it, not the compiler. This means ISR functions in C look like normal functions with no special prologue or epilogue (unlike AVR, where the compiler must generate explicit register save/restore sequences, and the `ISR()` macro or `__attribute__((interrupt))` to get the right code generation).
+The details of context save vary by architecture. Some processors (like ARM Cortex-M) handle it entirely in hardware — the CPU pushes a fixed set of registers automatically, and ISR functions in C look like normal functions. Others (like AVR) rely on the compiler to generate explicit save/restore sequences, requiring special macros or attributes (`ISR()`, `__attribute__((interrupt))`) to get the right code generation.
 
-## The NVIC
-
-The ARM Cortex-M Nested Vectored Interrupt Controller is the hardware block that manages all external interrupts (and some internal exceptions). Every interrupt source gets a slot in the NVIC with:
-
-- **Enable/disable** — Each interrupt can be individually enabled or disabled
-- **Pending flag** — An interrupt can be "pending" (requested) even if it is disabled; when enabled, it fires immediately
-- **Priority level** — A configurable numeric priority (lower number = higher priority on Cortex-M)
-
-"Nested" means a higher-priority interrupt can preempt a lower-priority ISR that is already running. "Vectored" means the hardware fetches the handler address from the vector table directly, without software dispatch. This combination makes Cortex-M interrupt entry very fast compared to architectures that use a single interrupt handler and require software to determine the source.
-
-### Tail-Chaining
-
-If a second interrupt becomes pending while the CPU is finishing an ISR, the NVIC skips the context restore and immediately enters the next handler. This "tail-chaining" eliminates the overhead of popping and re-pushing the same registers and reduces back-to-back interrupt latency from ~24 cycles to ~6 cycles on Cortex-M3/M4.
-
-## Priority Levels and Grouping
-
-Cortex-M priority is encoded in a field that is typically 3-4 bits wide (8 or 16 levels), though the exact number depends on the implementation — many chips implement only the top 3 or 4 bits of the 8-bit priority field, making the effective range 0-7 or 0-15.
-
-Priority grouping divides this field into two parts:
-
-- **Preemption priority** — Determines whether one interrupt can preempt another. Only a numerically lower preemption priority can preempt.
-- **Sub-priority** — Breaks ties when two interrupts with the same preemption priority are pending simultaneously. The one with the lower sub-priority runs first, but it will not preempt the other.
-
-Setting the priority grouping wrong is a common and confusing bug. If all bits are assigned to sub-priority, no interrupt can preempt any other — the system behaves as if nesting is disabled. The CMSIS function `NVIC_SetPriorityGrouping()` controls this, and it should be configured once at startup before enabling any interrupts.
-
-I am still building intuition for how to assign priorities in practice. The general guidance is: give the highest priority (lowest number) to interrupts with the hardest real-time deadlines (motor commutation, safety-critical timers), and lower priority to everything else (UART receive, background timers). But the number of levels is small, and getting the assignment wrong can lead to priority inversion or missed deadlines that only appear under load.
-
-## Interrupt Latency
-
-Interrupt latency is the time from the hardware event (e.g., pin edge) to the first instruction of the ISR executing. On Cortex-M3/M4, this is deterministic: 12 clock cycles in the best case. That includes the exception entry sequence (stacking, vector fetch, pipeline refill).
-
-In practice, latency is longer than 12 cycles because of:
-
-- **Higher-priority ISR already running** — The pending interrupt waits until the higher-priority handler finishes
-- **Disabled-interrupt regions** — Code that disables interrupts (via `__disable_irq()` or `PRIMASK`) adds the disabled window duration directly to the latency
-- **Multi-cycle instructions** — The CPU must finish the current instruction before taking the exception. Most Cortex-M instructions are 1 cycle, but load/store multiples and divides can take many cycles
-- **Flash wait states** — Vector fetch goes through the flash interface; additional wait states add cycles
-- **Bus contention** — DMA and other bus masters competing for the same bus as the vector fetch
-
-## Jitter
-
-Jitter is the variation in interrupt latency from one occurrence to the next. Even if the average latency is acceptable, high jitter means some events are handled faster than others. For periodic tasks — sampling an ADC at a fixed rate, generating a precise PWM update — jitter directly translates to timing error.
-
-Sources of jitter include everything listed under latency, plus: variable-length instruction sequences in higher-priority ISRs, cache misses (on M7), and flash accelerator behavior. Measuring jitter requires toggling a GPIO pin at the start of the ISR and capturing the timing on an oscilloscope or logic analyzer. I have found that jitter is often a bigger problem in practice than absolute latency — a system with 2 us average latency and 10 us jitter is harder to work with than one with 5 us average and 0.5 us jitter.
+On architectures with an interrupt controller (like the Cortex-M NVIC), higher-priority interrupts can preempt lower-priority ones already in progress, and the hardware fetches handler addresses directly from the vector table without software dispatch. Simpler architectures may use a single interrupt vector with software polling to determine the source.
 
 ## ISR Design Rules
 
@@ -72,8 +31,8 @@ Practical rules I have collected (and am still learning to apply consistently):
 - **Do the minimum work** — Read the data register, copy the value to a buffer, clear the interrupt flag, set a flag for the main loop. That is it.
 - **Never call blocking functions** — No `delay_ms()`, no busy-wait loops, no `printf()`. These belong in main loop context.
 - **Never allocate memory** — `malloc()` is not reentrant on most embedded C libraries. Calling it from an ISR risks heap corruption.
-- **Clear the interrupt source flag** — If the peripheral's interrupt flag is not cleared, the ISR returns and the NVIC immediately re-enters it. This creates an interrupt storm: the main loop never runs, the system appears locked up, and the watchdog (if present) eventually resets the device.
-- **Keep shared data access atomic** — If the ISR writes a 32-bit variable that the main loop reads, consider whether the access is atomic on the target platform. On Cortex-M, aligned 32-bit reads and writes are atomic, but 64-bit values or multi-field structures are not.
+- **Clear the interrupt source flag** — If the peripheral's interrupt flag is not cleared, the ISR returns and the interrupt controller immediately re-enters it. This creates an interrupt storm: the main loop never runs, the system appears locked up, and the watchdog (if present) eventually resets the device.
+- **Keep shared data access atomic** — If the ISR writes a variable that the main loop reads, consider whether the access is atomic on the target platform. Atomicity depends on the bus width and architecture — always verify for the specific target.
 
 ## Shared Data and volatile
 
@@ -111,27 +70,19 @@ __enable_irq();
 
 This is a blunt instrument. While interrupts are disabled, every pending interrupt is delayed. The disabled window adds directly to worst-case interrupt latency for the entire system. Best practice is to keep critical sections as short as possible — ideally just a few instructions — and measure the actual disabled duration with a logic analyzer.
 
-On Cortex-M3+, `BASEPRI` offers a finer tool: it masks interrupts below a given priority without affecting higher-priority ones. This allows protecting shared data from a specific set of ISRs without blocking time-critical higher-priority handlers. I have not used `BASEPRI` extensively yet, but it seems like the right approach for systems with both hard-real-time and background interrupts.
+Some architectures offer finer-grained masking — for example, Cortex-M3+ provides `BASEPRI` to mask only interrupts below a given priority. See {{< relref "cortex-m-interrupts" >}} for details.
 
 ## Tips
 
 - Keep ISRs as short as possible — set a flag, copy data to a buffer, clear the interrupt source, and return
 - Always clear the peripheral's interrupt flag before returning from the ISR to prevent interrupt storms
-- Clear pending interrupt flags before enabling interrupts in the NVIC to avoid spurious immediate entry
-- Configure priority grouping once at startup before enabling any interrupts
 
 ## Caveats
 
 - **Forgetting to clear the interrupt flag causes an interrupt storm** — The ISR runs, returns, and immediately re-enters because the peripheral still asserts the interrupt. The main loop starves. The system appears frozen. Always clear the source flag in the ISR
-- **Priority number 0 is the highest priority, not the lowest** — This is backwards from most people's intuition. On Cortex-M, a lower numeric value means a higher urgency level. Setting a non-critical interrupt to priority 0 means nothing else can preempt it
 - **volatile does not mean atomic** — Declaring a shared variable `volatile` prevents the compiler from caching it in a register, but it does not prevent torn reads or writes for types wider than the bus width. A 16-bit variable on an 8-bit AVR requires interrupt protection even if it is `volatile`
-- **Enabling an interrupt before its peripheral is configured risks an immediate spurious ISR** — If the peripheral's interrupt flag is already set (from a previous configuration or power-on state), enabling the interrupt in the NVIC causes immediate entry into the handler
-- **Interrupt nesting depends on priority grouping configuration** — If all priority bits are assigned to sub-priority (grouping set to 0 preemption bits), no ISR can preempt any other, regardless of assigned priority numbers
-- **Long ISRs cause jitter in all lower-priority interrupts** — A 100 µs ISR at priority 1 adds up to 100 µs of jitter to every interrupt at priority 2 or lower
 
 ## In Practice
 
 - A system that appears frozen with high CPU utilization likely has an interrupt storm — verify interrupt flags are being cleared
-- Timing jitter in periodic interrupts often traces to long higher-priority ISRs — measure ISR execution time with GPIO toggling
 - Shared variables that occasionally show corrupted values may have atomicity issues — verify access is protected or naturally atomic
-- An ISR that fires immediately when enabled suggests the peripheral's interrupt flag was already set — clear pending flags before enabling

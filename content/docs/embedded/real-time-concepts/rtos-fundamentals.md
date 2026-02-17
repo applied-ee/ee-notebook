@@ -25,7 +25,7 @@ A task is an independent execution context. Each task has:
 - **A stack** -- its own block of RAM for local variables, function call frames, and saved context
 - **A state** -- ready (can run), running (currently executing), blocked (waiting for something), or suspended (explicitly paused)
 
-The highest-priority task in the "ready" state always runs. If two tasks have the same priority, most RTOSes use round-robin time-slicing between them, though I try to avoid equal priorities because the behavior becomes less predictable.
+The highest-priority task in the "ready" state always runs. If two tasks have the same priority, most RTOSes use round-robin time-slicing between them, though equal priorities are best avoided because the behavior becomes less predictable.
 
 Tasks are created at startup or dynamically at runtime. A typical FreeRTOS task function looks like an infinite loop:
 
@@ -48,7 +48,7 @@ When the scheduler switches from one task to another, it must save the current t
 
 On a Cortex-M4, a context switch typically takes 2-10 us depending on the RTOS and whether the FPU context is saved (FPU registers are large -- 32 single-precision registers). This is not free. A system that context-switches thousands of times per second is spending meaningful CPU time just on housekeeping.
 
-Each task's stack must be large enough for its deepest call chain plus the context saved during a switch. Stack overflows in RTOS tasks are a common and dangerous failure mode -- the task silently corrupts adjacent memory, often another task's stack. FreeRTOS has a stack overflow detection hook, but it only catches some cases. I have learned to be generous with stack sizes during development and only trim them after profiling.
+Each task's stack must be large enough for its deepest call chain plus the context saved during a switch. Stack overflows in RTOS tasks are a common and dangerous failure mode -- the task silently corrupts adjacent memory, often another task's stack. FreeRTOS has a stack overflow detection hook, but it only catches some cases. The safe approach is generous stack sizes during development, trimmed only after profiling.
 
 ## Priority-Based Preemptive Scheduling
 
@@ -76,7 +76,7 @@ Every task needs its own stack. On a Cortex-M with 16 KB or 32 KB of SRAM, this 
 
 A minimal task might get by with 256 bytes of stack (no deep call chains, no large local arrays). A task that calls `printf` or processes complex data structures might need 1-4 KB. The RTOS kernel itself uses RAM for task control blocks (TCBs), queue storage, semaphore structures, and internal bookkeeping -- typically 1-3 KB total.
 
-On a 64 KB SRAM MCU, this is comfortable. On a 16 KB SRAM MCU, five tasks with 1 KB stacks plus the kernel overhead consumes half the available RAM before the application allocates a single buffer. I have worked on projects where the RTOS memory overhead was the deciding factor against using one.
+On a 64 KB SRAM MCU, this is comfortable. On a 16 KB SRAM MCU, five tasks with 1 KB stacks plus the kernel overhead consumes half the available RAM before the application allocates a single buffer. On some projects, the RTOS memory overhead alone is the deciding factor against using one.
 
 ## When an RTOS Helps
 
@@ -96,7 +96,7 @@ On a 64 KB SRAM MCU, this is comfortable. On a 16 KB SRAM MCU, five tasks with 1
 
 **FreeRTOS** is the most widely used embedded RTOS. It is small (a few thousand lines of kernel code), well-documented, and runs on virtually every MCU with more than a few KB of RAM. Amazon maintains it now, with cloud connectivity features added. For learning RTOS concepts, FreeRTOS is the standard starting point.
 
-**Zephyr** is a more ambitious project -- closer to a full embedded OS than a minimal kernel. It includes a device tree model, a driver framework, networking stacks, Bluetooth, and a build system (west + CMake). The learning curve is steeper, but the payoff is a richer ecosystem. I think of Zephyr as what comes next when FreeRTOS feels too bare.
+**Zephyr** is a more ambitious project -- closer to a full embedded OS than a minimal kernel. It includes a device tree model, a driver framework, networking stacks, Bluetooth, and a build system (west + CMake). The learning curve is steeper, but the payoff is a richer ecosystem. Zephyr is what comes next when FreeRTOS feels too bare.
 
 **ThreadX** (now Azure RTOS), **ChibiOS**, **RT-Thread**, and **NuttX** fill various niches. ChibiOS has very fast context switching and a strong STM32 HAL. NuttX targets POSIX compatibility. ThreadX is known for safety certifications.
 
@@ -110,7 +110,7 @@ The most common migration path is starting with a superloop and moving to an RTO
 - Sizing stacks for each task (too small crashes; too large wastes RAM)
 - Testing for new concurrency bugs that did not exist in the sequential design
 
-I have seen teams attempt this transition mid-project under schedule pressure. It usually goes badly. The better approach is to decide early whether the system's complexity warrants an RTOS and start with one if so. Retrofitting is possible but painful. For more on bare-metal patterns that delay or avoid the need for an RTOS, see {{< relref "/docs/embedded/firmware-structure" >}}.
+Attempting this transition mid-project under schedule pressure usually goes badly. The better approach is to decide early whether the system's complexity warrants an RTOS and start with one if so. Retrofitting is possible but painful. For more on bare-metal patterns that delay or avoid the need for an RTOS, see [Firmware Structure & Patterns]({{< relref "/docs/embedded/firmware-structure" >}}).
 
 ## Tips
 
