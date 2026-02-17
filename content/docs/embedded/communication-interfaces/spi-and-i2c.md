@@ -63,6 +63,13 @@ The MCU's I2C peripheral handles start/stop conditions, addressing, and ACK/NACK
 
 Pull-up resistors are external and mandatory. The bus is open-drain: devices can only pull lines low, and the pull-ups bring them back high. Pull-up value depends on bus capacitance and speed — 4.7k ohm is a common starting point for 100 kHz, but 400 kHz or longer traces may need 2.2k or lower. Getting this wrong produces slow, rounded rising edges that cause intermittent communication failures. An oscilloscope on SDA and SCL immediately reveals whether the pull-ups are sized correctly.
 
+{{< hint info >}}
+**Supply naming: VDD vs VCC**\
+Many modern ICs label the positive supply pin VDD, while hobbyist modules and breakout boards often label the same pin VCC. In most digital and I2C circuits these refer to the same positive supply rail — verify in the datasheet whether multiple supply voltages exist (e.g., core vs I/O), but for typical sensors and displays, VCC on the module is VDD of the chip.
+
+For I2C pull-ups, the resistors connect to the device logic supply (VDD/VCC). If the bus runs at 3.3 V, pull-ups go to 3.3 V. If at 5 V, pull-ups go to 5 V — unless level shifting is involved.
+{{< /hint >}}
+
 ### Clock Stretching
 
 A slave can hold SCL low to pause the bus while it processes data. This is called clock stretching, and it is part of the I2C specification — but not all masters handle it properly, and not all slaves do it predictably. Some sensors stretch the clock for milliseconds during a conversion, which stalls the entire bus. In firmware, this appears as the I2C transfer taking much longer than expected, or as a timeout if one is configured.

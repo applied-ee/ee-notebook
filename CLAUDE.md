@@ -114,6 +114,10 @@ An automatic glossary tooltip system links terms on every page (except the gloss
 
 **False-positive suppression:** Polysemous terms (words with both EE and non-EE meanings) are handled by two mechanisms. First, entries in `glossary.json` can include a `skipPatterns` array of regex strings — when the surrounding text node matches a skip pattern, that occurrence is skipped but linking continues on later text nodes. Second, content authors can wrap text in `<span class="no-glossary">...</span>` to suppress linking for one-off cases. Currently "Series" and "Node" have skip patterns; add more as needed.
 
+## TODO
+
+- **Fix deprecated `hint` shortcode usage.** Hugo warns: `Hint shortcode is deprecated, use markdown alerts format: '> [!NOTE] ...'`. Migrate all `{{< hint info >}}` / `{{< hint warning >}}` etc. to the markdown alerts syntax.
+
 ## Build & Verify
 
 ```sh
