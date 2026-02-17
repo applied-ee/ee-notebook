@@ -106,7 +106,7 @@ Semihosting also fails silently if no debugger is attached. On some implementati
 
 Segger's RTT is a better answer to the "I want `printf` over the debug probe" problem. RTT uses a shared memory buffer in SRAM. The firmware writes log data into the buffer using normal memory writes (no CPU halt). The debug probe reads the buffer contents in the background using the debug access port. The CPU never stops.
 
-RTT achieves throughput of several hundred KB/s with negligible CPU overhead. The tradeoff is that it requires a Segger J-Link (or a CMSIS-DAP probe with RTT support) and the RTT library linked into the firmware. For development-time logging, it is dramatically better than semihosting or UART in my experience.
+RTT achieves throughput of several hundred KB/s with negligible CPU overhead. The tradeoff is that it requires a Segger J-Link (or a CMSIS-DAP probe with RTT support) and the RTT library linked into the firmware. For development-time logging, it is dramatically better than semihosting or UART in practice.
 
 ## Debug Access in Production
 

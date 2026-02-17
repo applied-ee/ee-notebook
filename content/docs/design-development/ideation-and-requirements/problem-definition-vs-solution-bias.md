@@ -40,7 +40,7 @@ The problem statements leave room for exploration. The solution statements forec
 
 ## Techniques for Staying in the Problem Space
 
-Staying in the problem space takes deliberate effort. A few practices I've found helpful:
+Staying in the problem space takes deliberate effort. A few practices that help:
 
 - **Write the requirements before opening the schematic editor.** Even a rough bulleted list forces articulation of what the system must do. It's surprisingly hard, and the difficulty is the point — it reveals what isn't yet understood.
 - **Ask "what does success look like?" before "how do I build it?"** Define the acceptance criteria first. What measurements would confirm the project works? What would cause it to be declared a failure?

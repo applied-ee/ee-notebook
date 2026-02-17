@@ -36,7 +36,7 @@ The major global authorized distributors each have different strengths:
 
 **Digi-Key** has the widest catalog and is the go-to for prototype and small-quantity purchases. Their website is fast, their parametric search is thorough, and they stock an enormous range of parts in cut-tape quantities. They ship from a single massive warehouse in Minnesota, with same-day shipping for orders placed before the cutoff. For North American designers working on prototypes, Digi-Key is often the first stop.
 
-**Mouser** is similar in scope to Digi-Key, with a large catalog and strong prototype-quantity availability. Based in Texas, they offer competitive pricing and a good website experience. In my experience, Mouser sometimes has stock on parts that Digi-Key doesn't, and vice versa, making it worth checking both.
+**Mouser** is similar in scope to Digi-Key, with a large catalog and strong prototype-quantity availability. Based in Texas, they offer competitive pricing and a good website experience. In practice, Mouser sometimes has stock on parts that Digi-Key doesn't, and vice versa, making it worth checking both.
 
 **Arrow** and **Avnet** are larger in terms of total revenue but oriented more toward production volumes. They offer design-win support (application engineers who help design in their manufacturers' parts), better pricing at volume, and supply chain management services. For production orders, Arrow or Avnet pricing often beats Digi-Key and Mouser significantly.
 

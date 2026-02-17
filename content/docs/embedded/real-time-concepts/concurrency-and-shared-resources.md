@@ -127,7 +127,7 @@ Neither task can proceed. The system appears to hang. Deadlock prevention strate
 - **Use timeouts** -- `xSemaphoreTake(mutex, pdMS_TO_TICKS(100))` returns failure after 100 ms instead of blocking forever. The task can log the failure and recover
 - **Design to minimize shared resources** -- fewer mutexes means fewer opportunities for deadlock. Queues often eliminate the need for mutexes entirely
 
-In practice, the best defense is simplicity. Systems with one or two mutexes rarely deadlock. Systems with five or more mutexes held in varying orders are deadlock factories. If I find myself needing that many mutexes, the design probably needs restructuring. See [Firmware Structure & Patterns]({{< relref "/docs/embedded/firmware-structure" >}}) for patterns that reduce shared-state coupling.
+In practice, the best defense is simplicity. Systems with one or two mutexes rarely deadlock. Systems with five or more mutexes held in varying orders are deadlock factories. If a design needs that many mutexes, it probably needs restructuring. See [Firmware Structure & Patterns]({{< relref "/docs/embedded/firmware-structure" >}}) for patterns that reduce shared-state coupling.
 
 ## Tips
 

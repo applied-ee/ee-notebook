@@ -10,7 +10,7 @@ review:
 
 # Power Transfer vs Voltage Transfer
 
-One of the first things that surprised me about RF is that the rules are different from what I learned in basic circuit analysis. In low-frequency circuits, the typical goal is to deliver the most voltage to a load — high input impedance, low output impedance, done. In RF, the usual goal is to deliver the most power instead, and that leads to a completely different design philosophy. Understanding which game is being played explains a lot about why RF systems look the way they do.
+One of the first surprises in RF is that the rules are different from basic circuit analysis. In low-frequency circuits, the typical goal is to deliver the most voltage to a load — high input impedance, low output impedance, done. In RF, the usual goal is to deliver the most power instead, and that leads to a completely different design philosophy. Understanding which game is being played explains a lot about why RF systems look the way they do.
 
 ## The Maximum Power Transfer Theorem
 

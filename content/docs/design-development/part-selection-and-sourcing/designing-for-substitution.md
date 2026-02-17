@@ -14,7 +14,7 @@ The most supply-chain-resilient design is one where parts can be changed without
 
 ## The Principle of Deliberate Flexibility
 
-Designing for substitution is a mindset that runs through every design decision. It asks: "Is there a way to accomplish this function that doesn't lock me into a single source?" Sometimes the answer is no — a specific FPGA or a specialized sensor has no alternative, and the dependency is accepted. But surprisingly often, a small amount of design flexibility eliminates single-source dependencies without compromising performance.
+Designing for substitution is a mindset that runs through every design decision. It asks: "Is there a way to accomplish this function that doesn't lock the design into a single source?" Sometimes the answer is no — a specific FPGA or a specialized sensor has no alternative, and the dependency is accepted. But surprisingly often, a small amount of design flexibility eliminates single-source dependencies without compromising performance.
 
 The cost of flexibility is usually small: a few extra pads on the PCB, an adjustable regulator instead of a fixed one, or a standard interface instead of a proprietary one. The cost of inflexibility becomes apparent only when the supply chain breaks — and then it's enormous.
 

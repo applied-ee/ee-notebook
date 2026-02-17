@@ -73,7 +73,7 @@ Flash programmers and bootloaders typically want one of two formats:
 - **Raw binary** (`.bin`) — Just the machine code bytes, starting at the base address. No metadata. The programmer must know where to write it. Generated with `arm-none-eabi-objcopy -O binary`.
 - **Intel HEX** (`.hex`) — ASCII text with address and data records. Each line encodes a block of bytes and its target address. The programmer reads the addresses from the file. Generated with `arm-none-eabi-objcopy -O ihex`.
 
-I have been burned by flashing a `.bin` file at the wrong address. The binary format has no way to tell the programmer "I belong at 0x08000000" — that information is in the ELF or HEX file but not in the raw binary.
+A common mistake is flashing a `.bin` file at the wrong address. The binary format has no way to tell the programmer "I belong at 0x08000000" — that information is in the ELF or HEX file but not in the raw binary.
 
 Another useful tool is `arm-none-eabi-objdump`, which can disassemble the ELF file and show the section layout. Running `objdump -h firmware.elf` gives a quick summary of where each section was placed and how large it is — a lighter-weight alternative to reading the full map file.
 

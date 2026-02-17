@@ -30,7 +30,7 @@ There are practical asymmetries (noise pickup, intermodulation in nearby metal, 
 
 ## Radiation Resistance
 
-This concept confused me for a while until I found the right framing. Radiation resistance is the part of the antenna's input impedance that represents power actually radiated into space. It's not a physical resistor — it's a mathematical construct that accounts for the power leaving the antenna as radiation.
+This concept is easier to grasp with the right framing. Radiation resistance is the part of the antenna's input impedance that represents power actually radiated into space. It's not a physical resistor — it's a mathematical construct that accounts for the power leaving the antenna as radiation.
 
 A half-wave dipole has a radiation resistance of about 73 ohms. This means that if driven with 1 amp of RF current at the feedpoint, it radiates 73 watts. The power calculation is the same as for a real resistor: P = I^2 * R_rad.
 

@@ -31,7 +31,7 @@ This technique works when nothing else does. Before the UART is initialized, bef
 
 The workhorse of embedded observability. Send text strings over a UART to a serial terminal on the host. Every developer knows `printf` debugging, and on embedded it works the same way — with some caveats.
 
-**Baud rate and timing impact:** At 115200 baud, each character takes approximately 87 microseconds. A 50-character log line takes over 4 milliseconds. If the main loop runs at 1 kHz, one log line per iteration consumes nearly half the loop budget. This is not hypothetical — I have seen systems where adding UART logging changed timing enough to mask the bug being investigated.
+**Baud rate and timing impact:** At 115200 baud, each character takes approximately 87 microseconds. A 50-character log line takes over 4 milliseconds. If the main loop runs at 1 kHz, one log line per iteration consumes nearly half the loop budget. This is not hypothetical — there are systems where adding UART logging changed timing enough to mask the bug being investigated.
 
 **Mitigation strategies:**
 
@@ -64,7 +64,7 @@ ITM is significantly faster than UART logging because it uses dedicated trace ha
 - The SWO clock must be configured to match between target and probe — this is the most common source of "ITM output is not working" problems
 - Many IDEs (STM32CubeIDE, Ozone, VS Code with Cortex-Debug) can display ITM output in a console window
 
-I think of ITM as "UART logging without the UART" — same concept, less timing impact, but it requires a debug probe connection, so it is a development-time tool, not a production one.
+ITM is essentially "UART logging without the UART" — same concept, less timing impact, but it requires a debug probe connection, so it is a development-time tool, not a production one.
 
 ## ETM (Embedded Trace Macrocell)
 
@@ -78,7 +78,7 @@ ETM requires:
 
 The probes are expensive (hundreds to thousands of dollars) and the board must be designed for trace from the start. But for hard-to-reproduce bugs — the kind where the system crashes once a day and the sequence of events leading to the crash is unclear — ETM is invaluable. It allows reconstructing the complete execution history leading up to the fault.
 
-I have not used ETM regularly. It is on my list of tools to explore more deeply for complex timing bugs.
+ETM sees less everyday use than the other tools here — its cost and board requirements limit it to situations where nothing else can provide the needed visibility.
 
 ## Logic Analyzers
 
