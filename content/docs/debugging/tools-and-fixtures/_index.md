@@ -11,7 +11,7 @@ review:
 
 # Tools & Fixtures for Debugging
 
-This page is about what gets set up *before* the debug session begins — the physical fixtures, accessories, and habits that make debugging possible and safe. For how to actually use instruments and interpret readings, see the [Measurement & Test](/docs/measurement/) section.
+This page is about what gets set up *before* the debug session begins — the physical fixtures, accessories, and habits that make debugging possible and safe. For how to actually use instruments and interpret readings, see the [Measurement & Test]({{< relref "/docs/measurement" >}}) section.
 
 For fixture builds tailored to specific DUTs, see the sub-pages below.
 

@@ -22,7 +22,7 @@ The terms get thrown around loosely, but the distinction is about consequences.
 
 Most embedded systems are a mix. A motor controller might have a hard real-time commutation loop at 20 kHz and a soft real-time status display update at 10 Hz. The hard deadlines constrain the entire system design; the soft deadlines fill in around them.
 
-There is also the term **firm real-time** -- a missed deadline does not cause catastrophic failure, but the result of the computation is worthless after the deadline. A video frame decoded 5 ms late cannot be displayed because the next frame is already due. The system survives, but the work was wasted. In practice, I find the hard/soft distinction covers most real design decisions. The important question is always: what happens when the deadline is missed?
+There is also the term **firm real-time** -- a missed deadline does not cause catastrophic failure, but the result of the computation is worthless after the deadline. A video frame decoded 5 ms late cannot be displayed because the next frame is already due. The system survives, but the work was wasted. In practice, the hard/soft distinction covers most real design decisions. The important question is always: what happens when the deadline is missed?
 
 ## Worst-Case Execution Time (WCET)
 
@@ -30,7 +30,7 @@ Average execution time is nearly useless for real-time guarantees. If a function
 
 WCET depends on more than just the code path. On a Cortex-M4 or M7 with flash caches, the first execution of a loop may be much slower than subsequent iterations because the cache is cold. Interrupts that preempt the critical section add to the effective execution time. DMA transfers competing for the bus can insert wait states.
 
-I find it helpful to think of WCET as a budget. Every code path, every interrupt, and every bus contention event draws from the same time budget. If the budget is 100 us, and the task itself takes 60 us worst-case, that leaves 40 us for interrupt service, bus stalls, and scheduling overhead. Whether that is enough depends on what else is running.
+It helps to think of WCET as a budget. Every code path, every interrupt, and every bus contention event draws from the same time budget. If the budget is 100 us, and the task itself takes 60 us worst-case, that leaves 40 us for interrupt service, bus stalls, and scheduling overhead. Whether that is enough depends on what else is running.
 
 ### Measuring WCET
 
@@ -42,7 +42,7 @@ run_control_loop();
 GPIO_CLEAR(DEBUG_PIN);
 ```
 
-This is not elegant, but it is ground truth. Static analysis tools exist (aiT, RapiTime) that attempt to compute WCET from the binary, but they are conservative by design and expensive. For most bench firmware work, the scope measurement is what I trust. See {{< relref "/docs/measurement/time-frequency-spectrum/jitter" >}} for technique details on measuring timing variation.
+This is not elegant, but it is ground truth. Static analysis tools exist (aiT, RapiTime) that attempt to compute WCET from the binary, but they are conservative by design and expensive. For most bench firmware work, the scope measurement is the most trustworthy. See {{< relref "/docs/measurement/time-frequency-spectrum/jitter" >}} for technique details on measuring timing variation.
 
 ## Jitter
 
@@ -63,7 +63,7 @@ The acceptable jitter depends entirely on the application:
 - **48 kHz audio sample rate** -- the sample period is ~20.8 us, so +/-1 us of jitter is significant. DAC output jitter directly causes audible distortion
 - **PWM generation** -- jitter in the PWM edge timing appears as noise in the output. For LED dimming nobody cares; for precision analog output through a filtered PWM, sub-microsecond jitter matters
 
-I do not always know the jitter budget up front. Sometimes I discover it when artifacts appear -- a motor vibrates at a new frequency, or an audio output has unexpected noise. Working backward from the artifact to the jitter source is a common debugging pattern.
+The jitter budget is not always known up front. Sometimes it becomes apparent when artifacts appear -- a motor vibrates at a new frequency, or an audio output has unexpected noise. Working backward from the artifact to the jitter source is a common debugging pattern.
 
 ## Timer-Driven Execution
 
@@ -91,7 +91,7 @@ Even with timer-driven execution, several things can introduce unexpected timing
 
 ## The Scope as Timing Verifier
 
-Code review and simulation help, but the oscilloscope is the ground truth for timing verification. When I need to verify that a control loop meets its deadline, I toggle a GPIO pin and measure with the scope. The scope shows not just the average timing but the distribution -- [persistence mode]({{< relref "/docs/measurement/test-instruments/oscilloscope" >}}) is particularly useful for spotting occasional outliers that would be invisible in a logic analyzer's protocol view.
+Code review and simulation help, but the oscilloscope is the ground truth for timing verification. To verify that a control loop meets its deadline, toggle a GPIO pin and measure with the scope. The scope shows not just the average timing but the distribution -- [persistence mode]({{< relref "/docs/measurement/test-instruments/oscilloscope" >}}) is particularly useful for spotting occasional outliers that would be invisible in a logic analyzer's protocol view.
 
 The test setup matters. Run the system under realistic load with all features active. The timing measured with interrupts disabled and no communication traffic is not the timing the system will have in production.
 
