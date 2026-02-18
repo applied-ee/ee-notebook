@@ -42,7 +42,7 @@ run_control_loop();
 GPIO_CLEAR(DEBUG_PIN);
 ```
 
-This is not elegant, but it is ground truth. Static analysis tools exist (aiT, RapiTime) that attempt to compute WCET from the binary, but they are conservative by design and expensive. For most bench firmware work, the scope measurement is the most trustworthy. See {{< relref "/docs/measurement/time-frequency-spectrum/jitter" >}} for technique details on measuring timing variation.
+This is not elegant, but it is ground truth. Static analysis tools exist (aiT, RapiTime) that attempt to compute WCET from the binary, but they are conservative by design and expensive. For most bench firmware work, the scope measurement is the most trustworthy. See [Jitter]({{< relref "/docs/measurement/time-frequency-spectrum/jitter" >}}) for technique details on measuring timing variation.
 
 ## Jitter
 
@@ -71,7 +71,7 @@ The most important technique for deterministic timing is using a hardware timer 
 
 The timer period is set by hardware, not by code execution time. If the control loop code takes 40 us or 60 us, the next invocation still happens exactly when the timer fires. This decouples the period from the execution time and is the foundation of most real-time designs.
 
-On Cortex-M, SysTick is often used for RTOS tick timing, while a general-purpose timer (TIM1, TIM2, etc.) drives application-specific periodic tasks. The timer's clock source and prescaler determine the achievable period and resolution. See {{< relref "/docs/embedded/peripherals-and-io" >}} for timer peripheral configuration details.
+On Cortex-M, SysTick is often used for RTOS tick timing, while a general-purpose timer (TIM1, TIM2, etc.) drives application-specific periodic tasks. The timer's clock source and prescaler determine the achievable period and resolution. See [Peripherals & I/O]({{< relref "/docs/embedded/peripherals-and-io" >}}) for timer peripheral configuration details.
 
 There is a subtlety here: the timer fires at exact intervals, but the ISR response is not instant. Interrupt latency (the time from the timer event to the first instruction of the handler) adds a fixed-ish offset, and interrupt jitter (variation in that latency) adds uncertainty. If the timer fires every 1000 us but the ISR entry varies by +/-3 us due to other interrupt activity, the task execution has 3 us of jitter even though the timer itself is perfect. The timer provides a stable reference; the rest of the system determines how closely the code follows it.
 

@@ -52,7 +52,7 @@ MEMORY {
 }
 ```
 
-Sections placement follows a standard pattern: `.text` (executable code) and `.rodata` (constants) go in flash. `.data` (initialized globals) is stored in flash but copied to SRAM at startup. `.bss` (zero-initialized globals) is zeroed in SRAM at startup. The stack typically starts at the top of SRAM and grows downward. See {{< relref "/docs/embedded/mcu-architecture/memory-map" >}} for how these sections map to the hardware address space.
+Sections placement follows a standard pattern: `.text` (executable code) and `.rodata` (constants) go in flash. `.data` (initialized globals) is stored in flash but copied to SRAM at startup. `.bss` (zero-initialized globals) is zeroed in SRAM at startup. The stack typically starts at the top of SRAM and grows downward. See [Memory Map]({{< relref "/docs/embedded/mcu-architecture/memory-map" >}}) for how these sections map to the hardware address space.
 
 Getting the linker script wrong is uniquely dangerous because the build succeeds. The linker trusts the script. If the script declares 128 KB of SRAM on a chip that only has 64 KB, the linker places data in nonexistent memory, and the firmware crashes at runtime with no compile-time warning.
 
@@ -60,7 +60,7 @@ Vendor-provided linker scripts are a good starting point, but they often include
 
 ## The Startup File
 
-Before `main()`, someone has to set up the vector table, copy `.data` from flash to SRAM, zero `.bss`, and call `SystemInit()`. That someone is the startup file — usually assembly (e.g., `startup_stm32f411xe.s`) provided by the MCU vendor. For details on what the startup file does and why it matters, see {{< relref "/docs/embedded/firmware-structure/startup-and-initialization" >}}.
+Before `main()`, someone has to set up the vector table, copy `.data` from flash to SRAM, zero `.bss`, and call `SystemInit()`. That someone is the startup file — usually assembly (e.g., `startup_stm32f411xe.s`) provided by the MCU vendor. For details on what the startup file does and why it matters, see [Startup & Initialization]({{< relref "/docs/embedded/firmware-structure/startup-and-initialization" >}}).
 
 Most projects never modify the startup file, and that is fine. But when adding an early debug GPIO toggle, change the initial stack location, or support a custom bootloader entry, understanding what this file does is essential. It is not magic — it is a short sequence of loads, stores, and branch instructions.
 

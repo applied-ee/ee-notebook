@@ -12,7 +12,7 @@ review:
 
 Interrupts are the fundamental mechanism for real-time response in embedded systems. Instead of constantly polling a peripheral to see if something happened, the hardware itself signals the CPU: "stop what you are doing and handle this." The CPU saves its current context, jumps to a handler function, executes it, restores context, and resumes where it left off. This sounds straightforward, but the details — priority levels, nesting, shared data, and latency — are where most embedded bugs come from.
 
-For ARM Cortex-M specifics — NVIC configuration, priority grouping, tail-chaining, and latency characteristics — see {{< relref "cortex-m-interrupts" >}}.
+For ARM Cortex-M specifics — NVIC configuration, priority grouping, tail-chaining, and latency characteristics — see [Cortex-M Interrupts and the NVIC]({{< relref "cortex-m-interrupts" >}}).
 
 ## How Interrupts Work
 
@@ -56,7 +56,7 @@ int main(void) {
 }
 ```
 
-But `volatile` only prevents compiler reordering and caching — it does not make multi-byte accesses atomic. Writing a `uint64_t` from an ISR and reading it in `main()` can produce a torn read (half old value, half new) even with `volatile`. For multi-byte shared data, disable interrupts briefly around the access or use a lock-free structure like a ring buffer. See the discussion of race conditions in {{< relref "state-machines-and-event-loops" >}} for how event queues help with this.
+But `volatile` only prevents compiler reordering and caching — it does not make multi-byte accesses atomic. Writing a `uint64_t` from an ISR and reading it in `main()` can produce a torn read (half old value, half new) even with `volatile`. For multi-byte shared data, disable interrupts briefly around the access or use a lock-free structure like a ring buffer. See the discussion of race conditions in [State Machines & Event Loops]({{< relref "state-machines-and-event-loops" >}}) for how event queues help with this.
 
 ## Disabling Interrupts
 
@@ -70,7 +70,7 @@ __enable_irq();
 
 This is a blunt instrument. While interrupts are disabled, every pending interrupt is delayed. The disabled window adds directly to worst-case interrupt latency for the entire system. Best practice is to keep critical sections as short as possible — ideally just a few instructions — and measure the actual disabled duration with a logic analyzer.
 
-Some architectures offer finer-grained masking — for example, Cortex-M3+ provides `BASEPRI` to mask only interrupts below a given priority. See {{< relref "cortex-m-interrupts" >}} for details.
+Some architectures offer finer-grained masking — for example, Cortex-M3+ provides `BASEPRI` to mask only interrupts below a given priority. See [Cortex-M Interrupts and the NVIC]({{< relref "cortex-m-interrupts" >}}) for details.
 
 ## Tips
 

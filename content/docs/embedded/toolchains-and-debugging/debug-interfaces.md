@@ -41,7 +41,7 @@ SWD is ARM's 2-wire alternative to JTAG, designed specifically for Cortex-M. It 
 - **SWDIO** — Bidirectional data line
 - **SWCLK** — Clock, driven by the debug probe
 
-Two pins versus five is a significant advantage on pin-constrained MCUs. SWD also supports an optional third pin, **SWO** (Serial Wire Output), which provides trace output through the ITM — see {{< relref "observability" >}} for how SWO is used for non-intrusive logging.
+Two pins versus five is a significant advantage on pin-constrained MCUs. SWD also supports an optional third pin, **SWO** (Serial Wire Output), which provides trace output through the ITM — see [Observability]({{< relref "observability" >}}) for how SWO is used for non-intrusive logging.
 
 SWD is the standard debug interface for Cortex-M. Every modern ARM debug probe supports it, and most Cortex-M development boards expose an SWD header (sometimes labeled as the "debug" or "programming" header). The 10-pin Cortex Debug Connector is the standard pinout, though many boards use a smaller 2x5 1.27mm header.
 

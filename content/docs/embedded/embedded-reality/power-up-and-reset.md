@@ -42,7 +42,7 @@ The datasheet's POR specification assumes VCC rises monotonically and reaches th
 - **Decoupling capacitors** near the MCU's VCC pins slow the local ramp and smooth out noise, which is generally good -- but very large capacitors can make the ramp too slow
 - **Non-monotonic ramps** happen when a supply overshoots and rings, or when a load draws heavy current during startup. If VCC crosses the POR threshold, drops below it, and rises again, some POR circuits handle this correctly and some do not
 
-The safest approach is to measure the actual VCC ramp on the board with an oscilloscope and verify it meets the datasheet requirements. I have been surprised by how often the measured ramp differs from what the schematic implies. If the ramp is too slow, options include reducing bulk capacitance near the MCU, using a faster power supply, or adding an external reset supervisor that holds the MCU in reset until VCC is genuinely stable regardless of ramp rate. See {{< relref "/docs/measurement/power-rails-supplies" >}} for practical measurement techniques.
+The safest approach is to measure the actual VCC ramp on the board with an oscilloscope and verify it meets the datasheet requirements. I have been surprised by how often the measured ramp differs from what the schematic implies. If the ramp is too slow, options include reducing bulk capacitance near the MCU, using a faster power supply, or adding an external reset supervisor that holds the MCU in reset until VCC is genuinely stable regardless of ramp rate. See [Power Rails & Supplies]({{< relref "/docs/measurement/power-rails-supplies" >}}) for practical measurement techniques.
 
 ## Startup Races
 
@@ -52,7 +52,7 @@ Firmware that immediately tries to communicate with a peripheral that has not fi
 
 Startup races are particularly common in designs where the MCU and peripherals share a power rail. Both begin their power-up sequence simultaneously, but the MCU's POR is typically faster than a sensor's internal initialization. The datasheet for each external device specifies its power-up time, but I have found these numbers are sometimes optimistic -- adding a margin of 20-50% is cheap insurance.
 
-The order in which peripherals are powered also matters. If a sensor is on a switched power rail that firmware must enable, the sensor's startup time begins when the rail is turned on, not when the MCU resets. See {{< relref "/docs/embedded/firmware-structure/startup-and-initialization" >}} for the initialization sequence from firmware's perspective.
+The order in which peripherals are powered also matters. If a sensor is on a switched power rail that firmware must enable, the sensor's startup time begins when the rail is turned on, not when the MCU resets. See [Startup & Initialization]({{< relref "/docs/embedded/firmware-structure/startup-and-initialization" >}}) for the initialization sequence from firmware's perspective.
 
 ## Multi-Rail Sequencing
 
@@ -84,7 +84,7 @@ Most MCUs provide a register (often called RCC_CSR, RSTSR, or similar) that reco
 - **Software reset** -- firmware requested a reset via the AIRCR register
 - **External pin reset** -- the NRST pin was asserted
 
-Reading this register early in startup (before clearing it) is essential for diagnostics. A system that repeatedly brownout-resets has a power supply problem. A system that watchdog-resets has a firmware hang. A system that alternates between software reset and watchdog reset may be stuck in a crash-recover loop. See {{< relref "watchdogs-and-recovery" >}} for what to do with this information.
+Reading this register early in startup (before clearing it) is essential for diagnostics. A system that repeatedly brownout-resets has a power supply problem. A system that watchdog-resets has a firmware hang. A system that alternates between software reset and watchdog reset may be stuck in a crash-recover loop. See [Watchdogs & Recovery]({{< relref "watchdogs-and-recovery" >}}) for what to do with this information.
 
 On some MCUs, multiple reset cause flags can be set simultaneously (e.g., both POR and brownout on an initial power-up). The firmware should check flags in priority order and clear them after reading. Some HAL libraries clear the register automatically during their initialization, which means application code that checks the cause later sees nothing -- another reason to read it as early as possible, ideally in the first few lines of main().
 

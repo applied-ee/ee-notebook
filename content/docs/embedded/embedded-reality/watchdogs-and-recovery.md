@@ -72,7 +72,7 @@ The key insight is that safe state is a hardware design decision, not a firmware
 Failures in deployed embedded systems are qualitatively different from bench bugs. They are intermittent, environment-dependent, and impossible to reproduce on demand. Common patterns:
 
 - **Marginal power supply** -- A supply that droops under load, causing intermittent brownout resets. The system works on the bench (light load) but resets in the field (full load, temperature extremes). The watchdog reset counter climbs slowly over weeks
-- **EMI-induced faults** -- A nearby motor, relay, or switching supply injects noise that corrupts a bus transaction or flips a bit in SRAM. The symptom is a hard fault or watchdog reset with no obvious firmware cause. See {{< relref "/docs/measurement/noise-interference-grounding" >}} for measurement approaches
+- **EMI-induced faults** -- A nearby motor, relay, or switching supply injects noise that corrupts a bus transaction or flips a bit in SRAM. The symptom is a hard fault or watchdog reset with no obvious firmware cause. See [Noise, Interference & Grounding]({{< relref "/docs/measurement/noise-interference-grounding" >}}) for measurement approaches
 - **Temperature-dependent timing** -- An oscillator that drifts out of tolerance at temperature extremes, causing a communication peripheral to fail. UART baud rate errors above 3% cause framing errors; I2C timing violations cause NACKs
 - **State accumulation bugs** -- A memory leak, a counter that eventually overflows, or a resource that is acquired but never released. The system runs for days or weeks before the accumulated state triggers a fault. These are the hardest bugs to find because they do not reproduce on short test runs
 

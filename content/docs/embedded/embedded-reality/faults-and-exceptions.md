@@ -33,7 +33,7 @@ HardFault has a fixed priority of -1, meaning only NMI and reset can preempt it.
 A BusFault occurs when a memory transaction fails at the bus level. Common causes:
 
 - **Dereferencing a NULL pointer** -- address 0x00000000 is valid on Cortex-M (it is the start of the vector table in flash), so NULL dereferences often read the initial stack pointer value rather than faulting. However, writes to flash addresses fault because flash is read-only at the bus level
-- **Accessing a peripheral with its clock disabled** -- on most MCUs, reading or writing a peripheral register when the peripheral clock is not enabled returns a bus error. See {{< relref "/docs/embedded/mcu-architecture/memory-map" >}} for details on the peripheral address space
+- **Accessing a peripheral with its clock disabled** -- on most MCUs, reading or writing a peripheral register when the peripheral clock is not enabled returns a bus error. See [Memory Map]({{< relref "/docs/embedded/mcu-architecture/memory-map" >}}) for details on the peripheral address space
 - **Accessing unmapped memory** -- any address that does not correspond to flash, SRAM, or a peripheral returns a bus error
 - **DMA accessing an invalid address** -- a misconfigured DMA channel can trigger a BusFault during a transfer
 

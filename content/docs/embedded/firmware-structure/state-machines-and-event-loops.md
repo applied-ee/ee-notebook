@@ -99,7 +99,7 @@ while (1) {
 }
 ```
 
-The event queue is typically a ring buffer — ISRs push events, the main loop pops them. This gives ordered processing, decouples event sources from handlers, and makes the system testable (inject events in a harness without real hardware). The queue must be interrupt-safe: separate read and write indices, sized as a power of two for bitmask wrapping. If the ISR writes and the main loop reads, and indices are aligned 32-bit values on Cortex-M, no further locking is needed. See {{< relref "interrupts" >}} for more on shared data between ISR and main contexts.
+The event queue is typically a ring buffer — ISRs push events, the main loop pops them. This gives ordered processing, decouples event sources from handlers, and makes the system testable (inject events in a harness without real hardware). The queue must be interrupt-safe: separate read and write indices, sized as a power of two for bitmask wrapping. If the ISR writes and the main loop reads, and indices are aligned 32-bit values on Cortex-M, no further locking is needed. See [Interrupts]({{< relref "interrupts" >}}) for more on shared data between ISR and main contexts.
 
 ## The Superloop Pattern
 
@@ -133,7 +133,7 @@ The cooperative model fails when any task cannot guarantee a short execution tim
 - **Cryptographic operations** — Hashing or encryption on a resource-constrained MCU can take significant time
 - **Complex calculations** — Filtering, FFT, or control-loop math that exceeds the scheduling period
 
-When one task overruns, every other task's timing slips. There is no recovery mechanism. If the timing requirements are hard (motor commutation, audio sample rate), this is unacceptable — and the motivation for preemptive scheduling with an RTOS, covered in {{< relref "/docs/embedded/real-time-concepts" >}}. The intermediate solution is to break long operations into smaller chunks that fit within the cooperative time budget, but this adds complexity and only works if the worst-case chunk time is known.
+When one task overruns, every other task's timing slips. There is no recovery mechanism. If the timing requirements are hard (motor commutation, audio sample rate), this is unacceptable — and the motivation for preemptive scheduling with an RTOS, covered in [Real-Time Concepts]({{< relref "/docs/embedded/real-time-concepts" >}}). The intermediate solution is to break long operations into smaller chunks that fit within the cooperative time budget, but this adds complexity and only works if the worst-case chunk time is known.
 
 ## Avoiding Spaghetti
 

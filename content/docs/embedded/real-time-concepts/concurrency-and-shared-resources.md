@@ -28,7 +28,7 @@ __enable_irq();
 
 With interrupts disabled, no ISR can preempt the code, so the read-modify-write sequence is atomic. This works, but it delays all interrupt servicing for the duration of the critical section. If the critical section takes 5 us and a time-critical ISR has a 10 us deadline, this is fine. If the critical section takes 500 us, it is not.
 
-On Cortex-M, `PRIMASK` disables all configurable interrupts. `BASEPRI` is more selective -- it disables interrupts below a certain priority, allowing higher-priority interrupts through. RTOS critical sections typically use `BASEPRI` so the RTOS-managed priority range is protected while truly time-critical ISRs above the RTOS ceiling remain responsive. See {{< relref "/docs/embedded/mcu-architecture/core-architectures" >}} for details on Cortex-M registers.
+On Cortex-M, `PRIMASK` disables all configurable interrupts. `BASEPRI` is more selective -- it disables interrupts below a certain priority, allowing higher-priority interrupts through. RTOS critical sections typically use `BASEPRI` so the RTOS-managed priority range is protected while truly time-critical ISRs above the RTOS ceiling remain responsive. See [Core Architectures]({{< relref "/docs/embedded/mcu-architecture/core-architectures" >}}) for details on Cortex-M registers.
 
 The rule is simple: keep critical sections as short as possible. Copy the shared data to a local variable inside the critical section, then process the local copy outside it.
 

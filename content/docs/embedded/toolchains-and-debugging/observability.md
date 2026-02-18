@@ -92,7 +92,7 @@ Common uses:
 - **Interrupt timing** — Capture the interrupt request line alongside the ISR GPIO toggle to measure interrupt latency
 - **Multi-signal correlation** — See the relationship between a DMA complete flag, a chip select, and a processing-done GPIO toggle
 
-The Saleae Logic analyzers are popular for bench use — USB-connected, good software, reasonable price for the 8-channel version. For more channels or higher sample rates, dedicated instruments from Keysight, Rohde & Schwarz, and others are available. See {{< relref "/docs/measurement/signals-waveforms" >}} for general signal measurement techniques and {{< relref "/docs/measurement/digital-logic-protocols" >}} for digital protocol measurement specifics.
+The Saleae Logic analyzers are popular for bench use — USB-connected, good software, reasonable price for the 8-channel version. For more channels or higher sample rates, dedicated instruments from Keysight, Rohde & Schwarz, and others are available. See [Signals & Waveforms]({{< relref "/docs/measurement/signals-waveforms" >}}) for general signal measurement techniques and [Digital Logic & Protocols]({{< relref "/docs/measurement/digital-logic-protocols" >}}) for digital protocol measurement specifics.
 
 ## Oscilloscope-Assisted Debugging
 
@@ -105,7 +105,7 @@ Examples:
 - **Power supply ripple under load** — Firmware enables a peripheral (radio, motor driver, LED array) and the system misbehaves. The scope shows the supply rail sagging under the new load, possibly dropping below the MCU's minimum operating voltage.
 - **SPI clock integrity** — The SPI clock looks clean at 1 MHz but develops ringing at 10 MHz due to trace impedance mismatches. The scope reveals signal integrity issues that the logic analyzer, with its simple threshold detection, misses entirely.
 
-The oscilloscope shows what the firmware cannot see. For power supply investigation techniques, see {{< relref "/docs/measurement/power-rails-supplies" >}}.
+The oscilloscope shows what the firmware cannot see. For power supply investigation techniques, see [Power Rails & Supplies]({{< relref "/docs/measurement/power-rails-supplies" >}}).
 
 ## Post-Mortem Debugging
 

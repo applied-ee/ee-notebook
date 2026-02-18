@@ -10,7 +10,7 @@ review:
 
 # Cortex-M Interrupts and the NVIC
 
-This page covers interrupt handling specifics for the ARM Cortex-M architecture — the NVIC, hardware context save, priority grouping, tail-chaining, and latency characteristics. For general interrupt concepts, ISR design rules, and shared-data patterns, see {{< relref "interrupts" >}}.
+This page covers interrupt handling specifics for the ARM Cortex-M architecture — the NVIC, hardware context save, priority grouping, tail-chaining, and latency characteristics. For general interrupt concepts, ISR design rules, and shared-data patterns, see [Interrupts]({{< relref "interrupts" >}}).
 
 ## Cortex-M Context Save
 

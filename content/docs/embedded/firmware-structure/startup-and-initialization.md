@@ -82,11 +82,11 @@ Simple, deterministic, easy to reason about. Every function runs in sequence, ev
 
 ### Interrupt-Driven
 
-The main loop does nothing (or sleeps). ISRs handle all events — receiving UART data, processing timer ticks, responding to GPIO edges. This is power-efficient but makes the firmware harder to reason about: execution order depends on interrupt arrival, not code order. See {{< relref "interrupts" >}} for the design rules that make this manageable.
+The main loop does nothing (or sleeps). ISRs handle all events — receiving UART data, processing timer ticks, responding to GPIO edges. This is power-efficient but makes the firmware harder to reason about: execution order depends on interrupt arrival, not code order. See [Interrupts]({{< relref "interrupts" >}}) for the design rules that make this manageable.
 
 ### Hybrid (Flags and Deferred Processing)
 
-ISRs do the minimum — set a flag, copy a byte into a buffer — and the main loop checks flags and processes data. This gives fast interrupt response without putting complex logic in ISR context. Most production bare-metal firmware uses some variation of this pattern, and it connects naturally to the {{< relref "state-machines-and-event-loops" >}} approach.
+ISRs do the minimum — set a flag, copy a byte into a buffer — and the main loop checks flags and processes data. This gives fast interrupt response without putting complex logic in ISR context. Most production bare-metal firmware uses some variation of this pattern, and it connects naturally to the [State Machines & Event Loops]({{< relref "state-machines-and-event-loops" >}}) approach.
 
 ## The "Before main()" Problem
 
