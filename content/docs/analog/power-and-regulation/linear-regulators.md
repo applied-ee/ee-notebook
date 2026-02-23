@@ -75,7 +75,7 @@ Since a linear regulator converts excess voltage directly to heat, thermal manag
 - Look up junction-to-ambient thermal resistance (theta_JA) for the package and PCB layout
 - Verify: T_junction = T_ambient + P_diss x theta_JA < T_max
 
-See [Thermal Reality]({{< relref "/docs/fundamentals/power-energy-heat/thermal-reality" >}}) for the thermal model details.
+See [Thermal Reality]({{< relref "/docs/fundamentals/thermal-reality" >}}) for the thermal model details.
 
 ## Tips
 

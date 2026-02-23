@@ -22,4 +22,6 @@ Much like fuel, air, and spark in an internal combustion engine, these requireme
 - **[Current Direction & Conventions]({{< relref "current-direction-and-conventions" >}})** — Conventional vs electron flow, reference directions, and the passive sign convention.
 - **[Sourcing & Sinking]({{< relref "sourcing-and-sinking" >}})** — What it means for a pin or component to source or sink current, and where the distinction matters in practice.
 - **[Kirchhoff's Laws]({{< relref "kirchhoffs-laws" >}})** — KCL and KVL. Reference directions, sign conventions, and why these never fail.
+- **[Power Basics]({{< relref "power-basics" >}})** — P=VI and its variants, instantaneous vs average, DC vs AC, resistive vs reactive power.
 - **[Conservation of Energy]({{< relref "conservation-of-energy" >}})** — Where power goes, heat as the universal sink, and accounting for "missing" power.
+- **[Energy Over Time]({{< relref "energy-over-time" >}})** — Joules vs watts, capacitors and inductors as energy storage, time constants.

@@ -1,6 +1,6 @@
 ---
 title: "Power Basics"
-weight: 10
+weight: 25
 review:
   status: unreviewed
   method: []

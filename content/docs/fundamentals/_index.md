@@ -17,13 +17,13 @@ All of it seems simple until it needs to be applied to a real circuit on the ben
 
 ## Sections
 
-- **[Laws & First Principles]({{< relref "laws-first-principles" >}})** — The non-negotiable rules: Ohm's law, Kirchhoff's laws, conservation of energy.
+- **[Laws & First Principles]({{< relref "laws-first-principles" >}})** — The non-negotiable rules: Ohm's law, Kirchhoff's laws, power, conservation of energy, and energy storage dynamics.
+
+- **[Thermal Reality]({{< relref "thermal-reality" >}})** — Dissipation ratings, derating, thermal resistance chains, and why quiet thermal failures happen before spectacular ones.
 
 - **[Signaling Models]({{< relref "signaling-models" >}})** — What is the signal and what is it measured against? Go & return paths, reference planes, single-ended vs differential, balanced vs unbalanced, and common-mode rejection.
 
 - **[Circuit Analysis Techniques]({{< relref "circuit-analysis" >}})** — Series/parallel, voltage dividers, node/loop analysis, and Thevenin/Norton equivalents.
-
-- **[Power, Energy & Heat]({{< relref "power-energy-heat" >}})** — Where theory gets physical: power calculations, energy storage, and thermal limits.
 
 - **[Passive Components]({{< relref "passive-components" >}})** — Resistors, capacitors, inductors, and transformers beyond the ideal models.
 
