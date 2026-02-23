@@ -9,16 +9,19 @@ Before diving into specific laws, it helps to establish what is physically happe
 
 ## Where Energy Exists
 
-Energy in electronics shows up in several forms:
+Energy that stays in the electrical domain — stored in fields:
 
-- **Electric fields** — present wherever there is a voltage difference. A charged capacitor holds energy in its electric field. Every wire at a different potential than its neighbor has one.
+- **Electric fields** — present wherever there is a voltage difference. A charged capacitor holds energy in its electric field.
 - **Magnetic fields** — present wherever current flows. An inductor stores energy in its magnetic field. Transformers couple energy between windings through shared magnetic fields.
-- **Chemical potential** — batteries convert stored chemical energy into electrical energy. This is the dominant energy source at the boundary between the electrical domain and the chemical one.
+- **Chemical potential** — batteries convert stored chemical energy into electrical energy. This is the dominant energy source at the boundary between the electrical and chemical domains.
+
+Energy that leaves the electrical domain — conversion at boundaries:
+
 - **Thermal energy** — heat. The universal sink. Every real component converts some electrical energy into heat, whether intended or not.
 - **Mechanical energy** — motors convert electrical energy into rotation; generators do the reverse.
 - **Radiation** — antennas convert electrical energy into electromagnetic waves. LEDs convert it into light.
 
-In circuit analysis, electric and magnetic fields dominate. Chemical energy matters at the battery terminals. Thermal energy matters everywhere something gets warm. The others show up at transducers — the boundary between electrical and non-electrical domains.
+In the electrical domain, energy is stored only in electric and magnetic fields. Chemical energy enters at battery terminals, and thermal, mechanical, and radiated energy leave at transducers — but inside the circuit, fields are where the energy lives. This is the physical foundation everything else in this section builds on.
 
 ## How Energy Moves
 
@@ -31,7 +34,7 @@ Together, voltage and current describe the energy flow at any point in a circuit
 
 Two things that always matter:
 
-- **The circuit must form a closed loop.** No loop, no sustained current. An open circuit has voltage but no energy transfer.
+- **The circuit must form a closed loop.** No loop, no sustained current. An open circuit can have voltage (and stored field energy), but without a closed path there is no sustained energy transfer.
 - **The return path always matters.** Current returns to the source. Where and how it returns affects everything from signal integrity to noise. Ignoring the return path is one of the most common sources of confusion at the bench.
 
 ## What Stores Energy
