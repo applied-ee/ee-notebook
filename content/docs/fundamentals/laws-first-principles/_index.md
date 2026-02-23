@@ -17,6 +17,7 @@ Much like fuel, air, and spark in an internal combustion engine, these requireme
 
 ## What This Section Covers
 
+- **[Energy, Fields & Loads]({{< relref "energy-and-loads" >}})** — Where energy exists, how it moves through circuits, what stores it, what converts it, and what a load actually is.
 - **[Ohm's Law]({{< relref "ohms-law" >}})** — V=IR, when it applies, when it doesn't, and the practical meaning of impedance.
 - **[Current Direction & Conventions]({{< relref "current-direction-and-conventions" >}})** — Conventional vs electron flow, reference directions, and the passive sign convention.
 - **[Sourcing & Sinking]({{< relref "sourcing-and-sinking" >}})** — What it means for a pin or component to source or sink current, and where the distinction matters in practice.
