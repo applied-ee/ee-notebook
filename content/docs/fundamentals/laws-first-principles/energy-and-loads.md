@@ -92,5 +92,6 @@ For the quantitative relationship between voltage, current, and power in differe
 ## In Practice
 
 - **Circuit does nothing when powered** — verify the complete energy path. Is there actually a closed loop from source through load and back? An open return path is one of the most common reasons a circuit sits there doing nothing.
+- **Circuit does something unexpected when powered** — suspect an unintended energy path. A short circuit bypasses the intended load, routing current where it should not go. The result is excessive current, rapid heating, and potential damage. Solder bridges, stray wire strands, and failed insulation are common causes. If a fuse blows or a supply shuts down immediately, look for a short before anything else.
 - **Load behaves differently on different supplies** — suspect a mismatch between load type and source capability. A reactive or nonlinear load on a source that assumes resistive behavior will not get what it needs.
 - **Heat where none is expected** — something is acting as an unintended load. Parasitic resistance in a connector, a degraded solder joint, or a component conducting when it should be off — all convert electrical energy to heat in places the design did not account for.
