@@ -123,7 +123,7 @@ A curve tracer displays the current-voltage characteristic of a semiconductor de
 
 ### Variacs (Variable Autotransformers)
 
-A variac provides a continuously adjustable AC output voltage from zero to above line voltage (typically 0-140 VAC for a 120 V unit). Essential for slow power-up of unknown or dormant equipment — see [Safe Power-Up Procedures]({{< relref "../testing-and-troubleshooting#safe-power-up-procedures" >}}).
+A variac provides a continuously adjustable AC output voltage from zero to above line voltage (typically 0-140 VAC for a 120 V unit). Essential for slow power-up of unknown or dormant equipment — see [Safe Power-Up Procedures]({{< relref "../testing-and-troubleshooting/safe-power-up-procedures" >}}).
 
 **Sizing:** A 5 A variac (600 VA at 120 V) handles most bench equipment. Larger variacs (10-15 A) may be needed for power amplifiers, industrial equipment, or anything with a large power transformer that draws high magnetizing inrush current.
 
