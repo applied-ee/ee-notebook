@@ -89,6 +89,20 @@ Knowing what type of load a circuit presents determines:
 
 For the quantitative relationship between voltage, current, and power in different load types, see [Power Basics]({{< relref "power-basics" >}}).
 
+## Tips
+
+- **Start with the energy path** — before analyzing a circuit in detail, trace where energy enters, where it's stored, and where it leaves. This gives you the big picture before diving into specific voltages and currents.
+- **Classify the load first** — knowing whether a load is resistive, reactive, nonlinear, or active tells you what the source must provide and which measurements will be meaningful. It's the single most useful thing to establish early.
+- **Return path as a first-class concern** — when debugging, give the return path as much attention as the forward path. Many "mystery" failures trace back to an inadequate or unintended return.
+- **Use heat as a diagnostic** — unexpected warmth localizes unintended energy conversion. An IR thermometer or even a finger check narrows the search faster than voltage measurements in many cases.
+
+## Caveats
+
+- **Voltage without current is not power delivery** — an open circuit can have full supply voltage across it, but no energy is being transferred. Both voltage and current must be present simultaneously for energy to move.
+- **"Lossless" storage is an idealization** — real capacitors have ESR, real inductors have winding resistance and core loss. Energy stored and returned is always less than ideal; the difference becomes heat.
+- **Load type can change with operating conditions** — a motor is an inductive load at stall but presents back-EMF (acting partly as an active load) when spinning. A battery is a source when discharging and a load when charging. Don't assume the classification is fixed.
+- **Reactive loads don't consume average power (ideally)** — energy sloshes back and forth between source and reactive element each cycle. The source must handle the peak current even though average real power delivery is zero. This is the origin of power factor concerns.
+
 ## In Practice
 
 - **Circuit does nothing when powered** — verify the complete energy path. Is there actually a closed loop from source through load and back? An open return path is one of the most common reasons a circuit sits there doing nothing.
