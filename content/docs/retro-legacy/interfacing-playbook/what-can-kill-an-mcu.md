@@ -43,3 +43,18 @@ When the MCU is unpowered but an external signal is applied to an I/O pin, curre
 **How it happens at the interface:** The legacy system is powered on before the MCU. A cable is connected while the MCU is off. The MCU's supply is disabled by a regulator enable signal, but signals from the legacy system are still present on the I/O pins.
 
 **Prevention:** Add series resistors (1-10 kohm) on I/O pins to limit backfeed current below the clamp diode's rating. Alternatively, use interface circuits with their own supply enable that tri-state outputs when the MCU is unpowered.
+
+## Tips
+
+- Add a series resistor (1-10 kohm) on every MCU pin that connects to a legacy system as a default practice — this single component limits clamp diode current during overvoltage, limits backfeed current when the MCU is unpowered, and costs essentially nothing in performance for signals under 100 kHz
+- Check the MCU datasheet for absolute maximum ratings on each pin — some pins (like ADC inputs or USB D+/D-) have lower tolerances than general-purpose I/O, and a "5V-tolerant" label on a GPIO does not necessarily extend to every pin on the chip
+
+## Caveats
+
+- **"5V-tolerant" pins are only tolerant when the MCU is powered** — when VDD is 0V, the clamp diode to VDD forward-biases at 0.3V, and any signal above 0.3V backfeeds into the unpowered supply rail. The 5V tolerance rating assumes VDD is at its nominal value
+- **Latch-up from negative voltage or overvoltage may not destroy the MCU immediately** — it can cause high current draw, erratic behavior, or partial function loss that looks like a firmware bug. If an MCU starts behaving strangely after a wiring error, cycle power immediately and inspect for damage before assuming a software issue
+
+## In Practice
+
+- **An MCU pin that reads the correct voltage with a DMM but does not respond to signal changes** likely has a damaged input buffer from a previous overvoltage event — the pin may still conduct through the clamp diodes but the CMOS input gate is destroyed
+- **An MCU that draws significantly more supply current than its datasheet idle figure, even with all peripherals disabled,** has likely suffered latch-up damage — compare the measured supply current to the datasheet typical value as a quick health check after any wiring incident

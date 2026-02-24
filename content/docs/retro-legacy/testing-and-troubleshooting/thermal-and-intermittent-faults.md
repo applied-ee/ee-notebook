@@ -27,6 +27,11 @@ Faults that appear or disappear with temperature are common in legacy equipment 
 - Set the oscilloscope to trigger on an abnormal event (voltage dropout, spike, or edge) and use single-shot or persistence mode to capture the moment the fault occurs
 - A chart recorder or data logger on a critical voltage rail can capture slow intermittents that occur over hours — this is impractical with a scope but straightforward with a multimeter in logging mode
 
+## Tips
+
+- Work on one suspect area at a time with cold spray — spraying the entire board makes it impossible to identify which component is temperature-sensitive because everything cools at once
+- When monitoring for intermittents, set the scope trigger to capture the fault and walk away — some intermittents only appear when the equipment is undisturbed and at thermal equilibrium, and hovering over it with a probe changes the thermal environment
+
 ## Caveats
 
 - **Cold spray can cause condensation** — rapid cooling below the dew point creates water droplets on the board, which can cause shorts between closely spaced traces. Allow the board to return to room temperature and dry before drawing conclusions from a cold-spray test on a powered board

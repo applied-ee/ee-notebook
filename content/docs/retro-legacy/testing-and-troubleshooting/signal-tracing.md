@@ -41,6 +41,11 @@ For long signal chains or complex boards, the half-split method minimizes the nu
 
 - Use the half-split strategy to narrow the failing stage before deep-diving into component-level testing — this prevents wasting time measuring good components in a working section of the circuit
 
+## Caveats
+
+- **Loading the circuit with the probe can change the signal** — a 10x scope probe presents ~10 Mohm and ~15 pF, which is negligible for most low-frequency circuits but can detune or load RF stages significantly. If probing changes the symptom, the probe is part of the problem
+- **An audio signal tracer will not reveal distortion above the audible range** — harmonic distortion, high-frequency oscillation, and ultrasonic ringing all require a scope to detect. A stage that sounds clean through a tracer may still be oscillating at hundreds of kilohertz
+
 ## In Practice
 
 - **An amplifier stage that clips asymmetrically** (one half of the waveform clips before the other) has a shifted bias point — the DC voltage at the collector or drain has moved away from its midpoint, reducing swing in one direction

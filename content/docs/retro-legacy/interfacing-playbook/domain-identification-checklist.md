@@ -51,3 +51,8 @@ Before designing any interface circuit, characterize both sides of the connectio
 
 - **Legacy systems assume their loads are passive** -- A legacy 4-20 mA transmitter expects to drive a passive 250 ohm load, not an active circuit that might inject current back into the loop. A tube-era audio output expects a resistive load, not a capacitive one that reflects energy. Respect the legacy system's assumptions about what it is driving
 - **Hot-plugging legacy connectors is never safe unless designed for it** -- DB-9, DB-25, DIN, screw terminals, banana plugs -- none of these guarantee ground-first contact. Every hot-plug event is a potential ESD event, ground bounce event, and signal transient. Power down before connecting
+
+## In Practice
+
+- **A legacy system labeled "12V" that measures 14.2V at the interface connector** is within normal range for an unregulated supply under light load — design the interface for the actual measured voltage, not the nameplate rating
+- **A signal that measures clean on a DMM but causes intermittent errors on the MCU** likely has fast transients or ringing that the DMM averages out — check with a scope at the interface point before concluding the signal is within spec

@@ -47,3 +47,8 @@ If the equipment partially works, the diagnostic boundary is the transition from
 ## Caveats
 
 - **Do not assume a single fault** — legacy boards that have been sitting unpowered for years often have multiple failures. Fixing one fault and finding the board still does not work does not mean the diagnosis was wrong; it means there is a second fault to find
+
+## In Practice
+
+- **A board with correct voltage on the main rail but incorrect or absent voltages on secondary rails** usually has a failed local regulator or a cracked trace in the secondary distribution — measure each rail independently rather than assuming they are all derived correctly from a single source
+- **A mystery IC whose markings have been sanded off or are unreadable** can often be identified from its pinout — power and ground pins follow predictable patterns by package type, and measuring which pins connect to power rails narrows the possibilities quickly

@@ -47,6 +47,11 @@ Boards combining analog and digital sections (common from the 1980s onward).
 
 - On socketed ICs, remove and reseat the IC before condemning it — oxidized socket contacts are a common cause of intermittent logic failures, and reseating wipes the contact surfaces
 
+## Caveats
+
+- **A "failed" IC identified by symptom matching may actually be a victim of an upstream fault** — a regulator that oscillates because of a bad output capacitor will cause logic errors throughout the board, and replacing the logic ICs does not fix the root cause
+- **Replacing carbon composition resistors with modern metal film types changes the circuit's noise characteristics** — carbon comp resistors generate more thermal noise, and the lower noise of metal film replacements may reveal oscillation or interference problems that were previously masked
+
 ## In Practice
 
 - **A TTL board where multiple ICs run hot and the supply current is well above normal** likely has bus contention — two or more outputs fighting over a shared bus line. Check enable and direction control signals on bus buffers and transceivers

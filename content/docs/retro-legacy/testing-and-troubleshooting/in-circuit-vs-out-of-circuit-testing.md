@@ -31,7 +31,17 @@ When an in-circuit reading is ambiguous, desoldering one lead of the suspect com
 - Measure the component
 - Resolder the lead, adding flux — the original flux is long exhausted on a vintage joint
 
+## Tips
+
+- Always compare in-circuit readings to the expected value from the schematic or to the same node on a working unit — an in-circuit reading in isolation is meaningless because the parallel paths are unknown
+- When an in-circuit resistance reading is lower than expected, check for a semiconductor junction in parallel — reverse the meter leads and see if the reading changes, which indicates a diode or transistor junction in the measurement path
+
 ## Caveats
 
 - **In-circuit ESR readings are reliable, in-circuit capacitance readings are not** — the high test frequency of an ESR meter makes parallel paths negligible, but a capacitance measurement at lower frequency picks up every parallel capacitor on the node
 - **A component that tests good out of circuit may still fail in circuit** — temperature, voltage, and loading conditions on the board differ from bench test conditions. A transistor that passes all DMM tests may still fail under the specific bias and signal conditions of its circuit
+
+## In Practice
+
+- **An electrolytic capacitor that reads 2-3x its expected ESR value in circuit** is failing even if its capacitance still reads near nominal — ESR rises before capacitance drops, making ESR the early warning indicator for electrolytic aging
+- **A resistor that reads correct in circuit but the stage still misbehaves** may have a hairline crack that opens under thermal stress — the resistance is correct at room temperature on the bench but drifts or opens when the board reaches operating temperature

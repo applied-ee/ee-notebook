@@ -122,6 +122,16 @@ MCU DAC ── series resistor (1kΩ) ── AC coupling cap (10µF) ── outp
 
 **Watch for:** Audio grounds between equipment. Connecting the MCU ground to the audio equipment ground may create a ground loop with audible hum. If so, insert an audio isolation transformer (Triad Magnetics TY-250P or similar 600:600 ohm) in the signal path.
 
+## Tips
+
+- Build and test each interface pattern on a breadboard before committing to a PCB — a breadboard lets you verify signal levels, measure protection clamping, and confirm the legacy device responds correctly with minimal rework cost
+- Keep the MAX3232 charge pump capacitors close to the IC and use the values specified in the datasheet — incorrect or distant capacitors cause the charge pump to oscillate or fail to reach the required output voltage
+
+## Caveats
+
+- **A USB-serial adapter is not electrically identical to a MAX3232 circuit** — the adapter's RS-232 output swing is often reduced (±5V instead of ±12V), which may not meet the input threshold of older RS-232 receivers that expect larger swings. If communication is unreliable with an adapter but works with a proper MAX3232, the swing voltage is the likely cause
+- **The 250 ohm sense resistor in a 4-20 mA loop drops voltage that reduces the loop compliance** — the transmitter needs enough voltage to operate, and the sense resistor plus cable resistance subtract from the loop supply. A 24V supply with a 250 ohm resistor at 20 mA drops 5V across the resistor, leaving 19V for the transmitter and cable — usually adequate but can be marginal with long cable runs
+
 ## In Practice
 
 - **An MCU that resets or locks up when a relay on the same board switches** likely has insufficient flyback protection or poor ground routing -- check the flyback diode polarity and placement, and monitor the supply rail on a scope during relay switching

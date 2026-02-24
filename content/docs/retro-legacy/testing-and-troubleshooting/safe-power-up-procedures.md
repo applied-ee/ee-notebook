@@ -44,6 +44,11 @@ An incandescent light bulb in series with the AC line limits inrush current to w
 - If the bulb glows at full brightness, the equipment has a near-short somewhere in the power supply — the bulb is absorbing most of the power and protecting the board from further damage
 - A dim bulb tester is a cheap, always-available alternative to a variac for initial screening, though it provides less control over the voltage ramp
 
+## Tips
+
+- A dim bulb tester costs almost nothing to build (a light socket, a plug, and a cord) and prevents the most common beginner mistake: applying full power to a board with a shorted component and destroying additional parts in the process
+- Record the current draw at each voltage step during a variac bring-up — these numbers become the baseline for verifying the repair and for any future troubleshooting of the same equipment
+
 ## Caveats
 
 - **A variac does not provide isolation** — it is an autotransformer with a direct electrical connection between input and output. Working on mains-referenced equipment through a variac without an isolation transformer is a shock hazard. Always use an isolation transformer for safety on any equipment that connects to AC mains

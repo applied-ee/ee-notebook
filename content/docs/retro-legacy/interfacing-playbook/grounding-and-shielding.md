@@ -37,7 +37,17 @@ When the legacy system uses chassis ground as signal reference (common in indust
 - Do not create additional ground connections elsewhere -- one point of contact between the two ground systems
 - If the chassis bond creates unacceptable noise, insert isolation at the signal level instead of attempting to lift the ground
 
+## Tips
+
+- Measure the ground voltage between the two systems with a DMM before connecting any signal wires — this one measurement, which takes seconds, reveals whether isolation is needed and prevents the most common ground-offset damage
+- When troubleshooting ground noise, disconnect signal cables one at a time while monitoring the noise — the cable whose removal eliminates the noise identifies which connection is creating the ground loop
+
 ## Caveats
 
 - **Ground voltage between systems can drift with load** -- A DMM may show 0V between the grounds at idle, but once the interface is active, 500 mV of offset appears because the interface cable carries return current through a high-impedance path. Measure the ground offset with the interface active and current flowing, not just at idle
 - **USB ground is not isolated** -- USB-connected devices share ground with the host PC. If the legacy system has a ground offset relative to the PC, that offset appears across the interface. A USB isolator module (such as one based on the ADUM4160) breaks this connection
+
+## In Practice
+
+- **A 50/60 Hz hum that appears when connecting a USB-powered MCU to chassis-grounded audio equipment** is almost always a ground loop through the mains wiring — inserting a USB isolator or an audio isolation transformer breaks the loop
+- **A digital interface that works reliably at short cable lengths but produces data errors at longer runs** often has a ground offset that increases with distance — the additional cable resistance in the ground return raises the offset voltage, pushing signal levels outside the receiver's threshold

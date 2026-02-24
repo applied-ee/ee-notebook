@@ -47,3 +47,8 @@ Follow this sequence when connecting a modern MCU to a legacy system for the fir
 ## Caveats
 
 - **"Works on the bench" does not mean it works in the field** -- Bench conditions are clean: short cables, common ground through the bench supply, no nearby motors or relays. In the field, cables are long, grounds differ, and EMI is real. Test with realistic cable lengths and with both systems powered from their intended sources
+
+## In Practice
+
+- **A supply current spike at the moment the legacy system's cable is plugged in (even with the legacy system powered off)** indicates parasitic capacitance in the cable or connector charging through the MCU's I/O protection — this is normal for short cables but a series resistor limits the inrush on longer ones
+- **An interface that passes all functional tests on the bench but fails intermittently in the field** almost always has a ground or shielding issue — the bench environment provides a common ground through the bench supply and short, unshielded connections that do not exist in the field installation
