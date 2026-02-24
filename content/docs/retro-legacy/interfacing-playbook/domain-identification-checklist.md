@@ -45,7 +45,7 @@ Before designing any interface circuit, characterize both sides of the connectio
 
 ## Tips
 
-- Complete the domain identification checklist before building any interface circuit -- characterizing both sides of the connection up front prevents the most common MCU-destroying mistakes
+- **Complete the domain identification checklist before building any interface circuit** -- characterizing both sides of the connection up front prevents the most common MCU-destroying mistakes
 
 ## Caveats
 

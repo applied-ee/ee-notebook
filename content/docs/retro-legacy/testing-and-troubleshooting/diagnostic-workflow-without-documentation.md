@@ -40,9 +40,9 @@ If the equipment partially works, the diagnostic boundary is the transition from
 
 ## Tips
 
-- Start every diagnostic session by measuring the power supply voltages — most legacy faults trace back to a failed power supply component, and no downstream diagnosis is meaningful if the supply is wrong
-- Keep a notebook (physical or digital) of voltage readings at key nodes during diagnosis — these readings become the baseline for verifying the repair and for future troubleshooting of the same equipment
-- When a board has multiple identical channels (stereo audio, multi-channel industrial), compare the working channel to the failing one — the differences point directly to the fault
+- **Start every diagnostic session by measuring the power supply voltages** — most legacy faults trace back to a failed power supply component, and no downstream diagnosis is meaningful if the supply is wrong
+- **Keep a notebook of voltage readings at key nodes during diagnosis** (physical or digital) — these readings become the baseline for verifying the repair and for future troubleshooting of the same equipment
+- **When a board has multiple identical channels** (stereo audio, multi-channel industrial), compare the working channel to the failing one — the differences point directly to the fault
 
 ## Caveats
 

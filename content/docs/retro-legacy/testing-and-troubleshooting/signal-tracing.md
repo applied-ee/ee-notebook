@@ -39,7 +39,7 @@ For long signal chains or complex boards, the half-split method minimizes the nu
 
 ## Tips
 
-- Use the half-split strategy to narrow the failing stage before deep-diving into component-level testing — this prevents wasting time measuring good components in a working section of the circuit
+- **Use the half-split strategy to narrow the failing stage** before deep-diving into component-level testing — this prevents wasting time measuring good components in a working section of the circuit
 
 ## Caveats
 

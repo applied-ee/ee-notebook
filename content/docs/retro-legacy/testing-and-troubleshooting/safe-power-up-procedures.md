@@ -46,8 +46,8 @@ An incandescent light bulb in series with the AC line limits inrush current to w
 
 ## Tips
 
-- A dim bulb tester costs almost nothing to build (a light socket, a plug, and a cord) and prevents the most common beginner mistake: applying full power to a board with a shorted component and destroying additional parts in the process
-- Record the current draw at each voltage step during a variac bring-up — these numbers become the baseline for verifying the repair and for any future troubleshooting of the same equipment
+- **A dim bulb tester costs almost nothing to build** (a light socket, a plug, and a cord) and prevents the most common beginner mistake: applying full power to a board with a shorted component and destroying additional parts in the process
+- **Record the current draw at each voltage step during a variac bring-up** — these numbers become the baseline for verifying the repair and for any future troubleshooting of the same equipment
 
 ## Caveats
 

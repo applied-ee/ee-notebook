@@ -42,7 +42,7 @@ Follow this sequence when connecting a modern MCU to a legacy system for the fir
 
 ## Tips
 
-- Test the complete interface with realistic cable lengths and with both systems powered from their intended sources, not just bench supplies -- field conditions differ significantly from bench conditions
+- **Test the complete interface with realistic cable lengths** and with both systems powered from their intended sources, not just bench supplies -- field conditions differ significantly from bench conditions
 
 ## Caveats
 

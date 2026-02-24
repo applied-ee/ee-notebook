@@ -46,8 +46,8 @@ When the MCU is unpowered but an external signal is applied to an I/O pin, curre
 
 ## Tips
 
-- Add a series resistor (1-10 kohm) on every MCU pin that connects to a legacy system as a default practice — this single component limits clamp diode current during overvoltage, limits backfeed current when the MCU is unpowered, and costs essentially nothing in performance for signals under 100 kHz
-- Check the MCU datasheet for absolute maximum ratings on each pin — some pins (like ADC inputs or USB D+/D-) have lower tolerances than general-purpose I/O, and a "5V-tolerant" label on a GPIO does not necessarily extend to every pin on the chip
+- **Add a series resistor (1-10 kohm) on every MCU pin that connects to a legacy system** as a default practice — this single component limits clamp diode current during overvoltage, limits backfeed current when the MCU is unpowered, and costs essentially nothing in performance for signals under 100 kHz
+- **Check the MCU datasheet for absolute maximum ratings on each pin** — some pins (like ADC inputs or USB D+/D-) have lower tolerances than general-purpose I/O, and a "5V-tolerant" label on a GPIO does not necessarily extend to every pin on the chip
 
 ## Caveats
 

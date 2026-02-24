@@ -39,8 +39,8 @@ When the legacy system uses chassis ground as signal reference (common in indust
 
 ## Tips
 
-- Measure the ground voltage between the two systems with a DMM before connecting any signal wires — this one measurement, which takes seconds, reveals whether isolation is needed and prevents the most common ground-offset damage
-- When troubleshooting ground noise, disconnect signal cables one at a time while monitoring the noise — the cable whose removal eliminates the noise identifies which connection is creating the ground loop
+- **Measure the ground voltage between the two systems with a DMM before connecting any signal wires** — this one measurement, which takes seconds, reveals whether isolation is needed and prevents the most common ground-offset damage
+- **When troubleshooting ground noise, disconnect signal cables one at a time while monitoring the noise** — the cable whose removal eliminates the noise identifies which connection is creating the ground loop
 
 ## Caveats
 

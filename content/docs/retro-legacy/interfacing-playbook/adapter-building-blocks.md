@@ -83,8 +83,8 @@ Physical-layer and framing differences between legacy and modern:
 
 ## Tips
 
-- Place a series resistor (100 ohm to 1 kohm) on every interface pin as a default practice -- this single component limits fault current, forms an RC low-pass with pin capacitance, and reduces EMI coupling at negligible performance cost for signals under 1 MHz
-- Use isolated DC-DC modules (Murata NME, Recom R1S) to power the isolated side of optocoupler or digital isolator circuits -- without a truly separate supply, isolation is only on paper
+- **Place a series resistor (100 ohm to 1 kohm) on every interface pin** as a default practice -- this single component limits fault current, forms an RC low-pass with pin capacitance, and reduces EMI coupling at negligible performance cost for signals under 1 MHz
+- **Use isolated DC-DC modules** (Murata NME, Recom R1S) to power the isolated side of optocoupler or digital isolator circuits -- without a truly separate supply, isolation is only on paper
 
 ## Caveats
 

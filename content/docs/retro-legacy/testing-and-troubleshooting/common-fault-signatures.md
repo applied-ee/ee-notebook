@@ -45,7 +45,7 @@ Boards combining analog and digital sections (common from the 1980s onward).
 
 ## Tips
 
-- On socketed ICs, remove and reseat the IC before condemning it — oxidized socket contacts are a common cause of intermittent logic failures, and reseating wipes the contact surfaces
+- **On socketed ICs, remove and reseat the IC before condemning it** — oxidized socket contacts are a common cause of intermittent logic failures, and reseating wipes the contact surfaces
 
 ## Caveats
 

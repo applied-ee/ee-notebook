@@ -96,7 +96,8 @@ This means:
 - **Exploratory tone**: Write as someone learning, not lecturing; include uncertainty, questions, and corrections
 - **Practical focus**: Prefer bench experience, real measurements, and working circuits over pure theory
 - **Entry types**: Concepts, procedures, experiments, patterns, gotchas — no formal taxonomy required, just pick what fits
-- **In Practice sections**: Most sections use `## In Practice` as a closing section with practical diagnostic bullets. The `architecture-abstraction/` section is the exception — its pages end with `## Caveats` and do not have `## In Practice`. Practical observations from Architecture & Abstraction live in the topically appropriate pages in `measurement/`, `embedded/`, and `debugging/` instead.
+- **Closing sections**: Most pages end with three closing sections in order: `## Tips`, `## Caveats`, `## In Practice`. The `architecture-abstraction/` section is the exception — its pages end with `## Caveats` and do not have `## Tips` or `## In Practice`. Practical observations from Architecture & Abstraction live in the topically appropriate pages in `measurement/`, `embedded/`, and `debugging/` instead.
+- **Bold lead-in on every closing-section bullet**: Every bullet in Tips, Caveats, and In Practice must start with a **bold phrase** that captures the key idea, symptom, or situation, followed by the explanation. Format: `- **Bold lead-in phrase** — rest of the bullet`. This applies uniformly to all three section types.
 
 ## Glossary & Tooltip System
 

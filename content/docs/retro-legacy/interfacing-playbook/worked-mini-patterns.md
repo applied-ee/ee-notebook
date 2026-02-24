@@ -124,8 +124,8 @@ MCU DAC ── series resistor (1kΩ) ── AC coupling cap (10µF) ── outp
 
 ## Tips
 
-- Build and test each interface pattern on a breadboard before committing to a PCB — a breadboard lets you verify signal levels, measure protection clamping, and confirm the legacy device responds correctly with minimal rework cost
-- Keep the MAX3232 charge pump capacitors close to the IC and use the values specified in the datasheet — incorrect or distant capacitors cause the charge pump to oscillate or fail to reach the required output voltage
+- **Build and test each interface pattern on a breadboard before committing to a PCB** — a breadboard lets you verify signal levels, measure protection clamping, and confirm the legacy device responds correctly with minimal rework cost
+- **Keep the MAX3232 charge pump capacitors close to the IC** and use the values specified in the datasheet — incorrect or distant capacitors cause the charge pump to oscillate or fail to reach the required output voltage
 
 ## Caveats
 

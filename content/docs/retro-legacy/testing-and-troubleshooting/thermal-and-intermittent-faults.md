@@ -29,8 +29,8 @@ Faults that appear or disappear with temperature are common in legacy equipment 
 
 ## Tips
 
-- Work on one suspect area at a time with cold spray — spraying the entire board makes it impossible to identify which component is temperature-sensitive because everything cools at once
-- When monitoring for intermittents, set the scope trigger to capture the fault and walk away — some intermittents only appear when the equipment is undisturbed and at thermal equilibrium, and hovering over it with a probe changes the thermal environment
+- **Work on one suspect area at a time with cold spray** — spraying the entire board makes it impossible to identify which component is temperature-sensitive because everything cools at once
+- **When monitoring for intermittents, set the scope trigger to capture the fault and walk away** — some intermittents only appear when the equipment is undisturbed and at thermal equilibrium, and hovering over it with a probe changes the thermal environment
 
 ## Caveats
 

@@ -33,8 +33,8 @@ When an in-circuit reading is ambiguous, desoldering one lead of the suspect com
 
 ## Tips
 
-- Always compare in-circuit readings to the expected value from the schematic or to the same node on a working unit — an in-circuit reading in isolation is meaningless because the parallel paths are unknown
-- When an in-circuit resistance reading is lower than expected, check for a semiconductor junction in parallel — reverse the meter leads and see if the reading changes, which indicates a diode or transistor junction in the measurement path
+- **Always compare in-circuit readings to the expected value** from the schematic or to the same node on a working unit — an in-circuit reading in isolation is meaningless because the parallel paths are unknown
+- **When an in-circuit resistance reading is lower than expected, check for a semiconductor junction in parallel** — reverse the meter leads and see if the reading changes, which indicates a diode or transistor junction in the measurement path
 
 ## Caveats
 
