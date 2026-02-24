@@ -80,6 +80,18 @@ Same exponential behavior, but for current in an inductor. After one time consta
 - 10 mH / 100 Ω = 0.1 ms
 - Inductive time constants are usually short in electronics (small L, moderate R) but can be significant with large inductors or very low resistance paths
 
+## Battery Sizing
+
+Batteries are the most common bulk energy store in project work. The math is simple — the gotchas are in the derating.
+
+- **Wh vs. mAh** — Watt-hours are the honest comparison unit across chemistries and voltages. mAh is charge, not energy: a 3000 mAh cell at 3.7 V (11.1 Wh) holds nearly four times the energy of a 3000 mAh cell at 1.2 V (3.6 Wh). Always convert to Wh when comparing options
+- **Basic sizing** — estimate average system current, multiply by desired runtime, and add margin. Example: an MCU drawing 20 mA average plus a sensor drawing 5 mA = 25 mA average. For 24 hours of runtime: 25 mA × 24 h = 600 mAh minimum at the operating voltage
+- **Discharge curve reality** — a "3.7 V" Li-ion cell delivers 4.2 V when full and sags to 3.0 V when empty. Usable capacity depends on the minimum voltage your regulator tolerates — if the regulator drops out at 3.3 V, you lose whatever capacity remains below that point
+- **Derating** — nameplate capacity is measured under ideal conditions (room temperature, low discharge rate, new cell). Design for 70–80% of nameplate to account for age, temperature, and real-world discharge rates
+- **Peak vs. average current** — a battery must handle burst loads (radio TX, motor start, LED flash) without excessive voltage sag. Internal resistance × peak current = instantaneous voltage drop. A coin cell with 30 Ω internal resistance and a 100 mA pulse sags 3 V — it cannot do it
+
+For a fuller treatment — chemistry trade-offs, cell count, thermal and safety considerations — see [Power Source Selection]({{< relref "/docs/design-development/ideation-and-requirements/power-source-selection" >}}).
+
 ## Tips
 
 - Use E = ½CV² for quick capacitor energy estimates — remember energy scales with voltage squared
