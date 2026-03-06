@@ -7,13 +7,18 @@ weight: 30
 
 Resonance is what happens when capacitive and inductive reactance cancel at a specific frequency. Energy sloshes back and forth between the electric field of the capacitor and the magnetic field of the inductor, and the circuit's behavior at that frequency is dramatically different from its behavior at any other frequency. Resonance is the basis of filters, oscillators, and tuned circuits — and it's also the mechanism behind parasitic ringing and unexpected frequency peaks in circuits that weren't meant to resonate at all.
 
+> [!NOTE]
+> All resonance and Q formulas on this page are collected in the [Formula Reference]({{< relref "/docs/appendix/formulas" >}}) appendix for quick lookup.
+
 ## LC Resonance
 
-The resonant frequency of an LC circuit is:
+At one specific frequency, an inductor's rising reactance and a capacitor's falling reactance meet and exactly cancel. All that remains is resistance — the reactive parts add to zero, and the circuit behaves as though the L and C aren't there. That frequency is the resonant frequency.
+
+The expression comes from setting X_L = X_C — that is, 2πfL = 1/(2πfC) — and solving for f:
 
 **f₀ = 1 / (2π√(LC))**
 
-At this frequency, the capacitive reactance X_C = 1/(2πf₀C) exactly equals the inductive reactance X_L = 2πf₀L. The two reactances cancel, and what's left depends on whether the L and C are in series or parallel.
+At f₀, the two reactances are equal and opposite. What happens next depends on whether the L and C are in series or parallel.
 
 ### Series Resonance
 
@@ -41,9 +46,11 @@ Series resonance: impedance minimum, current maximum. Parallel resonance: impeda
 
 ## Quality Factor (Q)
 
-Q measures how "sharp" the resonance is — how much energy is stored vs. how much is lost per cycle. A high-Q circuit resonates strongly at f₀ and attenuates quickly away from it. A low-Q circuit has a broad, gentle resonance.
+Q measures how "sharp" the resonance is — the ratio of energy stored to energy lost per cycle. A high-Q circuit resonates strongly at f₀ and attenuates quickly away from it. A low-Q circuit has a broad, gentle resonance.
 
 **Q = 2π × (energy stored per cycle) / (energy dissipated per cycle)**
+
+The key to understanding Q in circuits is *where* the resistance sits relative to the energy circulation path between L and C. In a series RLC circuit, the resistance is *in* the circulation path — current flowing between L and C must pass through R, so lower R means less loss and higher Q. In a parallel RLC circuit, the resistance *shunts* energy out of the tank — current leaks through R instead of circulating between L and C, so higher R means less leakage and higher Q. This inversion is why the series and parallel Q formulas look reciprocal:
 
 For a series RLC circuit:
 
@@ -53,11 +60,9 @@ For a parallel RLC circuit:
 
 **Q = R × √(C/L) = R/X_L = R/X_C** (all evaluated at f₀)
 
-Note the inversion: in a series circuit, lower R means higher Q (less loss). In a parallel circuit, higher R means higher Q (less loss through the parallel resistance).
-
 ### Q and Bandwidth
 
-The bandwidth of a resonant circuit — the range of frequencies where the response is within 3 dB of the peak — is directly related to Q:
+A high-Q circuit is picky about frequency — it responds strongly right at resonance and barely at all a little ways away. The bandwidth of a resonant circuit — the range of frequencies where the response is within 3 dB of the peak — quantifies exactly how picky:
 
 **BW = f₀ / Q**
 

@@ -101,6 +101,28 @@ Z_total = Z₁ + Z₂ + Z₃ + ... — impedances in series add directly, same r
 
 ---
 
+## Resonance & Q Factor
+
+**LC resonant frequency**
+f₀ = 1 / (2π√(LC)) — the frequency where inductive and capacitive reactance exactly cancel. Energy shuttles between the magnetic field of L and the electric field of C with no net reactive impedance.
+
+**Q factor (energy definition)**
+Q = 2π × (energy stored) / (energy dissipated per cycle) — the universal definition. High Q means energy circulates many times before being lost; low Q means heavy damping.
+
+**Q of series RLC**
+Q = (1/R) × √(L/C) = X_L/R at f₀ — resistance is in the circulation path, so lower R means higher Q.
+
+**Q of parallel RLC**
+Q = R × √(C/L) = R/X_L at f₀ — resistance shunts energy out of the tank, so higher R means higher Q.
+
+**Bandwidth from Q**
+BW = f₀ / Q — the 3 dB bandwidth of a resonant circuit. A 1 MHz resonance with Q = 100 passes a 10 kHz window.
+
+**Loaded Q**
+1/Q_L = 1/Q_U + 1/Q_external — external loading always reduces Q. A high-Q inductor in a tank circuit can drop from Q_U = 200 to Q_L = 20 once coupled to a real load.
+
+---
+
 ## Magnetics
 
 **Copper loss (DC)**
