@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 280" width="420" height="280">
+  <style>
+    .wire { stroke: currentColor; stroke-width: 2; fill: none; }
+    .comp { stroke: currentColor; stroke-width: 2; fill: none; }
+    .label { font-family: 'Georgia', serif; font-size: 14px; fill: currentColor; text-anchor: middle; }
+    .label-sub { font-family: 'Georgia', serif; font-size: 11px; fill: currentColor; text-anchor: middle; opacity: 0.65; }
+    .node-dot { fill: currentColor; }
+  </style>
+
+  <!-- Input terminals -->
+  <circle cx="40" cy="40" r="3" class="node-dot"/>
+  <circle cx="40" cy="240" r="3" class="node-dot"/>
+
+  <!-- I_in label -->
+  <text x="24" y="125" class="label" text-anchor="end">I</text>
+  <text x="24" y="155" class="label" text-anchor="end" font-size="11" opacity="0.65">in</text>
+  <!-- Current arrow -->
+  <line x1="32" y1="100" x2="32" y2="140" class="wire" stroke-width="1.2"/>
+  <polyline points="28,132 32,140 36,132" class="comp" stroke-width="1.2"/>
+
+  <!-- Top rail -->
+  <line x1="40" y1="40" x2="340" y2="40" class="wire"/>
+
+  <!-- Junction dots on top rail -->
+  <circle cx="120" cy="40" r="3" class="node-dot"/>
+  <circle cx="220" cy="40" r="3" class="node-dot"/>
+  <circle cx="310" cy="40" r="3" class="node-dot"/>
+
+  <!-- Bottom rail -->
+  <line x1="40" y1="240" x2="340" y2="240" class="wire"/>
+
+  <!-- Junction dots on bottom rail -->
+  <circle cx="120" cy="240" r="3" class="node-dot"/>
+  <circle cx="220" cy="240" r="3" class="node-dot"/>
+  <circle cx="310" cy="240" r="3" class="node-dot"/>
+
+  <!-- R branch (left) -->
+  <line x1="120" y1="40" x2="120" y2="95" class="wire"/>
+  <polyline points="120,95 108,103 132,111 108,119 132,127 108,135 132,143 120,151" class="comp"/>
+  <line x1="120" y1="151" x2="120" y2="240" class="wire"/>
+  <text x="145" y="128" class="label" text-anchor="start">R</text>
+
+  <!-- L branch (center) -->
+  <line x1="220" y1="40" x2="220" y2="95" class="wire"/>
+  <path d="M220,95 C234,95 234,107 220,107 C234,107 234,119 220,119 C234,119 234,131 220,131 C234,131 234,143 220,143" class="comp"/>
+  <line x1="220" y1="143" x2="220" y2="240" class="wire"/>
+  <text x="243" y="124" class="label" text-anchor="start">L</text>
+
+  <!-- C branch (right) -->
+  <line x1="310" y1="40" x2="310" y2="125" class="wire"/>
+  <line x1="295" y1="125" x2="325" y2="125" class="comp" stroke-width="2.5"/>
+  <line x1="295" y1="137" x2="325" y2="137" class="comp" stroke-width="2.5"/>
+  <line x1="310" y1="137" x2="310" y2="240" class="wire"/>
+  <text x="335" y="135" class="label" text-anchor="start">C</text>
+
+  <!-- Ground symbol -->
+  <line x1="190" y1="240" x2="190" y2="248" class="wire"/>
+  <line x1="178" y1="248" x2="202" y2="248" class="wire" stroke-width="2"/>
+  <line x1="182" y1="253" x2="198" y2="253" class="wire" stroke-width="2"/>
+  <line x1="186" y1="258" x2="194" y2="258" class="wire" stroke-width="2"/>
+
+  <!-- Output terminal -->
+  <circle cx="340" cy="40" r="3" class="node-dot"/>
+  <circle cx="340" cy="240" r="3" class="node-dot"/>
+
+  <!-- Annotation -->
+  <text x="370" y="125" class="label-sub" text-anchor="start">At f&#x2080;:</text>
+  <text x="370" y="143" class="label-sub" text-anchor="start">Z = R</text>
+  <text x="370" y="161" class="label-sub" text-anchor="start">(maximum)</text>
+</svg>

@@ -22,6 +22,8 @@ At f₀, the two reactances are equal and opposite. What happens next depends on
 
 ### Series Resonance
 
+![Series RLC circuit](/img/fundamentals/series-rlc.svg)
+
 In a series LC circuit, the impedance at resonance drops to its minimum — ideally zero (just the series resistance of the real components). At f₀, the series combination of L and C looks like a short circuit to the driving source (limited only by the resistance in the loop).
 
 - Below f₀: the circuit is capacitive (X_C > X_L, net negative reactance)
@@ -31,6 +33,8 @@ In a series LC circuit, the impedance at resonance drops to its minimum — idea
 Series resonance creates an impedance minimum. It's used in series-tuned filters (bandpass) and is the mechanism behind crystal oscillator operation at the series resonant frequency.
 
 ### Parallel Resonance
+
+![Parallel RLC circuit](/img/fundamentals/parallel-rlc.svg)
 
 In a parallel LC circuit, the impedance at resonance rises to its maximum. At f₀, the parallel combination of L and C looks like an open circuit (ideally infinite impedance, limited by losses).
 
