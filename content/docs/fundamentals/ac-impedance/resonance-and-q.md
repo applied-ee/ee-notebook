@@ -23,42 +23,46 @@ At f₀, the two reactances are equal and opposite. What happens next depends on
 ### Series Resonance
 
 {{< circuit caption="Series RLC circuit — at resonance, impedance drops to R" >}}
-<svg viewBox="0 0 480 160" width="480" height="160">
+<svg viewBox="0 0 380 160" width="380" height="160">
   <style>
     .wire { stroke: currentColor; stroke-width: 2; fill: none; }
     .comp { stroke: currentColor; stroke-width: 2; fill: none; }
     .label { font-family: 'Georgia', serif; font-size: 14px; fill: currentColor; text-anchor: middle; }
     .node-dot { fill: currentColor; }
   </style>
-  <!-- Top wire: input to R -->
-  <circle cx="30" cy="40" r="3" class="node-dot"/>
-  <line x1="30" y1="40" x2="70" y2="40" class="wire"/>
-  <!-- Resistor (zigzag) -->
-  <polyline points="70,40 78,28 86,52 94,28 102,52 110,28 118,52 126,40" class="comp"/>
-  <text x="98" y="22" class="label">R</text>
-  <!-- Wire R to L -->
-  <line x1="126" y1="40" x2="170" y2="40" class="wire"/>
-  <!-- Inductor (humps) -->
-  <path d="M170,40 C170,26 182,26 182,40 C182,26 194,26 194,40 C194,26 206,26 206,40 C206,26 218,26 218,40" class="comp"/>
-  <text x="194" y="22" class="label">L</text>
-  <!-- Wire L to C -->
-  <line x1="218" y1="40" x2="270" y2="40" class="wire"/>
-  <!-- Capacitor (parallel plates) -->
-  <line x1="270" y1="25" x2="270" y2="55" class="comp" stroke-width="2.5"/>
-  <line x1="282" y1="25" x2="282" y2="55" class="comp" stroke-width="2.5"/>
-  <text x="276" y="16" class="label">C</text>
-  <!-- Wire C to output -->
-  <line x1="282" y1="40" x2="340" y2="40" class="wire"/>
-  <circle cx="340" cy="40" r="3" class="node-dot"/>
-  <!-- Bottom return wire -->
+  <!-- Left vertical wire (input side) -->
+  <circle cx="30" cy="30" r="3" class="node-dot"/>
+  <line x1="30" y1="30" x2="30" y2="130" class="wire"/>
   <circle cx="30" cy="130" r="3" class="node-dot"/>
-  <line x1="30" y1="130" x2="340" y2="130" class="wire"/>
+  <!-- Top wire: left corner to R -->
+  <line x1="30" y1="30" x2="70" y2="30" class="wire"/>
+  <!-- Resistor (zigzag) -->
+  <polyline points="70,30 78,18 86,42 94,18 102,42 110,18 118,42 126,30" class="comp"/>
+  <text x="98" y="12" class="label">R</text>
+  <!-- Wire R to L -->
+  <line x1="126" y1="30" x2="170" y2="30" class="wire"/>
+  <!-- Inductor (humps) -->
+  <path d="M170,30 C170,16 182,16 182,30 C182,16 194,16 194,30 C194,16 206,16 206,30 C206,16 218,16 218,30" class="comp"/>
+  <text x="194" y="12" class="label">L</text>
+  <!-- Wire L to C -->
+  <line x1="218" y1="30" x2="270" y2="30" class="wire"/>
+  <!-- Capacitor (parallel plates) -->
+  <line x1="270" y1="15" x2="270" y2="45" class="comp" stroke-width="2.5"/>
+  <line x1="282" y1="15" x2="282" y2="45" class="comp" stroke-width="2.5"/>
+  <text x="276" y="8" class="label">C</text>
+  <!-- Wire C to right corner -->
+  <line x1="282" y1="30" x2="340" y2="30" class="wire"/>
+  <!-- Right vertical wire -->
+  <circle cx="340" cy="30" r="3" class="node-dot"/>
+  <line x1="340" y1="30" x2="340" y2="130" class="wire"/>
   <circle cx="340" cy="130" r="3" class="node-dot"/>
-  <!-- Input label -->
-  <text x="16" y="72" class="label" text-anchor="end" font-size="12">V<tspan dy="4" font-size="10">in</tspan></text>
-  <line x1="24" y1="58" x2="24" y2="68" class="wire" stroke-width="1"/>
-  <line x1="20" y1="68" x2="28" y2="68" class="wire" stroke-width="1"/>
-  <!-- Ground -->
+  <!-- Bottom return wire -->
+  <line x1="30" y1="130" x2="340" y2="130" class="wire"/>
+  <!-- V_in label on left side -->
+  <text x="16" y="68" class="label" text-anchor="end" font-size="12">V<tspan dy="4" font-size="10">in</tspan></text>
+  <line x1="24" y1="52" x2="24" y2="62" class="wire" stroke-width="1"/>
+  <line x1="20" y1="62" x2="28" y2="62" class="wire" stroke-width="1"/>
+  <!-- Ground on bottom wire -->
   <line x1="185" y1="130" x2="185" y2="138" class="wire"/>
   <line x1="175" y1="138" x2="195" y2="138" class="wire" stroke-width="2"/>
   <line x1="179" y1="143" x2="191" y2="143" class="wire" stroke-width="2"/>
