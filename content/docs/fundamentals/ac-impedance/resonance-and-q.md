@@ -22,7 +22,49 @@ At f₀, the two reactances are equal and opposite. What happens next depends on
 
 ### Series Resonance
 
-![Series RLC circuit](/img/fundamentals/series-rlc.svg)
+{{< circuit caption="Series RLC circuit — at resonance, impedance drops to R" >}}
+<svg viewBox="0 0 480 160" width="480" height="160">
+  <style>
+    .wire { stroke: currentColor; stroke-width: 2; fill: none; }
+    .comp { stroke: currentColor; stroke-width: 2; fill: none; }
+    .label { font-family: 'Georgia', serif; font-size: 14px; fill: currentColor; text-anchor: middle; }
+    .node-dot { fill: currentColor; }
+  </style>
+  <!-- Top wire: input to R -->
+  <circle cx="30" cy="40" r="3" class="node-dot"/>
+  <line x1="30" y1="40" x2="70" y2="40" class="wire"/>
+  <!-- Resistor (zigzag) -->
+  <polyline points="70,40 78,28 86,52 94,28 102,52 110,28 118,52 126,40" class="comp"/>
+  <text x="98" y="22" class="label">R</text>
+  <!-- Wire R to L -->
+  <line x1="126" y1="40" x2="170" y2="40" class="wire"/>
+  <!-- Inductor (humps) -->
+  <path d="M170,40 C170,26 182,26 182,40 C182,26 194,26 194,40 C194,26 206,26 206,40 C206,26 218,26 218,40" class="comp"/>
+  <text x="194" y="22" class="label">L</text>
+  <!-- Wire L to C -->
+  <line x1="218" y1="40" x2="270" y2="40" class="wire"/>
+  <!-- Capacitor (parallel plates) -->
+  <line x1="270" y1="25" x2="270" y2="55" class="comp" stroke-width="2.5"/>
+  <line x1="282" y1="25" x2="282" y2="55" class="comp" stroke-width="2.5"/>
+  <text x="276" y="16" class="label">C</text>
+  <!-- Wire C to output -->
+  <line x1="282" y1="40" x2="340" y2="40" class="wire"/>
+  <circle cx="340" cy="40" r="3" class="node-dot"/>
+  <!-- Bottom return wire -->
+  <circle cx="30" cy="130" r="3" class="node-dot"/>
+  <line x1="30" y1="130" x2="340" y2="130" class="wire"/>
+  <circle cx="340" cy="130" r="3" class="node-dot"/>
+  <!-- Input label -->
+  <text x="16" y="72" class="label" text-anchor="end" font-size="12">V<tspan dy="4" font-size="10">in</tspan></text>
+  <line x1="24" y1="58" x2="24" y2="68" class="wire" stroke-width="1"/>
+  <line x1="20" y1="68" x2="28" y2="68" class="wire" stroke-width="1"/>
+  <!-- Ground -->
+  <line x1="185" y1="130" x2="185" y2="138" class="wire"/>
+  <line x1="175" y1="138" x2="195" y2="138" class="wire" stroke-width="2"/>
+  <line x1="179" y1="143" x2="191" y2="143" class="wire" stroke-width="2"/>
+  <line x1="183" y1="148" x2="187" y2="148" class="wire" stroke-width="2"/>
+</svg>
+{{< /circuit >}}
 
 In a series LC circuit, the impedance at resonance drops to its minimum — ideally zero (just the series resistance of the real components). At f₀, the series combination of L and C looks like a short circuit to the driving source (limited only by the resistance in the loop).
 
@@ -34,7 +76,50 @@ Series resonance creates an impedance minimum. It's used in series-tuned filters
 
 ### Parallel Resonance
 
-![Parallel RLC circuit](/img/fundamentals/parallel-rlc.svg)
+{{< circuit caption="Parallel RLC circuit — at resonance, impedance rises to R" >}}
+<svg viewBox="0 0 360 260" width="360" height="260">
+  <style>
+    .wire { stroke: currentColor; stroke-width: 2; fill: none; }
+    .comp { stroke: currentColor; stroke-width: 2; fill: none; }
+    .label { font-family: 'Georgia', serif; font-size: 14px; fill: currentColor; text-anchor: middle; }
+    .node-dot { fill: currentColor; }
+  </style>
+  <!-- Top rail -->
+  <circle cx="30" cy="30" r="3" class="node-dot"/>
+  <line x1="30" y1="30" x2="310" y2="30" class="wire"/>
+  <!-- Junction dots -->
+  <circle cx="100" cy="30" r="3" class="node-dot"/>
+  <circle cx="190" cy="30" r="3" class="node-dot"/>
+  <circle cx="280" cy="30" r="3" class="node-dot"/>
+  <!-- Bottom rail -->
+  <circle cx="30" cy="230" r="3" class="node-dot"/>
+  <line x1="30" y1="230" x2="310" y2="230" class="wire"/>
+  <circle cx="100" cy="230" r="3" class="node-dot"/>
+  <circle cx="190" cy="230" r="3" class="node-dot"/>
+  <circle cx="280" cy="230" r="3" class="node-dot"/>
+  <!-- R branch (left) -->
+  <line x1="100" y1="30" x2="100" y2="85" class="wire"/>
+  <polyline points="100,85 88,93 112,101 88,109 112,117 88,125 112,133 100,141" class="comp"/>
+  <line x1="100" y1="141" x2="100" y2="230" class="wire"/>
+  <text x="122" y="118" class="label" text-anchor="start">R</text>
+  <!-- L branch (center) -->
+  <line x1="190" y1="30" x2="190" y2="85" class="wire"/>
+  <path d="M190,85 C204,85 204,97 190,97 C204,97 204,109 190,109 C204,109 204,121 190,121 C204,121 204,133 190,133" class="comp"/>
+  <line x1="190" y1="133" x2="190" y2="230" class="wire"/>
+  <text x="212" y="114" class="label" text-anchor="start">L</text>
+  <!-- C branch (right) -->
+  <line x1="280" y1="30" x2="280" y2="115" class="wire"/>
+  <line x1="265" y1="115" x2="295" y2="115" class="comp" stroke-width="2.5"/>
+  <line x1="265" y1="127" x2="295" y2="127" class="comp" stroke-width="2.5"/>
+  <line x1="280" y1="127" x2="280" y2="230" class="wire"/>
+  <text x="302" y="125" class="label" text-anchor="start">C</text>
+  <!-- Ground -->
+  <line x1="160" y1="230" x2="160" y2="238" class="wire"/>
+  <line x1="150" y1="238" x2="170" y2="238" class="wire" stroke-width="2"/>
+  <line x1="154" y1="243" x2="166" y2="243" class="wire" stroke-width="2"/>
+  <line x1="158" y1="248" x2="162" y2="248" class="wire" stroke-width="2"/>
+</svg>
+{{< /circuit >}}
 
 In a parallel LC circuit, the impedance at resonance rises to its maximum. At f₀, the parallel combination of L and C looks like an open circuit (ideally infinite impedance, limited by losses).
 

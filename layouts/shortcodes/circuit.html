@@ -1,0 +1,4 @@
+<figure class="circuit-diagram{{ with .Get "class" }} {{ . }}{{ end }}">
+  {{- .Inner -}}
+  {{ with .Get "caption" }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>
