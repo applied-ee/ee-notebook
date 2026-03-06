@@ -67,6 +67,40 @@ f = 1 / (2 pi R C) — the -3 dB frequency where output drops to 70.7% of input.
 
 ---
 
+## AC & Impedance
+
+**Capacitive reactance**
+X_C = 1 / (2πfC) — impedance of a capacitor at frequency f. Halves every time frequency doubles; infinite at DC (open circuit), approaches zero at high frequency.
+
+**Inductive reactance**
+X_L = 2πfL — impedance of an inductor at frequency f. Doubles every time frequency doubles; zero at DC (short circuit), increases without bound at high frequency.
+
+**Complex impedance**
+Z = R + jX — impedance as a complex number. R (real part) is resistance (energy dissipated); X (imaginary part) is reactance (energy stored and returned).
+
+**Impedance of a capacitor**
+Z_C = -j / (2πfC) — negative imaginary because current leads voltage by 90°.
+
+**Impedance of an inductor**
+Z_L = j2πfL — positive imaginary because current lags voltage by 90°.
+
+**Impedance magnitude**
+|Z| = √(R² + X²) — what an impedance analyzer or LCR meter displays. Combines resistive and reactive parts into a single scalar.
+
+**Phase angle**
+θ = arctan(X / R) — angle between voltage and current. 0° is purely resistive; ±90° is purely reactive.
+
+**Ohm's law (AC)**
+V = IZ — Ohm's law generalized to AC. V, I, and Z are complex phasors; magnitude gives amplitude, phase gives timing.
+
+**Series impedance**
+Z_total = Z₁ + Z₂ + Z₃ + ... — impedances in series add directly, same rule as DC but with complex arithmetic.
+
+**Parallel impedance**
+1/Z_total = 1/Z₁ + 1/Z₂ + ... — reciprocal rule, same as parallel resistors but with complex arithmetic.
+
+---
+
 ## Magnetics
 
 **Copper loss (DC)**

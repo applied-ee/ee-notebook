@@ -7,6 +7,8 @@ weight: 10
 
 At DC, resistance tells the whole story: V = IR, and that's it. But as soon as a signal changes over time — a switching edge, an audio waveform, an RF carrier — resistance alone doesn't capture what's happening. Capacitors and inductors push back against changing signals in ways that depend on frequency, and the voltage and current through them aren't in phase anymore. Impedance is the concept that extends Ohm's law to handle all of this.
 
+> For the formulas referenced on this page, see the [Formula Reference appendix]({{< relref "/docs/appendix/formulas" >}}#ac--impedance).
+
 ## From Resistance to Impedance
 
 Resistance is opposition to current that dissipates energy as heat. It doesn't depend on frequency — a 1 kΩ resistor is 1 kΩ at DC, at 1 kHz, and at 1 GHz (ignoring parasitics for now).
@@ -17,78 +19,37 @@ Impedance (Z) combines both into a single quantity. It's the total opposition to
 
 ## Capacitive Reactance
 
-A capacitor opposes changes in voltage. The faster the voltage changes (higher frequency), the more current flows, so the capacitor looks like a lower impedance at higher frequencies:
+A capacitor opposes changes in voltage. At DC, no current flows through an ideal cap — it's an open wall. At high frequencies, the cap passes current freely and looks nearly like a short. The transition between these extremes is smooth and predictable: double the frequency, and the cap's impedance drops by half. Go up a decade in frequency, and it drops by 10×.
 
-**X_C = 1 / (2πfC)**
+This is why a bypass cap that works great at 1 kHz might be nearly invisible at 1 MHz — its impedance has dropped by three decades. Conversely, a coupling cap that passes audio signals easily will block DC completely.
 
-- At DC (f = 0), X_C is infinite — no current flows through an ideal capacitor at DC (it's an open circuit)
-- As frequency increases, X_C decreases — the cap passes more current
-- A 100 nF cap at 1 kHz: X_C = 1 / (2π × 1000 × 100×10⁻⁹) ≈ 1.6 kΩ
-- The same cap at 1 MHz: X_C ≈ 1.6 Ω
-
-The current through a capacitor leads the voltage by 90°. When voltage is at zero and rising, current is already at its peak.
+The current through a capacitor leads the voltage by 90°. When voltage is at zero and rising, current is already at its peak. This phase relationship is one of the signatures that distinguishes reactive behavior from resistive behavior.
 
 ## Inductive Reactance
 
-An inductor opposes changes in current. The faster the current tries to change (higher frequency), the more the inductor pushes back:
+An inductor opposes changes in current. At DC it's just wire — current flows freely. But as frequency increases, the inductor pushes back harder: double the frequency, double the impedance. Go up a decade, and the impedance rises by 10×.
 
-**X_L = 2πfL**
+This is the opposite of a capacitor's behavior, and it's why inductors show up in circuits that need to block high-frequency signals while passing DC — like the ferrite beads on power rails or the chokes in EMI filters.
 
-- At DC (f = 0), X_L is zero — an ideal inductor is a short circuit at DC (just wire resistance)
-- As frequency increases, X_L increases — the inductor blocks more current
-- A 10 µH inductor at 1 kHz: X_L = 2π × 1000 × 10×10⁻⁶ ≈ 0.063 Ω
-- The same inductor at 100 MHz: X_L ≈ 6.3 kΩ
-
-The current through an inductor lags the voltage by 90°. When voltage is applied, current ramps up gradually rather than appearing instantly.
+The current through an inductor lags the voltage by 90°. When voltage is applied, current ramps up gradually rather than appearing instantly. Again, this phase shift is the hallmark of reactance rather than resistance.
 
 ## Complex Impedance
 
-Impedance combines resistance and reactance using complex numbers:
+Impedance combines resistance and reactance into a single complex number. The real part is resistance — energy that gets dissipated as heat. The imaginary part is reactance — energy that gets stored in an electric or magnetic field and then returned to the circuit.
 
-**Z = R + jX**
+Engineers use j (not i, to avoid confusion with current) as the imaginary unit. A capacitor's impedance is negative imaginary (current leads voltage), an inductor's is positive imaginary (current lags voltage), and a resistor's impedance is purely real (voltage and current are in phase).
 
-Where:
-- R is the resistance (real part) — energy dissipated
-- X is the reactance (imaginary part) — energy stored and returned
-- j is the imaginary unit (engineers use j instead of i to avoid confusion with current)
-
-For a capacitor: Z_C = -j / (2πfC) = -jX_C (negative imaginary — current leads voltage)
-
-For an inductor: Z_L = j2πfL = jX_L (positive imaginary — current lags voltage)
-
-For a resistor: Z_R = R (purely real — voltage and current are in phase)
-
-### Magnitude and Phase
-
-The magnitude of impedance — what an ohmmeter or impedance analyzer reports as |Z| — is:
-
-**|Z| = √(R² + X²)**
-
-The phase angle between voltage and current is:
-
-**θ = arctan(X / R)**
-
-A purely resistive circuit has θ = 0° (voltage and current in phase). A purely capacitive circuit has θ = -90°. A purely inductive circuit has θ = +90°. Most real circuits land somewhere in between.
+What matters practically: the magnitude of impedance is what an impedance analyzer or LCR meter reports when it displays |Z|. It tells you how much the component or circuit opposes current at that frequency. The phase angle tells you where the energy goes — a phase near zero means mostly dissipation, a phase near ±90° means mostly storage. Most real circuits land somewhere in between.
 
 ## Series and Parallel Impedance
 
-The same series and parallel rules from DC analysis apply, but with complex numbers:
+The same series and parallel rules from DC analysis apply, but with complex numbers. Series impedances add directly. Parallel impedances combine with the reciprocal rule, just like parallel resistors.
 
-**Series:** Z_total = Z1 + Z2 + Z3 + ...
-
-**Parallel:** 1/Z_total = 1/Z1 + 1/Z2 + ...
-
-A resistor in series with a capacitor: Z = R - j/(2πfC). The magnitude and phase both depend on frequency. At low frequencies the capacitor dominates (high impedance, phase near -90°). At high frequencies the resistor dominates (impedance approaches R, phase approaches 0°).
-
-This is exactly how an RC filter works — the frequency-dependent impedance division between R and C creates the filtering action.
+A resistor in series with a capacitor is a good example: at low frequencies the capacitor dominates (high impedance, phase near −90°). At high frequencies the resistor dominates (impedance approaches R, phase approaches 0°). This is exactly how an RC filter works — the frequency-dependent impedance division between R and C creates the filtering action.
 
 ## Ohm's Law Generalized
 
-With impedance, Ohm's law becomes:
-
-**V = IZ**
-
-This works exactly the same as V = IR, except V, I, and Z are all complex quantities (phasors) at a specific frequency. The magnitude relationship |V| = |I| × |Z| gives the amplitude, and the phase relationship gives the timing between voltage and current waveforms.
+Ohm's law still works for AC — you just use impedance instead of resistance. The familiar V = IR becomes V = IZ, where all three quantities are complex numbers (phasors) at a specific frequency. The magnitude relationship gives the amplitude, and the phase relationship gives the timing between voltage and current waveforms.
 
 This generalized form is valid for steady-state sinusoidal signals at a single frequency. For signals with multiple frequency components, each frequency is analyzed separately (superposition applies in linear circuits).
 
