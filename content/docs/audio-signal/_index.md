@@ -32,3 +32,5 @@ The focus is hardware-oriented DSP intuition: understanding what converters, fil
 - **[Audio Systems & Signal Chains]({{< relref "audio-systems-and-signal-chains" >}})** — Gain staging, latency, and multistage design: building complete systems from individual blocks.
 
 - **[Practical Signal Reality]({{< relref "practical-signal-reality" >}})** — Quantization, jitter, and measurement: where theory meets the bench.
+
+- **[Power Amplifier Evolution]({{< relref "power-amp-evolution" >}})** — From single-transistor Class A through Class D switching: the chain of problems and solutions that shaped audio power amplifier design.
