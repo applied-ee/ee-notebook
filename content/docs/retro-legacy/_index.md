@@ -39,6 +39,4 @@ This is not a history of electronics or a museum catalog — historical context 
 
 - **[Interfacing Playbook: Modern ↔ Legacy]({{< relref "interfacing-playbook" >}})** — Level shifting, protocol conversion, galvanic isolation, grounding patterns, worked mini-patterns, and bench bring-up procedure for connecting modern MCUs to legacy systems
 
-- **[Components & Patterns]({{< relref "component-pattern-reference" >}})** — Quick reference to components and circuit patterns commonly encountered in retro and legacy electronics
-
 - **[Legacy Tooling Reference]({{< relref "legacy-tooling-reference" >}})** — Instruments and accessories that remain useful or necessary for legacy solid-state troubleshooting and repair
