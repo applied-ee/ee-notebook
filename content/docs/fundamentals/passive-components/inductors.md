@@ -87,7 +87,7 @@ Core losses add to DCR losses. At high switching frequencies, core losses can do
 
 - Inductors fight current changes — When a switch in series with an inductor opens, the inductor tries to maintain current flow. The voltage will rise until it finds a path (flyback diode, arc across switch contacts, or semiconductor breakdown). Always provide a current path
 - Parallel inductors need care — Unlike resistors, paralleling inductors is complicated by mutual inductance. Two inductors close together on a board may couple magnetically, changing the effective inductance
-- Self-resonant frequency — Like capacitors, inductors have parasitic capacitance (between turns). Above the SRF, the "inductor" becomes capacitive. For RF work, always check SRF vs. operating frequency
+- Self-resonant frequency — Like capacitors, inductors have parasitic capacitance (between turns). Above the SRF, the "inductor" becomes capacitive. For RF work, always check SRF vs. operating frequency (see [Frequency-Dependent Behavior]({{< relref "../ac-impedance/frequency-dependent-behavior" >}}) for impedance curves and details)
 - Current rating vs. saturation rating — Some datasheets list two current ratings: thermal (current before overheating due to DCR losses) and saturation (current before inductance drops by 20-30%). Use the lower of the two as the design limit
 
 ## In Practice

@@ -74,7 +74,7 @@ Some networks (bridges, T-networks, pi-networks) can't be fully reduced by serie
 - Series elements must carry the same current — If there's a branch point between two elements, they're not in series. This sounds obvious but causes errors in complex schematics
 - Parallel elements must share the same two nodes — If two elements connect between the same pair of nodes, they're in parallel. If they don't share both nodes, they're not parallel, even if they look close on the schematic
 - Real components aren't purely R, C, or L — A real capacitor in a series chain adds its ESR as a series resistance and its ESL as a series inductance. At some frequency, this changes the effective impedance significantly
-- Don't over-simplify for AC — At AC, impedances are needed, not just resistances. A 1 kΩ resistor in parallel with a 100 nF cap has different equivalent impedance at every frequency. Series/parallel reduction still works, but with complex numbers
+- Don't over-simplify for AC — At AC, impedances are needed, not just resistances. A 1 kΩ resistor in parallel with a 100 nF cap has different equivalent impedance at every frequency. Series/parallel reduction still works, but with complex numbers (see [Impedance & Reactance]({{< relref "../ac-impedance/impedance-and-reactance" >}}))
 
 ## In Practice
 

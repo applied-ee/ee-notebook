@@ -36,7 +36,7 @@ To handle this, Ohm’s law is generalized to:
 
 **V = IZ**
 
-Here, Z (impedance) replaces resistance. Impedance extends the same proportional relationship between voltage and current, but includes both magnitude and phase, captured as a complex number at a specific frequency.
+Here, Z (impedance) replaces resistance. Impedance extends the same proportional relationship between voltage and current, but includes both magnitude and phase, captured as a complex number at a specific frequency. See [Impedance & Reactance]({{< relref "../ac-impedance/impedance-and-reactance" >}}) for the full treatment.
 
 
 ## When It Doesn't Apply (Or Doesn't Tell the Whole Story)

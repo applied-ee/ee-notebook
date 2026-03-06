@@ -91,7 +91,7 @@ Nonlinear elements (diodes, transistors in large-signal operation, saturated tra
 
 The Thévenin/Norton equivalent captures the DC or single-frequency behavior perfectly. But:
 
-- **Frequency dependence** — Real circuits have impedance that varies with frequency. R_th becomes Z_th(f), and a single number doesn't capture the full picture. At DC or a single frequency, it works. Over a range of frequencies, the full impedance vs. frequency characteristic is needed
+- **Frequency dependence** — Real circuits have impedance that varies with frequency. R_th becomes Z_th(f), and a single number doesn't capture the full picture. At DC or a single frequency, it works. Over a range of frequencies, the full impedance vs. frequency characteristic is needed (see [AC & Impedance]({{< relref "../ac-impedance" >}}))
 - **Noise** — R_th generates thermal noise. The equivalent circuit's noise behavior matches the real circuit's only if the noise source is included (V_noise = √(4kTR_th × B))
 - **Nonlinearity** — As noted above, the equivalent is only valid in the linear operating region
 - **Dynamic behavior** — Thévenin gives the steady-state equivalent. Transient behavior (capacitive and inductive storage elements) requires more than a single R and V

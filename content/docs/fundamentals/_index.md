@@ -27,6 +27,8 @@ All of it seems simple until it needs to be applied to a real circuit on the ben
 
 - **[Passive Components]({{< relref "passive-components" >}})** — Resistors, capacitors, inductors, and transformers beyond the ideal models.
 
+- **[AC & Impedance]({{< relref "ac-impedance" >}})** — Frequency-dependent behavior, reactance, complex impedance, and resonance — the bridge from DC analysis to AC reality.
+
 - **[Magnetics in Practice]({{< relref "magnetics-in-practice" >}})** — Inductors and transformers beyond the ideal: saturation, losses, parasitics, noise, inrush, and what to look for on the bench.
 
 - **[Electromechanical Devices]({{< relref "electromechanical-devices" >}})** — Components where electrical signals create physical motion or sound: relays, reed switches, contactors, speakers, and buzzers.
