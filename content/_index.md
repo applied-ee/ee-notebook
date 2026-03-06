@@ -4,11 +4,8 @@ type: docs
 ---
 
 <div class="landing-hero">
-
 # EE Notebook
-
 </div>
-
 Electronics is not just assembling parts or learning equations — it is building intuition and a working understanding of how circuits and their components behave, and sometimes misbehave.
 
 This notebook exists as working reference for electronics — not a textbook that stops at theory, and not a cookbook that skips the reasoning. Many resources emphasize equations without explaining how real circuits behave. The result is math that can be solved but hardware that still surprises. The emphasis is on building intuition: how components behave, why circuits respond the way they do, and what changes when ideal assumptions no longer hold. Every entry connects concepts to real measurements, expected behavior to actual symptoms, and ideal models to the messy reality of components on a board.
