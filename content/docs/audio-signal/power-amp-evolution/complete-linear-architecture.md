@@ -7,6 +7,7 @@ review:
   notes: ""
   date: ""
 ---
+{{< katex >}}{{< /katex >}}
 
 # The Complete Linear Architecture
 

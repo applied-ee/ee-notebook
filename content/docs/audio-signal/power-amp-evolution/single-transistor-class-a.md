@@ -7,6 +7,7 @@ review:
   notes: ""
   date: ""
 ---
+{{< katex >}}{{< /katex >}}
 
 # Single-Transistor Class A
 

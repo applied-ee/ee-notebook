@@ -99,6 +99,16 @@ This means:
 - **Closing sections**: Most pages end with three closing sections in order: `## Tips`, `## Caveats`, `## In Practice`. The `architecture-abstraction/` section is the exception — its pages end with `## Caveats` and do not have `## Tips` or `## In Practice`. Practical observations from Architecture & Abstraction live in the topically appropriate pages in `measurement/`, `embedded/`, and `debugging/` instead.
 - **Bold lead-in on every closing-section bullet**: Every bullet in Tips, Caveats, and In Practice must start with a **bold phrase** that captures the key idea, symptom, or situation, followed by the explanation. Format: `- **Bold lead-in phrase** — rest of the bullet`. This applies uniformly to all three section types.
 
+## Math & Formulas (KaTeX)
+
+The hugo-book theme includes KaTeX for rendering math, but it only loads on pages that invoke the shortcode. Any page that uses `$$` or `\(` math delimiters **must** include `{{</* katex */>}}{{</* /katex */>}}` after the frontmatter closing `---` to trigger KaTeX loading.
+
+- **Display math**: Use `$$..$$` on its own line for block equations
+- **Inline math**: Use `\(...\)` for math within a sentence (note: single `$` delimiters are NOT supported)
+- **Trigger line**: Place `{{</* katex */>}}{{</* /katex */>}}` on the line immediately after frontmatter — it produces no visible output but loads the KaTeX JS/CSS
+
+Prefer KaTeX-rendered math over plain-text formulas (e.g., `$$V = IR$$` rather than `V = IR`) for consistency across the site.
+
 ## Glossary & Tooltip System
 
 An automatic glossary tooltip system links terms on every page (except the glossary itself) to their definitions.

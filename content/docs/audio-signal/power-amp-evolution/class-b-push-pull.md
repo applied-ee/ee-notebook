@@ -7,6 +7,7 @@ review:
   notes: ""
   date: ""
 ---
+{{< katex >}}{{< /katex >}}
 
 # Class B Push-Pull
 
