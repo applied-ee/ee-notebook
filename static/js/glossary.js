@@ -47,12 +47,20 @@
     TEXTAREA: true, INPUT: true
   };
 
+  // Math delimiter pattern — skip text nodes containing KaTeX delimiters
+  // so glossary linking doesn't break math rendering
+  var MATH_DELIM = /\$\$|\\[(\[]/;
+
   function shouldSkip(node) {
+    // Skip text nodes inside math delimiters (KaTeX hasn't processed them yet)
+    if (node.nodeType === 3 && MATH_DELIM.test(node.textContent)) return true;
     var el = node.parentNode;
     while (el && el !== content) {
       if (SKIP_TAGS[el.tagName]) return true;
       if (el.classList && el.classList.contains("glossary-term")) return true;
       if (el.classList && el.classList.contains("no-glossary")) return true;
+      // Skip KaTeX-rendered elements
+      if (el.classList && el.classList.contains("katex")) return true;
       el = el.parentNode;
     }
     return false;
