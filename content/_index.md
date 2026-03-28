@@ -4,7 +4,7 @@ type: docs
 ---
 
 <div class="landing-hero">
-# EE Notebook
+<h1>EE Notebook</h1>
 </div>
 Electronics is not just assembling parts or learning equations — it is building intuition and a working understanding of how circuits and their components behave, and sometimes misbehave.
 
